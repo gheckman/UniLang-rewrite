@@ -1,0 +1,42 @@
+􏶞object􏶟
+􏷲The connection points between electrical components (nodes)􏷱
+􏷰
+nodes contain junctions to describe where they can send current to.
+From a node's perspective, think of a junction like this:
+"Yes, I will allow current to leave this way, and I will send it to this other node(ConnectionId)"
+􏷯
+􏷮Electrical_System􏷭
+􏷬Trevor Hickey􏷫
+􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
+􏷦"stdioLib.h"􏷥􏷢HASA: BOOL􏷡
+
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐􏷏
+􏶠􏶐 will be in an invalid state until initialized􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄connection id􏷃􏷀the node number that the junction points to􏶿
+􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the junction will allow electricity to flow through or not􏶿
+􏶴
+//set all values to the ones passed in
+ptOutputs->m_nConnectionId = nConnectionId;
+ptOutputs->m_bHasFlow = bHasFlow;
+􏶳
+
+􏷘+􏷗􏷒Set_Values􏷑
+􏷐Sets the 􏶐􏷏
+􏶠Change the current connection id and whether the junction allows flow through􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄connection id􏷃􏷀the node number that the junction points to􏶿
+􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the junction will allow electricity to flow through or not􏶿
+􏶴
+//set all values to the ones passed in
+ptOutputs->m_nConnectionId = nConnectionId;
+ptOutputs->m_bHasFlow = bHasFlow;
+􏶳
+
+􏶨Whether or not current can flow out a junction point.􏶧
+􏶦Useful for representing diodes􏶥
+􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬has flow􏶫􏶪false􏶩
+
+􏶨Assuming current can flow out a junction point, this is where it will flow to.􏶧
+􏶦a connectionID is used to index into a list of all the nodes and give you back the appropriate NodeT􏶥
+􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬connection id􏶫􏶪0􏶩

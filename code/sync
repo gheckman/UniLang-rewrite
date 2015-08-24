@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+#nonmutatable globals
+ACTUAL_REPO="/home/malko/Desktop/work-related/fresh"
+CODE_ROOT="SimHost/UH72A VME/Src"
+TEST_ROOT="SimHost/Tests/Unit_Tests"
+
+PATH_TO_CODE_ROOT="$ACTUAL_REPO""/""$CODE_ROOT""/"
+PATH_TO_TEST_ROOT="$ACTUAL_REPO""/""$TEST_ROOT""/"
+
+function Transfer-Global(){
+  Print-Whats-Happening "Global" "$1"
+  Export-It "$1";
+  Copy-It "$1" "$2";
+  Style-It "$1" "$2";
+  Remove-Generated-Code-From-Work-Area "$1";
+}
+function Transfer-Object(){
+  Print-Whats-Happening "Object" "$1" 
+  Export-It "$1";
+  Copy-It "$1" "$2";
+  Style-It "$1" "$2";
+  Test-It "$1" "$3";
+  Remove-Generated-Code-From-Work-Area "$1";
+}
+
+
+function Print-Whats-Happening(){
+    
+    #print the name of the component or utily nicely
+    echo -n "$1"" - ";
+    Caps_Case "$2";
+}
+function Export-It(){
+
+  #export CodeLang stuff
+  #currently:
+  # - f2si export C code (in directory)
+  # - unit test wrapper for f2si components (in directory) 
+  CodeLang-compiler --exporter="f2si" --language="c" "$1".CodeLang;
+}
+function Copy-It(){
+  
+  #folder name it was exported to
+  f2siName=`Pushed_Caps_Case $1`;
+  
+  #Copy the exported code into the actual code base
+  cp -rf "$f2siName" "$PATH_TO_CODE_ROOT""$2" 
+}
+function Style-It(){
+
+  #folder name it was exported to
+  f2siName=`Pushed_Caps_Case $1`;
+  
+  #format the code once it's there
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*
+}
+function Test-It(){
+  
+  #folder name it was exported to
+  f2siName=`Pushed_Caps_Case $1`;
+  
+  cp -rf "$f2siName""Wrapper" "$PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"
+  clang-format-3.6 -style=file -i "$PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"/"$f2siName""Wrapper"/*.hpp
+  clang-format-3.6 -style=file -i "$PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"/"$f2siName""Wrapper"/*.cpp
+}
+
+function Remove-Generated-Code-From-Work-Area(){
+  #folder name it was exported to
+  f2siName=`Pushed_Caps_Case $1`;
+  
+  #removes exported folder
+  rm -rf "$f2siName";
+  
+  #removes wrapper if it exists
+  rm -rf "$f2siName""Wrapper";
+  
+  
+}
+
+
+
+function Pushed_Caps_Case(){
+      echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed "s/\( \|^\)\(.\)/\1\u\2/g" | tr -d " "
+    
+}
+
+#For printing nicely
+function Caps_Case(){
+  echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed -r 's/\<./\U&/g';
+}
+
+#name of CodeLang file / where to place in repo / where to place class wrapper
+
+#Utilities
+cd Utilities;
+Transfer-Global "time_utilities" "Shared/ffs"
+Transfer-Global "date_utilities" "Shared/ffs"
+cd ..;
+
+
+#Time related
+cd Time;
+Transfer-Global "month" "Components/Time"
+Transfer-Object "date_time" "Components/Time" "Components/Time"
+cd ..;
+
+#Electrical related
+cd Electrical;
+Transfer-Object "junction" "Components/Electrical/Generic" "Components/Electrical"
+Transfer-Object "node" "Components/Electrical/Generic" "Components/Electrical"
+Transfer-Global "node_type" "Components/Electrical/Generic"
+Transfer-Object "electrical_graph" "Components/Electrical/Generic" "Components/Electrical"
+Transfer-Object "path" "Components/Electrical/Generic" "Components/Electrical"
+Transfer-Object "paths" "Components/Electrical/Generic" "Components/Electrical"
+cd ..;
+
+#Other stuff
+cd Other;
+Transfer-Global "ffs_const" "Shared/ffs"
+cd ..;

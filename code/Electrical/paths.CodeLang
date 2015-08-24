@@ -1,0 +1,50 @@
+􏶞object􏶟
+􏷲A list of all valid paths through a circuit􏷱
+􏷰
+These are produced by the graph when it is queried to find all of the valid paths through the circuit.
+􏷯
+􏷮Electrical_System􏷭
+􏷬Trevor Hickey􏷫
+􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
+􏷦"Path.h"􏷥􏷢HASA: PathOutputsT􏷡
+
+􏵺the maximum number of paths that can be discovered and stored􏵻
+􏵾max number of valid paths through the circuit􏵿
+􏵼128􏵽
+
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐 to an empty 􏶐􏷏
+􏶠􏶐 will be in an invalid state until initialized􏶡
+􏶴
+    //the list starts empty
+    ptOutputs->m_nSize = 0;
+􏶳
+
+􏷘+􏷗􏷒Add􏷑
+􏷐Adds a traversal path to the total list of paths􏷏
+􏶠If the list of lists is not full, this will add a path to the total list of paths and increment the size.􏶡
+􏶜c􏶝􏷆PathOutputsT􏷅􏷄path􏷃􏷀The new path to add.􏶿
+􏶴
+    //add the new node and increment the total count.
+    //the total count is used as an index, 
+    //so this will prepare the node for the next insertion.
+    //We also have a safety check to avoid out-of-bounds indexing
+    if (ptOutputs->m_nSize < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND)
+    {
+    ptOutputs->m_tPaths[ptOutputs->m_nSize] = tPath;
+    ++ptOutputs->m_nSize;
+    }
+    else
+    {
+    perror("Too many paths added to path list");
+    }
+􏶳
+
+􏶨A list of nodes that complete a valid path to ground.􏶧
+􏶦statically allocated to max a size􏶥
+􏶌observe􏶑􏶘-􏶙􏶮PathOutputsT[MAX_NUMBER_OF_VALID_PATHS_THROUGH_THE_CIRCUIT]􏶭􏶬paths􏶫
+
+􏶨the size of the path being stored inside of the array.􏶧
+􏶦the size will increment each time a node is added to the list􏶥
+􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬size􏶫

@@ -1,0 +1,71 @@
+􏶞object􏶟
+􏷲A list of nodes that complete a valid path to ground.􏷱
+􏷰
+These are produced by the graph and stored as part 
+of the overall path list returned to the user.
+􏷯
+􏷮Electrical_System􏷭
+􏷬Trevor Hickey􏷫
+􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
+􏷦"stdioLib.h"􏷥􏷢HASA: BOOL􏷡
+
+􏵺the maximum number of nodes a graph can hold􏵻
+􏵾max length of paths that lead to ground􏵿
+􏵼128􏵽
+
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐 to an empty 􏶐􏷏
+􏶠􏶐 will be in an invalid state until initialized􏶡
+􏶴
+    //the list starts empty
+    ptOutputs->m_nSize = 0;
+􏶳
+
+􏷘+􏷗􏷒Add􏷑
+􏷐Adds a node to the current path􏷏
+􏶠If the list is not full, this will add the node to the current end of the list and increment the size􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The new node to add.􏶿
+􏶴
+    //add the new node and increment the total count.
+    //the total count is used as an index, 
+    //so this will prepare the node for the next insertion.
+    //We also have a safety check to avoid out-of-bounds indexing
+    if (ptOutputs->m_nSize < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND)
+    {
+    ptOutputs->m_nPath[ptOutputs->m_nSize] = nNode;
+    ++ptOutputs->m_nSize;
+    }
+    else
+    {
+    perror("Too many nodes added to path");
+    }
+􏶳
+
+􏷘+􏷗􏷒Exists􏷑
+􏷐Checks to see if the node exists in the current path􏷏
+􏶠Useful for avoiding cycles when traversing the electrical graph.􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node to test the existence of.􏶿
+􏶾BOOL􏶽􏶼exists􏶻􏶺True if the node exists, and false if it does not􏶹
+􏶴
+  //linear search to check if node has already been added to list
+  //this functions gets called to avoid cycles when traversing the graph.
+  //Inefficient?  It might be better to set a 'HasVisted' bool for each node,
+  //but I don't think the paths are going to get so long that it will be a problem.
+  //what I'd really like though is an unordered set(hash table), but this is C.
+  size_t nIndex = 0;
+  for (; nIndex < ptOutputs->m_nSize; ++nIndex){
+    if (ptOutputs->m_nPath[nIndex] == nNode){
+      return TRUE;
+    }
+  }
+  return FALSE;
+􏶳
+
+􏶨A list of nodes that complete a valid path to ground.􏶧
+􏶦statically allocated to max a size􏶥
+􏶌observe􏶑􏶘-􏶙􏶮size_t[MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND]􏶭􏶬path􏶫
+
+􏶨the size of the path being stored inside of the array.􏶧
+􏶦the size will increment each time a node is added to the list􏶥
+􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬size􏶫

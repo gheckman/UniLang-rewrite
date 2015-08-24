@@ -1,0 +1,173 @@
+􏶞object􏶟
+􏷲
+A generic node type which represents an electrical component inside of an electrical graph.
+Components of an electrical graph that can be interconnected through use of a node.
+􏷱
+􏷰
+From a computer science perspective, a NodeT is the vertex of a graph.
+The 'JunctionT's that a NodeT stores can be looked at as edges. 
+The reason we are not naming things vertex/edge in our code, 
+is because the terms node/junction provide a better fit when describing an electrical circuit.
+
+For the most part, these terms are synonymous, 
+but we will choose the latter as it better fits the problem domain:
+
+Graph Term | Electrical Term
+-----------|-----------------
+Vertex     | Node
+Edge       | Junction 
+
+That being said, just about everything on the electrical circuit is a NodeT.  
+Even wires are NodeTs!  JunctionTs are simply the points between a wire and another electrical component.  
+
+The reason we have done this, is that it makes the implementation of
+bidirectional and unidirectional electrical flow, 
+a property of the junction and not a decision that a NodeT needs to make based on 
+the direction of incoming and outgoing electricity.
+
+This particularly shines when attaching a diode to another electrical component.
+We can specify a unidirectional path, and the graph will add a 
+flow-able junction point in, but a nonflowable junction point out.
+Semantically, the components will still be connected, 
+but we've handled flow direction without adding any logic to the nodes themselves.
+
+Detailed implementation:  
+
+() = junction
+
++-------+   <--- O+------+   <--- O+-----------+
+| Diode |         | Wire |         | Component |
++-------+O        +------+O --->   +-----------+
+
+Behaves like this when traversing:  
+[Diode] <-- Wire <--> Component
+􏷯
+􏷮Time􏷭 􏷮Date􏷭 􏷮Component􏷭
+􏷬Trevor Hickey􏷫
+􏷦"stddef"􏷥􏷢HASA: size_t􏷡
+􏷦"stdioLib"􏷥􏷢HASA: BOOL􏷡
+􏷦"NodeType"􏷥􏷢HASA: NodeTypeE􏷡
+􏷦"Junction"􏷥􏷢HASA: JunctionOutputsT􏷡
+
+􏵺pre-defined space restrictions􏵻
+􏵸the max number of characters that can make up a node's name􏵹
+􏵾max number of characters in node name􏵿
+􏵼64􏵽
+
+􏵺pre-defined space restrictions􏵻
+􏵸the max number of junctions that can be a part of a node􏵹
+􏵾max number of junctions in node􏵿
+􏵼10􏵽
+
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐􏷏
+􏶠􏶐 will be in an invalid state until initialized􏶡
+􏶜􏶝􏷆char*􏷅􏷄name􏷃􏷀the name of the node􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄id􏷃􏷀a unique id for the node􏶿
+􏶜c􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node (what kind of electrical component it is)􏶿
+􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the node􏶿
+􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the node allows current to pass through it or not􏶿
+􏶴
+  //copy over name
+  strncpy(ptOutputs->m_szName, szName, sizeof(ptOutputs->m_szName));
+  ptOutputs->m_szName[sizeof(ptOutputs->m_szName) - 1] = '\0';
+  
+  //copy over other values
+  ptOutputs->m_nId = nId;
+  ptOutputs->m_eType = eType;
+  ptOutputs->m_fResistance = fResistance;
+  ptOutputs->m_bHasFlow = bHasFlow;
+  
+  //set the initial junction count to 0
+  ptOutputs->m_nNumberOfJunctions = 0;
+  
+  //construct other values to zero
+  ptOutputs->m_fCurrent = 0;
+  ptOutputs->m_fVoltage = 0;
+􏶳
+
+􏷘+􏷗􏷒add junction􏷑
+􏷐Adds a junction to show that one node can pass current to another node􏷏
+􏶠
+A junction is not the node itself, but contains an id to the other node.
+The reason we use a node and junction instead of two nodes is to handle flow direction between the two nodes.
+The graph will most likely add a junction to the two different nodes on behalf of the user.
+􏶡
+􏶜c􏶝􏷆JunctionOutputsT􏷅􏷄junction􏷃􏷀the junction to add to the node􏶿
+􏶴
+  //add the new junction and increment the total count.
+  //the total count is used as an index, 
+  //so this prepares the node for the next insertion.
+  //we also have a safety check to avoid out-of-bounds indexing
+  if (ptOutputs->m_nNumberOfJunctions < MAX_NUMBER_OF_JUNCTIONS_IN_NODE)
+  {
+    ptOutputs->m_tJunctions[ptOutputs->m_nNumberOfJunctions] = tJunction;
+    ++ptOutputs->m_nNumberOfJunctions;
+  }
+  else
+  {
+    perror("Too many junctions added");
+  }
+􏶳
+
+
+
+􏶨The name of the node [intended for debugging]􏶧
+􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏶭􏶬name􏶫􏶪0􏶩
+
+􏶨A unique Id for the Node.  No node will ever have the same Id.􏶧
+􏶦Junctions will contain these Ids so we know how nodes are inter-connected.􏶥
+􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬id􏶫􏶪0􏶩
+
+􏶨Three electrical properties of a component in a circuit.􏶧
+􏶦
+Q: Can't we just provide two of these, and derive the 3rd using Ohms law when we need it?  
+A: We could, but due to possible changes in the implementation, it's not certain how these values may be applied.  
+
+For example:
+Maybe we give everything the same voltage and set the initial amp draw on some of the components.  
+Then we set the resistance on other components.
+This wouldn't give us accurate results, as we go to calculate other currents but perhaps it would be close enough.  
+On the other hand, we could set resistance on everything and give the power source an initial voltage.  
+We could then go through and provide the right amperages and voltage drops for all the components.
+  
+Either way,
+we'll just provide all 3 for ease of use-ability.
+Power can still be computed later (P = IV)
+􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬resistance􏶫􏶪0􏶩
+
+􏶨􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬current􏶫􏶪0􏶩
+
+􏶨􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩
+
+
+􏶨whether a node will allow electricity to flow through it.􏶧
+􏶦
+maybe a fuse pops.  maybe a relay is open.  maybe a bus in nonfunctional.  
+These are all reasons flow could be false.
+Note: This property has nothing to do with the direction of current flow.
+It is the junctions whose flow properties determine current direction.
+􏶥
+􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬has flow􏶫􏶪false􏶩
+
+
+􏶨What kind of electrical component the node actually is.􏶧
+􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮NodeTypeE􏶭􏶬type􏶫􏶪0􏶩
+
+
+􏶨Describes the routes in which electricity can flow out of this node and into another node.􏶧
+􏶦For the most part, all of these junctions will point to connected wires.􏶥
+􏶌observe􏶑􏶘-􏶙􏶮JunctionOutputsT[MAX_NUMBER_OF_JUNCTIONS_IN_NODE]􏶭􏶬junctions􏶫􏶪0􏶩
+
+􏶨􏶧
+􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬number of junctions􏶫􏶪0􏶩
+
+
+

@@ -1,0 +1,54 @@
+􏶞global􏶟
+􏷲Common functions relating to VxWorks time.􏷱
+􏷰
+Functions for delaying tasks in terms of millisecond.
+Functions for converting between ticks and milliseconds based on the clock rate.
+􏷯
+􏷮Time Utilities􏷭 􏷮Time􏷭 􏷮Utilities􏷭
+􏷬Trevor Hickey􏷫
+􏷤"TaskLib"􏷣􏷢USES: taskDelay()􏷡
+􏷤"sysLib"􏷣􏷢USES: sysClkRateGet()􏷡
+
+􏷒tick period in milliseconds􏷑
+􏷐Get the tick period of the system clock in terms of milliseconds.􏷏
+􏶠queries the clock rate using the VxWorks API􏶡
+􏶾float􏶽􏶼number of milliseconds per tick􏶻􏶺the tick period of the system clock in terms of milliseconds􏶹
+􏶴
+//take the number of ticks per second that the system clock will be rated at,
+//and convert the value to the duration of each tick in milliseconds.
+//example: A clock rate of 1,000 ticks per second, will create a
+//tick period of 1 millisecond.
+return 1.0 / sysClkRateGet() * 1000;
+􏶳
+
+􏷒milliseconds to ticks􏷑
+􏷐Convert a number of milliseconds into how many kernel ticks would occur in that time period.􏷏
+􏶠queries the clock rate using the VxWorks API􏶡
+􏶜c􏶝􏷆unsigned long􏷅􏷄number of milliseconds􏷃􏷀the amount of milliseconds to convert into clock ticks􏶿
+􏶾unsigned long􏶽􏶼number of ticks􏶻􏶺the number of clock ticks that will occur in the amount of milliseconds given􏶹
+􏶴
+//avoid division by zero
+if (TickPeriodInMilliseconds() != 0.0){
+  return (unsigned int)(nNumberOfMilliseconds / TickPeriodInMilliseconds());
+}
+return 0;
+􏶳
+
+􏷒ticks to milliseconds􏷑
+􏷐Convert a number of ticks into how many milliseconds it would take for all the ticks to occur.􏷏
+􏶠queries the clock rate using the VxWorks API􏶡
+􏶜c􏶝􏷆unsigned long􏷅􏷄number of ticks􏷃􏷀the amount of clock ticks to convert into milliseconds􏶿
+􏶾unsigned int􏶽􏶼number of milliseconds􏶻􏶺the number of milliseconds that will occur in the amount of clock ticks given􏶹
+􏶴
+return TickPeriodInMilliseconds() * nNumberOfTicks;
+􏶳
+
+􏷒delay task number of milliseconds􏷑
+􏷐Delay a task a certain number of milliseconds.􏷏
+􏶠By querying the VxWorks API for the clock rate, we can decide what value to give taskDelay based on the passed in value.􏶡
+􏶜c􏶝􏷆int􏷅􏷄number of milliseconds to delay􏷃􏷀The number of milliseconds to delay the current task by.􏶿
+􏶴
+//delay for the calculated number of ticks
+//we convert the milliseconds into the appropriate amount of tick time
+taskDelay(MillisecondsToTicks(nNumberOfMillisecondsToDelay));
+􏶳
