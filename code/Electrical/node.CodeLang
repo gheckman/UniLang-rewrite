@@ -57,21 +57,20 @@ Behaves like this when traversing:
 􏵺pre-defined space restrictions􏵻
 􏵸the max number of junctions that can be a part of a node􏵹
 􏵾max number of junctions in node􏵿
-􏵼10􏵽
+􏵼16􏵽
 
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
 􏶠􏶐 will be in an invalid state until initialized􏶡
-􏶜􏶝􏷆char*􏷅􏷄name􏷃􏷀the name of the node􏶿
+􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the node􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄id􏷃􏷀a unique id for the node􏶿
 􏶜c􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node (what kind of electrical component it is)􏶿
 􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the node􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the node allows current to pass through it or not􏶿
 􏶴
   //copy over name
-  strncpy(ptOutputs->m_szName, szName, sizeof(ptOutputs->m_szName));
-  ptOutputs->m_szName[sizeof(ptOutputs->m_szName) - 1] = '\0';
+  strcpy(ptOutputs->m_szName, szName);
   
   //copy over other values
   ptOutputs->m_nId = nId;

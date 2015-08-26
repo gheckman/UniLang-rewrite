@@ -32,7 +32,7 @@
 􏷘+􏷗􏷒add node􏷑
 􏷐Adds a specified node to the graph.􏷏
 􏶠The user can construct a node into the graph, and receive back a unique ID to query for it later.􏶡
-􏶜􏶝􏷆char*􏷅􏷄name􏷃􏷀the name of the node being added􏶿
+􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the node being added􏶿
 􏶜c􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node that is being added􏶿
 􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistence of the node being added􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the node allows electricity to flow through it.􏶿
@@ -243,14 +243,14 @@ The order of NodeX and NodeY IS NOT important.􏶡
   //add the bidirectional junctions for the nodes
   JunctionOutputsT tJunctionX, tJunctionY;
   NodeInputsT tInputs = {0};
-  InitializeJunction(&tJunctionX,nWireId,TRUE);
-  InitializeJunction(&tJunctionY,nWireId,TRUE);
+  InitializeJunction(&tJunctionX,nNodeX,TRUE);
+  InitializeJunction(&tJunctionY,nNodeY,TRUE);
   
   //add the junctions to the nodes
   tInputs.m_tJunction = tJunctionX;
-  UpdateNode(&ptOutputs->m_tLocals.m_tNodes[nNodeX],&tInputs);
+  UpdateNode(&ptOutputs->m_tLocals.m_tNodes[nWireId],&tInputs);
   tInputs.m_tJunction = tJunctionY;
-  UpdateNode(&ptOutputs->m_tLocals.m_tNodes[nNodeY],&tInputs);
+  UpdateNode(&ptOutputs->m_tLocals.m_tNodes[nWireId],&tInputs);
 􏶳
 
 􏷘-􏷗􏷒recursive gather of paths􏷑
@@ -262,10 +262,12 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏶜􏶝􏷆PathsOutputsT *const􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
 􏶴
 
-  //check if node already exists in path
-  BOOL bAlreadyExistsInPath;
+  //used for input parameters to API methods
   PathInputsT tPathInputs = {0};
   PathsInputsT tPathsInputs = {0};
+  
+  //check if node already exists in path
+  BOOL bAlreadyExistsInPath;
   tPathInputs.m_bExists = TRUE;
   tPathInputs.m_nNode = nNode;
   UpdatePath(ptSeen,&tPathInputs);
@@ -280,10 +282,14 @@ The order of NodeX and NodeY IS NOT important.􏶡
     UpdatePath(ptSeen,&tPathInputs);
     UpdatePath(ptList,&tPathInputs);
     
+    //continue traversing if the node is not the common ground
     if (ptOutputs->m_tLocals.m_tNodes[nNode].m_eType != NODETYPE_GROUND)
     {
       TraverseNeighbors(ptOutputs,nNode,ptSeen,ptList,ptPathList);
     }
+    
+    //if the node is a common ground, we can assume that we've made a successful route through the circuit.
+    //since this a sucessful route, we will add it to the total list of paths that we are collecting.
     else
     {
       //add the path to the list of paths
@@ -346,7 +352,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
     //if we haven't seen the node before
     if (!ptSeen->m_bExists)
     {
-      //and if junction has flow
+      //and if the junction allows flow
       if(ptOutputs->m_tLocals.m_tNodes[nNode].m_tJunctions[nIndex].m_bHasFlow)
       {
         //add the node as it can be flowed through, and has not been visited yet
