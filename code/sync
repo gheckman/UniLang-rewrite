@@ -106,14 +106,22 @@ Transfer-Object "date_time" "Components/Time" "Components/Time"
 cd ..;
 
 #Electrical related
-cd Electrical;
-Transfer-Object "junction" "Components/Electrical/Generic" "Components/Electrical"
-Transfer-Object "node" "Components/Electrical/Generic" "Components/Electrical"
+cd Electrical/generic;
+Transfer-Object "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
+Transfer-Object "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
 Transfer-Global "node_type" "Components/Electrical/Generic"
-Transfer-Object "electrical_graph" "Components/Electrical/Generic" "Components/Electrical"
-Transfer-Object "path" "Components/Electrical/Generic" "Components/Electrical"
-Transfer-Object "paths" "Components/Electrical/Generic" "Components/Electrical"
-cd ..;
+Transfer-Object "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+Transfer-Object "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
+Transfer-Object "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
+cd ../../;
+
+#Electrical related
+cd Electrical/specific;
+Transfer-Object "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+cd ../../;
 
 #Other stuff
 cd Other;
