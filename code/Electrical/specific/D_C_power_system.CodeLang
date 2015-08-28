@@ -1,0 +1,179 @@
+􏶞object􏶟
+􏷲The entire UH72A DC power system.􏷱
+􏷰
+Contains both the DC power system circuit represented through a generic electrical graph,
+as well as a collection of node IDs to target any node on the graph directly.􏷯
+􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
+􏷬Trevor Hickey􏷫
+􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
+􏷦"ElectricalGraph.h"􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷦"AfterJunctionBox.h"􏷥 􏷢HASA: AfterJunctionBoxOutputsT􏷡
+􏷦"BatteryBox.h"􏷥       􏷢HASA: BatteryBoxOutputsT􏷡
+􏷦"DiodeBox.h"􏷥         􏷢HASA: DiodeBoxOutputsT􏷡
+􏷦"DistributionBox.h"􏷥  􏷢HASA: DistributionBoxOutputsT􏷡
+􏷤"string.h"􏷣􏷢USES: strcpy()􏷡
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐􏷏
+􏶠􏶐 will be in an invalid state until initialized.
+Initializing a 􏶐 will construct the entire graph, and provide valid ideas to query any node on the graph
+Internally, it uses a generic electrical graph data structure to build a specific graph for the UH72A.
+Portions of the graph are grouped as boxes (as seen in the DC System - Block Diagram)
+The DC System block diagram can be found on page 343 of the UH-72A Training Manual)
+All of the boxes contain electrical component ids 
+which can be used to query the graph and get back the actual node.
+􏶡
+􏶴
+  //Create an empty generic electrical graph;
+  InitializeElectricalGraph(&ptOutputs->m_tGraph);
+  
+  //add the battery box portion to the electrical graph data structure,
+  //and get back ids for all of the components in the battery box
+  InitializeBatteryBox(&ptOutputs->m_tBatteryBox,&ptOutputs->m_tGraph);
+  
+  //add the diode box portions to the electrical graph data structure,
+  //and get back ids for all of the components in the diode boxes
+  InitializeDiodeBox(&ptOutputs->m_tDiodeBoxLeft,&ptOutputs->m_tGraph);
+  InitializeDiodeBox(&ptOutputs->m_tDiodeBoxRight,&ptOutputs->m_tGraph);
+  
+  //add the distribution box portions to the electrical graph data structure,
+  //and get back ids for all of the components in the distribution boxes
+  InitializeDistributionBox(&ptOutputs->m_tDistributionBoxLeft,&ptOutputs->m_tGraph);
+  InitializeDistributionBox(&ptOutputs->m_tDistributionBoxRight,&ptOutputs->m_tGraph);
+  
+  //add the after junction box portions to the electrical graph data structure,
+  //and get back ids for all of the components in the after junction boxes
+  InitializeAfterJunctionBox(&ptOutputs->m_tAfterJunctionBoxLeft,&ptOutputs->m_tGraph);
+  InitializeAfterJunctionBox(&ptOutputs->m_tAfterJunctionBoxRight,&ptOutputs->m_tGraph);
+  
+  //connect all of the boxes together
+  //i.e. apply connections that aren't visible inside any of the individual boxes
+  //ConnectBoxesTogether(ptOutputs);
+􏶳
+
+􏷘-􏷗􏷒connect boxes together􏷑
+􏷐After all of the electrical boxes ares created,
+this stage adds the remaining wires to connect components in the boxes together􏷏
+􏶴
+  //a junction point used to connect boxes
+  size_t nJunction;
+  ElectricalGraphInputsT tInputs = {0};
+  tInputs.m_bAddNode = TRUE;
+  
+  //add the junction to graph
+  strcpy(tInputs.m_szName, "junction");
+  tInputs.m_eType = NODETYPE_JUNCTION;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  nJunction = ptOutputs->m_tGraph.m_nId;
+  
+  tInputs.m_bAddNode = FALSE;
+  tInputs.m_bAddWire = TRUE;
+  
+  //connect nodes from other boxes together
+  
+  //connects battery bus to diode boxes
+  tInputs.m_nNodeX = ptOutputs->m_tBatteryBox.m_nFuse1;
+  tInputs.m_nNodeY = ptOutputs->m_tDiodeBoxLeft.m_nDiode3;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  
+  tInputs.m_nNodeX = ptOutputs->m_tBatteryBox.m_nFuse3;
+  tInputs.m_nNodeY = ptOutputs->m_tDiodeBoxLeft.m_nDiode3;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  
+  //junction connects distribution boxes and battery box
+  tInputs.m_nNodeX = nJunction;
+  tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxLeft.m_nBusTieRelay;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  
+  tInputs.m_nNodeX = nJunction;
+  tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxRight.m_nBusTieRelay;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  
+  tInputs.m_nNodeX = nJunction;
+  tInputs.m_nNodeY = ptOutputs->m_tBatteryBox.m_nFuse2;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  
+  //connects diode boxes with distribution boxes
+  tInputs.m_nNodeX = ptOutputs->m_tDiodeBoxLeft.m_nDiode1;
+  tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxLeft.m_nFuse3;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    
+  tInputs.m_nNodeX = ptOutputs->m_tDiodeBoxLeft.m_nDiode2;
+  tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxRight.m_nFuse4;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    
+  tInputs.m_nNodeX = ptOutputs->m_tDiodeBoxRight.m_nDiode1;
+  tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxRight.m_nFuse3;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    
+  tInputs.m_nNodeX = ptOutputs->m_tDiodeBoxRight.m_nDiode2;
+  tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxLeft.m_nFuse4;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  
+  //connects distribution boxes with after junction boxes
+  tInputs.m_nNodeX = ptOutputs->m_tDistributionBoxLeft.m_nMainBus;
+  tInputs.m_nNodeY = ptOutputs->m_tAfterJunctionBoxLeft.m_nGeneratorBus;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  
+  tInputs.m_nNodeX = ptOutputs->m_tDistributionBoxRight.m_nMainBus;
+  tInputs.m_nNodeY = ptOutputs->m_tAfterJunctionBoxRight.m_nGeneratorBus;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+
+􏶳
+
+􏶨The UH72A Electrical System represented in a generic electrical graph data structure.􏶧
+􏶦Using the Ids in the electrical boxes below,
+individual nodes on the electrical graph may be queried directly.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮ElectricalGraphOutputsT􏶭􏶬graph􏶫􏶪0􏶩
+
+􏶨An electrical box of the UH72A 􏶏􏶧
+􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮BatteryBoxOutputsT􏶭􏶬battery box􏶫􏶪0􏶩
+
+􏶨An electrical box of the UH72A 􏶏􏶧
+􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮DiodeBoxOutputsT􏶭􏶬diode box left􏶫􏶪0􏶩
+
+􏶨An electrical box of the UH72A 􏶏􏶧
+􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮DiodeBoxOutputsT􏶭􏶬diode box right􏶫􏶪0􏶩
+
+􏶨An electrical box of the UH72A 􏶏􏶧
+􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮DistributionBoxOutputsT􏶭􏶬distribution box left􏶫􏶪0􏶩
+
+􏶨An electrical box of the UH72A 􏶏􏶧
+􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮DistributionBoxOutputsT􏶭􏶬distribution box right􏶫􏶪0􏶩
+
+􏶨An electrical box of the UH72A 􏶏􏶧
+􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮AfterJunctionBoxOutputsT􏶭􏶬after junction box left􏶫􏶪0􏶩
+
+􏶨An electrical box of the UH72A 􏶏􏶧
+􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮AfterJunctionBoxOutputsT􏶭􏶬after junction box right􏶫􏶪0􏶩

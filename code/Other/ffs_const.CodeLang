@@ -31,5 +31,6 @@
 􏶰ce􏶯 􏶮float􏶭       􏶬min per hour􏶫             􏶪60􏶩
 􏶰ce􏶯 􏶮float􏶭       􏶬lbs to kgs􏶫               􏶪0.45359237􏶩
 􏶰ce􏶯 􏶮float􏶭       􏶬psi to bar􏶫               􏶪0.0689475729􏶩
+􏶰ce􏶯 􏶮float􏶭       􏶬bar to psi􏶫               􏶪14.503773􏶩
 􏶰ce􏶯 􏶮float􏶭       􏶬e􏶫                        􏶪2.71828􏶩
 

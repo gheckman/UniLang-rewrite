@@ -334,8 +334,9 @@ The order of NodeX and NodeY IS NOT important.􏶡
   PathOutputsT tUnseenNodes;
   size_t nIndex = 0;
   
-  //used to call Add/Exists on path
+  //set the 'Add' method trigger
   PathInputsT tPathInputs = {0};
+  tPathInputs.m_bAdd = TRUE;
   
   //create a list of unseen neighbors that we will build up as we discover them
   InitializePath(&tUnseenNodes);
@@ -344,29 +345,50 @@ The order of NodeX and NodeY IS NOT important.􏶡
   for (;nIndex < ptOutputs->m_tLocals.m_tNodes[nNode].m_nNumberOfJunctions; ++nIndex)
   {
     
-    //check if node already exists in path
-    tPathInputs.m_bExists = TRUE;
-    tPathInputs.m_nNode = ptOutputs->m_tLocals.m_tNodes[nNode].m_tJunctions[nIndex].m_nConnectionId;
-    UpdatePath(ptSeen,&tPathInputs);
-    
-    //if we haven't seen the node before
-    if (!ptSeen->m_bExists)
+    //decide whether we have an unseen neighbor worth traversing
+    if(IsTraversableUnseenNeighbor(ptOutputs,nNode,nIndex,ptSeen))
     {
-      //and if the junction allows flow
-      if(ptOutputs->m_tLocals.m_tNodes[nNode].m_tJunctions[nIndex].m_bHasFlow)
-      {
-        //add the node as it can be flowed through, and has not been visited yet
-        tPathInputs.m_bExists = FALSE;
-        tPathInputs.m_bAdd = TRUE;
-        tPathInputs.m_nNode = ptOutputs->m_tLocals.m_tNodes[nNode].m_tJunctions[nIndex].m_nConnectionId;
-        UpdatePath(&tUnseenNodes,&tPathInputs);
-        tPathInputs.m_bAdd = FALSE;
-      }
+      //add the node as it can be flowed through, and has not been visited yet
+      tPathInputs.m_nNode = ptOutputs->m_tLocals.m_tNodes[nNode].m_tJunctions[nIndex].m_nConnectionId;
+      UpdatePath(&tUnseenNodes,&tPathInputs);
     }
     
   }
   
   return tUnseenNodes;
+􏶳
+
+􏷘-􏷗􏷒is traversable unseen neighbor􏷑
+􏷐Decides whether a neighbor node is valid to visit during a path traversal.􏷏
+􏶠It decides this by checking to see if the neighbor has already been seen(to avoid cycles), 
+and whether or not the junction between them is 'flowable'.􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node whose neighbors are being checked against.􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄junction index􏷃􏷀The neighbor of the first node (represented by the the junction's index).􏶿
+􏶜􏶝􏷆PathOutputsT *const􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen.􏶿
+􏶾BOOL􏶽􏶼is traversable unseen neighbor􏶻􏶺True if the node has not been seen yet, and due to it's properties, is also traversable; false if one or both of these stipulations is not true.􏶹
+􏶴
+  //assume the neighbor is not worth traversing down until proven otherwise
+  BOOL bValidNeighborToTraverse = FALSE;
+  
+  //it's proven otherwise, if we have not yet seen the neighbor node id
+  //and if the junction that points to the neighbor node id allows flow.
+  
+  //check if node already exists in path
+  PathInputsT tPathInputs = {0};
+  tPathInputs.m_bExists = TRUE;
+  tPathInputs.m_nNode = ptOutputs->m_tLocals.m_tNodes[nNode].m_tJunctions[nJunctionIndex].m_nConnectionId;
+  UpdatePath(ptSeen,&tPathInputs);
+  􏷄node􏷃
+  //if we haven't seen the node before
+  if (!ptSeen->m_bExists){
+    
+    //and if the junction allows flow
+    if(ptOutputs->m_tLocals.m_tNodes[nNode].m_tJunctions[nJunctionIndex].m_bHasFlow){
+      bValidNeighborToTraverse = TRUE;
+    }
+  }
+  
+  return bValidNeighborToTraverse;
 􏶳
 
 􏷘-􏷗􏷒can be traveled through􏷑

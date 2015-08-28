@@ -48,6 +48,7 @@ Behaves like this when traversing:
 􏷦"stdioLib"􏷥􏷢HASA: BOOL􏷡
 􏷦"NodeType"􏷥􏷢HASA: NodeTypeE􏷡
 􏷦"Junction"􏷥􏷢HASA: JunctionOutputsT􏷡
+􏷤"string.h"􏷣􏷢USES: strcpy()􏷡
 
 􏵺pre-defined space restrictions􏵻
 􏵸the max number of characters that can make up a node's name􏵹

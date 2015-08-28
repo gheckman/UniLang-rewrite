@@ -1,5 +1,134 @@
 􏶞object􏶟
-􏷲An electrical graph that can construct custom circuit configurations􏷱
-􏷰Intended to be generic enough to be used for a variety of electrical system use cases.􏷯
-􏷮Electrical_System􏷭
+􏷲A 􏶏 specific to the UH72A DC power system.􏷱
+􏷰Stores a collection of 􏶏 node IDs and builds them into the generic electrical graph.􏷯
+􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
 􏷬Trevor Hickey􏷫
+􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
+􏷦"ElectricalGraph.h"􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤"string.h"􏷣􏷢USES: strcpy()􏷡
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐􏷏
+􏶠􏶐 will be in an invalid state until initialized.
+Initializing a 􏶐 will construct all of its nodes into the generic electrical graph.
+It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶴
+  //create all the internal nodes inside the graph data structure
+  CreateNodes(ptOutputs,ptGraph);
+  
+  //connect these newly created nodes
+  CreateWires(ptOutputs,ptGraph);
+  
+  //apply any nodes to ground that should be
+  ApplyNodesToGround(ptOutputs,ptGraph);
+􏶳
+
+􏷘-􏷗􏷒create nodes􏷑
+􏷐Constructs all of the electrical components into the generic electrical graph data structure.􏷏
+􏶠This will give all of the node a valid id for querying the graph later.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶴
+  //create all of the vertexes that are part of the 􏶐
+  //the essential bus is technically outside the 􏶐,
+  //but we include it here for conceptual organization
+  ElectricalGraphInputsT tInputs = {0};
+  tInputs.m_bAddNode = TRUE;
+  
+  //add node to graph
+  strcpy(tInputs.m_szName, "diode 1");
+  tInputs.m_eType = NODETYPE_DIODE;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(ptGraph,&tInputs);
+  ptOutputs->m_nDiode1 = ptGraph->m_nId;
+  
+  //add node to graph
+  strcpy(tInputs.m_szName, "diode 2");
+  tInputs.m_eType = NODETYPE_DIODE;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(ptGraph,&tInputs);
+  ptOutputs->m_nDiode2 = ptGraph->m_nId;
+  
+  //add node to graph
+  strcpy(tInputs.m_szName, "diode 3");
+  tInputs.m_eType = NODETYPE_DIODE;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(ptGraph,&tInputs);
+  ptOutputs->m_nDiode3 = ptGraph->m_nId;
+  
+  //add node to graph
+  strcpy(tInputs.m_szName, "essential bus");
+  tInputs.m_eType = NODETYPE_BUS;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(ptGraph,&tInputs);
+  ptOutputs->m_nEssentialBus = ptGraph->m_nId;
+􏶳
+
+􏷘-􏷗􏷒create wires􏷑
+􏷐Connects all of the necessary 􏶐 nodes together.􏷏
+􏶠The nodes being connected will need to be created first.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
+􏶴
+  //connect the related components
+  ElectricalGraphInputsT tInputs = {0};
+  tInputs.m_bAddUnidirectionalWire = TRUE;
+  
+  //connect two nodes together
+  tInputs.m_nNodeX = ptOutputs->m_nDiode1;
+  tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(ptGraph,&tInputs);
+  
+  //connect two nodes together
+  tInputs.m_nNodeX = ptOutputs->m_nDiode2;
+  tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(ptGraph,&tInputs);
+  
+  //connect two nodes together
+  tInputs.m_nNodeX = ptOutputs->m_nDiode3;
+  tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
+  tInputs.m_fResistance = 0;
+  tInputs.m_bHasFlow = TRUE;
+  UpdateElectricalGraph(ptGraph,&tInputs);
+􏶳
+
+􏷘-􏷗􏷒apply nodes to ground􏷑
+􏷐Attach particular 􏶐 nodes to common ground.􏷏
+􏶠The nodes being connected to ground will need to be created first.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
+􏶴
+  //apply any nodes to ground that should be
+  ElectricalGraphInputsT tInputs = {0};
+  tInputs.m_bConnectNodeToCommonGround = TRUE;
+  
+  //connect node to common ground
+  tInputs.m_nNode = ptOutputs->m_nEssentialBus;
+  UpdateElectricalGraph(ptGraph,&tInputs);
+􏶳
+
+􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and recieve back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬diode 1􏶫􏶪0􏶩
+
+􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and recieve back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬diode 2􏶫􏶪0􏶩
+
+􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and recieve back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬diode 3􏶫􏶪0􏶩
+
+􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and recieve back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬essential bus􏶫􏶪0􏶩
