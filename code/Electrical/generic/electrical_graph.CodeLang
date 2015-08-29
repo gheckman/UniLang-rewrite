@@ -4,19 +4,15 @@
 􏷮Electrical_System􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
+􏷦"stddef.h"􏷥  􏷢HASA: size_t􏷡
 􏷦"stdioLib.h"􏷥􏷢HASA: BOOL􏷡
-􏷦"Node.h"􏷥􏷢HASA: NodeOutputsT􏷡
-􏷦"Paths.h"􏷥􏷢HASA: PathsOutputsT􏷡
+􏷦"Node.h"􏷥    􏷢HASA: NodeOutputsT􏷡
+􏷦"Paths.h"􏷥   􏷢HASA: PathsOutputsT􏷡
 􏷤"NodeType.h"􏷣􏷢USES: NodeTypeE􏷡
-􏷤"stdio.h"􏷣􏷢USES: perror()􏷡
+􏷤"stdio.h"􏷣   􏷢USES: perror()􏷡
 
 􏵺the maximum number of nodes a graph can hold􏵻
-􏵾max number of electrical nodes􏵿
-􏵼256􏵽
-
-
-
+􏵾max number of electrical nodes􏵿􏵼256􏵽
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
@@ -261,7 +257,6 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏶜􏶝􏷆PathOutputsT *const􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
 􏶜􏶝􏷆PathsOutputsT *const􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
 􏶴
-
   //used for input parameters to API methods
   PathInputsT tPathInputs = {0};
   PathsInputsT tPathsInputs = {0};
@@ -319,7 +314,6 @@ The order of NodeX and NodeY IS NOT important.􏶡
   {
     RecursiveGatherOfPaths(ptOutputs,tUnseenNeighbors.m_nPath[nIndex],ptSeen,ptList,ptPathList);
   }
-  
 􏶳
 
 􏷘-􏷗􏷒get unseen neighbors􏷑
@@ -378,7 +372,7 @@ and whether or not the junction between them is 'flowable'.􏶡
   tPathInputs.m_bExists = TRUE;
   tPathInputs.m_nNode = ptOutputs->m_tLocals.m_tNodes[nNode].m_tJunctions[nJunctionIndex].m_nConnectionId;
   UpdatePath(ptSeen,&tPathInputs);
-  􏷄node􏷃
+
   //if we haven't seen the node before
   if (!ptSeen->m_bExists){
     
