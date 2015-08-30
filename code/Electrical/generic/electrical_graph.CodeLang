@@ -389,7 +389,7 @@ and whether or not the junction between them is 'flowable'.􏶡
 􏷐Evaluates whether a node can be traversed through or not.􏷏
 􏶠Used to avoid gathering nodes that would lead to cycles.􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node being checked to see if current can flow through it.􏶿
-􏶾BOOL􏶽􏶼can be travelled 􏵱 if current can flow through the given node of the given graph; 􏵰 if it cannot.􏶹
+􏶾BOOL􏶽􏶼can be travelled through􏶻􏶺􏵱 if current can flow through the given node of the given graph; 􏵰 if it cannot.􏶹
 􏶴
   //check if a component has flow using a node id
   return GetCircuitComponent(ptOutputs,nNode)->m_bHasFlow;
