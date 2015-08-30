@@ -6,8 +6,8 @@ Function for looking up how many days are in a certain month.
 􏷯
 􏷮Date Utilities􏷭 􏷮Date􏷭 􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
-􏷦"Month"􏷥􏷢USES: MonthE􏷡
-􏷦"stdioLib.h"􏷥􏷢USES: BOOL􏷡
+􏷦Month􏷥􏷢USES: MonthE􏷡
+􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 
 
 􏶰ce􏶯 􏶮unsigned int􏶭 􏶬number of milliseconds in a day􏶫􏶪86400000􏶩
@@ -41,7 +41,7 @@ return DEFAULT_NUMBER_OF_DAYS[eMonth - 1];
 􏷐Determine whether the given year is a leap year􏷏
 􏶠An equation is applied that will work on any year to determine whether it is a leap year or not􏶡
 􏶜c􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year in which to look up the number of days in the month􏶿
-􏶾BOOL􏶽􏶼is leap year􏶻􏶺true if the passed in year is a leap year; false if it is not􏶹
+􏶾BOOL􏶽􏶼is leap year􏶻􏶺􏵱 if the passed in year is a leap year; 􏵰 if it is not􏶹
 􏶴
 //a well known algorithm for determining if a given year is a leap year
 //https://en.wikipedia.org/wiki/Leap_year#Algorithm

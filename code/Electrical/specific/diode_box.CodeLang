@@ -3,9 +3,10 @@
 􏷰Stores a collection of 􏶏 node IDs and builds them into the generic electrical graph.􏷯
 􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
 􏷬Trevor Hickey􏷫
-􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
-􏷦"ElectricalGraph.h"􏷥􏷢USES: ElectricalGraphOutputsT􏷡
-􏷤"string.h"􏷣􏷢USES: strcpy()􏷡
+
+􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤string􏷣􏷢USES: strcpy()􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
@@ -33,13 +34,13 @@ It will store the IDs given back by the graph so that they may be queried later 
   //the essential bus is technically outside the 􏶐,
   //but we include it here for conceptual organization
   ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddNode = TRUE;
+  tInputs.m_bAddNode = 􏵱;
   
   //add node to graph
   strcpy(tInputs.m_szName, "diode 1");
   tInputs.m_eType = NODETYPE_DIODE;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nDiode1 = ptGraph->m_nId;
   
@@ -47,7 +48,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "diode 2");
   tInputs.m_eType = NODETYPE_DIODE;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nDiode2 = ptGraph->m_nId;
   
@@ -55,7 +56,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "diode 3");
   tInputs.m_eType = NODETYPE_DIODE;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nDiode3 = ptGraph->m_nId;
   
@@ -63,7 +64,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "essential bus");
   tInputs.m_eType = NODETYPE_BUS;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nEssentialBus = ptGraph->m_nId;
 􏶳
@@ -75,27 +76,27 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶴
   //connect the related components
   ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddUnidirectionalWire = TRUE;
+  tInputs.m_bAddUnidirectionalWire = 􏵱;
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nDiode1;
   tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nDiode2;
   tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nDiode3;
   tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
 􏶳
 
@@ -106,7 +107,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶴
   //apply any nodes to ground that should be
   ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bConnectNodeToCommonGround = TRUE;
+  tInputs.m_bConnectNodeToCommonGround = 􏵱;
   
   //connect node to common ground
   tInputs.m_nNode = ptOutputs->m_nEssentialBus;

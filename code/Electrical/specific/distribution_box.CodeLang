@@ -3,9 +3,10 @@
 􏷰Stores a collection of 􏶏 node IDs and builds them into the generic electrical graph.􏷯
 􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
 􏷬Trevor Hickey􏷫
-􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
-􏷦"ElectricalGraph.h"􏷥􏷢USES: ElectricalGraphOutputsT􏷡
-􏷤"string.h"􏷣􏷢USES: strcpy()􏷡
+
+􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤string􏷣􏷢USES: strcpy()􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
@@ -33,13 +34,13 @@ It will store the IDs given back by the graph so that they may be queried later 
   //the essential bus is technically outside the 􏶐,
   //but we include it here for conceptual organization
   ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddNode = TRUE;
+  tInputs.m_bAddNode = 􏵱;
   
   //add node to graph
   strcpy(tInputs.m_szName, "main bus");
   tInputs.m_eType = NODETYPE_BUS;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nMainBus = ptGraph->m_nId;
   
@@ -47,7 +48,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "fuse 1");
   tInputs.m_eType = NODETYPE_FUSE;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nFuse1 = ptGraph->m_nId;
   
@@ -55,7 +56,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "fuse 2");
   tInputs.m_eType = NODETYPE_FUSE;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nFuse2 = ptGraph->m_nId;
   
@@ -63,7 +64,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "fuse 3");
   tInputs.m_eType = NODETYPE_FUSE;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nFuse3 = ptGraph->m_nId;
   
@@ -71,7 +72,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "fuse 4");
   tInputs.m_eType = NODETYPE_FUSE;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nFuse4 = ptGraph->m_nId;
   
@@ -79,7 +80,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "nonessential bus relay");
   tInputs.m_eType = NODETYPE_RELAY;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = FALSE;
+  tInputs.m_bHasFlow = 􏵰;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nNonessentialBusRelay = ptGraph->m_nId;
   
@@ -87,7 +88,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "shed bus relay");
   tInputs.m_eType = NODETYPE_RELAY;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = FALSE;
+  tInputs.m_bHasFlow = 􏵰;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nShedBusRelay = ptGraph->m_nId;
   
@@ -95,7 +96,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "bus tie relay");
   tInputs.m_eType = NODETYPE_RELAY;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = FALSE;
+  tInputs.m_bHasFlow = 􏵰;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nBusTieRelay = ptGraph->m_nId;
   
@@ -103,7 +104,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "nonessential bus");
   tInputs.m_eType = NODETYPE_BUS;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nNonessentialBus = ptGraph->m_nId;
   
@@ -111,7 +112,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   strcpy(tInputs.m_szName, "shed bus");
   tInputs.m_eType = NODETYPE_BUS;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nShedBus = ptGraph->m_nId;
 􏶳
@@ -123,69 +124,69 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶴
   //connect the related components
   ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddWire = TRUE;
+  tInputs.m_bAddWire = 􏵱;
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nMainBus;
   tInputs.m_nNodeY = ptOutputs->m_nFuse1;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nMainBus;
   tInputs.m_nNodeY = ptOutputs->m_nFuse2;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nMainBus;
   tInputs.m_nNodeY = ptOutputs->m_nFuse3;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nMainBus;
   tInputs.m_nNodeY = ptOutputs->m_nFuse4;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nMainBus;
   tInputs.m_nNodeY = ptOutputs->m_nBusTieRelay;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nFuse1;
   tInputs.m_nNodeY = ptOutputs->m_nNonessentialBusRelay;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nFuse2;
   tInputs.m_nNodeY = ptOutputs->m_nShedBusRelay;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nNonessentialBusRelay;
   tInputs.m_nNodeY = ptOutputs->m_nNonessentialBus;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
   //connect two nodes together
   tInputs.m_nNodeX = ptOutputs->m_nShedBusRelay;
   tInputs.m_nNodeY = ptOutputs->m_nShedBus;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   
 􏶳
@@ -197,7 +198,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶴
   //apply any nodes to ground that should be
   ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bConnectNodeToCommonGround = TRUE;
+  tInputs.m_bConnectNodeToCommonGround = 􏵱;
   
   //connect node to common ground
   tInputs.m_nNode = ptOutputs->m_nShedBus;

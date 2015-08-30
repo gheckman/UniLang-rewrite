@@ -1,13 +1,12 @@
 􏶞object􏶟
 􏷲A list of nodes that complete a valid path to ground.􏷱
-􏷰
-These are produced by the graph and stored as part 
-of the overall path list returned to the user.
-􏷯
+􏷰These are produced by the graph and stored as part 
+of the overall path list returned to the user.􏷯
 􏷮Electrical_System􏷭
 􏷬Trevor Hickey􏷫
-􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
-􏷦"stdioLib.h"􏷥􏷢HASA: BOOL􏷡
+
+􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
 
 􏵺the maximum number of nodes a graph can hold􏵻
 􏵾max length of paths that lead to ground􏵿
@@ -46,7 +45,7 @@ of the overall path list returned to the user.
 􏷐Checks to see if the node exists in the current path􏷏
 􏶠Useful for avoiding cycles when traversing the electrical graph.􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node to test the existence of.􏶿
-􏶾BOOL􏶽􏶼exists􏶻􏶺True if the node exists, and false if it does not􏶹
+􏶾BOOL􏶽􏶼exists􏶻􏶺􏵱 if the node exists, and 􏵰 if it does not􏶹
 􏶴
   //linear search to check if node has already been added to list
   //this functions gets called to avoid cycles when traversing the graph.
@@ -56,10 +55,10 @@ of the overall path list returned to the user.
   size_t nIndex = 0;
   for (; nIndex < ptOutputs->m_nSize; ++nIndex){
     if (ptOutputs->m_nPath[nIndex] == nNode){
-      return TRUE;
+      return 􏵱;
     }
   }
-  return FALSE;
+  return 􏵰;
 􏶳
 
 􏶨A list of nodes that complete a valid path to ground.􏶧

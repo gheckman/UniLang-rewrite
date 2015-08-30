@@ -1,10 +1,7 @@
 􏶞object􏶟
-􏷲
-A generic node type which represents an electrical component inside of an electrical graph.
-Components of an electrical graph that can be interconnected through use of a node.
-􏷱
-􏷰
-From a computer science perspective, a NodeT is the vertex of a graph.
+􏷲A generic node type which represents an electrical component inside of an electrical graph.
+Components of an electrical graph that can be interconnected through use of a node.􏷱
+􏷰From a computer science perspective, a NodeT is the vertex of a graph.
 The 'JunctionT's that a NodeT stores can be looked at as edges. 
 The reason we are not naming things vertex/edge in our code, 
 is because the terms node/junction provide a better fit when describing an electrical circuit.
@@ -40,15 +37,15 @@ Detailed implementation:
 +-------+O        +------+O --->   +-----------+
 
 Behaves like this when traversing:  
-[Diode] <-- Wire <--> Component
-􏷯
+[Diode] <-- Wire <--> Component􏷯
 􏷮Time􏷭 􏷮Date􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
-􏷦"stddef"􏷥􏷢HASA: size_t􏷡
-􏷦"stdioLib"􏷥􏷢HASA: BOOL􏷡
-􏷦"NodeType"􏷥􏷢HASA: NodeTypeE􏷡
-􏷦"Junction"􏷥􏷢HASA: JunctionOutputsT􏷡
-􏷤"string.h"􏷣􏷢USES: strcpy()􏷡
+
+􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷦NodeType􏷥􏷢HASA: NodeTypeE􏷡
+􏷦Junction􏷥􏷢HASA: JunctionOutputsT􏷡
+􏷤string􏷣􏷢USES: strcpy()􏷡
 
 􏵺pre-defined space restrictions􏵻
 􏵸the max number of characters that can make up a node's name􏵹
@@ -149,11 +146,11 @@ Power can still be computed later (P = IV)
 􏶨whether a node will allow electricity to flow through it.􏶧
 􏶦
 maybe a fuse pops.  maybe a relay is open.  maybe a bus in nonfunctional.  
-These are all reasons flow could be false.
+These are all reasons flow could be 􏵰.
 Note: This property has nothing to do with the direction of current flow.
 It is the junctions whose flow properties determine current direction.
 􏶥
-􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬has flow􏶫􏶪false􏶩
+􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬has flow􏶫􏶪􏵰􏶩
 
 
 􏶨What kind of electrical component the node actually is.􏶧

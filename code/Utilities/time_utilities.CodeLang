@@ -6,8 +6,8 @@ Functions for converting between ticks and milliseconds based on the clock rate.
 􏷯
 􏷮Time Utilities􏷭 􏷮Time􏷭 􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
-􏷤"TaskLib"􏷣􏷢USES: taskDelay()􏷡
-􏷤"sysLib"􏷣􏷢USES: sysClkRateGet()􏷡
+􏷤TaskLib􏷣􏷢USES: taskDelay()􏷡
+􏷤sysLib􏷣􏷢USES: sysClkRateGet()􏷡
 
 􏷒tick period in milliseconds􏷑
 􏷐Get the tick period of the system clock in terms of milliseconds.􏷏

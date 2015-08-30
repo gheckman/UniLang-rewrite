@@ -1,17 +1,17 @@
 􏶞object􏶟
 􏷲The entire UH72A DC power system.􏷱
-􏷰
-Contains both the DC power system circuit represented through a generic electrical graph,
+􏷰Contains both the DC power system circuit represented through a generic electrical graph,
 as well as a collection of node IDs to target any node on the graph directly.􏷯
 􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
 􏷬Trevor Hickey􏷫
-􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
-􏷦"ElectricalGraph.h"􏷥􏷢USES: ElectricalGraphOutputsT􏷡
-􏷦"AfterJunctionBox.h"􏷥 􏷢HASA: AfterJunctionBoxOutputsT􏷡
-􏷦"BatteryBox.h"􏷥       􏷢HASA: BatteryBoxOutputsT􏷡
-􏷦"DiodeBox.h"􏷥         􏷢HASA: DiodeBoxOutputsT􏷡
-􏷦"DistributionBox.h"􏷥  􏷢HASA: DistributionBoxOutputsT􏷡
-􏷤"string.h"􏷣􏷢USES: strcpy()􏷡
+
+􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷦AfterJunctionBox􏷥 􏷢HASA: AfterJunctionBoxOutputsT􏷡
+􏷦BatteryBox􏷥       􏷢HASA: BatteryBoxOutputsT􏷡
+􏷦DiodeBox􏷥         􏷢HASA: DiodeBoxOutputsT􏷡
+􏷦DistributionBox􏷥  􏷢HASA: DistributionBoxOutputsT􏷡
+􏷤string􏷣􏷢USES: strcpy()􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
@@ -58,18 +58,18 @@ this stage adds the remaining wires to connect components in the boxes together�
   //a junction point used to connect boxes
   size_t nJunction;
   ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddNode = TRUE;
+  tInputs.m_bAddNode = 􏵱;
   
   //add the junction to graph
   strcpy(tInputs.m_szName, "junction");
   tInputs.m_eType = NODETYPE_JUNCTION;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
   nJunction = ptOutputs->m_tGraph.m_nId;
   
-  tInputs.m_bAddNode = FALSE;
-  tInputs.m_bAddWire = TRUE;
+  tInputs.m_bAddNode = 􏵰;
+  tInputs.m_bAddWire = 􏵱;
   
   //connect nodes from other boxes together
   
@@ -77,70 +77,70 @@ this stage adds the remaining wires to connect components in the boxes together�
   tInputs.m_nNodeX = ptOutputs->m_tBatteryBox.m_nFuse1;
   tInputs.m_nNodeY = ptOutputs->m_tDiodeBoxLeft.m_nDiode3;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
   
   tInputs.m_nNodeX = ptOutputs->m_tBatteryBox.m_nFuse3;
   tInputs.m_nNodeY = ptOutputs->m_tDiodeBoxLeft.m_nDiode3;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
   
   //junction connects distribution boxes and battery box
   tInputs.m_nNodeX = nJunction;
   tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxLeft.m_nBusTieRelay;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
   
   tInputs.m_nNodeX = nJunction;
   tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxRight.m_nBusTieRelay;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
   
   tInputs.m_nNodeX = nJunction;
   tInputs.m_nNodeY = ptOutputs->m_tBatteryBox.m_nFuse2;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
   
   //connects diode boxes with distribution boxes
   tInputs.m_nNodeX = ptOutputs->m_tDiodeBoxLeft.m_nDiode1;
   tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxLeft.m_nFuse3;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
     
   tInputs.m_nNodeX = ptOutputs->m_tDiodeBoxLeft.m_nDiode2;
   tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxRight.m_nFuse4;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
     
   tInputs.m_nNodeX = ptOutputs->m_tDiodeBoxRight.m_nDiode1;
   tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxRight.m_nFuse3;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
     
   tInputs.m_nNodeX = ptOutputs->m_tDiodeBoxRight.m_nDiode2;
   tInputs.m_nNodeY = ptOutputs->m_tDistributionBoxLeft.m_nFuse4;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
   
   //connects distribution boxes with after junction boxes
   tInputs.m_nNodeX = ptOutputs->m_tDistributionBoxLeft.m_nMainBus;
   tInputs.m_nNodeY = ptOutputs->m_tAfterJunctionBoxLeft.m_nGeneratorBus;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
   
   tInputs.m_nNodeX = ptOutputs->m_tDistributionBoxRight.m_nMainBus;
   tInputs.m_nNodeY = ptOutputs->m_tAfterJunctionBoxRight.m_nGeneratorBus;
   tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = TRUE;
+  tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
 
 􏶳

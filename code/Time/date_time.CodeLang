@@ -13,8 +13,8 @@ The year limit of datetime is now the max size of an unsigned int.
 􏷯
 􏷮Time􏷭 􏷮Date􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
-􏷦"Month"􏷥􏷢USES: MonthE􏷡
-􏷤"DateUtilities"􏷣􏷢USES: IsLeapYear()􏷡
+􏷦Month􏷥􏷢USES: MonthE􏷡
+􏷤DateUtilities􏷣􏷢USES: IsLeapYear()􏷡
 
 
 􏷘+􏷗􏷒􏶐􏷑

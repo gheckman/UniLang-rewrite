@@ -1,12 +1,11 @@
 􏶞object􏶟
 􏷲A list of all valid paths through a circuit􏷱
-􏷰
-These are produced by the graph when it is queried to find all of the valid paths through the circuit.
-􏷯
+􏷰These are produced by the graph when it is queried to find all of the valid paths through the circuit.􏷯
 􏷮Electrical_System􏷭
 􏷬Trevor Hickey􏷫
-􏷦"stddef.h"􏷥􏷢HASA: size_t􏷡
-􏷦"Path.h"􏷥􏷢HASA: PathOutputsT􏷡
+
+􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷦Path􏷥􏷢HASA: PathOutputsT􏷡
 
 􏵺the maximum number of paths that can be discovered and stored􏵻
 􏵾max number of valid paths through the circuit􏵿

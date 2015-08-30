@@ -7,8 +7,7 @@
 
 
 􏶊The type of electrical component that an electrical graph node represents.􏶉
-􏶈
-For an electrical circuit, nodes represent all electrical components including 'wires' and 'ground'.
+􏶈For an electrical circuit, nodes represent all electrical components including 'wires' and 'ground'.
 'Wires' and 'ground' are node types, but they are NOT something that a user of the graph will need to specify.  
 'Wires' and 'ground' will be created internally by the graph, to help manage connections, and internal logic.
 A user will only need to interact with the graph's interface to connect components together and specify which ones go to ground.
@@ -17,8 +16,7 @@ It's unlikely that a user will ever specify WIRE or GROUND themselves when descr
 Note 1: Ground is important for calculating complete paths.
 Note 2: Because of the graph's interface, connecting components will automatically put a wire between them.
 Note 3: All other node types can be used to perform specific functionality as needed by the user, but the electrical graph itself does not
-rely on, or do anything special when encountering other node types; it simply stores them so they can be queried later.
-􏶇
+rely on, or do anything special when encountering other node types; it simply stores them so they can be queried later.􏶇
 􏶀node type􏶋
 􏶆battery􏶅
 􏶆breaker􏶅
