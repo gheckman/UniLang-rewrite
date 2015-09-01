@@ -38,7 +38,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "battery");
-  tInputs.m_eType = NODETYPE_BATTERY;
+  tInputs.m_eType = NODE_TYPE_BATTERY;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -46,7 +46,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "battery hot bus");
-  tInputs.m_eType = NODETYPE_BUS;
+  tInputs.m_eType = NODE_TYPE_BUS;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -54,7 +54,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "battery relay");
-  tInputs.m_eType = NODETYPE_RELAY;
+  tInputs.m_eType = NODE_TYPE_RELAY;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵰;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -62,7 +62,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "battery bus");
-  tInputs.m_eType = NODETYPE_BUS;
+  tInputs.m_eType = NODE_TYPE_BUS;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -70,7 +70,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "battery bus fuse 1");
-  tInputs.m_eType = NODETYPE_FUSE;
+  tInputs.m_eType = NODE_TYPE_FUSE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -78,7 +78,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "battery bus fuse 2");
-  tInputs.m_eType = NODETYPE_FUSE;
+  tInputs.m_eType = NODE_TYPE_FUSE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -86,7 +86,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "battery bus fuse 3");
-  tInputs.m_eType = NODETYPE_FUSE;
+  tInputs.m_eType = NODE_TYPE_FUSE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -94,7 +94,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "external power relay");
-  tInputs.m_eType = NODETYPE_RELAY;
+  tInputs.m_eType = NODE_TYPE_RELAY;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵰;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -102,7 +102,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "external power unit");
-  tInputs.m_eType = NODETYPE_EPU;
+  tInputs.m_eType = NODE_TYPE_EPU;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);

@@ -15,12 +15,15 @@ It's unlikely that a user will ever specify WIRE or GROUND themselves when descr
 
 Note 1: Ground is important for calculating complete paths.
 Note 2: Because of the graph's interface, connecting components will automatically put a wire between them.
+Therefore, using WIRE should never be done by the client using the generic graph(the graph will do it for you).
 Note 3: All other node types can be used to perform specific functionality as needed by the user, but the electrical graph itself does not
-rely on, or do anything special when encountering other node types; it simply stores them so they can be queried later.􏶇
+rely on, or do anything special when encountering other node types; it simply stores them so they can be queried later.  Except for ground;
+It uses ground to know whether there is a complete path.􏶇
 􏶀node type􏶋
 􏶆battery􏶅
 􏶆breaker􏶅
 􏶆bus􏶅
+􏶆device􏶅 􏶂devices are often leaf nodes of the graph, and usually the last nodes that branch off the bus.􏶁
 􏶆diode􏶅
 􏶆epu􏶅
 􏶆fuse􏶅

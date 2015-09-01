@@ -31,14 +31,12 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   //create all of the vertexes that are part of the 􏶐
-  //the essential bus is technically outside the 􏶐,
-  //but we include it here for conceptual organization
   ElectricalGraphInputsT tInputs = {0};
   tInputs.m_bAddNode = 􏵱;
   
   //add node to graph
   strcpy(tInputs.m_szName, "diode 1");
-  tInputs.m_eType = NODETYPE_DIODE;
+  tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -46,7 +44,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "diode 2");
-  tInputs.m_eType = NODETYPE_DIODE;
+  tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
@@ -54,19 +52,11 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //add node to graph
   strcpy(tInputs.m_szName, "diode 3");
-  tInputs.m_eType = NODETYPE_DIODE;
+  tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(ptGraph,&tInputs);
   ptOutputs->m_nDiode3 = ptGraph->m_nId;
-  
-  //add node to graph
-  strcpy(tInputs.m_szName, "essential bus");
-  tInputs.m_eType = NODETYPE_BUS;
-  tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  ptOutputs->m_nEssentialBus = ptGraph->m_nId;
 􏶳
 
 􏷘-􏷗􏷒create wires􏷑
@@ -74,30 +64,6 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶠The nodes being connected will need to be created first.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
 􏶴
-  //connect the related components
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddUnidirectionalWire = 􏵱;
-  
-  //connect two nodes together
-  tInputs.m_nNodeX = ptOutputs->m_nDiode1;
-  tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
-  tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  
-  //connect two nodes together
-  tInputs.m_nNodeX = ptOutputs->m_nDiode2;
-  tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
-  tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  
-  //connect two nodes together
-  tInputs.m_nNodeX = ptOutputs->m_nDiode3;
-  tInputs.m_nNodeY = ptOutputs->m_nEssentialBus;
-  tInputs.m_fResistance = 0;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
 􏶳
 
 􏷘-􏷗􏷒apply nodes to ground􏷑

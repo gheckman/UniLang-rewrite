@@ -121,6 +121,8 @@ Transfer-Object "after_junction_box" "Components/Electrical/Specific" "Component
 Transfer-Object "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
 Transfer-Object "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
 Transfer-Object "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Global "electrical_system_side" "Components/Electrical/Specific"
 Transfer-Object "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
 cd ../../;
 

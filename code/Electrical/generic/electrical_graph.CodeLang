@@ -22,7 +22,7 @@
   ptOutputs->m_tLocals.m_nNumberOfNodes = 0;
   
   //establish a common ground
-  ptOutputs->m_tLocals.m_nCommonGround = AddNode(ptOutputs,"common ground",NODETYPE_GROUND,0,􏵱);
+  ptOutputs->m_tLocals.m_nCommonGround = AddNode(ptOutputs,"common ground",NODE_TYPE_GROUND,0,􏵱);
 􏶳
 
 􏷘+􏷗􏷒add node􏷑
@@ -68,7 +68,7 @@
 􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   //calculate the wire and get the id
-  size_t nId = AddNode(ptOutputs,"wire",NODETYPE_WIRE,fResistance,bHasFlow);
+  size_t nId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,fResistance,bHasFlow);
   
   //connect the wire between the two components
   ConnectWireBetweenTwoOtherNodesBidirectionally(ptOutputs,nId,nNodeX,nNodeY);
@@ -88,7 +88,7 @@ and applies the appropriate junction points.􏶡
 􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   //calculate the wire and get the id
-  size_t nId = AddNode(ptOutputs,"wire",NODETYPE_WIRE,fResistance,bHasFlow);
+  size_t nId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,fResistance,bHasFlow);
   
   //connect the wire between the two components
   ConnectWireBetweenTwoOtherNodesUnidirectionally(ptOutputs,nId,nNodeX,nNodeY);
@@ -278,7 +278,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
     UpdatePath(ptList,&tPathInputs);
     
     //continue traversing if the node is not the common ground
-    if (ptOutputs->m_tLocals.m_tNodes[nNode].m_eType != NODETYPE_GROUND)
+    if (ptOutputs->m_tLocals.m_tNodes[nNode].m_eType != NODE_TYPE_GROUND)
     {
       TraverseNeighbors(ptOutputs,nNode,ptSeen,ptList,ptPathList);
     }
