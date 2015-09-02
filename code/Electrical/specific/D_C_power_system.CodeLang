@@ -27,7 +27,7 @@ which can be used to query the graph and get back the actual node.
 􏶡
 􏶴
 
-  size_t nIndex = 0;
+  size_t nIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
 
   //Create an empty generic electrical graph;
   InitializeElectricalGraph(&ptOutputs->m_tGraph);
@@ -37,7 +37,7 @@ which can be used to query the graph and get back the actual node.
   InitializeBatteryBox(&ptOutputs->m_tBatteryBox,&ptOutputs->m_tGraph);
   
   //symmetric boxes
-  for (; nIndex < 2; ++nIndex){
+  for (; nIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++nIndex){
     
     //add the diode box portions to the electrical graph data structure,
     //Initializing will establish all of the component IDs in the diode boxes
@@ -65,7 +65,7 @@ which can be used to query the graph and get back the actual node.
 􏷐After all of the electrical boxes ares created,
 this stage adds the remaining wires to connect components in the boxes together􏷏
 􏶴
-  size_t nIndex = 0;
+  size_t nIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
   
   //a junction point used to connect boxes
   size_t nJunction;
@@ -106,7 +106,7 @@ this stage adds the remaining wires to connect components in the boxes together�
   
   
   //symmetric connections
-  for (; nIndex < 2; ++nIndex){
+  for (; nIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++nIndex){
     
     //junction connects distribution boxes and battery box
     tInputs.m_nNodeX = nJunction;

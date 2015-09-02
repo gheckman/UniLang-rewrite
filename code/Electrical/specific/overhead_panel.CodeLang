@@ -108,12 +108,12 @@ and puts them into the generic electrical graph data structure.􏷏
   tInputs.m_fResistance = fResistance;
   tInputs.m_bHasFlow = bHasFlow;
   UpdateElectricalGraph(ptGraph,&tInputs);
-  *ptNodeId = ptGraph->m_nId;
+  *pnNodeId = ptGraph->m_nId;
   
   //add device to the ground.
   tInputs.m_bAddNode = 􏵰;
   tInputs.m_bConnectNodeToCommonGround = 􏵱;
-  tInputs.m_nNode = *ptNodeId;
+  tInputs.m_nNode = *pnNodeId;
   UpdateElectricalGraph(ptGraph,&tInputs);
 􏶳
 
@@ -136,12 +136,12 @@ and puts them into the generic electrical graph data structure.􏷏
   tInputs.m_fResistance = fResistance;
   tInputs.m_bHasFlow = bHasFlow;
   UpdateElectricalGraph(ptGraph,&tInputs);
-  *ptNodeId = ptGraph->m_nId;
+  *pnNodeId = ptGraph->m_nId;
   
   //add device to the ground.
   tInputs.m_bAddNode = 􏵰;
   tInputs.m_bConnectNodeToCommonGround = 􏵱;
-  tInputs.m_nNode = *ptNodeId;
+  tInputs.m_nNode = *pnNodeId;
   UpdateElectricalGraph(ptGraph,&tInputs);
 􏶳
 
@@ -428,8 +428,8 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠The nodes being connected will need to be created first.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
 􏶴
-  size_t nIndex = 0;
-  for (; nIndex < 2; ++nIndex){
+  size_t nIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
+  for (; nIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++nIndex){
     
     //row 1
     ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,ptOutputs->m_nGenSys[nIndex]);

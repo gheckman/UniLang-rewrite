@@ -16,7 +16,7 @@ From a node's perspective, think of a junction like this:
 􏶜c􏶝􏷆size_t􏷅􏷄connection id􏷃􏷀the node number that the junction points to􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the junction will allow electricity to flow through or not􏶿
 􏶴
-//set all values to the ones passed in
+􏶲set all values to the ones passed in􏶱
 ptOutputs->m_nConnectionId = nConnectionId;
 ptOutputs->m_bHasFlow = bHasFlow;
 􏶳
@@ -27,7 +27,7 @@ ptOutputs->m_bHasFlow = bHasFlow;
 􏶜c􏶝􏷆size_t􏷅􏷄connection id􏷃􏷀the node number that the junction points to􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the junction will allow electricity to flow through or not􏶿
 􏶴
-//set all values to the ones passed in
+􏶲set all values to the ones passed in􏶱
 ptOutputs->m_nConnectionId = nConnectionId;
 ptOutputs->m_bHasFlow = bHasFlow;
 􏶳
