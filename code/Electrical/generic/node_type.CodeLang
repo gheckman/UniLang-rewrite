@@ -28,8 +28,8 @@ It uses ground to know whether there is a complete path.􏶇
 􏶆epu􏶅
 􏶆fuse􏶅
 􏶆generator􏶅
-􏶆ground􏶅
+􏶆ground􏶅 􏶂Used internally by the graph.  Should not be used by the client of the graph.􏶁
 􏶆junction􏶅
 􏶆relay􏶅
 􏶆resistor􏶅
-􏶆wire􏶅
+􏶆wire􏶅 􏶂Used internally by the graph.  Should not be used by the client of the graph.􏶁

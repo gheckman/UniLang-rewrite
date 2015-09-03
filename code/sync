@@ -82,12 +82,14 @@ function Remove-Generated-Code-From-Work-Area(){
 
 function Pushed_Caps_Case(){
       echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed "s/\( \|^\)\(.\)/\1\u\2/g" | tr -d " "
-    
 }
 
 #For printing nicely
 function Caps_Case(){
   echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed -r 's/\<./\U&/g';
+}
+
+function Clang-Format-Some-Other-Files(){
 }
 
 #name of CodeLang file / where to place in repo / where to place class wrapper
@@ -130,3 +132,5 @@ cd ../../;
 cd Other;
 Transfer-Global "ffs_const" "Shared/ffs"
 cd ..;
+
+Clang-Format-Some-Other-Files;
