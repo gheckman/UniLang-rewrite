@@ -18,13 +18,13 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   //create the buses on the 􏶏
-  CreateBusses(ptOutputs,ptGraph);
+  CreateBusses(ptOutputs,􏵶graph􏵷);
   
   //create all the internal nodes inside the graph data structure
-  CreateDevices(ptOutputs,ptGraph);
+  CreateDevices(ptOutputs,􏵶graph􏵷);
   
   //connect these newly created nodes
-  ConnectDevices(ptOutputs,ptGraph);
+  ConnectDevices(ptOutputs,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create busses􏷑
@@ -32,10 +32,10 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶠This will give all of the created nodes a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
-  CreateBusAndApplyToGround(ptOutputs,&􏵴essential bus􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ESS BUS",0,􏵱,ptGraph);
-  CreateBusAndApplyToGround(ptOutputs,&􏵴essential bus􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS BUS",0,􏵱,ptGraph);
-  CreateBusAndApplyToGround(ptOutputs,&􏵴shed bus􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ESS BUS",0,􏵱,ptGraph);
-  CreateBusAndApplyToGround(ptOutputs,&􏵴shed bus􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS BUS",0,􏵱,ptGraph);
+  CreateBusAndApplyToGround(ptOutputs,&􏵴essential bus􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ESS BUS",0,􏵱,􏵶graph􏵷);
+  CreateBusAndApplyToGround(ptOutputs,&􏵴essential bus􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS BUS",0,􏵱,􏵶graph􏵷);
+  CreateBusAndApplyToGround(ptOutputs,&􏵴shed bus􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ESS BUS",0,􏵱,􏵶graph􏵷);
+  CreateBusAndApplyToGround(ptOutputs,&􏵴shed bus􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS BUS",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create devices􏷑
@@ -49,8 +49,8 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   //creates all of the left and right portions of the 􏶏
   //*buses do not need created here(they are created elesewhere).
-  CreateLeftPanelDevices(ptOutputs,ptGraph);
-  CreateRightPanelDevices(ptOutputs,ptGraph);
+  CreateLeftPanelDevices(ptOutputs,􏵶graph􏵷);
+  CreateRightPanelDevices(ptOutputs,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices􏷑
@@ -61,14 +61,14 @@ and puts them into the generic electrical graph data structure.􏷏
 􏶴
   //construct all the devices that are a part of 
   //the left portion of the 􏶏.
-  CreateLeftPanelDevicesForRow1(ptOutputs,ptGraph);
-  CreateLeftPanelDevicesForRow2(ptOutputs,ptGraph);
-  CreateLeftPanelDevicesForRow3(ptOutputs,ptGraph);
-  CreateLeftPanelDevicesForRow4(ptOutputs,ptGraph);
-  CreateLeftPanelDevicesForRow5(ptOutputs,ptGraph);
-  CreateLeftPanelDevicesForRow6(ptOutputs,ptGraph);
-  CreateLeftPanelDevicesForRow7(ptOutputs,ptGraph);
-  CreateLeftPanelDevicesForRow8(ptOutputs,ptGraph);
+  CreateLeftPanelDevicesForRow1(ptOutputs,􏵶graph􏵷);
+  CreateLeftPanelDevicesForRow2(ptOutputs,􏵶graph􏵷);
+  CreateLeftPanelDevicesForRow3(ptOutputs,􏵶graph􏵷);
+  CreateLeftPanelDevicesForRow4(ptOutputs,􏵶graph􏵷);
+  CreateLeftPanelDevicesForRow5(ptOutputs,􏵶graph􏵷);
+  CreateLeftPanelDevicesForRow6(ptOutputs,􏵶graph􏵷);
+  CreateLeftPanelDevicesForRow7(ptOutputs,􏵶graph􏵷);
+  CreateLeftPanelDevicesForRow8(ptOutputs,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create right panel devices􏷑
@@ -79,14 +79,14 @@ and puts them into the generic electrical graph data structure.􏷏
 􏶴
   //construct all the devices that are a part of 
   //the right portion of the 􏶏.
-  CreateRightPanelDevicesForRow1(ptOutputs,ptGraph);
-  CreateRightPanelDevicesForRow2(ptOutputs,ptGraph);
-  CreateRightPanelDevicesForRow3(ptOutputs,ptGraph);
-  CreateRightPanelDevicesForRow4(ptOutputs,ptGraph);
-  CreateRightPanelDevicesForRow5(ptOutputs,ptGraph);
-  CreateRightPanelDevicesForRow6(ptOutputs,ptGraph);
-  CreateRightPanelDevicesForRow7(ptOutputs,ptGraph);
-  CreateRightPanelDevicesForRow8(ptOutputs,ptGraph);
+  CreateRightPanelDevicesForRow1(ptOutputs,􏵶graph􏵷);
+  CreateRightPanelDevicesForRow2(ptOutputs,􏵶graph􏵷);
+  CreateRightPanelDevicesForRow3(ptOutputs,􏵶graph􏵷);
+  CreateRightPanelDevicesForRow4(ptOutputs,􏵶graph􏵷);
+  CreateRightPanelDevicesForRow5(ptOutputs,􏵶graph􏵷);
+  CreateRightPanelDevicesForRow6(ptOutputs,􏵶graph􏵷);
+  CreateRightPanelDevicesForRow7(ptOutputs,􏵶graph􏵷);
+  CreateRightPanelDevicesForRow8(ptOutputs,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create device and apply to ground􏷑
@@ -107,14 +107,14 @@ and puts them into the generic electrical graph data structure.􏷏
   tInputs.m_eType = NODE_TYPE_DEVICE;
   tInputs.m_fResistance = fResistance;
   tInputs.m_bHasFlow = bHasFlow;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  *pnNodeId = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  *pnNodeId = 􏵶graph􏵷->m_nId;
   
   //add device to the ground.
   tInputs.m_bAddNode = 􏵰;
   tInputs.m_bConnectNodeToCommonGround = 􏵱;
   tInputs.m_nNode = *pnNodeId;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 
 􏷘-􏷗􏷒create bus and apply to ground􏷑
@@ -135,14 +135,14 @@ and puts them into the generic electrical graph data structure.􏷏
   tInputs.m_eType = NODE_TYPE_BUS;
   tInputs.m_fResistance = fResistance;
   tInputs.m_bHasFlow = bHasFlow;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  *pnNodeId = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  *pnNodeId = 􏵶graph􏵷->m_nId;
   
   //add device to the ground.
   tInputs.m_bAddNode = 􏵰;
   tInputs.m_bConnectNodeToCommonGround = 􏵱;
   tInputs.m_nNode = *pnNodeId;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 1􏷑
@@ -151,14 +151,14 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴gen sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"GEN SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴bt sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"B/T SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fire e sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE-E SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel l sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FUEL-L SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴hyd p sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"HYD-P SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴wu sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"W/U SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cad sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"CAD SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴vemd sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"VEMD SYS",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴gen sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"GEN SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴bt sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"B/T SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fire e sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE-E SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel l sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FUEL-L SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴hyd p sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"HYD-P SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴wu sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"W/U SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cad sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"CAD SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴vemd sys􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"VEMD SYS",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 2􏷑
@@ -168,14 +168,14 @@ and put them into the generic electrical graph data structure.􏷏
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
   //empty spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴wiper􏵵,"WIPER",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴tqn2 eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"TQ/N2 ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ovsp eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"OVSP ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴primep eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PRIME-P ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fired eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE-D ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel v eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FUEL-V ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ign eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"IGN ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴start eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"START ENG",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴wiper􏵵,"WIPER",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴tqn2 eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"TQ/N2 ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ovsp eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"OVSP ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴primep eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PRIME-P ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fired eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE-D ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuelv eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FUEL-V ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ign eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"IGN ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴start eng􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"START ENG",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 3􏷑
@@ -184,15 +184,15 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴hums􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"HUMS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FLOATS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cont winch􏵵,"CONT WINCH",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ccpil winch􏵵,"CC-PIL WINCH",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴boom winch􏵵,"BOOM WINCH",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pos lights􏵵,"POS LIGHTS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ldg lights􏵵,"LDG LIGHTS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ckpt lights􏵵,"CKPT LIGHTS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴var nr􏵵,"VAR NR",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴hums􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"HUMS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FLOATS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cont winch􏵵,"CONT WINCH",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ccpil winch􏵵,"CC-PIL WINCH",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴boom winch􏵵,"BOOM WINCH",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pos lights􏵵,"POS LIGHTS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ldg lights􏵵,"LDG LIGHTS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ckpt lights􏵵,"CKPT LIGHTS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴var nr􏵵,"VAR NR",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 4􏷑
@@ -205,12 +205,12 @@ and put them into the generic electrical graph data structure.􏷏
   //empty spot
   //empty spot
   //empty spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pitch sas􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PITCH SAS",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pitch sas􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PITCH SAS",0,􏵱,􏵶graph􏵷);
   //empty spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴htg cont􏵵,"HTG-CONT",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ckpt vent􏵵,"CKPT VENT",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ftr􏵵,"FTR",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴roll sass􏵵,"ROLL SAS",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴htg cont􏵵,"HTG-CONT",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ckpt vent􏵵,"CKPT VENT",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ftr􏵵,"FTR",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴roll sas􏵵,"ROLL SAS",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 5􏷑
@@ -226,9 +226,9 @@ and put them into the generic electrical graph data structure.􏷏
   //empty spot
   //empty spot
   //empty spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴adc􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ADC",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AVIO MSTR",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AVIO MAIN",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴adc􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ADC",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AVIO MSTR",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AVIO MAIN",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 6􏷑
@@ -240,13 +240,13 @@ and put them into the generic electrical graph data structure.􏷏
   //empty spot
   //empty spot
   //empty spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ptst cp􏵵,"PT/ST CP",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ptst cp􏵵,"PT/ST CP",0,􏵱,􏵶graph􏵷);
   //empty spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴mir hook􏵵,"MIR HOOK",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pwr hook􏵵,"PWR HOOK",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cargo paxlt􏵵,"CARGO PAXLT",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴mir hook􏵵,"MIR HOOK",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pwr hook􏵵,"PWR HOOK",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cargo paxlt􏵵,"CARGO PAXLT",0,􏵱,􏵶graph􏵷);
   //emtpy spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴xfera pump􏵵,"XFER-A PUMP",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴xfera pump􏵵,"XFER-A PUMP",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 7􏷑
@@ -265,7 +265,7 @@ and put them into the generic electrical graph data structure.􏷏
   //empty spot
   //empty spot
   //empty spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴shed avio main􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AVIO MAIN",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴shed avio main􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AVIO MAIN",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 8􏷑
@@ -274,7 +274,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴stby hor bat􏵵,"STBY HOR BAT",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴stby hor bat􏵵,"STBY HOR BAT",0,􏵱,􏵶graph􏵷);
   //empty spot (*Our sim does not have an inverter. So I'm leaving this bus branch as empty. Note that there is an INV is here on the diagram)
   //empty spot
   //empty spot
@@ -290,14 +290,14 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴vemd sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"VEMD SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cad sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"CAD SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴wu sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"W/U SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴hyd p sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"HYD-P SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel l sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL-L SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fire e sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FIRE-E SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴bt sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"B/T SYS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴gen sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"GEN SYS",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴vemd sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"VEMD SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cad sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"CAD SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴wu sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"W/U SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴hyd p sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"HYD-P SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel l sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL-L SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fire e sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FIRE-E SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴bt sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"B/T SYS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴gen sys􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"GEN SYS",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create right panel devices for row 2􏷑
@@ -306,14 +306,14 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴start eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"START ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ign eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"IGN ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel v eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL-V ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fired eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FIRE-D ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴primep eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PRIME-P ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ovsp eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"OVSP ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴tqn2 eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"TQ/N2 ENG",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴rotor rpm􏵵,"ROTOR RPM",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴start eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"START ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ign eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"IGN ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuelv eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL-V ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴fired eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FIRE-D ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴primep eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PRIME-P ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ovsp eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"OVSP ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴tqn2 eng􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"TQ/N2 ENG",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴rotor rpm􏵵,"ROTOR RPM",0,􏵱,􏵶graph􏵷);
   //empty spot
 􏶳
 
@@ -323,15 +323,15 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴n2 trim􏵵,"N2 TRIM",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴instr lights􏵵,"INSTR LIGHTS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴acol lights􏵵,"ACOL LIGHTS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴emex lights􏵵,"EM/EX LIGHTS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cc ped winch􏵵,"CC-PED WINCH",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴aux tank􏵵,"AUX TANK",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pt st plt􏵵,"PT/ST PLT",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FLOATS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴hums􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"HUMS",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴n2 trim􏵵,"N2 TRIM",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴instr lights􏵵,"INSTR LIGHTS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴acol lights􏵵,"ACOL LIGHTS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴emex lights􏵵,"EM/EX LIGHTS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cc ped winch􏵵,"CC-PED WINCH",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴aux tank􏵵,"AUX TANK",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pt st plt􏵵,"PT/ST PLT",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FLOATS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴hums􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"HUMS",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create right panel devices for row 4􏷑
@@ -340,12 +340,12 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴yaw sas􏵵,"YAW SAS",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴beep trim􏵵,"BEEP TRIM",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴mast mon􏵵,"MAST MON",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴xferf pump􏵵,"XFER-F PUMP",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴sx16􏵵,"SX16",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pitch sas􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PITCH SAS",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴yaw sas􏵵,"YAW SAS",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴beep trim􏵵,"BEEP TRIM",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴mast mon􏵵,"MAST MON",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴xferf pump􏵵,"XFER-F PUMP",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴sx16􏵵,"SX16",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pitch sas􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PITCH SAS",0,􏵱,􏵶graph􏵷);
   //empty spot
   //empty spot
   //empty spot
@@ -358,10 +358,10 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MAIN",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MSTR",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴adc􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ADC",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴enc alt􏵵,"ENC ALT",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MAIN",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MSTR",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴adc􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ADC",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴enc alt􏵵,"ENC ALT",0,􏵱,􏵶graph􏵷);
   //empty spot
   //empty spot
   //empty spot
@@ -376,11 +376,11 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴htgv􏵵,"HTG-V",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴inst cool􏵵,"INST COOL",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pax blw􏵵,"PAX BLW",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pwrls light􏵵,"PWR L/S LIGHT",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴contls light􏵵,"COUNT L/S LIGHT",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴htgv􏵵,"HTG-V",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴inst cool􏵵,"INST COOL",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pax blw􏵵,"PAX BLW",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴pwrls light􏵵,"PWR L/S LIGHT",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴contls light􏵵,"COUNT L/S LIGHT",0,􏵱,􏵶graph􏵷);
   //empty spot
   //empty spot
   //empty spot
@@ -394,8 +394,8 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴shed avio main􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MAIN",0,􏵱,ptGraph);
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴emer bat􏵵,"EMER BAT",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴shed avio main􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MAIN",0,􏵱,􏵶graph􏵷);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴emer bat􏵵,"EMER BAT",0,􏵱,􏵶graph􏵷);
   //empty spot
   //empty spot
   //empty spot
@@ -420,7 +420,7 @@ and put them into the generic electrical graph data structure.􏷏
   //empty spot (*Our sim does not have an inverter. So I'm leaving this bus branch as empty. Note that there is an INV is here on the diagram)
   //empty spot
   //empty spot
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴bat emex lt􏵵,"BAT EM/EX LT",0,􏵱,ptGraph);
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴bat emex lt􏵵,"BAT EM/EX LT",0,􏵱,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒connect devices􏷑
@@ -432,92 +432,92 @@ and put them into the generic electrical graph data structure.􏷏
   for (; nIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++nIndex){
     
     //row 1
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴gen sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴fire e sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴fuel l sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴hyd p sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴wu sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴cad sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴vemd sys􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴gen sys􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴fire e sys􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴fuel l sys􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴hyd p sys􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴wu sys􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴cad sys􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴vemd sys􏵵[nIndex]);
     
     //row 2
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴tqn2 eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴ovsp eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴primep eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴fired eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴fuel v eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴ign eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴start eng􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴tqn2 eng􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴ovsp eng􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴primep eng􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴fired eng􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴fuelv eng􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴ign eng􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴start eng􏵵[nIndex]);
     
     //row 3
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴hums􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴floats􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴hums􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴floats􏵵[nIndex]);
     
     //row 4
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴pitch sas􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴pitch sas􏵵[nIndex]);
     
     //row 5
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴adc􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴avio mstr􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,ptGraph,nIndex,􏵴ess avio main􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴adc􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴avio mstr􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴ess avio main􏵵[nIndex]);
     
     //row 7
-    ConnectDeviceWithShed(ptOutputs,ptGraph,nIndex,􏵴shed avio main􏵵[nIndex]);
+    ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,nIndex,􏵴shed avio main􏵵[nIndex]);
   }
   
   //row 2
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴wiper􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rotor rpm􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴wiper􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rotor rpm􏵵);
   
   //row 3
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont winch􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ccpil winch􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴boom winch􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pos lights􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ldg lights􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt lights􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴var nr􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴n2 trim􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴instr lights􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴acol lights􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴emex lights􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cc ped winch􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴aux tank􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pt st plt􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont winch􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ccpil winch􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴boom winch􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pos lights􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ldg lights􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt lights􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴var nr􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴n2 trim􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴instr lights􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴acol lights􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴emex lights􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cc ped winch􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴aux tank􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pt st plt􏵵);
   
   //row 4
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴htg cont􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt vent􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ftr􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴roll sass􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴sx16􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴xferf pump􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mast mon􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴beep trim􏵵);
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴yaw sas􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴htg cont􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt vent􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ftr􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴roll sas􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴sx16􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴xferf pump􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mast mon􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴beep trim􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴yaw sas􏵵);
   
   //row 5
-  ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴enc alt􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴enc alt􏵵);
   
   //row 6
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ptst cp􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴mir hook􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pwr hook􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cargo paxlt􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴xfera pump􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴htgv􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴inst cool􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pax blw􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pwrls light􏵵);
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴contls light􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ptst cp􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴mir hook􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pwr hook􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cargo paxlt􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴xfera pump􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴htgv􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴inst cool􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pax blw􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pwrls light􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴contls light􏵵);
   
   //row 7
-  ConnectDeviceWithShed(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴emer bat􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴emer bat􏵵);
   
   //row 8
   //These are part of the AC bus, and perhaps out of scope.
-  //ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_X,􏵴stby hor bat􏵵);
-  //ConnectDeviceWithEssential(ptOutputs,ptGraph,ELECTRICAL_SYSTEM_SIDE_X,􏵴bat emex lt􏵵);
+  //ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_X,􏵴stby hor bat􏵵);
+  //ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_X,􏵴bat emex lt􏵵);
 􏶳
 
 
@@ -533,11 +533,11 @@ and put them into the generic electrical graph data structure.􏷏
   tInputs.m_bAddWire = 􏵱;
   
   //connect device and bus
-  tInputs.m_nNodeX = nDevice;
-  tInputs.m_nNodeY = 􏵴essential bus􏵵[eSide];
+  tInputs.m_nNodeX = 􏵶device􏵷;
+  tInputs.m_nNodeY = 􏵴essential bus􏵵[􏵶side􏵷];
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 􏷘-􏷗􏷒connect device with shed􏷑
 􏷐Connects all of the necessary 􏶐 devices to the essential bus􏷏
@@ -551,11 +551,11 @@ and put them into the generic electrical graph data structure.􏷏
   tInputs.m_bAddWire = 􏵱;
   
   //connect device and bus
-  tInputs.m_nNodeX = nDevice;
-  tInputs.m_nNodeY = 􏵴shed bus􏵵[eSide];
+  tInputs.m_nNodeX = 􏵶device􏵷;
+  tInputs.m_nNodeY = 􏵴shed bus􏵵[􏵶side􏵷];
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 
 

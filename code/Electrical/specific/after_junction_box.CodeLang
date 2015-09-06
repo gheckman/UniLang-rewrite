@@ -16,13 +16,13 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create all the internal nodes inside the graph data structure􏶱
-  CreateNodes(ptOutputs,ptGraph);
+  CreateNodes(ptOutputs,􏵶graph􏵷);
   
   􏶲connect these newly created nodes􏶱
-  CreateWires(ptOutputs,ptGraph);
+  CreateWires(ptOutputs,􏵶graph􏵷);
   
   􏶲apply any nodes to ground that should be􏶱
-  ApplyNodesToGround(ptOutputs,ptGraph);
+  ApplyNodesToGround(ptOutputs,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create nodes􏷑
@@ -41,32 +41,32 @@ It will store the IDs given back by the graph so that they may be queried later 
   tInputs.m_eType = NODE_TYPE_RELAY;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵰;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  􏵴generator relay􏵵 = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴generator relay􏵵 = 􏵶graph􏵷->m_nId;
   
   􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "starter relay");
   tInputs.m_eType = NODE_TYPE_RELAY;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵰;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  􏵴starter relay􏵵 = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴starter relay􏵵 = 􏵶graph􏵷->m_nId;
   
   􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "generator bus");
   tInputs.m_eType = NODE_TYPE_BUS;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  􏵴generator bus􏵵 = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴generator bus􏵵 = 􏵶graph􏵷->m_nId;
   
   􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "generator");
   tInputs.m_eType = NODE_TYPE_GENERATOR;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  􏵴generator􏵵 = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴generator􏵵 = 􏵶graph􏵷->m_nId;
 􏶳
 
 􏷘-􏷗􏷒create wires􏷑
@@ -83,28 +83,28 @@ It will store the IDs given back by the graph so that they may be queried later 
   tInputs.m_nNodeY = 􏵴generator relay􏵵;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   
   􏶲connect two nodes together􏶱
   tInputs.m_nNodeX = 􏵴generator􏵵;
   tInputs.m_nNodeY = 􏵴starter relay􏵵;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   
   􏶲connect two nodes together􏶱
   tInputs.m_nNodeY = 􏵴generator relay􏵵;
   tInputs.m_nNodeX = 􏵴generator bus􏵵;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   
   􏶲connect two nodes together􏶱
   tInputs.m_nNodeY = 􏵴starter relay􏵵;
   tInputs.m_nNodeX = 􏵴generator bus􏵵;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 
 􏷘-􏷗􏷒apply nodes to ground􏷑
@@ -118,11 +118,11 @@ It will store the IDs given back by the graph so that they may be queried later 
   
   􏶲connect node to common ground􏶱
   tInputs.m_nNode = 􏵴generator􏵵;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
    
   􏶲connect node to common ground􏶱
   tInputs.m_nNode = 􏵴generator bus􏵵;
-  UpdateElectricalGraph(ptGraph,&tInputs);
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧

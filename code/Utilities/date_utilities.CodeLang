@@ -23,18 +23,18 @@ This function will abstract that edge case, and allow for querying any month bas
 􏶜c􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year in which to look up the number of days in the month􏶿
 􏶾unsigned int􏶽􏶼number of days􏶻􏶺the number of days in the given month on the given year􏶹
 􏶴
-//default number of days for each month.
-//February is the only exception here. It's not always being 28.
+􏶲default number of days for each month.
+February is the only exception here. It's not always being 28.􏶱
 static const unsigned int DEFAULT_NUMBER_OF_DAYS[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-//the special case for when it's February and a leap year
-if(eMonth == MONTH_FEB && IsLeapYear(nYear))
+􏶲the special case for when it's February and a leap year􏶱
+if(􏵶month􏵷 == MONTH_FEB && IsLeapYear(􏵶year􏵷))
 {
     return 29;
 }
 
-//not February on a leap year.  Use the lookup table to get the number of days.
-return DEFAULT_NUMBER_OF_DAYS[eMonth - 1];
+􏶲not February on a leap year.  Use the lookup table to get the number of days.􏶱
+return DEFAULT_NUMBER_OF_DAYS[􏵶month􏵷 - 1];
 􏶳
 
 􏷒is leap year􏷑
@@ -43,7 +43,7 @@ return DEFAULT_NUMBER_OF_DAYS[eMonth - 1];
 􏶜c􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year in which to look up the number of days in the month􏶿
 􏶾BOOL􏶽􏶼is leap year􏶻􏶺􏵱 if the passed in year is a leap year; 􏵰 if it is not􏶹
 􏶴
-//a well known algorithm for determining if a given year is a leap year
-//https://en.wikipedia.org/wiki/Leap_year#Algorithm
-return (nYear % 4 == 0 && nYear % 100 != 0) || nYear % 400 == 0;
+􏶲a well known algorithm for determining if a given year is a leap year
+https://en.wikipedia.org/wiki/Leap_year#Algorithm􏶱
+return (􏵶year􏵷 % 4 == 0 && 􏵶year􏵷 % 100 != 0) || 􏵶year􏵷 % 400 == 0;
 􏶳

@@ -16,13 +16,13 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   //create all the internal nodes inside the graph data structure
-  CreateNodes(ptOutputs,ptGraph);
+  CreateNodes(ptOutputs,􏵶graph􏵷);
   
   //connect these newly created nodes
-  CreateWires(ptOutputs,ptGraph);
+  CreateWires(ptOutputs,􏵶graph􏵷);
   
   //apply any nodes to ground that should be
-  ApplyNodesToGround(ptOutputs,ptGraph);
+  ApplyNodesToGround(ptOutputs,􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create nodes􏷑
@@ -39,24 +39,24 @@ It will store the IDs given back by the graph so that they may be queried later 
   tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  􏵴diode 1􏵵 = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴diode 1􏵵 = 􏵶graph􏵷->m_nId;
   
   //add node to graph
   strcpy(tInputs.m_szName, "diode 2");
   tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  􏵴diode 2􏵵 = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴diode 2􏵵 = 􏵶graph􏵷->m_nId;
   
   //add node to graph
   strcpy(tInputs.m_szName, "diode 3");
   tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(ptGraph,&tInputs);
-  􏵴diode 3􏵵 = ptGraph->m_nId;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴diode 3􏵵 = 􏵶graph􏵷->m_nId;
 􏶳
 
 􏷘-􏷗􏷒create wires􏷑

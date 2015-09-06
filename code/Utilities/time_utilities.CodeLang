@@ -40,7 +40,7 @@ return s_fTickPeriod_ms;
 􏶴
 􏶲avoid division by zero􏶱
 if (TickPeriodInMilliseconds() != 0.0){
-  return (unsigned int)(nNumberOfMilliseconds / TickPeriodInMilliseconds());
+  return (unsigned int)(􏵶number of milliseconds􏵷 / TickPeriodInMilliseconds());
 }
 return 0;
 􏶳
@@ -51,7 +51,7 @@ return 0;
 􏶜c􏶝􏷆unsigned long􏷅􏷄number of ticks􏷃􏷀the amount of clock ticks to convert into milliseconds􏶿
 􏶾unsigned int􏶽􏶼number of milliseconds􏶻􏶺the number of milliseconds that will occur in the amount of clock ticks given􏶹
 􏶴
-return (unsigned long)TickPeriodInMilliseconds() * nNumberOfTicks;
+return (unsigned long)TickPeriodInMilliseconds() * 􏵶number of ticks􏵷;
 􏶳
 
 􏷒delay task number of milliseconds􏷑
@@ -61,5 +61,5 @@ return (unsigned long)TickPeriodInMilliseconds() * nNumberOfTicks;
 􏶴
 􏶲delay for the calculated number of ticks
 we convert the milliseconds into the appropriate amount of tick time􏶱
-taskDelay(MillisecondsToTicks(nNumberOfMillisecondsToDelay));
+taskDelay(MillisecondsToTicks(􏵶number of milliseconds to delay􏵷));
 􏶳

@@ -31,7 +31,7 @@
     We also have a safety check to avoid out-of-bounds indexing􏶱
     if (􏵴size􏵵 < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND)
     {
-    􏵴paths􏵵[􏵴size􏵵] = tPath;
+    􏵴paths􏵵[􏵴size􏵵] = 􏵶path􏵷;
     ++􏵴size􏵵;
     }
     else

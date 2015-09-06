@@ -68,13 +68,13 @@ Behaves like this when traversing:
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the node allows current to pass through it or not􏶿
 􏶴
   􏶲copy over name􏶱
-  strcpy(􏵴name􏵵, szName);
+  strcpy(􏵴name􏵵, 􏵶name􏵷);
   
   􏶲copy over other values􏶱
-  􏵴id􏵵 = nId;
-  􏵴type􏵵 = eType;
-  􏵴resistance􏵵 = fResistance;
-  􏵴has flow􏵵 = bHasFlow;
+  􏵴id􏵵 = 􏵶id􏵷;
+  􏵴type􏵵 = 􏵶type􏵷;
+  􏵴resistance􏵵 = 􏵶resistance􏵷;
+  􏵴has flow􏵵 = 􏵶has flow􏵷;
   
   􏶲set the initial junction count to 0􏶱
   􏵴number of junctions􏵵 = 0;
@@ -99,7 +99,7 @@ The graph will most likely add a junction to the two different nodes on behalf o
   we also have a safety check to avoid out-of-bounds indexing􏶱
   if (􏵴number of junctions􏵵 < MAX_NUMBER_OF_JUNCTIONS_IN_NODE)
   {
-    􏵴junctions􏵵[􏵴number of junctions􏵵] = tJunction;
+    􏵴junctions􏵵[􏵴number of junctions􏵵] = 􏵶junction􏵷;
     ++􏵴number of junctions􏵵;
   }
   else

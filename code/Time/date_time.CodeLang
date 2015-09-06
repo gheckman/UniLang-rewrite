@@ -30,10 +30,10 @@ Reseting the time to a different value will require a re-initalize.
 􏶜c􏶝􏷆unsigned int􏷅􏷄milliseconds􏷃􏷀the number of milliseconds in a day to start the current date time at􏶿
 􏶴
 􏶲we assume the input parameters are valid􏶱
-􏵴day􏵵 = nDay;
-􏵴month􏵵 = eMonth;
-􏵴year􏵵 = nYear;
-􏵴milliseconds􏵵 = nMilliseconds;
+􏵴day􏵵 = 􏵶day􏵷;
+􏵴month􏵵 = 􏵶month􏵷;
+􏵴year􏵵 = 􏵶year􏵷;
+􏵴milliseconds􏵵 = 􏵶milliseconds􏵷;
 􏶳
 
 
@@ -45,7 +45,7 @@ Reseting the time to a different value will require a re-initalize.
 􏶲increase the number of milliseconds.
 we assume this happens frequently enough that we don't have
 more than a day delay between millisecond updates.􏶱
-􏵴milliseconds􏵵 += nNumberOfMilliseconds;
+􏵴milliseconds􏵵 += 􏵶number of milliseconds􏵷;
 
 􏶲handles milliseconds overflow
 wraps value for milliseconds and increments day during millisecond overflow􏶱
