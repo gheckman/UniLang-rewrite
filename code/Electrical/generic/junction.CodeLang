@@ -17,8 +17,8 @@ From a node's perspective, think of a junction like this:
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the junction will allow electricity to flow through or not􏶿
 􏶴
 􏶲set all values to the ones passed in􏶱
-ptOutputs->m_nConnectionId = nConnectionId;
-ptOutputs->m_bHasFlow = bHasFlow;
+􏵴connection id􏵵 = nConnectionId;
+􏵴has flow􏵵 = bHasFlow;
 􏶳
 
 􏷘+􏷗􏷒Set_Values􏷑
@@ -28,8 +28,8 @@ ptOutputs->m_bHasFlow = bHasFlow;
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the junction will allow electricity to flow through or not􏶿
 􏶴
 􏶲set all values to the ones passed in􏶱
-ptOutputs->m_nConnectionId = nConnectionId;
-ptOutputs->m_bHasFlow = bHasFlow;
+􏵴connection id􏵵 = nConnectionId;
+􏵴has flow􏵵 = bHasFlow;
 􏶳
 
 􏶨Whether or not current can flow out a junction point.􏶧

@@ -67,21 +67,21 @@ Behaves like this when traversing:
 􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the node􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the node allows current to pass through it or not􏶿
 􏶴
-  //copy over name
-  strcpy(ptOutputs->m_szName, szName);
+  􏶲copy over name􏶱
+  strcpy(􏵴name􏵵, szName);
   
-  //copy over other values
-  ptOutputs->m_nId = nId;
-  ptOutputs->m_eType = eType;
-  ptOutputs->m_fResistance = fResistance;
-  ptOutputs->m_bHasFlow = bHasFlow;
+  􏶲copy over other values􏶱
+  􏵴id􏵵 = nId;
+  􏵴type􏵵 = eType;
+  􏵴resistance􏵵 = fResistance;
+  􏵴has flow􏵵 = bHasFlow;
   
-  //set the initial junction count to 0
-  ptOutputs->m_nNumberOfJunctions = 0;
+  􏶲set the initial junction count to 0􏶱
+  􏵴number of junctions􏵵 = 0;
   
-  //construct other values to zero
-  ptOutputs->m_fCurrent = 0;
-  ptOutputs->m_fVoltage = 0;
+  􏶲construct other values to zero􏶱
+  􏵴current􏵵 = 0;
+  􏵴voltage􏵵 = 0;
 􏶳
 
 􏷘+􏷗􏷒add junction􏷑
@@ -93,14 +93,14 @@ The graph will most likely add a junction to the two different nodes on behalf o
 􏶡
 􏶜c􏶝􏷆JunctionOutputsT􏷅􏷄junction􏷃􏷀the junction to add to the node􏶿
 􏶴
-  //add the new junction and increment the total count.
-  //the total count is used as an index, 
-  //so this prepares the node for the next insertion.
-  //we also have a safety check to avoid out-of-bounds indexing
-  if (ptOutputs->m_nNumberOfJunctions < MAX_NUMBER_OF_JUNCTIONS_IN_NODE)
+  􏶲add the new junction and increment the total count.
+  the total count is used as an index, 
+  so this prepares the node for the next insertion.
+  we also have a safety check to avoid out-of-bounds indexing􏶱
+  if (􏵴number of junctions􏵵 < MAX_NUMBER_OF_JUNCTIONS_IN_NODE)
   {
-    ptOutputs->m_tJunctions[ptOutputs->m_nNumberOfJunctions] = tJunction;
-    ++ptOutputs->m_nNumberOfJunctions;
+    􏵴junctions􏵵[􏵴number of junctions􏵵] = tJunction;
+    ++􏵴number of junctions􏵵;
   }
   else
   {

@@ -16,8 +16,8 @@
 􏷐Initialize the 􏶐 to an empty 􏶐􏷏
 􏶠􏶐 will be in an invalid state until initialized􏶡
 􏶴
-    //the list starts empty
-    ptOutputs->m_nSize = 0;
+    􏶲the list starts empty􏶱
+    􏵴size􏵵 = 0;
 􏶳
 
 􏷘+􏷗􏷒Add􏷑
@@ -25,14 +25,14 @@
 􏶠If the list of lists is not full, this will add a path to the total list of paths and increment the size.􏶡
 􏶜c􏶝􏷆PathOutputsT􏷅􏷄path􏷃􏷀The new path to add.􏶿
 􏶴
-    //add the new node and increment the total count.
-    //the total count is used as an index, 
-    //so this will prepare the node for the next insertion.
-    //We also have a safety check to avoid out-of-bounds indexing
-    if (ptOutputs->m_nSize < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND)
+    􏶲add the new node and increment the total count.
+    the total count is used as an index, 
+    so this will prepare the node for the next insertion.
+    We also have a safety check to avoid out-of-bounds indexing􏶱
+    if (􏵴size􏵵 < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND)
     {
-    ptOutputs->m_tPaths[ptOutputs->m_nSize] = tPath;
-    ++ptOutputs->m_nSize;
+    􏵴paths􏵵[􏵴size􏵵] = tPath;
+    ++􏵴size􏵵;
     }
     else
     {

@@ -90,6 +90,8 @@ function Caps_Case(){
 }
 
 function Clang-Format-Some-Other-Files(){
+echo "sdf";
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT"
 }
 
 #name of CodeLang file / where to place in repo / where to place class wrapper

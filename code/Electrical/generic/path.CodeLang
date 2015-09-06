@@ -17,8 +17,8 @@ of the overall path list returned to the user.􏷯
 􏷐Initialize the 􏶐 to an empty 􏶐􏷏
 􏶠􏶐 will be in an invalid state until initialized􏶡
 􏶴
-    //the list starts empty
-    ptOutputs->m_nSize = 0;
+    􏶲the list starts empty􏶱
+    􏵴size􏵵 = 0;
 􏶳
 
 􏷘+􏷗􏷒Add􏷑
@@ -26,14 +26,14 @@ of the overall path list returned to the user.􏷯
 􏶠If the list is not full, this will add the node to the current end of the list and increment the size􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The new node to add.􏶿
 􏶴
-    //add the new node and increment the total count.
-    //the total count is used as an index, 
-    //so this will prepare the node for the next insertion.
-    //We also have a safety check to avoid out-of-bounds indexing
-    if (ptOutputs->m_nSize < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND)
+    􏶲add the new node and increment the total count.
+    the total count is used as an index, 
+    so this will prepare the node for the next insertion.
+    We also have a safety check to avoid out-of-bounds indexing􏶱
+    if (􏵴size􏵵 < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND)
     {
-    ptOutputs->m_nPath[ptOutputs->m_nSize] = nNode;
-    ++ptOutputs->m_nSize;
+    􏵴path􏵵[􏵴size􏵵] = nNode;
+    ++􏵴size􏵵;
     }
     else
     {
@@ -47,14 +47,14 @@ of the overall path list returned to the user.􏷯
 􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node to test the existence of.􏶿
 􏶾BOOL􏶽􏶼exists􏶻􏶺􏵱 if the node exists, and 􏵰 if it does not􏶹
 􏶴
-  //linear search to check if node has already been added to list
-  //this functions gets called to avoid cycles when traversing the graph.
-  //Inefficient?  It might be better to set a 'HasVisted' bool for each node,
-  //but I don't think the paths are going to get so long that it will be a problem.
-  //what I'd really like though is an unordered set(hash table), but this is C.
+  􏶲linear search to check if node has already been added to list
+  this functions gets called to avoid cycles when traversing the graph.
+  Inefficient?  It might be better to set a 'HasVisted' bool for each node,
+  but I don't think the paths are going to get so long that it will be a problem.
+  what I'd really like though is an unordered set(hash table), but this is C.􏶱
   size_t nIndex = 0;
-  for (; nIndex < ptOutputs->m_nSize; ++nIndex){
-    if (ptOutputs->m_nPath[nIndex] == nNode){
+  for (; nIndex < 􏵴size􏵵; ++nIndex){
+    if (􏵴path􏵵[nIndex] == nNode){
       return 􏵱;
     }
   }

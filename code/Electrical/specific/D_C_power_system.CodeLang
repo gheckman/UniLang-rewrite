@@ -29,36 +29,36 @@ which can be used to query the graph and get back the actual node.
 
   size_t nIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
 
-  //Create an empty generic electrical graph;
-  InitializeElectricalGraph(&ptOutputs->m_tGraph);
+  􏶲Create an empty generic electrical graph􏶱
+  InitializeElectricalGraph(&􏵴graph􏵵);
   
-  //add the battery box portion to the electrical graph data structure,
-  //Initializing will establish all of the component IDs in the battery box
-  InitializeBatteryBox(&ptOutputs->m_tBatteryBox,&ptOutputs->m_tGraph);
+  􏶲add the battery box portion to the electrical graph data structure,
+  Initializing will establish all of the component IDs in the battery box􏶱
+  InitializeBatteryBox(&􏵴battery box􏵵,&􏵴graph􏵵);
   
-  //symmetric boxes
+  􏶲symmetric boxes􏶱
   for (; nIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++nIndex){
     
-    //add the diode box portions to the electrical graph data structure,
-    //Initializing will establish all of the component IDs in the diode boxes
-    InitializeDiodeBox(&ptOutputs->m_tDiodeBox[nIndex],&ptOutputs->m_tGraph);
+    􏶲add the diode box portions to the electrical graph data structure,
+    Initializing will establish all of the component IDs in the diode boxes􏶱
+    InitializeDiodeBox(&􏵴diode box􏵵[nIndex],&􏵴graph􏵵);
     
-    //add the distribution box portions to the electrical graph data structure,
-    //Initializing will establish all of the component IDs in the distribution boxes
-    InitializeDistributionBox(&ptOutputs->m_tDistributionBox[nIndex],&ptOutputs->m_tGraph);
+    􏶲add the distribution box portions to the electrical graph data structure,
+    Initializing will establish all of the component IDs in the distribution boxes􏶱
+    InitializeDistributionBox(&􏵴distribution box􏵵[nIndex],&􏵴graph􏵵);
     
-    //add the after junction box portions to the electrical graph data structure,
-    //Initializing will establish all of the component IDs in the after junction boxes
-    InitializeAfterJunctionBox(&ptOutputs->m_tAfterJunctionBox[nIndex],&ptOutputs->m_tGraph);
+    􏶲add the after junction box portions to the electrical graph data structure,
+    Initializing will establish all of the component IDs in the after junction boxes􏶱
+    InitializeAfterJunctionBox(&􏵴after junction box􏵵[nIndex],&􏵴graph􏵵);
   }
   
-  //add the overhead panel portion to the electrical graph data structure.
-  //Initializing will establish all of the component IDs in the overhead panel.
-  InitializeOverheadPanel(&ptOutputs->m_tOverheadPanel,&ptOutputs->m_tGraph);
+  􏶲add the overhead panel portion to the electrical graph data structure.
+  Initializing will establish all of the component IDs in the overhead panel.􏶱
+  InitializeOverheadPanel(&􏵴overhead panel􏵵,&􏵴graph􏵵);
   
-  //connect all of the boxes together
-  //i.e. apply connections that aren't visible inside any of the individual boxes
-  //ConnectBoxesTogether(ptOutputs);
+  􏶲connect all of the boxes together
+  i.e. apply connections that aren't visible inside any of the individual boxes􏶱
+  ConnectBoxesTogether(ptOutputs);
 􏶳
 
 􏷘-􏷗􏷒connect boxes together􏷑
@@ -67,107 +67,107 @@ this stage adds the remaining wires to connect components in the boxes together�
 􏶴
   size_t nIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
   
-  //a junction point used to connect boxes
+  􏶲a junction point used to connect boxes􏶱
   size_t nJunction;
   ElectricalGraphInputsT tInputs = {0};
   tInputs.m_bAddNode = 􏵱;
   
-  //add the junction to graph
+  􏶲add the junction to graph􏶱
   strcpy(tInputs.m_szName, "junction");
   tInputs.m_eType = NODE_TYPE_JUNCTION;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
-  nJunction = ptOutputs->m_tGraph.m_nId;
+  UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
+  nJunction = 􏵴graph􏵵.m_nId;
   
   tInputs.m_bAddNode = 􏵰;
   tInputs.m_bAddWire = 􏵱;
   
-  //connect nodes from other boxes together
+  􏶲connect nodes from other boxes together􏶱
   
-  //connects battery bus to diode boxes
-  tInputs.m_nNodeX = ptOutputs->m_tBatteryBox.m_nFuse1;
-  tInputs.m_nNodeY = ptOutputs->m_tDiodeBox[ELECTRICAL_SYSTEM_SIDE_LEFT].m_nDiode3;
+  􏶲connects battery bus to diode boxes􏶱
+  tInputs.m_nNodeX = 􏵴battery box􏵵.m_nFuse1;
+  tInputs.m_nNodeY = 􏵴diode box􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT].m_nDiode3;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   
-  tInputs.m_nNodeX = ptOutputs->m_tBatteryBox.m_nFuse3;
-  tInputs.m_nNodeY = ptOutputs->m_tDiodeBox[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_nDiode3;
+  tInputs.m_nNodeX = 􏵴battery box􏵵.m_nFuse3;
+  tInputs.m_nNodeY = 􏵴diode box􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_nDiode3;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   
   tInputs.m_nNodeX = nJunction;
-  tInputs.m_nNodeY = ptOutputs->m_tBatteryBox.m_nFuse2;
+  tInputs.m_nNodeY = 􏵴battery box􏵵.m_nFuse2;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   
   
-  //symmetric connections
+  􏶲symmetric connections􏶱
   for (; nIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++nIndex){
     
-    //junction connects distribution boxes and battery box
+    􏶲junction connects distribution boxes and battery box􏶱
     tInputs.m_nNodeX = nJunction;
-    tInputs.m_nNodeY = ptOutputs->m_tDistributionBox[nIndex].m_nBusTieRelay;
+    tInputs.m_nNodeY = 􏵴distribution box􏵵[nIndex].m_nBusTieRelay;
     tInputs.m_fResistance = 0;
     tInputs.m_bHasFlow = 􏵱;
-    UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
-    tInputs.m_nNodeX = ptOutputs->m_tDiodeBox[nIndex].m_nDiode1;
-    tInputs.m_nNodeY = ptOutputs->m_tOverheadPanel.m_nEssentialBus[nIndex];
+    tInputs.m_nNodeX = 􏵴diode box􏵵[nIndex].m_nDiode1;
+    tInputs.m_nNodeY = 􏵴overhead panel􏵵.m_nEssentialBus[nIndex];
     tInputs.m_fResistance = 0;
     tInputs.m_bHasFlow = 􏵱;
-    UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
 
-    tInputs.m_nNodeX = ptOutputs->m_tDiodeBox[nIndex].m_nDiode2;
-    tInputs.m_nNodeY = ptOutputs->m_tOverheadPanel.m_nEssentialBus[nIndex];
+    tInputs.m_nNodeX = 􏵴diode box􏵵[nIndex].m_nDiode2;
+    tInputs.m_nNodeY = 􏵴overhead panel􏵵.m_nEssentialBus[nIndex];
     tInputs.m_fResistance = 0;
     tInputs.m_bHasFlow = 􏵱;
-    UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
 
-    tInputs.m_nNodeX = ptOutputs->m_tDiodeBox[nIndex].m_nDiode3;
-    tInputs.m_nNodeY = ptOutputs->m_tOverheadPanel.m_nEssentialBus[nIndex];
+    tInputs.m_nNodeX = 􏵴diode box􏵵[nIndex].m_nDiode3;
+    tInputs.m_nNodeY = 􏵴overhead panel􏵵.m_nEssentialBus[nIndex];
     tInputs.m_fResistance = 0;
     tInputs.m_bHasFlow = 􏵱;
-    UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
-    //connect the overhead panel to the distribution and diode boxes
-    tInputs.m_nNodeX = ptOutputs->m_tDistributionBox[nIndex].m_nShedBusRelay;
-    tInputs.m_nNodeY = ptOutputs->m_tOverheadPanel.m_nShedBus[nIndex];
+    􏶲connect the overhead panel to the distribution and diode boxes􏶱
+    tInputs.m_nNodeX = 􏵴distribution box􏵵[nIndex].m_nShedBusRelay;
+    tInputs.m_nNodeY = 􏵴overhead panel􏵵.m_nShedBus[nIndex];
     tInputs.m_fResistance = 0;
     tInputs.m_bHasFlow = 􏵱;
-    UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
-    //connects distribution boxes with after junction boxes
-    tInputs.m_nNodeX = ptOutputs->m_tDistributionBox[nIndex].m_nMainBus;
-    tInputs.m_nNodeY = ptOutputs->m_tAfterJunctionBox[nIndex].m_nGeneratorBus;
+    􏶲connects distribution boxes with after junction boxes􏶱
+    tInputs.m_nNodeX = 􏵴distribution box􏵵[nIndex].m_nMainBus;
+    tInputs.m_nNodeY = 􏵴after junction box􏵵[nIndex].m_nGeneratorBus;
     tInputs.m_fResistance = 0;
     tInputs.m_bHasFlow = 􏵱;
-    UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
-    //connects diode boxes with distribution boxes
-    tInputs.m_nNodeX = ptOutputs->m_tDiodeBox[nIndex].m_nDiode1;
-    tInputs.m_nNodeY = ptOutputs->m_tDistributionBox[nIndex].m_nFuse3;
+    􏶲connects diode boxes with distribution boxes􏶱
+    tInputs.m_nNodeX = 􏵴diode box􏵵[nIndex].m_nDiode1;
+    tInputs.m_nNodeY = 􏵴distribution box􏵵[nIndex].m_nFuse3;
     tInputs.m_fResistance = 0;
     tInputs.m_bHasFlow = 􏵱;
-    UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+    UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   }
   
-  //distribution to diode box crossover
-  tInputs.m_nNodeX = ptOutputs->m_tDiodeBox[ELECTRICAL_SYSTEM_SIDE_LEFT].m_nDiode2;
-  tInputs.m_nNodeY = ptOutputs->m_tDistributionBox[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_nFuse4;
+  􏶲distribution to diode box crossover􏶱
+  tInputs.m_nNodeX = 􏵴diode box􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT].m_nDiode2;
+  tInputs.m_nNodeY = 􏵴distribution box􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_nFuse4;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
-  //distribution to diode box crossover
-  tInputs.m_nNodeX = ptOutputs->m_tDiodeBox[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_nDiode2;
-  tInputs.m_nNodeY = ptOutputs->m_tDistributionBox[ELECTRICAL_SYSTEM_SIDE_LEFT].m_nFuse4;
+  􏶲distribution to diode box crossover􏶱
+  tInputs.m_nNodeX = 􏵴diode box􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_nDiode2;
+  tInputs.m_nNodeY = 􏵴distribution box􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT].m_nFuse4;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(&ptOutputs->m_tGraph,&tInputs);
+  UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   
 
 􏶳

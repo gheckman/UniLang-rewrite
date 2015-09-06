@@ -29,52 +29,50 @@ Reseting the time to a different value will require a re-initalize.
 􏶜c􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year to set the date at􏶿
 􏶜c􏶝􏷆unsigned int􏷅􏷄milliseconds􏷃􏷀the number of milliseconds in a day to start the current date time at􏶿
 􏶴
-//we assume the input parameters are valid
-ptOutputs->m_nDay = nDay;
-ptOutputs->m_eMonth = eMonth;
-ptOutputs->m_nYear = nYear;
-ptOutputs->m_nMilliseconds = nMilliseconds;
+􏶲we assume the input parameters are valid􏶱
+􏵴day􏵵 = nDay;
+􏵴month􏵵 = eMonth;
+􏵴year􏵵 = nYear;
+􏵴milliseconds􏵵 = nMilliseconds;
 􏶳
-
 
 
 􏷘+􏷗􏷒increase by number of milliseconds􏷑
 􏷐Increment the 􏶐 by a number of milliseconds.􏷏
 􏶠Moving forward a number of milliseconds will properly adjust all of the other values.􏶡
-􏷔transformer􏷓
 􏶜c􏶝􏷆unsigned int􏷅􏷄number of milliseconds􏷃􏷀the number of milliseconds to increase the current date time by􏶿
 􏶴
-//increase the number of milliseconds.
-//we assume this happens frequently enough that we don't have
-//more than a day delay between millisecond updates.
-ptOutputs->m_nMilliseconds += nNumberOfMilliseconds;
+􏶲increase the number of milliseconds.
+we assume this happens frequently enough that we don't have
+more than a day delay between millisecond updates.􏶱
+􏵴milliseconds􏵵 += nNumberOfMilliseconds;
 
-//handles milliseconds overflow
-//wraps value for milliseconds and increments day during millisecond overflow
-if(ptOutputs->m_nMilliseconds >= NUMBER_OF_MILLISECONDS_IN_A_DAY)
+􏶲handles milliseconds overflow
+wraps value for milliseconds and increments day during millisecond overflow􏶱
+if(􏵴milliseconds􏵵 >= NUMBER_OF_MILLISECONDS_IN_A_DAY)
 {
-    ptOutputs->m_nMilliseconds %= NUMBER_OF_MILLISECONDS_IN_A_DAY;
-    ++ptOutputs->m_nDay;
+    􏵴milliseconds􏵵 %= NUMBER_OF_MILLISECONDS_IN_A_DAY;
+    ++􏵴day􏵵;
 }
 
-//handles day overflow
-//resets value for day and increases the month by 1 during day overflow
-if(ptOutputs->m_nDay > NumberOfDaysInTheMonth(ptOutputs->m_eMonth,ptOutputs->m_nYear))
+􏶲handles day overflow
+resets value for day and increases the month by 1 during day overflow􏶱
+if(􏵴day􏵵 > NumberOfDaysInTheMonth(􏵴month􏵵,􏵴year􏵵))
 {
-    ptOutputs->m_nDay = 1;
-    ++ptOutputs->m_eMonth;
+    􏵴day􏵵 = 1;
+    ++􏵴month􏵵;
 }
 
-//handles month overflow
-//resets value for month and increases the year by 1 during month overflow
-if(ptOutputs->m_eMonth > NUMBER_OF_MONTHS_IN_A_YEAR)
+􏶲handles month overflow
+resets value for month and increases the year by 1 during month overflow􏶱
+if(􏵴month􏵵 > NUMBER_OF_MONTHS_IN_A_YEAR)
 {
-    ptOutputs->m_eMonth = 1;
-    ++ptOutputs->m_nYear;
+    􏵴month􏵵 = 1;
+    ++􏵴year􏵵;
 }
 
-//max value of year is max the value of an unsigned int
-//large enough for our use cases.
+􏶲max value of year is max the value of an unsigned int
+large enough for our use cases.􏶱
 􏶳
 
 

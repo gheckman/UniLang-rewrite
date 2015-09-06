@@ -8,17 +8,28 @@ Functions for converting between ticks and milliseconds based on the clock rate.
 􏷬Trevor Hickey􏷫
 􏷤TaskLib􏷣􏷢USES: taskDelay()􏷡
 􏷤sysLib􏷣􏷢USES: sysClkRateGet()􏷡
+􏷤stdioLib􏷣􏷢USES: BOOL􏷡
 
 􏷒tick period in milliseconds􏷑
 􏷐Get the tick period of the system clock in terms of milliseconds.􏷏
 􏶠queries the clock rate using the VxWorks API􏶡
 􏶾float􏶽􏶼number of milliseconds per tick􏶻􏶺the tick period of the system clock in terms of milliseconds􏶹
 􏶴
-//take the number of ticks per second that the system clock will be rated at,
-//and convert the value to the duration of each tick in milliseconds.
-//example: A clock rate of 1,000 ticks per second, will create a
-//tick period of 1 millisecond.
-return 1.0 / sysClkRateGet() * 1000;
+􏶲statics used to avoid calling sysClkRateGet() and doing the same calculation again and again.
+Are we saving computation time by checking to see if we've already checked the tick rate once before? Possibly.􏶱
+static BOOL s_bTickPeriodInitialized = FALSE;
+static float s_fTickPeriod_ms = 0.0f;
+    
+􏶲take the number of ticks per second that the system clock will be rated at,
+and convert the value to the duration of each tick in milliseconds.
+example: A clock rate of 1,000 ticks per second, will create a
+tick period of 1 millisecond.􏶱
+if (!s_bTickPeriodInitialized) { 
+    s_fTickPeriod_ms = 1000.0f * (1.0f / sysClkRateGet());
+    s_bTickPeriodInitialized = TRUE;
+}
+
+return s_fTickPeriod_ms;
 􏶳
 
 􏷒milliseconds to ticks􏷑
@@ -27,7 +38,7 @@ return 1.0 / sysClkRateGet() * 1000;
 􏶜c􏶝􏷆unsigned long􏷅􏷄number of milliseconds􏷃􏷀the amount of milliseconds to convert into clock ticks􏶿
 􏶾unsigned long􏶽􏶼number of ticks􏶻􏶺the number of clock ticks that will occur in the amount of milliseconds given􏶹
 􏶴
-//avoid division by zero
+􏶲avoid division by zero􏶱
 if (TickPeriodInMilliseconds() != 0.0){
   return (unsigned int)(nNumberOfMilliseconds / TickPeriodInMilliseconds());
 }
@@ -40,7 +51,7 @@ return 0;
 􏶜c􏶝􏷆unsigned long􏷅􏷄number of ticks􏷃􏷀the amount of clock ticks to convert into milliseconds􏶿
 􏶾unsigned int􏶽􏶼number of milliseconds􏶻􏶺the number of milliseconds that will occur in the amount of clock ticks given􏶹
 􏶴
-return TickPeriodInMilliseconds() * nNumberOfTicks;
+return (unsigned long)TickPeriodInMilliseconds() * nNumberOfTicks;
 􏶳
 
 􏷒delay task number of milliseconds􏷑
@@ -48,7 +59,7 @@ return TickPeriodInMilliseconds() * nNumberOfTicks;
 􏶠By querying the VxWorks API for the clock rate, we can decide what value to give taskDelay based on the passed in value.􏶡
 􏶜c􏶝􏷆int􏷅􏷄number of milliseconds to delay􏷃􏷀The number of milliseconds to delay the current task by.􏶿
 􏶴
-//delay for the calculated number of ticks
-//we convert the milliseconds into the appropriate amount of tick time
+􏶲delay for the calculated number of ticks
+we convert the milliseconds into the appropriate amount of tick time􏶱
 taskDelay(MillisecondsToTicks(nNumberOfMillisecondsToDelay));
 􏶳
