@@ -35,11 +35,11 @@
 􏶾size_t􏶽􏶼id􏶻􏶺a unique id that represents the node just created.􏶹
 􏶴
   􏶲calculate the new node id􏶱
-  size_t nId = 􏵴number of nodes􏵵;
+  size_t unId = 􏵴number of nodes􏵵;
   
   􏶲create the new node with a unique id􏶱
   NodeOutputsT tNode;
-  InitializeNode(&tNode,􏵶name􏵷,nId,􏵶type􏵷,􏵶resistance􏵷,􏵶has flow􏵷);
+  InitializeNode(&tNode,􏵶name􏵷,unId,􏵶type􏵷,􏵶resistance􏵷,􏵶has flow􏵷);
   
   􏶲add the new node and increment the total count.
   the total count is used as an index, 
@@ -55,7 +55,7 @@
     perror("Too many nodes added to electrical graph");
   }
   
-  return nId;
+  return unId;
 􏶳
 
 􏷘+􏷗􏷒add wire􏷑
@@ -68,13 +68,13 @@
 􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   􏶲calculate the wire and get the id􏶱
-  size_t nId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
+  size_t unId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
   
   􏶲connect the wire between the two components􏶱
-  ConnectWireBetweenTwoOtherNodesBidirectionally(ptOutputs,nId,􏵶node x􏵷,􏵶node y􏵷);
+  ConnectWireBetweenTwoOtherNodesBidirectionally(ptOutputs,unId,􏵶node x􏵷,􏵶node y􏵷);
   
   􏶲give the user a lookup key(an id) to their newly created node􏶱
-  return nId;
+  return unId;
 􏶳
 
 􏷘+􏷗􏷒add unidirectional wire􏷑
@@ -88,13 +88,13 @@ and applies the appropriate junction points.􏶡
 􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   􏶲calculate the wire and get the id􏶱
-  size_t nId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
+  size_t unId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
   
   􏶲connect the wire between the two components􏶱
-  ConnectWireBetweenTwoOtherNodesUnidirectionally(ptOutputs,nId,􏵶node x􏵷,􏵶node y􏵷);
+  ConnectWireBetweenTwoOtherNodesUnidirectionally(ptOutputs,unId,􏵶node x􏵷,􏵶node y􏵷);
   
   􏶲give the user a lookup key(an id) to their newly created node􏶱
-  return nId;
+  return unId;
 􏶳
 
 􏷘+􏷗􏷒connect node to common ground􏷑
@@ -114,11 +114,11 @@ This will clear all the previous calculated electrical data.􏶡
 􏶴 
   􏶲iterate over all of the node elements,􏶱
   􏶲and clear their calculated electrical data.􏶱
-  size_t nIndex = 0;
-  for (; nIndex < 􏵴number of nodes􏵵; ++nIndex)
+  size_t unIndex = 0;
+  for (; unIndex < 􏵴number of nodes􏵵; ++unIndex)
   {
-    􏵴nodes􏵵[nIndex].m_fVoltage = 0;
-    􏵴nodes􏵵[nIndex].m_fResistance = 0;
+    􏵴nodes􏵵[unIndex].m_fVoltage = 0;
+    􏵴nodes􏵵[unIndex].m_fResistance = 0;
   }
 􏶳
 
@@ -128,10 +128,10 @@ This will clear all the previous calculated electrical data.􏶡
 􏶴
   􏶲iterate over all of the node elements,􏶱
   􏶲and turn on their ability to receive flow.􏶱
-  size_t nIndex = 0;
-  for (; nIndex < 􏵴number of nodes􏵵; ++nIndex)
+  size_t unIndex = 0;
+  for (; unIndex < 􏵴number of nodes􏵵; ++unIndex)
   {
-    􏵴nodes􏵵[nIndex].m_bHasFlow = 􏵱;
+    􏵴nodes􏵵[unIndex].m_bHasFlow = 􏵱;
   }
 􏶳
 
@@ -264,7 +264,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
   􏶲check if node already exists in path􏶱
   BOOL bAlreadyExistsInPath;
   tPathInputs.m_bExists = 􏵱;
-  tPathInputs.m_nNode = 􏵶node􏵷;
+  tPathInputs.m_unNode = 􏵶node􏵷;
   UpdatePath(􏵶seen􏵷,&tPathInputs);
   bAlreadyExistsInPath = 􏵶seen􏵷->m_bExists;
   tPathInputs.m_bExists = 􏵰;
@@ -292,8 +292,8 @@ The order of NodeX and NodeY IS NOT important.􏶡
       UpdatePaths(􏵶path list􏵷,&tPathsInputs);
     }
 
-    --􏵶seen􏵷->m_nSize;
-    --􏵶list􏵷->m_nSize;
+    --􏵶seen􏵷->m_unSize;
+    --􏵶list􏵷->m_unSize;
   }
 􏶳
 
@@ -308,11 +308,11 @@ The order of NodeX and NodeY IS NOT important.􏶡
   􏶲recurse down all of the neighbors that we haven't seen before,􏶱
   􏶲and that we have the ability to flow through􏶱
   PathOutputsT tUnseenNeighbors = GetUnseenNeighbors(ptOutputs,􏵶node􏵷,􏵶seen􏵷);
-  size_t nIndex = 0;
+  size_t unIndex = 0;
   
-  for (;nIndex < tUnseenNeighbors.m_nSize; ++nIndex)
+  for (;unIndex < tUnseenNeighbors.m_unSize; ++unIndex)
   {
-    RecursiveGatherOfPaths(ptOutputs,tUnseenNeighbors.m_nPath[nIndex],􏵶seen􏵷,􏵶list􏵷,􏵶path list􏵷);
+    RecursiveGatherOfPaths(ptOutputs,tUnseenNeighbors.m_unPath[unIndex],􏵶seen􏵷,􏵶list􏵷,􏵶path list􏵷);
   }
 􏶳
 
@@ -326,7 +326,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
 
   􏶲the list of unseen paths that will be built and returned􏶱
   PathOutputsT tUnseenNodes;
-  size_t nIndex = 0;
+  size_t unIndex = 0;
   
   􏶲set the 'Add' method trigger􏶱
   PathInputsT tPathInputs = {0};
@@ -336,14 +336,14 @@ The order of NodeX and NodeY IS NOT important.􏶡
   InitializePath(&tUnseenNodes);
   
   􏶲loop over all of the junctions for a particular node􏶱
-  for (;nIndex < 􏵴nodes􏵵[􏵶name􏵷].m_nNumberOfJunctions; ++nIndex)
+  for (;unIndex < 􏵴nodes􏵵[unIndex].m_unNumberOfJunctions; ++unIndex)
   {
     
     􏶲decide whether we have an unseen neighbor worth traversing􏶱
-    if(IsTraversableUnseenNeighbor(ptOutputs,􏵶node􏵷,nIndex,􏵶seen􏵷))
+    if(IsTraversableUnseenNeighbor(ptOutputs,􏵶node􏵷,unIndex,􏵶seen􏵷))
     {
       􏶲add the node as it can be flowed through, and has not been visited yet􏶱
-      tPathInputs.m_nNode = 􏵴nodes􏵵[􏵶node􏵷].m_tJunctions[nIndex].m_nConnectionId;
+      tPathInputs.m_unNode = 􏵴nodes􏵵[􏵶node􏵷].m_tJunctions[unIndex].m_unConnectionId;
       UpdatePath(&tUnseenNodes,&tPathInputs);
     }
     
@@ -370,7 +370,7 @@ and whether or not the junction between them is 'flowable'.􏶡
   􏶲check if node already exists in path􏶱
   PathInputsT tPathInputs = {0};
   tPathInputs.m_bExists = 􏵱;
-  tPathInputs.m_nNode = 􏵴nodes􏵵[􏵶node􏵷].m_tJunctions[􏵶junction index􏵷].m_nConnectionId;
+  tPathInputs.m_unNode = 􏵴nodes􏵵[􏵶node􏵷].m_tJunctions[􏵶junction index􏵷].m_unConnectionId;
   UpdatePath(􏵶seen􏵷,&tPathInputs);
 
   􏶲if we haven't seen the node before􏶱

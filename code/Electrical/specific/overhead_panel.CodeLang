@@ -103,17 +103,17 @@ and puts them into the generic electrical graph data structure.􏷏
   tInputs.m_bAddNode = 􏵱;
   
   //add node to graph
-  strcpy(tInputs.m_szName, szName);
+  strcpy(tInputs.m_szName, 􏵶name􏵷);
   tInputs.m_eType = NODE_TYPE_DEVICE;
-  tInputs.m_fResistance = fResistance;
-  tInputs.m_bHasFlow = bHasFlow;
+  tInputs.m_fResistance = 􏵶resistance􏵷;
+  tInputs.m_bHasFlow = 􏵶has flow􏵷;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  *pnNodeId = 􏵶graph􏵷->m_nId;
+  *􏵶node id􏵷 = 􏵶graph􏵷->m_unId;
   
   //add device to the ground.
   tInputs.m_bAddNode = 􏵰;
   tInputs.m_bConnectNodeToCommonGround = 􏵱;
-  tInputs.m_nNode = *pnNodeId;
+  tInputs.m_unNode = *􏵶node id􏵷;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 
@@ -131,17 +131,17 @@ and puts them into the generic electrical graph data structure.􏷏
   tInputs.m_bAddNode = 􏵱;
   
   //add node to graph
-  strcpy(tInputs.m_szName, szName);
+  strcpy(tInputs.m_szName, 􏵶name􏵷);
   tInputs.m_eType = NODE_TYPE_BUS;
-  tInputs.m_fResistance = fResistance;
-  tInputs.m_bHasFlow = bHasFlow;
+  tInputs.m_fResistance = 􏵶resistance􏵷;
+  tInputs.m_bHasFlow = 􏵶has flow􏵷;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  *pnNodeId = 􏵶graph􏵷->m_nId;
+  *􏵶node id􏵷 = 􏵶graph􏵷->m_unId;
   
   //add device to the ground.
   tInputs.m_bAddNode = 􏵰;
   tInputs.m_bConnectNodeToCommonGround = 􏵱;
-  tInputs.m_nNode = *pnNodeId;
+  tInputs.m_unNode = *􏵶node id􏵷;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 
@@ -428,41 +428,41 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠The nodes being connected will need to be created first.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
 􏶴
-  size_t nIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
-  for (; nIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++nIndex){
+  size_t unIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
+  for (; unIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++unIndex){
     
     //row 1
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴gen sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴fire e sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴fuel l sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴hyd p sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴wu sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴cad sys􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴vemd sys􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴gen sys􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fire e sys􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fuel l sys􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴hyd p sys􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴wu sys􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴cad sys􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴vemd sys􏵵[unIndex]);
     
     //row 2
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴tqn2 eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴ovsp eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴primep eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴fired eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴fuelv eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴ign eng􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴start eng􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴tqn2 eng􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ovsp eng􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴primep eng􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fired eng􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fuelv eng􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ign eng􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴start eng􏵵[unIndex]);
     
     //row 3
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴hums􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴floats􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴hums􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴floats􏵵[unIndex]);
     
     //row 4
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴pitch sas􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴pitch sas􏵵[unIndex]);
     
     //row 5
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴adc􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴avio mstr􏵵[nIndex]);
-    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,nIndex,􏵴ess avio main􏵵[nIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴adc􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴avio mstr􏵵[unIndex]);
+    ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ess avio main􏵵[unIndex]);
     
     //row 7
-    ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,nIndex,􏵴shed avio main􏵵[nIndex]);
+    ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,unIndex,􏵴shed avio main􏵵[unIndex]);
   }
   
   //row 2
@@ -533,8 +533,8 @@ and put them into the generic electrical graph data structure.􏷏
   tInputs.m_bAddWire = 􏵱;
   
   //connect device and bus
-  tInputs.m_nNodeX = 􏵶device􏵷;
-  tInputs.m_nNodeY = 􏵴essential bus􏵵[􏵶side􏵷];
+  tInputs.m_unNodeX = 􏵶device􏵷;
+  tInputs.m_unNodeY = 􏵴essential bus􏵵[􏵶side􏵷];
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
@@ -551,8 +551,8 @@ and put them into the generic electrical graph data structure.􏷏
   tInputs.m_bAddWire = 􏵱;
   
   //connect device and bus
-  tInputs.m_nNodeX = 􏵶device􏵷;
-  tInputs.m_nNodeY = 􏵴shed bus􏵵[􏵶side􏵷];
+  tInputs.m_unNodeX = 􏵶device􏵷;
+  tInputs.m_unNodeY = 􏵴shed bus􏵵[􏵶side􏵷];
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);

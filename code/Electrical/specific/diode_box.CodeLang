@@ -15,13 +15,13 @@ Initializing a 􏶐 will construct all of its nodes into the generic electrical 
 It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
-  //create all the internal nodes inside the graph data structure
+  􏶲create all the internal nodes inside the graph data structure􏶱
   CreateNodes(ptOutputs,􏵶graph􏵷);
   
-  //connect these newly created nodes
+  􏶲connect these newly created nodes􏶱
   CreateWires(ptOutputs,􏵶graph􏵷);
   
-  //apply any nodes to ground that should be
+  􏶲apply any nodes to ground that should be􏶱
   ApplyNodesToGround(ptOutputs,􏵶graph􏵷);
 􏶳
 
@@ -30,33 +30,33 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶠This will give all of the node a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
-  //create all of the vertexes that are part of the 􏶐
+  􏶲create all of the vertexes that are part of the 􏶐􏶱
   ElectricalGraphInputsT tInputs = {0};
   tInputs.m_bAddNode = 􏵱;
   
-  //add node to graph
+  􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "diode 1");
   tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 1􏵵 = 􏵶graph􏵷->m_nId;
+  􏵴diode 1􏵵 = 􏵶graph􏵷->m_unId;
   
-  //add node to graph
+  􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "diode 2");
   tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 2􏵵 = 􏵶graph􏵷->m_nId;
+  􏵴diode 2􏵵 = 􏵶graph􏵷->m_unId;
   
-  //add node to graph
+  􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "diode 3");
   tInputs.m_eType = NODE_TYPE_DIODE;
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 3􏵵 = 􏵶graph􏵷->m_nId;
+  􏵴diode 3􏵵 = 􏵶graph􏵷->m_unId;
 􏶳
 
 􏷘-􏷗􏷒create wires􏷑
