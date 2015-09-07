@@ -336,7 +336,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
   InitializePath(&tUnseenNodes);
   
   􏶲loop over all of the junctions for a particular node􏶱
-  for (;unIndex < 􏵴nodes􏵵[unIndex].m_unNumberOfJunctions; ++unIndex)
+  for (;unIndex < 􏵴nodes􏵵[􏵶node􏵷].m_unNumberOfJunctions; ++unIndex)
   {
     
     􏶲decide whether we have an unseen neighbor worth traversing􏶱
