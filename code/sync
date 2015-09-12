@@ -10,14 +10,22 @@ PATH_TO_TEST_ROOT="$ACTUAL_REPO""/""$TEST_ROOT""/"
 
 function Transfer-Global(){
   Print-Whats-Happening "Global" "$1"
-  Export-It "$1";
+  Export-It-Good "$1";
   Copy-It "$1" "$2";
   Style-It "$1" "$2";
   Remove-Generated-Code-From-Work-Area "$1";
 }
-function Transfer-Object(){
+function Transfer-Object-Good(){
   Print-Whats-Happening "Object" "$1" 
-  Export-It "$1";
+  Export-It-Good "$1";
+  Copy-It "$1" "$2";
+  Style-It "$1" "$2";
+  Test-It "$1" "$3";
+  Remove-Generated-Code-From-Work-Area "$1";
+}
+function Transfer-Object-Bad(){
+  Print-Whats-Happening "Object" "$1" 
+  Export-It-Bad "$1";
   Copy-It "$1" "$2";
   Style-It "$1" "$2";
   Test-It "$1" "$3";
@@ -31,14 +39,24 @@ function Print-Whats-Happening(){
     echo -n "$1"" - ";
     Caps_Case "$2";
 }
-function Export-It(){
+function Export-It-Good(){
 
   #export CodeLang stuff
   #currently:
   # - f2si export C code (in directory)
   # - unit test wrapper for f2si components (in directory) 
-  CodeLang-compiler --exporter="f2si" --language="c" "$1".CodeLang;
+  CodeLang-compiler --exporter="f2si" --language="c" --style="good" "$1".CodeLang;
 }
+function Export-It-Bad(){
+
+  #export CodeLang stuff
+  #currently:
+  # - f2si export C code (in directory)
+  # - unit test wrapper for f2si components (in directory) 
+  CodeLang-compiler --exporter="f2si" --language="c" --style="bad" "$1".CodeLang;
+}
+
+
 function Copy-It(){
   
   #folder name it was exported to
@@ -111,23 +129,23 @@ cd ..;
 
 #Electrical related
 cd Electrical/generic;
-Transfer-Object "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Object "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Global "node_type" "Components/Electrical/Generic"
-Transfer-Object "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Object "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Object "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
+Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
+Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
+Transfer-Global-Bad "node_type" "Components/Electrical/Generic"
+Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
+Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
 cd ../../;
 
 #Electrical related
 cd Electrical/specific;
-Transfer-Object "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-Transfer-Object "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-Transfer-Object "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-Transfer-Object "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-Transfer-Object "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
 #Transfer-Global "electrical_system_side" "Components/Electrical/Specific"
-Transfer-Object "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
 cd ../../;
 
 #Other stuff
