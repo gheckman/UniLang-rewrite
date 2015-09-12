@@ -8,7 +8,7 @@ These are derived from the Wiring Diagram Manual (WDM) MBB BK117 C-2.􏷯
 􏷦stddef􏷥􏷢HASA: size_t􏷡
 􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
 􏷤string􏷣􏷢USES: strcpy()􏷡
-􏷤ElectricalSystemSide􏷣􏷢USES: ElectricalSystemSideE􏷡
+􏷤AircraftGeneralConst􏷣􏷢USES: ElectricalSystemSideE􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
@@ -429,7 +429,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
 􏶴
   size_t unIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
-  for (; unIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++unIndex){
+  for (; unIndex < NUM_ELECTRICAL_SYSTEM_SIDES; ++unIndex){
     
     //row 1
     ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴gen sys􏵵[unIndex]);

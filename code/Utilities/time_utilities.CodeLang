@@ -25,7 +25,7 @@ and convert the value to the duration of each tick in milliseconds.
 example: A clock rate of 1,000 ticks per second, will create a
 tick period of 1 millisecond.􏶱
 if (!s_bTickPeriodInitialized) { 
-    s_fTickPeriod_ms = 1000.0f * (1.0f / sysClkRateGet());
+    s_fTickPeriod_ms = 1000.0f * (1.0f / (float)sysClkRateGet());
     s_bTickPeriodInitialized = TRUE;
 }
 
@@ -35,12 +35,12 @@ return s_fTickPeriod_ms;
 􏷒milliseconds to ticks􏷑
 􏷐Convert a number of milliseconds into how many kernel ticks would occur in that time period.􏷏
 􏶠queries the clock rate using the VxWorks API􏶡
-􏶜c􏶝􏷆unsigned long􏷅􏷄number of milliseconds􏷃􏷀the amount of milliseconds to convert into clock ticks􏶿
-􏶾unsigned long􏶽􏶼number of ticks􏶻􏶺the number of clock ticks that will occur in the amount of milliseconds given􏶹
+􏶜c􏶝􏷆float􏷅􏷄number of milliseconds􏷃􏷀the amount of milliseconds to convert into clock ticks􏶿
+􏶾int􏶽􏶼number of ticks􏶻􏶺the number of clock ticks that will occur in the amount of milliseconds given􏶹
 􏶴
 􏶲avoid division by zero􏶱
-if (TickPeriodInMilliseconds() != 0.0){
-  return (unsigned int)(􏵶number of milliseconds􏵷 / TickPeriodInMilliseconds());
+if (TickPeriodInMilliseconds() != 0.0f){
+  return (int)(􏵶number of milliseconds􏵷 / TickPeriodInMilliseconds());
 }
 return 0;
 􏶳
@@ -48,10 +48,10 @@ return 0;
 􏷒ticks to milliseconds􏷑
 􏷐Convert a number of ticks into how many milliseconds it would take for all the ticks to occur.􏷏
 􏶠queries the clock rate using the VxWorks API􏶡
-􏶜c􏶝􏷆unsigned long􏷅􏷄number of ticks􏷃􏷀the amount of clock ticks to convert into milliseconds􏶿
-􏶾unsigned int􏶽􏶼number of milliseconds􏶻􏶺the number of milliseconds that will occur in the amount of clock ticks given􏶹
+􏶜c􏶝􏷆int􏷅􏷄number of ticks􏷃􏷀the amount of clock ticks to convert into milliseconds􏶿
+􏶾float􏶽􏶼number of milliseconds􏶻􏶺the number of milliseconds that will occur in the amount of clock ticks given􏶹
 􏶴
-return (unsigned long)TickPeriodInMilliseconds() * 􏵶number of ticks􏵷;
+return TickPeriodInMilliseconds() * (float)􏵶number of ticks􏵷;
 􏶳
 
 􏷒delay task number of milliseconds􏷑
@@ -61,5 +61,5 @@ return (unsigned long)TickPeriodInMilliseconds() * 􏵶number of ticks􏵷;
 􏶴
 􏶲delay for the calculated number of ticks
 we convert the milliseconds into the appropriate amount of tick time􏶱
-taskDelay(MillisecondsToTicks(􏵶number of milliseconds to delay􏵷));
+taskDelay(MillisecondsToTicks((float)􏵶number of milliseconds to delay􏵷));
 􏶳

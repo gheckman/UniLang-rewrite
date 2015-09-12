@@ -13,7 +13,7 @@ as well as a collection of node IDs to target any node on the graph directly.�
 􏷦DistributionBox􏷥  􏷢HASA: DistributionBoxOutputsT􏷡
 􏷦OverheadPanel􏷥  􏷢HASA: OverheadPanelOutputsT􏷡
 􏷤string􏷣􏷢USES: strcpy()􏷡
-􏷤ElectricalSystemSide􏷣􏷢OverheadPanelE􏷡
+􏷤AircraftGeneralConst􏷣􏷢USES: ElectricalSystemSideE􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
@@ -37,7 +37,7 @@ which can be used to query the graph and get back the actual node.
   InitializeBatteryBox(&􏵴battery box􏵵,&􏵴graph􏵵);
   
   􏶲symmetric boxes􏶱
-  for (; unIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++unIndex){
+  for (; unIndex < NUM_ELECTRICAL_SYSTEM_SIDES; ++unIndex){
     
     􏶲add the diode box portions to the electrical graph data structure,
     Initializing will establish all of the component IDs in the diode boxes􏶱
@@ -106,7 +106,7 @@ this stage adds the remaining wires to connect components in the boxes together�
   
   
   􏶲symmetric connections􏶱
-  for (; unIndex < TOTAL_ELECTRICAL_SYSTEM_SIDE; ++unIndex){
+  for (; unIndex < NUM_ELECTRICAL_SYSTEM_SIDES; ++unIndex){
     
     􏶲junction connects distribution boxes and battery box􏶱
     tInputs.m_unNodeX = nJunction;
