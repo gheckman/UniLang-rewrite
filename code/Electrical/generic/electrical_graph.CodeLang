@@ -35,11 +35,11 @@
 􏶾size_t􏶽􏶼id􏶻􏶺a unique id that represents the node just created.􏶹
 􏶴
   􏶲calculate the new node id􏶱
-  size_t unId = 􏵴number of nodes􏵵;
+  size_t uId = 􏵴number of nodes􏵵;
   
   􏶲create the new node with a unique id􏶱
   NodeOutputsT tNode;
-  InitializeNode(&tNode,􏵶name􏵷,unId,􏵶type􏵷,􏵶resistance􏵷,􏵶has flow􏵷);
+  InitializeNode(&tNode,􏵶name􏵷,uId,􏵶type􏵷,􏵶resistance􏵷,􏵶has flow􏵷);
   
   􏶲add the new node and increment the total count.
   the total count is used as an index, 
@@ -55,7 +55,7 @@
     perror("Too many nodes added to electrical graph");
   }
   
-  return unId;
+  return uId;
 􏶳
 
 􏷘+􏷗􏷒add wire􏷑
@@ -68,16 +68,16 @@
 􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   􏶲calculate the wire and get the id􏶱
-  size_t unId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
+  size_t uId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
   
   􏶲connect the wire between the two components􏶱
-  ConnectWireBetweenTwoOtherNodesBidirectionally(ptOutputs,unId,􏵶node x􏵷,􏵶node y􏵷);
+  ConnectWireBetweenTwoOtherNodesBidirectionally(ptOutputs,uId,􏵶node x􏵷,􏵶node y􏵷);
   
   􏶲give the user a lookup key(an id) to their newly created node􏶱
-  return unId;
+  return uId;
 􏶳
 
-􏷘+􏷗􏷒add unidirectional wire􏷑
+􏷘+􏷗􏷒add uidirectional wire􏷑
 􏷐Connect two nodes together and allow electricity to only flow one way between them.􏷏
 􏶠Connects two nodes together, adds a wire between them,
 and applies the appropriate junction points.􏶡
@@ -88,13 +88,13 @@ and applies the appropriate junction points.􏶡
 􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   􏶲calculate the wire and get the id􏶱
-  size_t unId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
+  size_t uId = AddNode(ptOutputs,"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
   
   􏶲connect the wire between the two components􏶱
-  ConnectWireBetweenTwoOtherNodesUnidirectionally(ptOutputs,unId,􏵶node x􏵷,􏵶node y􏵷);
+  ConnectWireBetweenTwoOtherNodesUidirectionally(ptOutputs,uId,􏵶node x􏵷,􏵶node y􏵷);
   
   􏶲give the user a lookup key(an id) to their newly created node􏶱
-  return unId;
+  return uId;
 􏶳
 
 􏷘+􏷗􏷒connect node to common ground􏷑
@@ -178,8 +178,8 @@ see: GetCircuitComponent(size_t nNode);
   AllowCurrentFlowOfNodesToWireBidirectionally(ptOutputs,􏵶wire id􏵷,􏵶node x􏵷,􏵶node y􏵷);
 􏶳
 
-􏷘-􏷗􏷒connect wire between two other nodes unidirectionally􏷑
-􏷐Allow current to flow unidirectionally between a wire and two nodes.􏷏
+􏷘-􏷗􏷒connect wire between two other nodes uidirectionally􏷑
+􏷐Allow current to flow uidirectionally between a wire and two nodes.􏷏
 􏶠The order of NodeX and NodeY IS important.􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀The node that will allow electricity in but not out.􏶿
@@ -187,7 +187,7 @@ see: GetCircuitComponent(size_t nNode);
 􏶴
   􏶲create a wire between two nodes that flows ONE way􏶱
   AllowCurrentFlowOutOfWireToNodes(ptOutputs,􏵶wire id􏵷,􏵶node x􏵷,􏵶node y􏵷);
-  AllowCurrentFlowOfNodesToWireUnidirectionally(ptOutputs,􏵶wire id􏵷,􏵶node x􏵷,􏵶node y􏵷);
+  AllowCurrentFlowOfNodesToWireUidirectionally(ptOutputs,􏵶wire id􏵷,􏵶node x􏵷,􏵶node y􏵷);
 􏶳
 
 􏷘-􏷗􏷒allow current flow of nodes to wire bidirectionally􏷑
@@ -208,14 +208,14 @@ see: GetCircuitComponent(size_t nNode);
   UpdateNode(&􏵴nodes􏵵[􏵶node y􏵷],&tInputs);
 􏶳
 
-􏷘-􏷗􏷒allow current flow of nodes to wire unidirectionally􏷑
-􏷐Part of the connection process of adding unidirectional flow between a wire and two nodes.􏷏
+􏷘-􏷗􏷒allow current flow of nodes to wire uidirectionally􏷑
+􏷐Part of the connection process of adding uidirectional flow between a wire and two nodes.􏷏
 􏶠The order of NodeX and NodeY IS important.􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀The node that will allow electricity in but not out.􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀The node that will allow electricity to flow both ways.􏶿
 􏶴
-  􏶲add the unidirectional junctions for the nodes􏶱
+  􏶲add the uidirectional junctions for the nodes􏶱
   JunctionOutputsT tJunctionX, tJunctionY;
   NodeInputsT tInputs = {0};
   InitializeJunction(&tJunctionX,􏵶wire id􏵷,􏵱);

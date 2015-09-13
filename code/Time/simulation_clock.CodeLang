@@ -1,0 +1,68 @@
+􏶞object􏶟
+􏷲􏷱
+􏷰􏷯
+􏷮Time􏷭 􏷮Simulation_Clock􏷭 􏷮Component􏷭
+􏷬Trevor Hickey􏷫
+􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷦DateTime􏷥􏷢HASA: HASA: DateTimeOutputsT􏷡
+􏷦MillisecondTimer􏷥􏷢HASA: MillisecondTimerOutputsT􏷡
+􏷦Month􏷥􏷢USES: MonthE􏷡
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐􏷏
+􏶠􏶡
+􏶴
+    􏶲construct the clock at 0 milliseconds and paused􏶱
+    InitializeDateTime(&􏵴date time􏵵, 0, 0, 0, 0);
+    InitializeMillisecondTimer(&􏵴timer􏵵);
+    􏵴paused􏵵 = 􏵱;
+􏶳
+
+􏷘+􏷗􏷒reset􏷑
+􏷐􏷏
+􏶠􏶡
+􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀􏶿
+􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀􏶿
+􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀􏶿
+􏶜c􏶝􏷆int􏷅􏷄milliseconds􏷃􏷀􏶿
+􏶴
+    􏶲reset the timer and set the datetime to a new date and time􏶱
+
+    􏶲reset the timer􏶱
+    MillisecondTimerInputsT tTimerInputs;
+    tTimerInputs.m_bReset = 􏵱;
+    UpdateMillisecondTimer(&􏵴timer􏵵, &tTimerInputs);
+
+    􏶲and apply a new datetime􏶱
+    InitializeDateTime(&􏵴date time􏵵,
+                       􏵶month􏵷,
+                       􏵶day􏵷,
+                       􏵶year􏵷,
+                       􏵶milliseconds􏵷);
+􏶳
+
+􏷘+􏷗􏷒set pause state􏷑
+􏷐􏷏
+􏶠􏶡
+􏶜c􏶝􏷆BOOL􏷅􏷄pause􏷃􏷀whether or not to pause the clock􏶿
+􏶴
+    􏶲trigger timer to pause􏶱
+    MillisecondTimerInputsT tTimerInputs;
+    tTimerInputs.m_bSetPauseState = 􏵱;
+    tTimerInputs.m_bPause = 􏵱;
+    UpdateMillisecondTimer(&􏵴timer􏵵, &tTimerInputs);
+    
+􏶳
+
+
+􏶨􏶧
+􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬paused􏶫􏶪0􏶩
+
+􏶨􏶧
+􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮DateTimeOutputsT􏶭􏶬date time􏶫􏶪0􏶩
+
+􏶨􏶧
+􏶦􏶥
+􏶘-􏶙􏶮MillisecondTimerOutputsT􏶭􏶬timer􏶫􏶪0􏶩

@@ -18,25 +18,41 @@ The millisecond timer only keeps track of the entire duration as an amount of mi
 􏶳
 
 􏷘+􏷗􏷒update􏷑
-􏷐Update the pause state of the timer, as well as a possible reset trigger􏷏
-􏶠Updating the timer will also derive the total elasped time􏶡
-􏶜c􏶝􏷆BOOL􏷅􏷄pause􏷃􏷀whether or not to pause the timer􏶿
-􏶜c􏶝􏷆BOOL􏷅􏷄reset􏷃􏷀whether or not to reset the timer􏶿
+􏷐Updates the state of the timer in regards to total elapsed time􏷏
+􏶠Only call this function if you do not plan on changing the pause/reset.
+Pause and reset functions will also update the total elapsed time.􏶡
 􏶴
-􏶲change the state of the 􏶏 by calling transformer functions􏶱
+􏶲set the new elapsed time􏶱
+􏵲adjust time􏵳);
+􏶳
 
-􏶲possibly reset the 􏶏 elapsed time back to zero􏶱
-if(􏵶reset􏵷)
-{
-    􏵲reset􏵳ptOutputs);
-}
-
+􏷘+􏷗􏷒set pause state􏷑
+􏷐Update the pause state of the timer􏷏
+􏶠Pausing the timer may also derive a new total elasped time􏶡
+􏶜c􏶝􏷆BOOL􏷅􏷄pause􏷃􏷀whether or not to pause the timer􏶿
+􏶴
 􏶲Set whether the 􏶏 is paused or unpaused.􏶱
-􏵶pause􏵷 ? 􏵲pause􏵳ptOutputs)
-        : 􏵲un pause􏵳ptOutputs);
+􏵶pause􏵷 ? 􏵲pause􏵳)
+        : 􏵲un pause􏵳);
 
 􏶲set the new elapsed time􏶱
-􏵲adjust time􏵳ptOutputs);
+􏵲adjust time􏵳);
+􏶳
+
+􏷘+􏷗􏷒reset􏷑
+􏷐resets the timer􏷏
+􏶠This function can be called whether the timer is paused or not.
+Resetting the timer will not affect the pause state.􏶡
+􏶴
+􏶲reset the 􏶏 elapsed time back to zero􏶱
+
+􏶲similar to the normal construction of a 􏶏,
+except reseting the 􏶏 has no effect on the pause state􏶱
+􏵴elapsed time_ms􏵵 = 0;
+􏵴last update tick amount􏵵 = tickGet();
+
+􏶲set the new elapsed time􏶱
+􏵲adjust time􏵳);
 􏶳
 
 􏷘-􏷗􏷒pause􏷑
@@ -57,17 +73,6 @@ if (􏵴paused􏵵){
     􏵴last update tick amount􏵵 = tickGet();
 }
 􏵴paused􏵵 = 􏵰;
-􏶳
-
-􏷘-􏷗􏷒reset􏷑
-􏷐resets the timer􏷏
-􏶠This function can be called whether the timer is paused or not.
-Resetting the timer will not affect the pause state.􏶡
-􏶴
-􏶲similar to the normal construction of a 􏶏,
-except reseting the 􏶏 has no effect on the pause state􏶱
-􏵴elapsed time_ms􏵵 = 0;
-􏵴last update tick amount􏵵 = tickGet();
 􏶳
 
 􏷘-􏷗􏷒adjust time􏷑
