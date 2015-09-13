@@ -1,0 +1,94 @@
+􏶞object􏶟
+􏷲A stopwatch with millisecond precision􏷱
+􏷰A timer that starts paused at 0 milliseconds once constructed.
+It can be paused/unpaused, and reset.
+The millisecond timer only keeps track of the entire duration as an amount of milliseconds.􏷯
+􏷮Time􏷭 􏷮Timer􏷭 􏷮Component􏷭
+􏷬Trevor Hickey􏷫
+􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Create a timer􏷏
+􏶠The timer is created paused and at 0 milliseconds􏶡
+􏶴
+􏶲construct the timer at 0 milliseconds and paused􏶱
+􏵴elapsed time_ms􏵵 = 0;
+􏵴last update tick amount􏵵 = tickGet();
+􏵴paused􏵵 = 􏵱;
+􏶳
+
+􏷘+􏷗􏷒update􏷑
+􏷐Update the pause state of the timer, as well as a possible reset trigger􏷏
+􏶠Updating the timer will also derive the total elasped time􏶡
+􏶜c􏶝􏷆BOOL􏷅􏷄pause􏷃􏷀whether or not to pause the timer􏶿
+􏶜c􏶝􏷆BOOL􏷅􏷄reset􏷃􏷀whether or not to reset the timer􏶿
+􏶴
+􏶲change the state of the 􏶏 by calling transformer functions􏶱
+
+􏶲possibly reset the 􏶏 elapsed time back to zero􏶱
+if(􏵶reset􏵷)
+{
+    􏵲reset􏵳ptOutputs);
+}
+
+􏶲Set whether the 􏶏 is paused or unpaused.􏶱
+􏵶pause􏵷 ? 􏵲pause􏵳ptOutputs)
+        : 􏵲un pause􏵳ptOutputs);
+
+􏶲set the new elapsed time􏶱
+􏵲adjust time􏵳ptOutputs);
+􏶳
+
+􏷘-􏷗􏷒pause􏷑
+􏷐pauses the timer􏷏
+􏶠This function is ok to call even if the timer is already paused.􏶡
+􏶴
+􏶲set the 􏶏 to be paused (even if it already was)􏶱
+􏵴paused􏵵 = 􏵱;
+􏶳
+
+􏷘-􏷗􏷒un pause􏷑
+􏷐unpauses the timer􏷏
+􏶠This function is ok to call even if the timer is already unpaused.􏶡
+􏶴
+􏶲It is important to set the last last tick amount to this moment before unpausing.  
+This way we don't calculate a gap of time when the 􏶏 was paused.􏶱
+if (􏵴paused􏵵){
+    􏵴last update tick amount􏵵 = tickGet();
+}
+􏵴paused􏵵 = 􏵰;
+􏶳
+
+􏷘-􏷗􏷒reset􏷑
+􏷐resets the timer􏷏
+􏶠This function can be called whether the timer is paused or not.
+Resetting the timer will not affect the pause state.􏶡
+􏶴
+􏶲similar to the normal construction of a 􏶏,
+except reseting the 􏶏 has no effect on the pause state􏶱
+􏵴elapsed time_ms􏵵 = 0;
+􏵴last update tick amount􏵵 = tickGet();
+􏶳
+
+􏷘-􏷗􏷒adjust time􏷑
+􏷐update the total elapsed time􏷏
+􏶠This is dependent on whether the timer is paused of not.􏶡
+􏶴
+if(!􏵴paused􏵵){
+    􏶲update the elaspsed time, and reset the tick marker for next time􏶱
+    􏵴elapsed time_ms􏵵 += TicksToMilliseconds(tickGet() - 􏵴last update tick amount􏵵);
+    􏵴last update tick amount􏵵 = tickGet();
+}
+􏶳
+
+􏶨The amount of milliseconds that have gone by􏶧
+􏶦Will change on each update unless the timer is paused􏶥
+􏶌observe􏶑􏶘-􏶙􏶮int􏶭􏶬elapsed time_ms􏶫􏶪0􏶩
+
+􏶨Whether the timer is paused or unpaused􏶧
+􏶦It can be changed during an update􏶥
+􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬paused􏶫􏶪0􏶩
+
+􏶨The elapsed time from the last update􏶧
+􏶦Used internally to keep track of how much time has gone by since the last update.􏶥
+􏶘-􏶙􏶮int􏶭􏶬last update tick amount􏶫􏶪0􏶩

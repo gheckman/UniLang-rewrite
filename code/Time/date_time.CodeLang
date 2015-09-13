@@ -1,7 +1,6 @@
 􏶞object􏶟
 􏷲An adjustable date and a time with millisecond precision􏷱
-􏷰
-A replacement over time_t and struct tm from the standard C library.
+􏷰A replacement over time_t and struct tm from the standard C library.
 Due to the size and precision limitations of time_t and struct tm,
 DateTime provides a similar interface to struct tm, but can be updated with millisecond precision.  
 It contains both the date month/day/year, and the time of day in milliseconds.
@@ -9,8 +8,7 @@ The reason this type was added was to account for the size limitations on 32-bit
 We would not be able to exceed the year 2038 without rolling out our own DateTime object.  
 The datetime changes through a millisecond delta, and it handles the overflow of days and months.  
 It accounts for leap years, but does not account for daylight savings time or leap seconds.
-The year limit of datetime is now the max size of an unsigned int.
-􏷯
+The year limit of datetime is now the max size of an unsigned int.􏷯
 􏷮Time􏷭 􏷮Date􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
 􏷦Month􏷥􏷢USES: MonthE􏷡

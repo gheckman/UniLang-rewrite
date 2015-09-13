@@ -124,14 +124,15 @@ cd ..;
 #Time related
 cd Time;
 Transfer-Global "month" "Components/Time"
-Transfer-Object "date_time" "Components/Time" "Components/Time"
+Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
+Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
 cd ..;
 
 #Electrical related
 cd Electrical/generic;
 Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
 Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Global-Bad "node_type" "Components/Electrical/Generic"
+Transfer-Global "node_type" "Components/Electrical/Generic"
 Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
 Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
 Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
