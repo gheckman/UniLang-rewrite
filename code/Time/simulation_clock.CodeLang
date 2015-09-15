@@ -1,6 +1,8 @@
 􏶞object􏶟
-􏷲􏷱
-􏷰􏷯
+􏷲A simulated clock that manages a date and time automatically. 􏷱
+􏷰Once given a date and time to start at, it will handle the internal logic of updating the time
+during updates.  Since the clock is simulated, it can be paused and unpaused.  
+It can also be reset to another time if desired.􏷯
 􏷮Time􏷭 􏷮Simulation_Clock􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
 􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
@@ -9,27 +11,36 @@
 􏷦Month􏷥􏷢USES: MonthE􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
-􏷐􏷏
-􏶠􏶡
+􏷐Create a clock at a specified date and time􏷏
+􏶠The clock will start paused􏶡
+􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀the date month to start the clock at. valid range: (1 - 12)􏶿
+􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀the day of the month to start the clock at.  valid range: (1 - 31)􏶿
+􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀the date year to start the clock at.  valid range: any positive year number, that fits the size of the type.􏶿
+􏶜c􏶝􏷆int􏷅􏷄milliseconds􏷃􏷀how many milliseconds of the current day to start the time at.  valid range: (0 - 86,399,999)􏶿
 􏶴
-    􏶲construct the clock at 0 milliseconds and paused􏶱
-    InitializeDateTime(&􏵴date time􏵵, 0, 0, 0, 0);
+    􏶲construct date based on passed in values􏶱
+    InitializeDateTime(&􏵴date time􏵵,
+                       􏵶month􏵷,
+                       􏵶day􏵷,
+                       􏵶year􏵷,
+                       􏵶milliseconds􏵷);
+    
     InitializeMillisecondTimer(&􏵴timer􏵵);
     􏵴paused􏵵 = 􏵱;
 􏶳
 
 􏷘+􏷗􏷒reset􏷑
-􏷐􏷏
-􏶠􏶡
-􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀􏶿
-􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀􏶿
-􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀􏶿
-􏶜c􏶝􏷆int􏷅􏷄milliseconds􏷃􏷀􏶿
+􏷐Reset the clock to a new date and time.􏷏
+􏶠Ressetting the clock will not affect its pause state􏶡
+􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀current month of the year. valid range: (1 - 12)􏶿
+􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀the current calendar day of the month.  valid range: (1 - 31)􏶿
+􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀the current year.  valid range: any positive year number, that fits the size of the type.􏶿
+􏶜c􏶝􏷆int􏷅􏷄milliseconds􏷃􏷀the number of milliseconds of the current day.  valid range: (0 - 86,399,999)􏶿
 􏶴
     􏶲reset the timer and set the datetime to a new date and time􏶱
 
     􏶲reset the timer􏶱
-    MillisecondTimerInputsT tTimerInputs;
+    MillisecondTimerInputsT tTimerInputs={0};
     tTimerInputs.m_bReset = 􏵱;
     UpdateMillisecondTimer(&􏵴timer􏵵, &tTimerInputs);
 
@@ -42,27 +53,78 @@
 􏶳
 
 􏷘+􏷗􏷒set pause state􏷑
-􏷐􏷏
-􏶠􏶡
+􏷐Change whether the clock is paused or not.􏷏
+􏶠There is no harm in setting a clock to the same pause state that it is already in.􏶡
 􏶜c􏶝􏷆BOOL􏷅􏷄pause􏷃􏷀whether or not to pause the clock􏶿
 􏶴
+    􏶲pause or unpause the timer􏶱
+    􏵶pause􏵷 ? 􏵲pause􏵳) : 􏵲un pause􏵳);
+    
+    􏶲update the date and time values􏶱
+    􏵲update􏵳);
+􏶳
+
+􏷘-􏷗􏷒pause􏷑
+􏷐Pause the 􏶏􏷏
+􏶠The clock derives its time change from an internal timer.
+All we must do is pause the timer.􏶡
+􏶴
     􏶲trigger timer to pause􏶱
-    MillisecondTimerInputsT tTimerInputs;
+    MillisecondTimerInputsT tTimerInputs={0};
     tTimerInputs.m_bSetPauseState = 􏵱;
     tTimerInputs.m_bPause = 􏵱;
     UpdateMillisecondTimer(&􏵴timer􏵵, &tTimerInputs);
+    􏵴paused􏵵 = 􏵱;
+􏶳
+
+􏷘-􏷗􏷒un pause􏷑
+􏷐Unpause the 􏶏􏷏
+􏶠The clock derives its time change from an internal timer.
+All we must do is unpause the timer.􏶡
+􏶴
+    􏶲trigger timer to un pause􏶱
+    MillisecondTimerInputsT tTimerInputs={0};
+    tTimerInputs.m_bSetPauseState = 􏵱;
+    tTimerInputs.m_bPause = 􏵰;
+    UpdateMillisecondTimer(&􏵴timer􏵵, &tTimerInputs);
+    􏵴paused􏵵 = 􏵰;
+􏶳
+
+􏷘+􏷗􏷒update􏷑
+􏷐Update the current date and time of the 􏶏􏷏
+􏶠This function should be called individually if a user wishes to
+update the date and time, but would not like to cause a reset or affect the pause states.
+This function does not need to be called before/after a pause state change, as the time values
+will already be up-to-date.􏶡
+􏶴
+    􏶲input triggers􏶱
+    DateTimeInputsT tDateTimeInputs={0};
+    MillisecondTimerInputsT tTimerInputs={0};
     
+    􏶲update timer duration􏶱
+    tTimerInputs.m_bUpdate = 􏵱;
+    UpdateMillisecondTimer(&􏵴timer􏵵, &tTimerInputs);
+    tTimerInputs.m_bUpdate = 􏵰;
+
+    􏶲use the updated timer to update the date and time􏶱
+    tDateTimeInputs.m_uNumberOfMilliseconds = 􏵴timer􏵵.m_nElapsedTime_ms;
+    UpdateDateTime(&􏵴date time􏵵,&tDateTimeInputs);
+
+    􏶲reset timer for next update􏶱
+    tTimerInputs.m_bReset = 􏵱;
+    UpdateMillisecondTimer(&􏵴timer􏵵,&tTimerInputs);
 􏶳
 
 
-􏶨􏶧
-􏶦􏶥
+􏶨Whether the clock is currently paused or unpaused􏶧
+􏶦This data member can be affected by the SetPauseState(BOOL)􏶥
 􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬paused􏶫􏶪0􏶩
 
-􏶨􏶧
-􏶦􏶥
+􏶨Holds the current date and time􏶧
+􏶦Updated internally using an internal timer􏶥
 􏶌observe􏶑􏶘-􏶙􏶮DateTimeOutputsT􏶭􏶬date time􏶫􏶪0􏶩
 
-􏶨􏶧
-􏶦􏶥
+􏶨A timer used internally to keep track of time gone by.􏶧
+􏶦The timer is reset after each update in order to get a delta time since the last update.  
+The timer's elapsed time is used when updating the simulated clock's date and time.􏶥
 􏶘-􏶙􏶮MillisecondTimerOutputsT􏶭􏶬timer􏶫􏶪0􏶩

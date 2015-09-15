@@ -6,6 +6,8 @@ The millisecond timer only keeps track of the entire duration as an amount of mi
 􏷮Time􏷭 􏷮Timer􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
 􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷤TickLib􏷣􏷢USES: tickGet()􏷡
+􏷤TimeUtilities􏷣􏷢USES: TicksToMilliseconds()􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Create a timer􏷏

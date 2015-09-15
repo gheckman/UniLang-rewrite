@@ -40,7 +40,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 1􏵵 = 􏵶graph􏵷->m_unId;
+  􏵴diode 1􏵵 = 􏵶graph􏵷->m_uId;
   
   􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "diode 2");
@@ -48,7 +48,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 2􏵵 = 􏵶graph􏵷->m_unId;
+  􏵴diode 2􏵵 = 􏵶graph􏵷->m_uId;
   
   􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "diode 3");
@@ -56,7 +56,7 @@ It will store the IDs given back by the graph so that they may be queried later 
   tInputs.m_fResistance = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 3􏵵 = 􏵶graph􏵷->m_unId;
+  􏵴diode 3􏵵 = 􏵶graph􏵷->m_uId;
 􏶳
 
 􏷘-􏷗􏷒create wires􏷑

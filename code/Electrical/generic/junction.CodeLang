@@ -21,7 +21,7 @@ From a node's perspective, think of a junction like this:
 􏵴has flow􏵵 = 􏵶has flow􏵷;
 􏶳
 
-􏷘+􏷗􏷒Set_Values􏷑
+􏷘+􏷗􏷒set values􏷑
 􏷐Sets the 􏶐􏷏
 􏶠Change the current connection id and whether the junction allows flow through􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄connection id􏷃􏷀the node number that the junction points to􏶿

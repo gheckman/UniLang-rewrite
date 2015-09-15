@@ -77,7 +77,7 @@
   return uId;
 􏶳
 
-􏷘+􏷗􏷒add uidirectional wire􏷑
+􏷘+􏷗􏷒add unidirectional wire􏷑
 􏷐Connect two nodes together and allow electricity to only flow one way between them.􏷏
 􏶠Connects two nodes together, adds a wire between them,
 and applies the appropriate junction points.􏶡
@@ -264,7 +264,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
   􏶲check if node already exists in path􏶱
   BOOL bAlreadyExistsInPath;
   tPathInputs.m_bExists = 􏵱;
-  tPathInputs.m_unNode = 􏵶node􏵷;
+  tPathInputs.m_uNode = 􏵶node􏵷;
   UpdatePath(􏵶seen􏵷,&tPathInputs);
   bAlreadyExistsInPath = 􏵶seen􏵷->m_bExists;
   tPathInputs.m_bExists = 􏵰;
@@ -292,8 +292,8 @@ The order of NodeX and NodeY IS NOT important.􏶡
       UpdatePaths(􏵶path list􏵷,&tPathsInputs);
     }
 
-    --􏵶seen􏵷->m_unSize;
-    --􏵶list􏵷->m_unSize;
+    --􏵶seen􏵷->m_uSize;
+    --􏵶list􏵷->m_uSize;
   }
 􏶳
 
@@ -310,9 +310,9 @@ The order of NodeX and NodeY IS NOT important.􏶡
   PathOutputsT tUnseenNeighbors = GetUnseenNeighbors(ptOutputs,􏵶node􏵷,􏵶seen􏵷);
   size_t unIndex = 0;
   
-  for (;unIndex < tUnseenNeighbors.m_unSize; ++unIndex)
+  for (;unIndex < tUnseenNeighbors.m_uSize; ++unIndex)
   {
-    RecursiveGatherOfPaths(ptOutputs,tUnseenNeighbors.m_unPath[unIndex],􏵶seen􏵷,􏵶list􏵷,􏵶path list􏵷);
+    RecursiveGatherOfPaths(ptOutputs,tUnseenNeighbors.m_puPath[unIndex],􏵶seen􏵷,􏵶list􏵷,􏵶path list􏵷);
   }
 􏶳
 
@@ -336,14 +336,14 @@ The order of NodeX and NodeY IS NOT important.􏶡
   InitializePath(&tUnseenNodes);
   
   􏶲loop over all of the junctions for a particular node􏶱
-  for (;unIndex < 􏵴nodes􏵵[􏵶node􏵷].m_unNumberOfJunctions; ++unIndex)
+  for (;unIndex < 􏵴nodes􏵵[􏵶node􏵷].m_uNumberOfJunctions; ++unIndex)
   {
     
     􏶲decide whether we have an unseen neighbor worth traversing􏶱
     if(IsTraversableUnseenNeighbor(ptOutputs,􏵶node􏵷,unIndex,􏵶seen􏵷))
     {
       􏶲add the node as it can be flowed through, and has not been visited yet􏶱
-      tPathInputs.m_unNode = 􏵴nodes􏵵[􏵶node􏵷].m_tJunctions[unIndex].m_unConnectionId;
+      tPathInputs.m_uNode = 􏵴nodes􏵵[􏵶node􏵷].m_ptJunctions[unIndex].m_uConnectionId;
       UpdatePath(&tUnseenNodes,&tPathInputs);
     }
     
@@ -370,14 +370,14 @@ and whether or not the junction between them is 'flowable'.􏶡
   􏶲check if node already exists in path􏶱
   PathInputsT tPathInputs = {0};
   tPathInputs.m_bExists = 􏵱;
-  tPathInputs.m_unNode = 􏵴nodes􏵵[􏵶node􏵷].m_tJunctions[􏵶junction index􏵷].m_unConnectionId;
+  tPathInputs.m_uNode = 􏵴nodes􏵵[􏵶node􏵷].m_ptJunctions[􏵶junction index􏵷].m_uConnectionId;
   UpdatePath(􏵶seen􏵷,&tPathInputs);
 
   􏶲if we haven't seen the node before􏶱
   if (!􏵶seen􏵷->m_bExists){
     
     􏶲and if the junction allows flow􏶱
-    if(􏵴nodes􏵵[􏵶node􏵷].m_tJunctions[􏵶junction index􏵷].m_bHasFlow){
+    if(􏵴nodes􏵵[􏵶node􏵷].m_ptJunctions[􏵶junction index􏵷].m_bHasFlow){
       bValidNeighborToTraverse = 􏵱;
     }
   }

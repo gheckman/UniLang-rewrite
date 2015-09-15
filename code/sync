@@ -126,6 +126,7 @@ cd Time;
 Transfer-Global "month" "Components/Time"
 Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
 Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
+Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
 cd ..;
 
 #Electrical related
