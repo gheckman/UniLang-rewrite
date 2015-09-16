@@ -22,7 +22,7 @@
   􏵴number of nodes􏵵 = 0;
   
   􏶲establish a common ground􏶱
-  􏵴common ground􏵵 = 􏵲add node􏵳"common ground",NODE_TYPE_GROUND,0,􏵱);
+  􏵴common ground􏵵 = AddNode(ptOutputs,"common ground",NODE_TYPE_GROUND,0,0.0f,􏵱);
 􏶳
 
 􏷘+􏷗􏷒add node􏷑
@@ -31,6 +31,7 @@
 􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the node being added􏶿
 􏶜c􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node that is being added􏶿
 􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistence of the node being added􏶿
+􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the node allows electricity to flow through it.􏶿
 􏶾size_t􏶽􏶼id􏶻􏶺a unique id that represents the node just created.􏶹
 􏶴
@@ -39,7 +40,7 @@
   
   􏶲create the new node with a unique id􏶱
   NodeOutputsT tNode;
-  InitializeNode(&tNode,􏵶name􏵷,uId,􏵶type􏵷,􏵶resistance􏵷,􏵶has flow􏵷);
+  InitializeNode(&tNode,􏵶name􏵷,uId,􏵶type􏵷,􏵶resistance􏵷,􏵶expected amperage􏵷,􏵶has flow􏵷);
   
   􏶲add the new node and increment the total count.
   the total count is used as an index, 
@@ -64,11 +65,12 @@
 􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀One of the nodes to attach to the other node.􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀One of the nodes to attach to the other node.􏶿
 􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀The resistance of the wire.􏶿
+􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀Whether he wire has flow initially.􏶿
 􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   􏶲calculate the wire and get the id􏶱
-  size_t uId = 􏵲add node􏵳"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
+  size_t uId = 􏵲add node􏵳"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶expected amperage􏵷,􏵶has flow􏵷);
   
   􏶲connect the wire between the two components􏶱
   􏵲connect wire between two other nodes bidirectionally􏵳uId,􏵶node x􏵷,􏵶node y􏵷);
@@ -84,11 +86,12 @@ and applies the appropriate junction points.􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀One of the nodes to attach to the other. Electricity will flow from this node to the other.􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀One of the nodes to attach to the other. Electricity will NOT flow from this node to the other.􏶿
 􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀The resistance of the wire.􏶿
+􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀Whether he wire has flow initially.􏶿
 􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   􏶲calculate the wire and get the id􏶱
-  size_t uId = 􏵲add node􏵳"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶has flow􏵷);
+  size_t uId = 􏵲add node􏵳"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶expected amperage􏵷,􏵶has flow􏵷);
   
   􏶲connect the wire between the two components􏶱
   􏵲connect wire between two other nodes unidirectionally􏵳uId,􏵶node x􏵷,􏵶node y􏵷);
@@ -104,7 +107,7 @@ Having nodes connect to common ground, is important for identifying valid paths 
 􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that will be applied to ground.􏶿
 􏶴
   􏶲add a connection the the ground node which is a part of the graph itself.􏶱
-  􏵲add wire􏵳􏵶node􏵷,􏵴common ground􏵵,0,􏵱);
+  􏵲add wire􏵳􏵶node􏵷,􏵴common ground􏵵,0,0.0f,􏵱);
 􏶳
 
 􏷘+􏷗􏷒clear voltage and current􏷑

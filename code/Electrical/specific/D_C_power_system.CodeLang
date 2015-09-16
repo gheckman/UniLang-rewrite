@@ -75,7 +75,8 @@ this stage adds the remaining wires to connect components in the boxes together�
   􏶲add the junction to graph􏶱
   strcpy(tInputs.m_szName, "junction");
   tInputs.m_eType = NODE_TYPE_JUNCTION;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   nJunction = 􏵴graph􏵵.m_uId;
@@ -88,19 +89,22 @@ this stage adds the remaining wires to connect components in the boxes together�
   􏶲connects battery bus to diode boxes􏶱
   tInputs.m_uNodeX = 􏵴battery box􏵵.m_uFuse1;
   tInputs.m_uNodeY = 􏵴diode box􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT].m_uDiode3;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   
   tInputs.m_uNodeX = 􏵴battery box􏵵.m_uFuse3;
   tInputs.m_uNodeY = 􏵴diode box􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_uDiode3;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   
   tInputs.m_uNodeX = nJunction;
   tInputs.m_uNodeY = 􏵴battery box􏵵.m_uFuse2;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   
@@ -111,46 +115,53 @@ this stage adds the remaining wires to connect components in the boxes together�
     􏶲junction connects distribution boxes and battery box􏶱
     tInputs.m_uNodeX = nJunction;
     tInputs.m_uNodeY = 􏵴distribution box􏵵[uIndex].m_uBusTieRelay;
-    tInputs.m_fResistance = 0;
+    tInputs.m_fResistance = 0.0f;
+    tInputs.m_fExpectedAmperage = 0.0f;
     tInputs.m_bHasFlow = 􏵱;
     UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
     tInputs.m_uNodeX = 􏵴diode box􏵵[uIndex].m_uDiode1;
     tInputs.m_uNodeY = 􏵴overhead panel􏵵.m_puEssentialBus[uIndex];
-    tInputs.m_fResistance = 0;
+    tInputs.m_fResistance = 0.0f;
+    tInputs.m_fExpectedAmperage = 0.0f;
     tInputs.m_bHasFlow = 􏵱;
     UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
 
     tInputs.m_uNodeX = 􏵴diode box􏵵[uIndex].m_uDiode2;
     tInputs.m_uNodeY = 􏵴overhead panel􏵵.m_puEssentialBus[uIndex];
-    tInputs.m_fResistance = 0;
+    tInputs.m_fResistance = 0.0f;
+    tInputs.m_fExpectedAmperage = 0.0f;
     tInputs.m_bHasFlow = 􏵱;
     UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
 
     tInputs.m_uNodeX = 􏵴diode box􏵵[uIndex].m_uDiode3;
     tInputs.m_uNodeY = 􏵴overhead panel􏵵.m_puEssentialBus[uIndex];
-    tInputs.m_fResistance = 0;
+    tInputs.m_fResistance = 0.0f;
+    tInputs.m_fExpectedAmperage = 0.0f;
     tInputs.m_bHasFlow = 􏵱;
     UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
     􏶲connect the overhead panel to the distribution and diode boxes􏶱
     tInputs.m_uNodeX = 􏵴distribution box􏵵[uIndex].m_uShedBusRelay;
     tInputs.m_uNodeY = 􏵴overhead panel􏵵.m_puShedBus[uIndex];
-    tInputs.m_fResistance = 0;
+    tInputs.m_fResistance = 0.0f;
+    tInputs.m_fExpectedAmperage = 0.0f;
     tInputs.m_bHasFlow = 􏵱;
     UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
     􏶲connects distribution boxes with after junction boxes􏶱
     tInputs.m_uNodeX = 􏵴distribution box􏵵[uIndex].m_uMainBus;
     tInputs.m_uNodeY = 􏵴after junction box􏵵[uIndex].m_uGeneratorBus;
-    tInputs.m_fResistance = 0;
+    tInputs.m_fResistance = 0.0f;
+    tInputs.m_fExpectedAmperage = 0.0f;
     tInputs.m_bHasFlow = 􏵱;
     UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
     􏶲connects diode boxes with distribution boxes􏶱
     tInputs.m_uNodeX = 􏵴diode box􏵵[uIndex].m_uDiode1;
     tInputs.m_uNodeY = 􏵴distribution box􏵵[uIndex].m_uFuse3;
-    tInputs.m_fResistance = 0;
+    tInputs.m_fResistance = 0.0f;
+    tInputs.m_fExpectedAmperage = 0.0f;
     tInputs.m_bHasFlow = 􏵱;
     UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   }
@@ -158,14 +169,16 @@ this stage adds the remaining wires to connect components in the boxes together�
   􏶲distribution to diode box crossover􏶱
   tInputs.m_uNodeX = 􏵴diode box􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT].m_uDiode2;
   tInputs.m_uNodeY = 􏵴distribution box􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_uFuse4;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
     
   􏶲distribution to diode box crossover􏶱
   tInputs.m_uNodeX = 􏵴diode box􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT].m_uDiode2;
   tInputs.m_uNodeY = 􏵴distribution box􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT].m_uFuse4;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
   

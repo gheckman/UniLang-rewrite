@@ -37,7 +37,8 @@ It will store the IDs given back by the graph so that they may be queried later 
   􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "diode 1");
   tInputs.m_eType = NODE_TYPE_DIODE;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   􏵴diode 1􏵵 = 􏵶graph􏵷->m_uId;
@@ -45,7 +46,8 @@ It will store the IDs given back by the graph so that they may be queried later 
   􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "diode 2");
   tInputs.m_eType = NODE_TYPE_DIODE;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   􏵴diode 2􏵵 = 􏵶graph􏵷->m_uId;
@@ -53,7 +55,8 @@ It will store the IDs given back by the graph so that they may be queried later 
   􏶲add node to graph􏶱
   strcpy(tInputs.m_szName, "diode 3");
   tInputs.m_eType = NODE_TYPE_DIODE;
-  tInputs.m_fResistance = 0;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   􏵴diode 3􏵵 = 􏵶graph􏵷->m_uId;

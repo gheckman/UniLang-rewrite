@@ -65,6 +65,7 @@ Behaves like this when traversing:
 􏶜c􏶝􏷆size_t􏷅􏷄id􏷃􏷀a unique id for the node􏶿
 􏶜c􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node (what kind of electrical component it is)􏶿
 􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the node􏶿
+􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the node allows current to pass through it or not􏶿
 􏶴
   􏶲copy over name􏶱
@@ -74,6 +75,7 @@ Behaves like this when traversing:
   􏵴id􏵵 = 􏵶id􏵷;
   􏵴type􏵵 = 􏵶type􏵷;
   􏵴resistance􏵵 = 􏵶resistance􏵷;
+  􏵴expected amperage􏵵 = 􏵶expected amperage􏵷;
   􏵴has flow􏵵 = 􏵶has flow􏵷;
   
   􏶲set the initial junction count to 0􏶱
@@ -141,6 +143,11 @@ Power can still be computed later (P = IV)
 
 􏶨􏶧􏶦􏶥
 􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩
+
+􏶨Based on documentation, we may have expected amperage draws for particular portions of the electrical circuit. 
+If so, we can record these expected amperage draws alongside the individual nodes that represent them.􏶧
+􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬expected amperage􏶫􏶪0􏶩
 
 
 􏶨whether a node will allow electricity to flow through it.􏶧

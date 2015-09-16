@@ -5,32 +5,32 @@
 􏷬Mark Meyer􏷫
 
 􏶨General constants􏶧
-􏶰ce􏶯 􏶮float􏶭 􏶬aircraft reposition timer sec􏶫 􏶪5􏶩
-􏶰ce􏶯 􏶮float􏶭 􏶬valve state open􏶫              􏶪0􏶩
-􏶰ce􏶯 􏶮float􏶭 􏶬valve state closed􏶫            􏶪1􏶩
-􏶰ce􏶯 􏶮float􏶭 􏶬annun flash rate ms􏶫           􏶪1000􏶩
-􏶰ce􏶯 􏶮int􏶭   􏶬invalid index􏶫                 􏶪-1􏶩
+􏶰sc􏶯 􏶮float􏶭 􏶬aircraft reposition timer sec􏶫 􏶪5􏶩
+􏶰sc􏶯 􏶮float􏶭 􏶬valve state open􏶫              􏶪0􏶩
+􏶰sc􏶯 􏶮float􏶭 􏶬valve state closed􏶫            􏶪1􏶩
+􏶰sc􏶯 􏶮float􏶭 􏶬annun flash rate ms􏶫           􏶪1000􏶩
+􏶰sc􏶯 􏶮int􏶭   􏶬invalid index􏶫                 􏶪-1􏶩
 
-􏶰ce􏶯 􏶮float􏶭       􏶬kias to fpm􏶫              􏶪101.268591􏶩􏶨Calculation constants􏶧
-􏶰ce􏶯 􏶮long double􏶭 􏶬acceleration gravity fts􏶫 􏶪32.17405􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬pi􏶫                       􏶪3.1415926535897932384626433832795􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬deg to rad􏶫               􏶪0.01745329251994329576923690768489􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬rad to deg􏶫               􏶪57.295779513082320876798154814105􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬gc nm per rad􏶫            􏶪3437.74677471314􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬feet per nm􏶫              􏶪6076.1155􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬earth radius in miles􏶫    􏶪3956􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬inhg to pascals􏶫          􏶪3386.38866667􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬inhg to hp􏶫               􏶪33.8638866667􏶩
-􏶰ce􏶯 􏶮long double􏶭 􏶬mps to knots􏶫             􏶪1.943844􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬knots to mps􏶫             􏶪0.514444􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬feet to meters􏶫           􏶪0.3048􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬ms per hour􏶫              􏶪3600000􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬ms per minute􏶫            􏶪60000􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬ms per second􏶫            􏶪1000􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬sec per hour􏶫             􏶪3600􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬sec per minute􏶫           􏶪60􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬min per hour􏶫             􏶪60􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬lbs to kgs􏶫               􏶪0.45359237􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬psi to bar􏶫               􏶪0.0689475729􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬bar to psi􏶫               􏶪14.503773􏶩
-􏶰ce􏶯 􏶮float􏶭       􏶬e􏶫                        􏶪2.71828􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬kias to fpm􏶫              􏶪101.268591􏶩􏶨Calculation constants􏶧
+􏶰sc􏶯 􏶮long double􏶭 􏶬acceleration gravity fts􏶫 􏶪32.17405􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬pi􏶫                       􏶪3.1415926535897932384626433832795􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬deg to rad􏶫               􏶪0.01745329251994329576923690768489􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬rad to deg􏶫               􏶪57.295779513082320876798154814105􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬gc nm per rad􏶫            􏶪3437.74677471314􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬feet per nm􏶫              􏶪6076.1155􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬earth radius in miles􏶫    􏶪3956􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬inhg to pascals􏶫          􏶪3386.38866667􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬inhg to hp􏶫               􏶪33.8638866667􏶩
+􏶰sc􏶯 􏶮long double􏶭 􏶬mps to knots􏶫             􏶪1.943844􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬knots to mps􏶫             􏶪0.514444􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬feet to meters􏶫           􏶪0.3048􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬ms per hour􏶫              􏶪3600000􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬ms per minute􏶫            􏶪60000􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬ms per second􏶫            􏶪1000􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬sec per hour􏶫             􏶪3600􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬sec per minute􏶫           􏶪60􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬min per hour􏶫             􏶪60􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬lbs to kgs􏶫               􏶪0.45359237􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬psi to bar􏶫               􏶪0.0689475729􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬bar to psi􏶫               􏶪14.503773􏶩
+􏶰sc􏶯 􏶮float􏶭       􏶬e􏶫                        􏶪2.71828􏶩
