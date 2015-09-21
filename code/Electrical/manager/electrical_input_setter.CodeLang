@@ -1,0 +1,213 @@
+􏶞global􏶟
+􏷲Handles retrieving all of the electrical inputs from the various systems and connections􏷱
+􏷰These functions were seperated out of the manager to lower the manager's dependency count.  
+The manager is then easier to read, and easier to test.􏷯
+􏷮Electrical_System􏷭 􏷮Input_Setter􏷭
+􏷬Trevor Hickey􏷫
+􏷦ElectricalData􏷥􏷢USES: ElectricalSystemInputsT􏷡
+􏷤Ownship􏷣􏷢USES: Read functions􏷡
+
+􏷘+􏷗􏷒set electrical inputs􏷑
+􏷐Fills the electrical manager's inputs with the appropriate data􏷏
+􏶠Reads from Ownship and fills the input struct
+based on the outputs of various systems and connections􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲Turn all of the relevant outputs from other systems into the relevant inputs􏶱
+    􏵲set inputs from systems􏵳􏵶inputs􏵷);
+
+    􏶲Turn all of the relevant outputs from other connections into the relevant inputs􏶱
+    􏵲set inputs from connections􏵳􏵶inputs􏵷);
+􏶳
+
+􏷘-􏷗􏷒set inputs from systems􏷑
+􏷐Applies inputs from the outputs of various other systems􏷏
+􏶠Uses ownship to get the various outputs from systems􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲Set the inputs from the various systems􏶱
+    􏵲read from avionics􏵳􏵶inputs􏵷);
+    􏵲read from engine􏵳􏵶inputs􏵷);
+    􏵲read from fire􏵳􏵶inputs􏵷);
+    􏵲read from flight controls􏵳􏵶inputs􏵷);
+    􏵲read from flight guidance􏵳􏵶inputs􏵷);
+    􏵲read from fuel􏵳􏵶inputs􏵷);
+    􏵲read from hydraulic􏵳􏵶inputs􏵷);
+    􏵲read from lighting􏵳􏵶inputs􏵷);
+    􏵲read from master warning􏵳􏵶inputs􏵷);
+    􏵲read from radio􏵳􏵶inputs􏵷);
+    
+    􏶲From Aircraft General, Environmental, and Time􏶱
+    􏶲nothing needed from these systems...􏶱
+􏶳
+
+􏷘-􏷗􏷒set inputs from connections􏷑
+􏷐Applies inputs from the outputs of various other connections􏷏
+􏶠Uses ownship to get the various outputs from systems􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲Set the inputs from the various connections􏶱
+    􏵲read from IOS􏵳􏵶inputs􏵷);
+    􏵲read from PLC􏵳􏵶inputs􏵷);
+
+    􏶲From Aural, BugEye, Control Loader,􏶱
+    􏶲External Systems, Flight Engine, Garmin430,􏶱
+    􏶲Generic, GLInstruments, GLStudios,􏶱
+    􏶲MicroController, MontionBase,􏶱
+    􏶲SEP, SRNS, Wet Compass, Xplane􏶱
+    􏶲nothing needed from these connections...􏶱
+􏶳
+
+
+􏷘-􏷗􏷒read from avionics􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
+    AvionicsSystemOutputT tAvionicsOutput;
+    ReadAvionicsSystemOutput(&tAvionicsOutput);
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from engine􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
+    EngineSystemOutputT tEngineOutput;
+    ReadEngineSystemOutput(&tEngineOutput);
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from fire􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
+    FireSystemOutputT tFireOutput;
+    ReadFireSystemOutput(&tFireOutput);
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from flight controls􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
+    //FlightConstrolsSystemOutputT tFlightConstrolsOutput;
+    //ReadFlightConstrolsSystemOutput(&tFlightConstrolsOutput);
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from flight guidance􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
+    FlightGuidanceSystemOutputT tFlightGuidanceOutput;
+    ReadFlightGuidanceSystemOutput(&tFlightGuidanceOutput);
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from fuel􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
+    FuelSystemOutputT tFuelOutput;
+    ReadFuelSystemOutput(&tFuelOutput);
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from hydraulic􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
+    HydraulicSystemOutputT tHydraulicOutput;
+    ReadHydraulicSystemOutput(&tHydraulicOutput);
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from lighting􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
+    LightingSystemOutputT tLightingOutput;
+    ReadLightingSystemOutput(&tLightingOutput);
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+
+void ReadFromMasterWarning(void)
+{
+    //get the outputs
+    MasterWarningSystemOutputT tMasterWarningOutput;
+    ReadMasterWarningSystemOutput(&tMasterWarningOutput);
+    
+    //turn them into inputs
+    //...
+}
+void ReadFromRadio(void)
+{
+    //get the outputs
+    RadioSystemOutputT tRadioOutput;
+    ReadRadioSystemOutput(&tRadioOutput);
+    
+    //turn them into inputs
+    //...
+}
+void ReadFromIOS(void)
+{
+   
+    //get the outputs
+    IOStoHostT tIOSOutput;
+    ReadIOSData(&tIOSOutput);
+    
+    //turn them into inputs
+    //TODO: The IOS team is going to chage the relevant IOS struct as they complete the failures/malfunctions on their side.
+    //It's likely that the struct will also be generated, and the SimHost team will not have to worry about any of the IOS
+    //files other than reading from them.
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bBatteryRelayFails; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bBatteryRelayFails; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bBusTie1FailsOpen; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bBusTie2FailsOpen; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bCircuitBatteryBus; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_nGen1StarterGeneratorOverheat; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_nGen2StarterGeneratorOverheat; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bGen1StarterGeneratorFail; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bGen2StarterGeneratorFail; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_nGen1StarterGeneratorOvervoltage; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_nGen2StarterGeneratorOvervoltage; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bShortCircuitMainBus1; // = TODO
+    s_tElectricalSystem.m_tInputs.m_tFailures.m_bShortCircuitMainBus2; // = TODO
+
+}
+void ReadFromPLC(const PLCInConnectionDataT *const ptInputs)
+{
+}

@@ -62,8 +62,22 @@ function Copy-It(){
   #folder name it was exported to
   f2siName=`Pushed_Caps_Case $1`;
   
-  #Copy the exported code into the actual code base
-  cp -rf "$f2siName" "$PATH_TO_CODE_ROOT""$2" 
+  #if it's a single header file
+  count=`ls -1 $f2siName/*.c 2>/dev/null | wc -l`;
+  if [ $count == 0 ]; then
+  
+    #Copy headers into the actual code base (don't transfer folder)
+    cp -rf $f2siName/*.h "$PATH_TO_CODE_ROOT""$2" 
+    #echo hi
+    
+  #if it's multiple files
+  else
+  
+    #Copy the directory into the actual code base
+    cp -rf "$f2siName" "$PATH_TO_CODE_ROOT""$2"
+    
+  fi
+  
 }
 function Style-It(){
 
@@ -71,7 +85,8 @@ function Style-It(){
   f2siName=`Pushed_Caps_Case $1`;
   
   #format the code once it's there
-  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/* > /dev/null 2>&1;
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/*.h > /dev/null 2>&1;
 }
 function Test-It(){
   
@@ -108,7 +123,7 @@ function Caps_Case(){
 }
 
 function Clang-Format-Some-Other-Files(){
-echo "sdf";
+echo "formatting other files...";
   #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT"
 }
 
