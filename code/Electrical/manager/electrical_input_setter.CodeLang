@@ -1,7 +1,9 @@
 􏶞global􏶟
 􏷲Handles retrieving all of the electrical inputs from the various systems and connections􏷱
-􏷰These functions were seperated out of the manager to lower the manager's dependency count.  
-The manager is then easier to read, and easier to test.􏷯
+􏷰These functions were separated out of the manager to lower the manager's dependency count.  
+The manager is then easier to read, and easier to test.  
+These functions only exist to copy all of the data from various structures,
+and put it into the electrical system's inputs.􏷯
 􏷮Electrical_System􏷭 􏷮Input_Setter􏷭
 􏷬Trevor Hickey􏷫
 􏷦ElectricalData􏷥􏷢USES: ElectricalSystemInputsT􏷡
@@ -163,51 +165,65 @@ based on the outputs of various systems and connections􏶡
     􏶲...􏶱
 􏶳
 
-
-void ReadFromMasterWarning(void)
-{
-    //get the outputs
+􏷘-􏷗􏷒read from master warning􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
     MasterWarningSystemOutputT tMasterWarningOutput;
     ReadMasterWarningSystemOutput(&tMasterWarningOutput);
     
-    //turn them into inputs
-    //...
-}
-void ReadFromRadio(void)
-{
-    //get the outputs
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from radio􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the outputs􏶱
     RadioSystemOutputT tRadioOutput;
     ReadRadioSystemOutput(&tRadioOutput);
     
-    //turn them into inputs
-    //...
-}
-void ReadFromIOS(void)
-{
-   
-    //get the outputs
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+
+􏷘-􏷗􏷒read from IOS􏷑
+􏷐Applies inputs given from the IOS􏷏
+􏶠Uses ownship to get the IOS data.  This data is primarily malfunction triggers,
+but it could be other information as well􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the IOS􏶿
+􏶴
+    􏶲get the outputs􏶱
     IOStoHostT tIOSOutput;
     ReadIOSData(&tIOSOutput);
     
-    //turn them into inputs
-    //TODO: The IOS team is going to chage the relevant IOS struct as they complete the failures/malfunctions on their side.
-    //It's likely that the struct will also be generated, and the SimHost team will not have to worry about any of the IOS
-    //files other than reading from them.
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bBatteryRelayFails; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bBatteryRelayFails; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bBusTie1FailsOpen; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bBusTie2FailsOpen; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bCircuitBatteryBus; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_nGen1StarterGeneratorOverheat; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_nGen2StarterGeneratorOverheat; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bGen1StarterGeneratorFail; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bGen2StarterGeneratorFail; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_nGen1StarterGeneratorOvervoltage; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_nGen2StarterGeneratorOvervoltage; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bShortCircuitMainBus1; // = TODO
-    s_tElectricalSystem.m_tInputs.m_tFailures.m_bShortCircuitMainBus2; // = TODO
+    􏶲read in the IOS malfunctions􏶱
+    ptInputs->m_tFailures.m_bBatteryRelayFails = tIOSOutput.m_bBatteryRelayFails;
+    ptInputs->m_tFailures.m_bBusTie1FailsOpen = tIOSOutput.m_bBusTie1FailsOpen;
+    ptInputs->m_tFailures.m_bBusTie2FailsOpen = tIOSOutput.m_bBusTie2FailsOpen;
+    ptInputs->m_tFailures.m_bCircuitBatteryBus = tIOSOutput.m_bCircuitBatteryBus;
+    ptInputs->m_tFailures.m_nGen1StarterGeneratorOverheat = tIOSOutput.m_nGen1StarterGeneratorOverheat;
+    ptInputs->m_tFailures.m_nGen2StarterGeneratorOverheat = tIOSOutput.m_nGen2StarterGeneratorOverheat;
+    ptInputs->m_tFailures.m_bGen1StarterGeneratorFail = tIOSOutput.m_bGen1StarterGeneratorFail;
+    ptInputs->m_tFailures.m_bGen2StarterGeneratorFail = tIOSOutput.m_bGen2StarterGeneratorFail;
+    ptInputs->m_tFailures.m_nGen1StarterGeneratorOvervoltage = tIOSOutput.m_nGen1StarterGeneratorOvervoltage;
+    ptInputs->m_tFailures.m_nGen2StarterGeneratorOvervoltage = tIOSOutput.m_nGen2StarterGeneratorOvervoltage;
+    ptInputs->m_tFailures.m_bShortCircuitMainBus1 = tIOSOutput.m_bShortCircuitMainBus1;
+    ptInputs->m_tFailures.m_bShortCircuitMainBus2 = tIOSOutput.m_bShortCircuitMainBus2;
+􏶳
 
-}
-void ReadFromPLC(const PLCInConnectionDataT *const ptInputs)
-{
-}
+􏷘-􏷗􏷒read from PLC􏷑
+􏷐Applies inputs signaled from the PLC􏷏
+􏶠􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
+􏶴
+    􏶲get the outputs􏶱
+    
+    􏶲turn outputs into inputs􏶱
+    􏶲...􏶱
+􏶳
+

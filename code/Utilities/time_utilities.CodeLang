@@ -10,7 +10,7 @@ Functions for converting between ticks and milliseconds based on the clock rate.
 􏷤sysLib􏷣􏷢USES: sysClkRateGet()􏷡
 􏷤stdioLib􏷣􏷢USES: BOOL􏷡
 
-􏷒tick period in milliseconds􏷑
+􏷘+􏷗􏷒tick period in milliseconds􏷑
 􏷐Get the tick period of the system clock in terms of milliseconds.􏷏
 􏶠queries the clock rate using the VxWorks API􏶡
 􏶾int􏶽􏶼number of milliseconds per tick􏶻􏶺the tick period of the system clock in terms of milliseconds􏶹
@@ -32,7 +32,7 @@ if (!s_bTickPeriodInitialized) {
 return s_nTickPeriod_ms;
 􏶳
 
-􏷒milliseconds to ticks􏷑
+􏷘+􏷗􏷒milliseconds to ticks􏷑
 􏷐Convert a number of milliseconds into how many kernel ticks would occur in that time period.􏷏
 􏶠queries the clock rate using the VxWorks API􏶡
 􏶜c􏶝􏷆int􏷅􏷄number of milliseconds􏷃􏷀the amount of milliseconds to convert into clock ticks􏶿
@@ -45,7 +45,7 @@ if (􏵲tick period in milliseconds􏵳) != 0){
 return 0;
 􏶳
 
-􏷒ticks to milliseconds􏷑
+􏷘+􏷗􏷒ticks to milliseconds􏷑
 􏷐Convert a number of ticks into how many milliseconds it would take for all the ticks to occur.􏷏
 􏶠queries the clock rate using the VxWorks API􏶡
 􏶜c􏶝􏷆int􏷅􏷄number of ticks􏷃􏷀the amount of clock ticks to convert into milliseconds􏶿
@@ -54,7 +54,7 @@ return 0;
 return 􏵲tick period in milliseconds􏵳) * 􏵶number of ticks􏵷;
 􏶳
 
-􏷒delay task number of milliseconds􏷑
+􏷘+􏷗􏷒delay task number of milliseconds􏷑
 􏷐Delay a task a certain number of milliseconds.􏷏
 􏶠By querying the VxWorks API for the clock rate, we can decide what value to give taskDelay based on the passed in value.􏶡
 􏶜c􏶝􏷆int􏷅􏷄number of milliseconds to delay􏷃􏷀The number of milliseconds to delay the current task by.􏶿

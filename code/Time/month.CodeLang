@@ -23,7 +23,7 @@ Additional utility functions for iterating over months.
 􏶆nov􏶅
 􏶆dec􏶅
 
-􏷒next month􏷑
+􏷘+􏷗􏷒next month􏷑
 􏷐determine the next month after the one is given􏷏
 􏶠
 This will allow for an iteration over months,
@@ -38,7 +38,7 @@ that will handle the roll-over from Dec to Jan
     return 􏵶month􏵷+1;
 􏶳
 
-􏷒previous month􏷑
+􏷘+􏷗􏷒previous month􏷑
 􏷐determine the previous month after the one is given􏷏
 􏶠
 This will allow for an iteration over months,

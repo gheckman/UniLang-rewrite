@@ -124,7 +124,11 @@ function Caps_Case(){
 
 function Clang-Format-Some-Other-Files(){
 echo "formatting other files...";
-  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT"
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.h"
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.c"
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsTypes.h"
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.h
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.c
 }
 
 #name of CodeLang file / where to place in repo / where to place class wrapper
@@ -144,7 +148,7 @@ Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
 Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
 cd ..;
 
-#Electrical related
+#Electrical Generic related
 cd Electrical/generic;
 Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
 Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
@@ -154,7 +158,7 @@ Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrica
 Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
 cd ../../;
 
-#Electrical related
+#Electrical Specific related
 cd Electrical/specific;
 Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
 Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
@@ -164,6 +168,12 @@ Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Component
 #Transfer-Global "electrical_system_side" "Components/Electrical/Specific"
 Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
 cd ../../;
+
+#Electrical Manager related
+cd Electrical/manager;
+Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
+cd ../../;
+
 
 #Other stuff
 cd Other;

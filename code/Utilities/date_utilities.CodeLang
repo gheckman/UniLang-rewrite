@@ -13,7 +13,7 @@ Function for looking up how many days are in a certain month.
 􏶰ce􏶯 􏶮unsigned int􏶭 􏶬number of milliseconds in a day􏶫􏶪86400000􏶩
 􏶰ce􏶯 􏶮unsigned int􏶭   􏶬number of months in a year􏶫􏶪12􏶩
 
-􏷒number of days in the month􏷑
+􏷘+􏷗􏷒number of days in the month􏷑
 􏷐Determine the number of days in a particular month based on the particular year􏷏
 􏶠
 The number of days in February is contingent on whether the year is a leap year or not.
@@ -37,7 +37,7 @@ if(􏵶month􏵷 == MONTH_FEB && IsLeapYear(􏵶year􏵷))
 return DEFAULT_NUMBER_OF_DAYS[􏵶month􏵷 - 1];
 􏶳
 
-􏷒is leap year􏷑
+􏷘+􏷗􏷒is leap year􏷑
 􏷐Determine whether the given year is a leap year􏷏
 􏶠An equation is applied that will work on any year to determine whether it is a leap year or not􏶡
 􏶜c􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year in which to look up the number of days in the month􏶿
