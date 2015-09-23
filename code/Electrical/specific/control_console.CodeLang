@@ -1,0 +1,88 @@
+􏶞object􏶟
+􏷲A 􏶏 specific to the UH72A DC power system.􏷱
+􏷰Stores a collection of 􏶏 node IDs and builds them into the generic electrical graph.􏷯
+􏷮Electrical_System􏷭 􏷮Control_Console􏷭
+􏷬Trevor Hickey􏷫
+
+􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤string􏷣􏷢USES: strcpy()􏷡
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐􏷏
+􏶠􏶐 will be in an invalid state until initialized.
+Initializing a 􏶐 will construct all of its nodes into the generic electrical graph.
+It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶴
+  􏶲create all the internal nodes inside the graph data structure􏶱
+  CreateNodes(ptOutputs,􏵶graph􏵷);
+  
+  􏶲connect these newly created nodes􏶱
+  CreateWires(ptOutputs,􏵶graph􏵷);
+  
+  􏶲apply any nodes to ground that should be􏶱
+  ApplyNodesToGround(ptOutputs,􏵶graph􏵷);
+􏶳
+
+􏷘-􏷗􏷒create nodes􏷑
+􏷐Constructs all of the electrical components into the generic electrical graph data structure.􏷏
+􏶠This will give all of the node a valid id for querying the graph later.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶴
+  􏶲create all of the vertexes that are part of the 􏶐􏶱
+  ElectricalGraphInputsT tInputs = {0};
+  tInputs.m_bAddNode = 􏵱;
+  
+  􏶲add node to graph􏶱
+  strcpy(tInputs.m_szName, "diode 1");
+  tInputs.m_eType = NODE_TYPE_DIODE;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴diode 1􏵵 = 􏵶graph􏵷->m_uId;
+  
+  􏶲add node to graph􏶱
+  strcpy(tInputs.m_szName, "diode 2");
+  tInputs.m_eType = NODE_TYPE_DIODE;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴diode 2􏵵 = 􏵶graph􏵷->m_uId;
+  
+  􏶲add node to graph􏶱
+  strcpy(tInputs.m_szName, "diode 3");
+  tInputs.m_eType = NODE_TYPE_DIODE;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴diode 3􏵵 = 􏵶graph􏵷->m_uId;
+􏶳
+
+􏷘-􏷗􏷒create wires􏷑
+􏷐Connects all of the necessary 􏶐 nodes together.􏷏
+􏶠The nodes being connected will need to be created first.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
+􏶴
+􏶳
+
+􏷘-􏷗􏷒apply nodes to ground􏷑
+􏷐Attach particular 􏶐 nodes to common ground.􏷏
+􏶠The nodes being connected to ground will need to be created first.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
+􏶴
+􏶳
+
+
+􏶨The ID of a node that is conceptually stored in the 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and recieve back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cabin monitor􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dvr􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mx15 imager􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ls16 cntl􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk cntl􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk adu􏶫􏶪0􏶩

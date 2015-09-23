@@ -1,7 +1,10 @@
 􏶞object􏶟
-􏷲A 􏶏 specific to the UH72A DC power system.􏷱
-􏷰Stores a collection of 􏶏 node IDs and builds them into the generic electrical graph.
-These are derived from the Wiring Diagram Manual (WDM) MBB BK117 C-2.􏷯
+􏷲􏶏 specific to the UH72A DC power system.􏷱
+􏷰Stores a collection of 􏶏 node IDs and builds them into the generic electrical graph.  
+The node Ids are for the left, center, and right circuit breaker panels.  
+The left and right panels are apart of the overhead panel.
+The left and right panel circuit breakers are derived from the Aircraft Instrument Functionality Matrix VER 4.xlsx
+The center panel circuit breakers are derived from MEP Instrument Functionality Matrix VER 4.xlsx􏷯
 􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
 􏷬Trevor Hickey􏷫
 
@@ -17,25 +20,27 @@ Initializing a 􏶐 will construct all of its nodes into the generic electrical 
 It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
-  //create the buses on the 􏶏
-  CreateBusses(ptOutputs,􏵶graph􏵷);
+  􏶲create the buses on the 􏶏􏶱
+  􏵲create buses􏵳􏵶graph􏵷);
   
-  //create all the internal nodes inside the graph data structure
-  CreateDevices(ptOutputs,􏵶graph􏵷);
+  􏶲create all the internal nodes inside the graph data structure􏶱
+  􏵲create devices􏵳􏵶graph􏵷);
   
-  //connect these newly created nodes
-  ConnectDevices(ptOutputs,􏵶graph􏵷);
+  􏶲connect these newly created nodes􏶱
+  􏵲connect devices􏵳􏵶graph􏵷);
 􏶳
 
-􏷘-􏷗􏷒create busses􏷑
+􏷘-􏷗􏷒create buses􏷑
 􏷐Constructs all of the electrical components into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created nodes a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
-  CreateBusAndApplyToGround(ptOutputs,&􏵴essential bus􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ESS BUS",0,0.0f,􏵱,􏵶graph􏵷);
-  CreateBusAndApplyToGround(ptOutputs,&􏵴essential bus􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS BUS",0,0.0f,􏵱,􏵶graph􏵷);
-  CreateBusAndApplyToGround(ptOutputs,&􏵴shed bus􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ESS BUS",0,0.0f,􏵱,􏵶graph􏵷);
-  CreateBusAndApplyToGround(ptOutputs,&􏵴shed bus􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS BUS",0,0.0f,􏵱,􏵶graph􏵷);
+  size_t unIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
+  for (; unIndex < NUM_ELECTRICAL_SYSTEM_SIDES; ++unIndex){
+    􏵲create bus and apply to ground􏵳&􏵴essential bus􏵵[unIndex],"ESS BUS",0,0.0f,􏵱,􏵶graph􏵷);
+    􏵲create bus and apply to ground􏵳&􏵴nonessential bus􏵵[unIndex],"NON ESS BUS",0,0.0f,􏵱,􏵶graph􏵷);
+    􏵲create bus and apply to ground􏵳&􏵴shed bus􏵵[unIndex],"SHED BUS",0,0.0f,􏵱,􏵶graph􏵷);
+  }
 􏶳
 
 􏷘-􏷗􏷒create devices􏷑
@@ -43,20 +48,23 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶠This will give all of the created nodes a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
-  //if you tilt the "Wiring Diagram Manual (WDM) MBB BK117 C-2" on its side, you will have the 􏶏
-  //portion of the schematic on top of he other DC boxes.  From this position, you will will be able to differentiate
-  //the left from the right portion of the 􏶏.
+  􏶲if you tilt the "Wiring Diagram Manual (WDM) MBB BK117 C-2" on its side, you will have the 􏶏
+  portion of the schematic on top of he other DC boxes.  From this position, you will will be able to differentiate
+  the left from the right portion of the 􏶏.  That file is the Eurocopter though, so don't rely on the actual names there.􏶱
   
-  //creates all of the left and right portions of the 􏶏
-  //*buses do not need created here(they are created elesewhere).
-  CreateLeftPanelDevices(ptOutputs,􏵶graph􏵷);
-  CreateRightPanelDevices(ptOutputs,􏵶graph􏵷);
+  􏶲creates all of the left and right portions of the 􏶏
+  *buses do not need created here(they are created elesewhere).􏶱
+  􏵲create left panel devices􏵳􏵶graph􏵷);
+  􏵲create right panel devices􏵳􏵶graph􏵷);
+  
+  􏶲create devices seen on the center console􏶱
+  􏵲create center panel devices􏵳􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices􏷑
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏,
 and puts them into the generic electrical graph data structure.􏷏
-􏶠This will give all of the created nodes a valid id for querying the graph later.􏶡
+􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel nodes into.􏶿
 􏶴
   //construct all the devices that are a part of 
@@ -74,7 +82,7 @@ and puts them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒create right panel devices􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏,
 and puts them into the generic electrical graph data structure.􏷏
-􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
+􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
   //construct all the devices that are a part of 
@@ -87,6 +95,44 @@ and puts them into the generic electrical graph data structure.􏷏
   CreateRightPanelDevicesForRow6(ptOutputs,􏵶graph􏵷);
   CreateRightPanelDevicesForRow7(ptOutputs,􏵶graph􏵷);
   CreateRightPanelDevicesForRow8(ptOutputs,􏵶graph􏵷);
+􏶳
+
+􏷘-􏷗􏷒create center panel devices􏷑
+􏷐Constructs all of the electrical components that make up the center console portion of the 􏶏,
+and puts them into the generic electrical graph data structure.􏷏
+􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its center panel devices into.􏶿
+􏶴
+  //CB001 SHED BUS 1 (spare)
+  //CB002 SHED BUS 1 (vacant)
+  //CB003 SHED BUS 1 (spare)
+  //CB004 SHED BUS 2 (spare)
+  //CB005 SHED BUS 2 (vacant)
+  //CB006 SHED BUS 2 (spare)
+  //CB007 SHED BUS 1 (vacant)
+  //CB008 SHED BUS 1 (spare)
+  //CB009 SHED BUS 1 (vacant)
+  //CB010 SHED BUS 2 (vacant)
+  //CB011 SHED BUS 2 (spare)
+  //CB012 SHED BUS 2 (vacant)
+  //CB013 SHED BUS 1 (spare)
+  //CB014 SHED BUS 1 (vacant)
+  //CB015 SHED BUS 1 (spare)
+  //CB016 SHED BUS 2 (spare)
+  //CB017 SHED BUS 2 (vacant)
+  //CB018 SHED BUS 2 (spare)
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cabin monitor􏵵,"Cabin Monitor",0,7.5f,􏵱,􏵶graph􏵷); //CB019
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴dvr􏵵,"DVR",0,5.0f,􏵱,􏵶graph􏵷); //CB020
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴mx15 imager􏵵,"MX15 IMAGER",0,15.0f,􏵱,􏵶graph􏵷); //CB021
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ls16 cntl􏵵,"LS16 CNTL",0,5.0f,􏵱,􏵶graph􏵷); //CB022
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴dwnlnk cntl􏵵,"DWNLNK CNTL",0,2.0f,􏵱,􏵶graph􏵷); //CB023
+  CreateDeviceAndApplyToGround(ptOutputs,&􏵴dwnlnk adu􏵵,"DWNLNK ADU",0,5.0f,􏵱,􏵶graph􏵷); //CB024
+  //CB025 NON ESS BUS 1 (spare)
+  //CB026 NON ESS BUS 1 (vacant)
+  //CB027 NON ESS BUS 1 (spare)
+  //CB028 NON ESS BUS 2 (spare)
+  //CB029 NON ESS BUS 2 (vacant)
+  //CB030 NON ESS BUS 2 (spare)
 􏶳
 
 􏷘-􏷗􏷒create device and apply to ground􏷑
@@ -245,7 +291,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-                       //CB035 (inactive)
+    //CB035 (inactive)
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FLOATS",0,0.0f,􏵱,􏵶graph􏵷);       //CB036
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴cont􏵵,"CONT",0,2.0f,􏵱,􏵶graph􏵷);         //CB037
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴cc pil􏵵,"CC PIL",0,7.5f,􏵱,􏵶graph􏵷);        //CB038
@@ -295,9 +341,9 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-                         //CB143 (vacant)
-                         //CB144 (vacant)
-                         //CB145 (vacant)
+    //CB143 (vacant)
+    //CB144 (vacant)
+    //CB145 (vacant)
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴dimm test􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"DIMM TEST 2",0,2.0f,􏵱,􏵶graph􏵷);    //CB146
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴ics backup􏵵,"ICS BACKUP",0,1.0f,􏵱,􏵶graph􏵷);    //CB147
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴nms2􏵵,"NMS2",0,5.0f,􏵱,􏵶graph􏵷);         //CB148
@@ -478,91 +524,100 @@ and put them into the generic electrical graph data structure.􏷏
       ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴vemd􏵵[unIndex]);
   }
   
-//row 1
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴stby hor bat􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ic amp􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ics cab􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴com4 xcvr􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴com4 ctrl􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ics backup􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴nms2􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴bat em ex lt􏵵);
+  //row 1
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴stby hor bat􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ic amp􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ics cab􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴com4 xcvr􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴com4 ctrl􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ics backup􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴nms2􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴bat em ex lt􏵵);
 
-//row 2
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴vhf tx1􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms1􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms blw􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴lh mon􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴bambi bucket􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴avio main1􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴avio main 2􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴emer bat􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴video dist􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rh mon􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mov map􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rad alt􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dme􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cm3 ant􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cm3 rt􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mkr􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴com5 xcvr􏵵);
+  //row 2
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴vhf tx1􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms1􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms blw􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴lh mon􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴bambi bucket􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴avio main1􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴avio main 2􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴emer bat􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴video dist􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rh mon􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mov map􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rad alt􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dme􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cm3 ant􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cm3 rt􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mkr􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴com5 xcvr􏵵);
 
-//row 3
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴fcds2 backup􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pt st cp􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ap2􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴mir􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cargo pax lt􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont1 ls lt􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴xfera pump􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴htgv􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴inst cool􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pax blw􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cont2􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴atc􏵵);
-ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴waas relay􏵵);
+  //row 3
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴fcds2 backup􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pt st cp􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ap2􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴mir􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cargo pax lt􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont1 ls lt􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴xfera pump􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴htgv􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴inst cool􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pax blw􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cont2􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴atc􏵵);
+  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴waas relay􏵵);
 
-//row 4
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms12 relay􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴roll2 sema􏵵);
+  //row 4
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms12 relay􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴roll2 sema􏵵);
 
-//row 5
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴instr lights􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴p1 sas􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴htg cont􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt vent􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ftr􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴roll1 sas􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴yaw sas􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴beep trim􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mast mom􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴xferf pump􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴p2 sema􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ap1􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴altm vibr􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴vhf tx2􏵵);
+  //row 5
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴instr lights􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴p1 sas􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴htg cont􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt vent􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ftr􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴roll1 sas􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴yaw sas􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴beep trim􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mast mom􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴xferf pump􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴p2 sema􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ap1􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴altm vibr􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴vhf tx2􏵵);
 
-//row 6
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cc pil􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴boom􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pos􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ldg􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴var nr􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴n2 trim􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴instr􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴acol􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴em ex􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cc ped winch􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴aux tank􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pt st plt􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dwnlnk adu b􏵵);
+  //row 6
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cc pil􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴boom􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pos􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ldg􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴var nr􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴n2 trim􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴instr􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴acol􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴em ex􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cc ped winch􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴aux tank􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pt st plt􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dwnlnk adu b􏵵);
 
-//row 7
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴sand filt􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴wiper􏵵);
-ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rotor rpm􏵵);
+  //row 7
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴sand filt􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴wiper􏵵);
+  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rotor rpm􏵵);
+  
+  //center console
+  􏵲connect device with nonessential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cabin monitor􏵵);
+  􏵲connect device with nonessential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴dvr􏵵);
+  􏵲connect device with nonessential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴mx15 imager􏵵);
+  􏵲connect device with nonessential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ls16 cntl􏵵);
+  􏵲connect device with nonessential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dwnlnk cntl􏵵);
+  􏵲connect device with nonessential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dwnlnk adu􏵵);
+  
 􏶳
 
 
@@ -580,6 +635,26 @@ ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,
   //connect device and bus
   tInputs.m_uNodeX = 􏵶device􏵷;
   tInputs.m_uNodeY = 􏵴essential bus􏵵[􏵶side􏵷];
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+􏶳
+
+􏷘-􏷗􏷒connect device with nonessential􏷑
+􏷐Connects all of the necessary 􏶐 devices to the nonessential bus􏷏
+􏶠The nodes being connected will need to be created first.􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜c􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
+􏶴
+  //connect two nodes trigger
+  ElectricalGraphInputsT tInputs = {0};
+  tInputs.m_bAddWire = 􏵱;
+  
+  //connect device and bus
+  tInputs.m_uNodeX = 􏵶device􏵷;
+  tInputs.m_uNodeY = 􏵴nonessential bus􏵵[􏵶side􏵷];
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
@@ -607,10 +682,13 @@ ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,
 
 
 􏶨The IDs of the left and right essential bus which are used to connect essential devices.􏶧
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[2]􏶭􏶬essential bus􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬essential bus􏶫􏶪0􏶩
+
+􏶨The IDs of the left and right nonessential bus which are used to connect nonessential devices.􏶧
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬nonessential bus􏶫􏶪0􏶩
 
 􏶨The IDs of the left and right shed bus which are used to connect shed devices.􏶧
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[2]􏶭􏶬shed bus􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬shed bus􏶫􏶪0􏶩
 
 􏶨Row 1 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
@@ -739,3 +817,12 @@ ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬wu􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬cad􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬vemd􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+
+􏶨The ID of a node that is conceptually stored on the control console􏶧
+􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cabin monitor􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dvr􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mx15 imager􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ls16 cntl􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk cntl􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk adu􏶫􏶪0􏶩
