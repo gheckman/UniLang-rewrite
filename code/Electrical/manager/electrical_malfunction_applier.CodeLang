@@ -1,0 +1,116 @@
+􏶞global􏶟
+􏷲Applies electrical malfunctions to the electrical graph triggered from the IOS data􏷱
+􏷰We assume the malfunctions have already been read into the input struct.􏷯
+􏷮Electrical_System􏷭 􏷮Malfunction_Applier􏷭
+􏷬Trevor Hickey􏷫
+􏷦ElectricalData􏷥􏷢USES: ElectricalFailureInputsT􏷡
+􏷦DCPowerSystem􏷥􏷢USES: DCPowerSystemOutputsT􏷡
+
+
+􏷘+􏷗􏷒apply electrical malfunctions􏷑
+􏷐Applies electrical malfunctions to the electrical graph triggered from the IOS data􏷏
+􏶠These malfunctions will turn off flow for the particular graph nodes.􏶡
+􏶜􏶝􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃􏷀The DC Power system that will be effected by the triggered malfunctions.􏶿
+􏶜c􏶝􏷆ElectricalFailureInputsT *const􏷅􏷄failures􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
+􏶴
+    􏶲apply malfunctions that can occur on any of the following electrical boxes:􏶱
+    􏵲apply battery box malfunctions􏵳&􏵶system􏵷->m_tGraph,&􏵶system􏵷->m_tBatteryBox,􏵶failures􏵷);
+    􏵲apply distribution box malfunctions􏵳&􏵶system􏵷->m_tGraph,􏵶system􏵷->m_ptDistributionBox,􏵶failures􏵷);
+    􏵲apply after junction box malfunctions􏵳&􏵶system􏵷->m_tGraph,􏵶system􏵷->m_ptAfterJunctionBox,􏵶failures􏵷);
+􏶳
+
+􏷘-􏷗􏷒apply battery box malfunctions􏷑
+􏷐Uses the IOS malfunctions to potentially stop flow on protions of the battery box􏷏
+􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT *const􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
+􏶜c􏶝􏷆BatteryBoxOutputsT *const􏷅􏷄box􏷃􏷀The Battery Box that will be effected by the triggered malfunctions.􏶿
+􏶜c􏶝􏷆ElectricalFailureInputsT *const􏷅􏷄failures􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
+􏶴
+    􏶲possibly stop flow on the battery bus􏶱
+    􏵲apply failure to component􏵳􏵶graph􏵷,􏵶box􏵷->m_uBus,􏵶failures􏵷->m_bCircuitBatteryBus);
+    
+    􏶲possibly stop flow on the bus relay􏶱
+    􏵲apply failure to component􏵳􏵶graph􏵷,􏵶box􏵷->m_uRelay,􏵶failures􏵷->m_bBatteryRelayFails);
+􏶳
+
+􏷘-􏷗􏷒apply distribution box malfunctions􏷑
+􏷐Uses the IOS malfunctions to potentially stop flow on protions of the distribution box􏷏
+􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT *const􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
+􏶜c􏶝􏷆DistributionBoxOutputsT *const􏷅􏷄box􏷃􏷀The Distribution Box that will be effected by the triggered malfunctions.􏶿
+􏶜c􏶝􏷆ElectricalFailureInputsT *const􏷅􏷄failures􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
+􏶴
+
+    􏶲possibly stop flow on the bus tie 1 (force it to open)
+    Q: What if the bus tie is already closed?  Does it stay closed during this failure?
+    Does the failure only stop it from re-closing again in the future?
+    A: The SME says that the BusTieFailsOpen will make the bus tie open even if it is already closed.􏶱
+    􏵲apply failure to component􏵳􏵶graph􏵷,􏵶box􏵷[0].m_uBusTieRelay,􏵶failures􏵷->m_bBusTie1FailsOpen);
+    
+    􏶲possibly stop flow on the bus tie 2 (force it to open)􏶱
+    􏵲apply failure to component􏵳􏵶graph􏵷,􏵶box􏵷[1].m_uBusTieRelay,􏵶failures􏵷->m_bBusTie2FailsOpen);
+    
+    􏶲possibly stop flow on main bus 1􏶱
+    􏵲apply failure to component􏵳􏵶graph􏵷,􏵶box􏵷[0].m_uMainBus,􏵶failures􏵷->m_bShortCircuitMainBus1);
+    
+    􏶲possibly stop flow on main bus 2􏶱
+    􏵲apply failure to component􏵳􏵶graph􏵷,􏵶box􏵷[1].m_uMainBus,􏵶failures􏵷->m_bShortCircuitMainBus2);
+􏶳
+
+􏷘-􏷗􏷒apply after junction box malfunctions􏷑
+􏷐Uses the IOS malfunctions to potentially stop flow on protions of the after junction box􏷏
+􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT *const􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
+􏶜c􏶝􏷆AfterJunctionBoxOutputsT *const􏷅􏷄box􏷃􏷀The After Junction Box that will be effected by the triggered malfunctions.􏶿
+􏶜c􏶝􏷆ElectricalFailureInputsT *const􏷅􏷄failures􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
+􏶴
+    􏶲maybe we'll do something different depending on the level at which its overheating?
+    maybe we won't stop flow anywhere until the overheat reaches a certain temperature?
+    the description says that the generator does not automatically trip off.
+    At least for now, let's just check if it's overheating at all, and if it is, we'll shut off the flow􏶱
+    if (􏵶failures􏵷->m_nGen1StarterGeneratorOverheat > 0){
+        􏵲apply failure to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uGenerator, TRUE);
+    }
+
+    if (􏵶failures􏵷->m_nGen2StarterGeneratorOverheat > 0){
+        􏵲apply failure to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uGenerator, TRUE);
+    }
+
+    􏶲possibly stop flow on generator 1 starter relay􏶱
+    􏵲apply failure to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uStarterRelay, 􏵶failures􏵷->m_bGen1StarterGeneratorFail);
+
+    􏶲possibly stop flow on generator 2 starter relay􏶱
+    􏵲apply failure to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uStarterRelay, 􏵶failures􏵷->m_bGen2StarterGeneratorFail);
+
+    􏶲possibly stop flow on generator 1 due to over-voltage􏶱
+    if (􏵶failures􏵷->m_nGen1StarterGeneratorOvervoltage > 0){
+        􏵲apply failure to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uGenerator, TRUE);
+    }
+
+    􏶲possibly stop flow on generator 2 due to over-voltage􏶱
+    if (􏵶failures􏵷->m_nGen2StarterGeneratorOvervoltage > 0){
+        􏵲apply failure to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uGenerator, TRUE);
+    }
+􏶳
+
+􏷘-􏷗􏷒apply failure to component􏷑
+􏷐given an id to a graph node, we can apply the failure to it􏷏
+􏶠Applying the failure to the node will turn off its ability "to flow"􏶡
+􏶜􏶝􏷆ElectricalGraphOutputsT *const􏷅􏷄graph􏷃􏷀The graph where the actual node exists.  The node element will be looked up through the Id􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄id􏷃􏷀The ID of the node to change flow state on􏶿
+􏶜c􏶝􏷆BOOL􏷅􏷄failure􏷃􏷀whether or not the malfunction occured.  True malfunctions stop flow.  False malfunctions give flow.􏶿
+􏶴
+    􏶲set trigger to receive electrical components out of the graph􏶱
+    ElectricalGraphInputsT tInputs;
+    tInputs.m_bGetCircuitComponent = 􏵱;
+
+    􏶲get the generic elecrical component􏶱
+    tInputs.m_uNode = 􏵶id􏵷;
+    UpdateElectricalGraph(􏵶graph􏵷, &tInputs);
+
+    􏶲apply a possible failure to it
+    You'll notice that we NOT(!) the Failure.
+    That's because the failures are true when they occur, but we're assining it to
+    whether the component can flow.􏶱
+    􏵶graph􏵷->m_ptCircuitComponent->m_bHasFlow = !􏵶failure􏵷;
+􏶳

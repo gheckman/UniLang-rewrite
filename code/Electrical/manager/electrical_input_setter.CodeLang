@@ -14,12 +14,13 @@ and put it into the electrical system's inputs.􏷯
 􏶠Reads from Ownship and fills the input struct
 based on the outputs of various systems and connections􏶡
 􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
     􏶲Turn all of the relevant outputs from other systems into the relevant inputs􏶱
     􏵲set inputs from systems􏵳􏵶inputs􏵷);
 
     􏶲Turn all of the relevant outputs from other connections into the relevant inputs􏶱
-    􏵲set inputs from connections􏵳􏵶inputs􏵷);
+    􏵲set inputs from connections􏵳􏵶inputs􏵷,􏵶plc􏵷);
 􏶳
 
 􏷘-􏷗􏷒set inputs from systems􏷑
@@ -47,10 +48,11 @@ based on the outputs of various systems and connections􏶡
 􏷐Applies inputs from the outputs of various other connections􏷏
 􏶠Uses ownship to get the various outputs from systems􏶡
 􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
     􏶲Set the inputs from the various connections􏶱
     􏵲read from IOS􏵳􏵶inputs􏵷);
-    􏵲read from PLC􏵳􏵶inputs􏵷);
+    􏵲read from PLC􏵳􏵶inputs􏵷,􏵶plc􏵷);
 
     􏶲From Aural, BugEye, Control Loader,􏶱
     􏶲External Systems, Flight Engine, Garmin430,􏶱
@@ -216,14 +218,225 @@ but it could be other information as well􏶡
     ptInputs->m_tFailures.m_bShortCircuitMainBus2 = tIOSOutput.m_bShortCircuitMainBus2;
 􏶳
 
-􏷘-􏷗􏷒read from PLC􏷑
+􏷘-􏷗􏷒read from plc􏷑
 􏷐Applies inputs signaled from the PLC􏷏
 􏶠􏶡
 􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
+􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
-    􏶲get the outputs􏶱
     
-    􏶲turn outputs into inputs􏶱
+    􏶲turn PLC inputs into system inputs􏶱
     􏶲...􏶱
 􏶳
 
+􏷘-􏷗􏷒read plc circuit breakers􏷑
+􏷐Applies circuit breakers inputs signaled from the PLC􏷏
+􏶠􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
+􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
+􏶴
+    
+    􏶲turn PLC circuit breaker inputs into the system's input􏶱
+    
+    􏶲Overhead Panel Circuit Breakers􏶱
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tFcdm1 = 􏵶plc􏵷->m_bOverheadAvEssBus1Fcdm1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tFcds2Backup = 􏵶plc􏵷->m_bOverheadAvEssBus1FCDS2BackupDI;
+    //􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadAvEssBus1InactiveDI[2];
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tNd1 = 􏵶plc􏵷->m_bOverheadAvEssBus1Nd1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tNms1 = 􏵶plc􏵷->m_bOverheadAvEssBus1Nms1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tPfd1 = 􏵶plc􏵷->m_bOverheadAvEssBus1Pfd1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tVhfTx1 = 􏵶plc􏵷->m_bOverheadAvEssBus1VhfTx1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAtc = 􏵶plc􏵷->m_bOverheadAvEssBus2AtcDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tFcdm2 = 􏵶plc􏵷->m_bOverheadAvEssBus2Fcdm2DI;
+    //􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadAvEssBus2InactiveDI[2];
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tNd2 = 􏵶plc􏵷->m_bOverheadAvEssBus2Nd2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tPfd2 = 􏵶plc􏵷->m_bOverheadAvEssBus2Pfd2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tWaasRelay = 􏵶plc􏵷->m_bOverheadAvEssBus2WaasRelayDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tAvioMstr = 􏵶plc􏵷->m_bOverheadAvioMstr1OnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadAvioMstr2OnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCom4Ctrl = 􏵶plc􏵷->m_bOverheadAvShedBus1Com4CtrlDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCom4Xcvr = 􏵶plc􏵷->m_bOverheadAvShedBus1Com4XcvrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadAvShedBus1InactiveDI[2];
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tLhMon = 􏵶plc􏵷->m_bOverheadAvShedBus1LHMonDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tNmsBlw = 􏵶plc􏵷->m_bOverheadAvShedBus1NmsBlwDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tCm3Ant = 􏵶plc􏵷->m_bOverheadAvShedBus2Cm3AntDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tCm3Rt = 􏵶plc􏵷->m_bOverheadAvShedBus2Cm3RtDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tCom5Xcvr = 􏵶plc􏵷->m_bOverheadAvShedBus2Com5XcvrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tDme = 􏵶plc􏵷->m_bOverheadAvShedBus2DmeDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tMkr = 􏵶plc􏵷->m_bOverheadAvShedBus2MkrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tMovMap = 􏵶plc􏵷->m_bOverheadAvShedBus2MovMapDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tRadAlt = 􏵶plc􏵷->m_bOverheadAvShedBus2RadAltDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tRhMon = 􏵶plc􏵷->m_bOverheadAvShedBus2RHMonDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tVideoDist = 􏵶plc􏵷->m_bOverheadAvShedBus2VideoDistDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tBatEmExLt = 􏵶plc􏵷->m_bOverheadBatEmExltDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadBldHtgEmerDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadBldHtgOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadCargoHookArmDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadControlEng1SandFltrNormDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadControlEng1SandFltrTestDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadControlEng1TrainOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadControlEng1VentOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadControlEng2SandFltrNormDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadControlEng2SandFltrTestDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadControlEng2TrainOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadControlEng2VentOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tAdc = 􏵶plc􏵷->m_bOverheadEssBus1AdcDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tAhrs1 = 􏵶plc􏵷->m_bOverheadEssBus1Ahrs1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tAhrs2 = 􏵶plc􏵷->m_bOverheadEssBus1Ahrs2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tEssAvioMain1 = 􏵶plc􏵷->m_bOverheadEssBus1AvioMainDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot. = 􏵶plc􏵷->m_bOverheadEssBus1AvioMasterDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tBlwPel = 􏵶plc􏵷->m_bOverheadEssBus1BlwPelDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCkptVent = 􏵶plc􏵷->m_bOverheadEssBus1CkptVentDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tDimmTest = 􏵶plc􏵷->m_bOverheadEssBus1DimmTestDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tFireD = 􏵶plc􏵷->m_bOverheadEssBus1EngFireDDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tFuelV = 􏵶plc􏵷->m_bOverheadEssBus1EngFuelVDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tIgn = 􏵶plc􏵷->m_bOverheadEssBus1EngIgnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tOvsp = 􏵶plc􏵷->m_bOverheadEssBus1EngOvspDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tPrimeP = 􏵶plc􏵷->m_bOverheadEssBus1EngPrimePDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tStart = 􏵶plc􏵷->m_bOverheadEssBus1EngStartDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tTqN2 = 􏵶plc􏵷->m_bOverheadEssBus1EngTqN2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tWiper = 􏵶plc􏵷->m_bOverheadEssBus1EngWiperDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tFtr = 􏵶plc􏵷->m_bOverheadEssBus1FtrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tHtgCont = 􏵶plc􏵷->m_bOverheadEssBus1HtgContDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tIcAmp = 􏵶plc􏵷->m_bOverheadEssBus1IcAmpDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadEssBus1IcsCabDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tIcs = 􏵶plc􏵷->m_bOverheadEssBus1IcsDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadEssBus1InactiveDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tInstrLights = 􏵶plc􏵷->m_bOverheadEssBus1InstrLightsDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCkpt = 􏵶plc􏵷->m_bOverheadEssBus1LightsCkptDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tLdg = 􏵶plc􏵷->m_bOverheadEssBus1LightsLdgDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tPos = 􏵶plc􏵷->m_bOverheadEssBus1LightsPosDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tNms12Relay = 􏵶plc􏵷->m_bOverheadEssBus1Nms1Over2RelayDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tP1Sas = 􏵶plc􏵷->m_bOverheadEssBus1P1SasDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tRoll1Sas = 􏵶plc􏵷->m_bOverheadEssBus1Roll1SasDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tBt = 􏵶plc􏵷->m_bOverheadEssBus1SysBtDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCad = 􏵶plc􏵷->m_bOverheadEssBus1SysCadDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tFireE = 􏵶plc􏵷->m_bOverheadEssBus1SysFireEDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tFuelL = 􏵶plc􏵷->m_bOverheadEssBus1SysFuelLDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tGen = 􏵶plc􏵷->m_bOverheadEssBus1SysGenDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tHydP = 􏵶plc􏵷->m_bOverheadEssBus1SysHydPDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tVemd = 􏵶plc􏵷->m_bOverheadEssBus1SysVemdDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tWu = 􏵶plc􏵷->m_bOverheadEssBus1SysWuDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tVarNr = 􏵶plc􏵷->m_bOverheadEssBus1VarNrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tBoom = 􏵶plc􏵷->m_bOverheadEssBus1WinchBoomDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCcPil = 􏵶plc􏵷->m_bOverheadEssBus1WinchCcPilDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCont = 􏵶plc􏵷->m_bOverheadEssBus1WinchContDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAdc = 􏵶plc􏵷->m_bOverheadEssBus2AdcDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAhrs1 = 􏵶plc􏵷->m_bOverheadEssBus2Ahrs1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAh2s2 = 􏵶plc􏵷->m_bOverheadEssBus2Ahrs2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAltmVibr = 􏵶plc􏵷->m_bOverheadEssBus2AltmVibrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAp1 = 􏵶plc􏵷->m_bOverheadEssBus2Ap1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAvioMain2 = 􏵶plc􏵷->m_bOverheadEssBus2AvioMainDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAvioMast = 􏵶plc􏵷->m_bOverheadEssBus2AvioMasterDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tBeepTrim = 􏵶plc􏵷->m_bOverheadEssBus2BeepTrimDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tBlwPel = 􏵶plc􏵷->m_bOverheadEssBus2BlwPelDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tCcPedWinch = 􏵶plc􏵷->m_bOverheadEssBus2CcPedWinchDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tDimmTest2 = 􏵶plc􏵷->m_bOverheadEssBus2DimmTest2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tDwnlnkAduB = 􏵶plc􏵷->m_bOverheadEssBus2DwnlnkAduBDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tFireD = 􏵶plc􏵷->m_bOverheadEssBus2EngFireDDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tFuelV = 􏵶plc􏵷->m_bOverheadEssBus2EngFuelVDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tIgn = 􏵶plc􏵷->m_bOverheadEssBus2EngIgnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tOvsp = 􏵶plc􏵷->m_bOverheadEssBus2EngOvspDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tPrimeP = 􏵶plc􏵷->m_bOverheadEssBus2EngPrimePDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tStart = 􏵶plc􏵷->m_bOverheadEssBus2EngStartDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tTqN2 = 􏵶plc􏵷->m_bOverheadEssBus2EngTqN2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tICSBackup = 􏵶plc􏵷->m_bOverheadEssBus2IcsBackupDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tIcs = 􏵶plc􏵷->m_bOverheadEssBus2IcsDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tAcol = 􏵶plc􏵷->m_bOverheadEssBus2LightsAcolDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tEmEx = 􏵶plc􏵷->m_bOverheadEssBus2LightsEmExDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tInstr = 􏵶plc􏵷->m_bOverheadEssBus2LightsInstrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tMastMom = 􏵶plc􏵷->m_bOverheadEssBus2MastMomDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tN2Trim = 􏵶plc􏵷->m_bOverheadEssBus2N2TrimDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tNms2 = 􏵶plc􏵷->m_bOverheadEssBus2Nms2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tP2Sema = 􏵶plc􏵷->m_bOverheadEssBus2P2SemaDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tPtStPlt = 􏵶plc􏵷->m_bOverheadEssBus2PtStPltDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tRoll2Sema = 􏵶plc􏵷->m_bOverheadEssBus2Roll2SemaDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tRotorRpm = 􏵶plc􏵷->m_bOverheadEssBus2RotorRpmDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tBt = 􏵶plc􏵷->m_bOverheadEssBus2SysBtDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tCad = 􏵶plc􏵷->m_bOverheadEssBus2SysCadDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tFireE = 􏵶plc􏵷->m_bOverheadEssBus2SysFireEDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tFuelL = 􏵶plc􏵷->m_bOverheadEssBus2SysFuelLDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tGen = 􏵶plc􏵷->m_bOverheadEssBus2SysGenDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tHydP = 􏵶plc􏵷->m_bOverheadEssBus2SysHydPDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tVemd = 􏵶plc􏵷->m_bOverheadEssBus2SysVemdDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tWu = 􏵶plc􏵷->m_bOverheadEssBus2SysWuDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tVhfTx2 = 􏵶plc􏵷->m_bOverheadEssBus2VhfTx2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tXferfPump = 􏵶plc􏵷->m_bOverheadEssBus2XferFPumpDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tYawSas = 􏵶plc􏵷->m_bOverheadEssBus2YawSasDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadFuelPumpsPrime1OnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadFuelPumpsPrime2OnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadFuelPumpsXferAOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadFuelPumpsXferFOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadLightsAcolOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadLightsCarPaxOffDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadLightsCarPaxOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadLightsEmExOffDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadLightsEmExOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadLightsInstrNvgDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadLightsInstrOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadLightsPosOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tPaxBlw = 􏵶plc􏵷->m_bOverheadPaxBlwOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadPtStHtgCpOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadPtStHtgPilOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tSandFilt = 􏵶plc􏵷->m_bOverheadSandFiltDI[0];
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tSandFilt = 􏵶plc􏵷->m_bOverheadSandFiltDI[1];
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tAp2 = 􏵶plc􏵷->m_bOverheadShedBus1Ap2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tAvioMain1 = 􏵶plc􏵷->m_bOverheadShedBus1AvioMainDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tBambiBucket = 􏵶plc􏵷->m_bOverheadShedBus1BambiBucketDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCargoPaxLt = 􏵶plc􏵷->m_bOverheadShedBus1CargoPaxLtDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tCont1LsLt = 􏵶plc􏵷->m_bOverheadShedBus1Cont1LSLtDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tPwr = 􏵶plc􏵷->m_bOverheadShedBus1LoadHookPwrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tPtStCp = 􏵶plc􏵷->m_bOverheadShedBus1PtStCpDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tXferaPump = 􏵶plc􏵷->m_bOverheadShedBus1XferAPumpDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tEssAvioMain2 = 􏵶plc􏵷->m_bOverheadShedBus2AvioMainDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tEmerBat = 􏵶plc􏵷->m_bOverheadShedBus2EmerBatDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tHtgv = 􏵶plc􏵷->m_bOverheadShedBus2HtgVDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tInstCool = 􏵶plc􏵷->m_bOverheadShedBus2InstCoolDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.m_tCont2 = 􏵶plc􏵷->m_bOverheadShedBus2LSLightCont2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadShedBus2LSLightPwrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadShedBus2PaxBlwDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadStbyHorOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tCoPilot.m_tStbyHorBat = 􏵶plc􏵷->m_bOverheadStbyHorBatDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestBatHorExTestDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestDisplayCpdsDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestDisplayWuDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestExtWarnFire1OffDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestExtWarnFire1WarnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestExtWarnFire2OffDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestExtWarnFire2WarnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestHydS1DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadTestHydS2DI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadVentilationCkptOnDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadWinchCblCtrDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadWiperFastDI;
+    􏵶inputs􏵷->m_tComponents.m_tPanelBreakers.m_tPilot.X = 􏵶plc􏵷->m_bOverheadWiperOffDI;
+􏶳
+
+􏷘-􏷗􏷒read plc switches􏷑
+􏷐Applies circuit breakers inputs signaled from the PLC􏷏
+􏶠􏶡
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
+􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
+􏶴
+    
+    􏶲turn PLC switch inputs into the system's input􏶱
+    
+    􏶲switches on the main switch panel􏶱
+    
+    􏵶plc􏵷->m_bOverheadEmShedBusOnDI;
+    
+    
+    􏵶plc􏵷->m_bMainSwitchPnlBatMstrEngageDI;
+    􏵶plc􏵷->m_bMainSwitchPnlBatMstrOffDI;
+    
+    􏵶plc􏵷->m_bOverheadBusTie1OffDI;
+    􏵶plc􏵷->m_bOverheadBusTie1ResDI;
+    􏵶plc􏵷->m_bOverheadBusTie2OffDI;
+    􏵶plc􏵷->m_bOverheadBusTie2ResDI;
+    
+    
+    􏵶plc􏵷->m_bMainSwitchPnlGen2ResetDI;
+    􏵶plc􏵷->m_bMainSwitchPnlGen2OffDI;
+    􏵶plc􏵷->m_bMainSwitchPnlGen1ResetDI;
+    􏵶plc􏵷->m_bMainSwitchPnlGen1OffDI;
+􏶳

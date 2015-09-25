@@ -172,6 +172,7 @@ cd ../../;
 #Electrical Manager related
 cd Electrical/manager;
 Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
+Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
 cd ../../;
 
 
