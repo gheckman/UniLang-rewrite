@@ -129,56 +129,91 @@ echo "formatting other files...";
   clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsTypes.h"
   clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.h
   clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.c
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Connections/UDP/J2Communication"/*.h
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Connections/UDP/J2Communication"/*.c
 }
 
-#name of CodeLang file / where to place in repo / where to place class wrapper
-
-#Utilities
-cd Utilities;
-Transfer-Global "time_utilities" "Shared/ffs"
-Transfer-Global "date_utilities" "Shared/ffs"
-cd ..;
-
-
-#Time related
-cd Time;
-Transfer-Global "month" "Components/Time"
-Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
-Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
-Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
-cd ..;
-
-#Electrical Generic related
-cd Electrical/generic;
-Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Global "node_type" "Components/Electrical/Generic"
-Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
-Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
-cd ../../;
-
-#Electrical Specific related
-cd Electrical/specific;
-Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
-#Transfer-Global "electrical_system_side" "Components/Electrical/Specific"
-Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
-cd ../../;
-
-#Electrical Manager related
-cd Electrical/manager;
-Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
-Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
-cd ../../;
+function Single-Newline-At-The-End-Of-Every-File(){
+  recursively-set-a-single-blank-line-to-the-end-of-files --start-path "$PATH_TO_CODE_ROOT" --file-extension h
+  recursively-set-a-single-blank-line-to-the-end-of-files --start-path "$PATH_TO_CODE_ROOT" --file-extension hpp
+  recursively-set-a-single-blank-line-to-the-end-of-files --start-path "$PATH_TO_CODE_ROOT" --file-extension c
+  recursively-set-a-single-blank-line-to-the-end-of-files --start-path "$PATH_TO_CODE_ROOT" --file-extension cpp
+}
+function Remove-Whitespace-Lines-At-The-Top-Of-Every-File(){
+  recursively-remove-first-whitespace-lines-from-front-of-files --start-path "$PATH_TO_CODE_ROOT" --file-extension h
+  recursively-remove-first-whitespace-lines-from-front-of-files --start-path "$PATH_TO_CODE_ROOT" --file-extension hpp
+  recursively-remove-first-whitespace-lines-from-front-of-files --start-path "$PATH_TO_CODE_ROOT" --file-extension c
+  recursively-remove-first-whitespace-lines-from-front-of-files --start-path "$PATH_TO_CODE_ROOT" --file-extension cpp
+}
+function Check-For-Duplicate-Headers(){
+  recursively-detect-redundant-header-files --start-path "$PATH_TO_CODE_ROOT" --file-extension h
+  recursively-detect-redundant-header-files --start-path "$PATH_TO_CODE_ROOT" --file-extension hpp
+  recursively-detect-redundant-header-files --start-path "$PATH_TO_CODE_ROOT" --file-extension c
+  recursively-detect-redundant-header-files --start-path "$PATH_TO_CODE_ROOT" --file-extension cpp 
+}
 
 
-#Other stuff
-cd Other;
-Transfer-Global "ffs_const" "Shared/ffs"
-cd ..;
+function Codelang-Transform(){
+  #name of CodeLang file / where to place in repo / where to place class wrapper
 
+  #Utilities
+  cd Utilities;
+  Transfer-Global "time_utilities" "Shared/ffs"
+  Transfer-Global "date_utilities" "Shared/ffs"
+  cd ..;
+
+  #Time related
+  cd Time;
+  Transfer-Global "month" "Components/Time"
+  Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
+  Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
+  Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
+  cd ..;
+
+  #Electrical Generic related
+  cd Electrical/generic;
+  Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Global "node_type" "Components/Electrical/Generic"
+  Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  cd ../../;
+
+  #Electrical Specific related
+  cd Electrical/specific;
+  Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Global "electrical_system_side" "Components/Electrical/Specific"
+  Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  cd ../../;
+
+  #Electrical Manager related
+  cd Electrical/manager;
+  Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
+  Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
+  cd ../../;
+
+  #Other stuff
+  cd Other;
+  Transfer-Global "ffs_const" "Shared/ffs"
+  cd ..;
+  
+  #Connection stuff
+  cd Connections/J2;
+  #Transfer-Global "j2_communication" "Connections/UDP/";
+  #Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
+  cd ../../;
+}
+
+
+#Starting point:
+Codelang-Transform;
 Clang-Format-Some-Other-Files;
+#Check-For-Duplicate-Headers;
+Remove-Whitespace-Lines-At-The-Top-Of-Every-File;
+Single-Newline-At-The-End-Of-Every-File;
+

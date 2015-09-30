@@ -52,7 +52,7 @@ based on the outputs of various systems and connections􏶡
 􏶴
     􏶲Set the inputs from the various connections􏶱
     􏵲read from IOS􏵳􏵶inputs􏵷);
-    􏵲read from PLC􏵳􏵶inputs􏵷,􏵶plc􏵷);
+    􏵲read from plc􏵳􏵶inputs􏵷,􏵶plc􏵷);
 
     􏶲From Aural, BugEye, Control Loader,􏶱
     􏶲External Systems, Flight Engine, Garmin430,􏶱
