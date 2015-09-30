@@ -151,6 +151,15 @@ function Check-For-Duplicate-Headers(){
   recursively-detect-redundant-header-files --start-path "$PATH_TO_CODE_ROOT" --file-extension c
   recursively-detect-redundant-header-files --start-path "$PATH_TO_CODE_ROOT" --file-extension cpp 
 }
+function Cpp-Check-All-Files(){
+  find "$PATH_TO_CODE_ROOT" -type f|while read f; do cppchecker "'""$f""'" --search-paths '/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src' '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
+}
+function Splint-Check-All-Files(){
+  find "$PATH_TO_CODE_ROOT" -type f|while read f; do splint-checker "'""$f""'" --search-paths '/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src' '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
+}
+function Hungarian-Notation-Check-All-Files(){
+  find "$PATH_TO_CODE_ROOT" -type f|while read f; do f2si-hungarian-notation-validator "'""$f""'" --search-paths '/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src' '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
+}
 
 
 function Codelang-Transform(){
@@ -210,10 +219,28 @@ function Codelang-Transform(){
 }
 
 
-#Starting point:
+#--------------------#
+# CodeLang -> F2si C #
+#--------------------#
 Codelang-Transform;
-Clang-Format-Some-Other-Files;
+
+
+#------------------#
+# Global Scanners: #
+#------------------#
 #Check-For-Duplicate-Headers;
+#Cpp-Check-All-Files;
+#Splint-Check-All-Files;
+#Hungarian-Notation-Check-All-Files;
+
+#---------------------------#
+# Selected Transformations: #
+#---------------------------#
+Clang-Format-Some-Other-Files;
+
+#-------------------------#
+# Global Transformations: #
+#-------------------------#
 Remove-Whitespace-Lines-At-The-Top-Of-Every-File;
 Single-Newline-At-The-End-Of-Every-File;
 
