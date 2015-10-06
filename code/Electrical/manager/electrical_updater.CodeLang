@@ -1,0 +1,109 @@
+􏶞global􏶟
+􏷲Update the electrical system logic􏷱
+􏷰Updates the electrical system using its inputs and setting its output􏷯
+􏷮Electrical_System􏷭
+􏷬Trevor Hickey􏷫
+􏷦ElectricalData􏷥􏷢USES: ElectricalSystemT􏷡
+􏷤ElectricalMalfunctionApplier􏷣􏷢USES: ApplyElectricalMalfunctions()􏷡
+
+􏷘+􏷗􏷒update electrical logic􏷑
+􏷐Update the electrical system logic􏷏
+􏶠Updates the electrical system using its inputs and setting its output􏶡
+􏶜􏶝􏷆ElectricalSystemT *const􏷅􏷄system􏷃􏷀The entire electrical system with all of its inputs and outputs.􏶿
+􏶜c􏶝􏷆float􏷅􏷄time delta􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶴
+    􏶲there may be a need to simulate a spike when the generator or battery is turned on.
+    I have no information on this, so for the time being, I'll leave a comment only.
+
+    1. Change the state of particular nodes of the graph based on the input data coming in.
+       This involves:
+       - turning off flow on nodes whose electrical components are signaled to be off.
+       - popping circuit breakers
+       - opening closing relays
+       - applying malfunctions
+    
+       *These changes may come from other systems, from the IOS, or from the PLC􏶱
+    􏵲change electrical graph state􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem, &􏵶system􏵷->m_tInputs);
+
+    􏶲2. Run algorithm to compute new electrical data among the nodes.􏶱
+    􏵲update electrical data across graph􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem);
+
+    􏶲3. Turn off power on all components that are no longer receiving electricity in the graph.􏶱
+    􏵲stop power on disconnected components􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem);
+
+    􏶲4. Potentially fudge data to match the documents on what should ACTUALLY be displayed on the screens.
+       - Hopefully this does not need to be done if the resistances are set appropriately on each of the nodes.
+       - However, I suspect that we might end up checking to see if a node's amperage is between some range, and then set it to an exact value based on that.
+         because documents such as the LUH-CUSTOMIZED-REV-11-VOL-1.pdf give exact values down to two decimal places.
+         Deriving these perfectly seems unlikely without spending too much time tweaking resistances.􏶱
+    
+    􏶲5. Provide power flags for other systems􏶱
+    􏵲set power flags for other systems􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem);
+    
+    􏶲6. Provide outputs for screens􏶱
+    􏵲set data needed for screen displays􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem);
+􏶳
+
+
+􏷘-􏷗􏷒change electrical graph state􏷑
+􏷐􏷏
+􏶠􏶡
+􏶜􏶝􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶜c􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃
+􏶴
+    􏶲In order to change the state of the power system, we will
+    1. Apply malfunctions
+    2. Change bus tie relays, and power sources based on physical switch states
+    3. Pop any breakers􏶱
+    
+    􏶲We take in the DC Power system, and a list of failures.
+    We apply the failures to the DC Power system.􏶱
+    ApplyElectricalMalfunctions(􏵶system􏵷, &􏵶inputs􏵷->m_tFailures);
+    
+    􏶲We observe the switch states from the PLC, 
+    and apply changes to the circuitry based on the switch positions and internal state􏶱
+    􏵲change circuitry based on switch state􏵳􏵶system􏵷, &􏵶inputs􏵷->m_tSwitches);
+
+    􏶲We pop any breakers that need to be triggered to pop􏶱
+    􏵲pop breakers􏵳􏵶system􏵷, &􏵶inputs􏵷->m_tPanelBreakers);
+􏶳
+
+􏷘-􏷗􏷒update electrical data across graph􏷑
+􏷐􏷏
+􏶠􏶡
+􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶴
+􏶳
+
+􏷘-􏷗􏷒stop power on disconnected components􏷑
+􏷐􏷏
+􏶠􏶡
+􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶴
+􏶳
+
+􏷘-􏷗􏷒set power flags for other systems􏷑
+􏷐􏷏
+􏶠􏶡
+􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶴
+􏶳
+
+􏷘-􏷗􏷒set data needed for screen displays􏷑
+􏷐􏷏
+􏶠􏶡
+􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶴
+􏶳
+
+􏷘-􏷗􏷒change circuitry based on switch state􏷑
+􏷐􏷏
+􏶠􏶡
+􏶴
+􏶳
+
+􏷘-􏷗􏷒pop breakers􏷑
+􏷐􏷏
+􏶠􏶡
+􏶴
+􏶳

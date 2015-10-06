@@ -124,11 +124,11 @@ function Caps_Case(){
 
 function Clang-Format-Some-Other-Files(){
 echo "formatting other files...";
-  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.h"
-  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.c"
-  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsTypes.h"
-  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.h
-  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.c
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.h"
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.c"
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsTypes.h"
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.h
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.c
   #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Connections/UDP/J2Communication"/*.h
   #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Connections/UDP/J2Communication"/*.c
 }
@@ -167,48 +167,55 @@ function Codelang-Transform(){
 
   #Utilities
   cd Utilities;
-  Transfer-Global "time_utilities" "Shared/ffs"
-  Transfer-Global "date_utilities" "Shared/ffs"
+  #Transfer-Global "time_utilities" "Shared/ffs"
+  #Transfer-Global "date_utilities" "Shared/ffs"
   cd ..;
 
   #Time related
   cd Time;
-  Transfer-Global "month" "Components/Time"
-  Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
-  Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
-  Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
+  #Transfer-Global "month" "Components/Time"
+  #Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
   cd ..;
 
   #Electrical Generic related
   cd Electrical/generic;
-  Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  Transfer-Global "node_type" "Components/Electrical/Generic"
-  Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Global "node_type" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
   cd ../../;
 
   #Electrical Specific related
   cd Electrical/specific;
-  Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
   #Transfer-Global "electrical_system_side" "Components/Electrical/Specific"
-  Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
   cd ../../;
 
   #Electrical Manager related
   cd Electrical/manager;
-  Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
-  Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
+  #Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
+  #Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
+  #Transfer-Global "electrical_updater" "SystemManagers/Electrical"
   cd ../../;
+  
+  #Electrical components
+  cd Electrical/components;
+  Transfer-Object-Bad "battery" "Components/Electrical" "Components/Electrical"
+  cd ../../;
+  
 
   #Other stuff
   cd Other;
-  Transfer-Global "ffs_const" "Shared/ffs"
+  #Transfer-Global "ffs_const" "Shared/ffs"
   cd ..;
   
   #Connection stuff
@@ -216,6 +223,11 @@ function Codelang-Transform(){
   #Transfer-Global "j2_communication" "Connections/UDP/";
   #Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
   cd ../../;
+  
+  cd Components;
+  #Transfer-Object-Bad "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
+  #Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
+  cd ..;
 }
 
 
@@ -241,6 +253,6 @@ Clang-Format-Some-Other-Files;
 #-------------------------#
 # Global Transformations: #
 #-------------------------#
-Remove-Whitespace-Lines-At-The-Top-Of-Every-File;
-Single-Newline-At-The-End-Of-Every-File;
+#Remove-Whitespace-Lines-At-The-Top-Of-Every-File;
+#Single-Newline-At-The-End-Of-Every-File;
 

@@ -1,0 +1,186 @@
+􏶞object􏶟
+􏷲A charing and draining battery􏷱
+􏷰Contains electrical properties and temperatures that adjust over time.􏷯
+􏷮Electrical􏷭 􏷮Battery􏷭
+􏷬Nick Dean􏷫
+􏷬Trevor Hickey􏷫
+
+􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷤FfsCommon􏷣􏷢LimitRate()􏷡
+􏷤FfsConst􏷣􏷢MS_PER_HOUR􏷡
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐􏷏
+􏶠􏶐 will be in an invalid state until initialized􏶡
+􏶜c􏶝􏷆float􏷅􏷄rated voltage􏷃􏷀the rated voltage od the battery􏶿
+􏶜c􏶝􏷆float􏷅􏷄rated amp hours􏷃􏷀the rated amp hours of the battery􏶿
+􏶜c􏶝􏷆float􏷅􏷄normal temperature_degc􏷃􏷀the normal temperature of the battery􏶿
+􏶜c􏶝􏷆float􏷅􏷄normal temperature rate􏷃􏷀the normal temperature rate of the battery􏶿
+􏶴
+    􏶲set all the local data during initalization􏶱
+    􏵴rated voltage􏵵 = 􏵶rated voltage􏵷;
+    􏵴rated amp hours􏵵 = 􏵶rated amp hours􏵷;
+    􏵴normal temperature_degc􏵵 = 􏵶normal temperature_degc􏵷;
+    􏵴normal temperature rate􏵵 = 􏵶normal temperature rate􏵷;
+    
+    􏶲assume the battery does not have an overheat failure when created􏶱
+    􏵴overheat failure􏵵 = 􏵰;
+    
+    􏶲start the voltage, amperage, and temperature at 0􏶱
+    􏵴voltage􏵵 = 0;
+    􏵴amp draw􏵵 = 0;
+    􏵴temperature_degc􏵵 = 0;
+    
+    􏶲assume the battery is not charging when created􏶱
+    􏵴is charging􏵵 = 􏵰;
+􏶳
+
+􏷘+􏷗􏷒set overheat failure􏷑
+􏶜c􏶝􏷆BOOL􏷅􏷄overheat failure􏷃􏷀whether the overheat failure is on or off􏶿
+􏷰set whether the battery has overheated􏷯
+􏷐An overheated battery will affect its temperature.􏷏
+􏶴
+    􏶲sets the overheat failure􏶱
+    􏵴overheat failure􏵵 = 􏵶overheat failure􏵷;
+􏶳
+
+􏷘+􏷗􏷒update􏷑
+􏷰Update the battery over time using a time delta􏷯
+􏷐Updates the electrical properties, temperature, and determines if the battery is charging.􏷏
+􏶜c􏶝􏷆float􏷅􏷄bus source voltage􏷃􏷀the voltage of the bus that the battery is attached to􏶿
+􏶜c􏶝􏷆float􏷅􏷄bus amp draw􏷃􏷀the amperage of the bus that the battery is attached to􏶿
+􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶴
+    
+    􏶲determines whether the battery is charging which is used throughout the rest of the update􏶱
+    􏵲sets whether battery is charging􏵳􏵶bus source voltage􏵷);
+    
+    􏶲adjust the voltage based on the time gone by􏶱
+    􏵲adjust voltage􏵳􏵶time delta_ms􏵷);
+    
+    􏶲adjust the amp draw based on the bus's amp draw􏶱
+    􏵲adjust amp draw􏵳􏵶bus amp draw􏵷);
+
+    􏶲adjust the temperature based on the time gone by􏶱
+    􏵲adjust temperature􏵳􏵶time delta_ms􏵷);
+􏶳
+
+􏷘-􏷗􏷒sets whether battery is charging􏷑
+􏶜c􏶝􏷆float􏷅􏷄bus source voltage􏷃􏷀the current voltage of the bus that the battery is attached to.􏶿
+􏷰Determines and sets whether the battery is charging.􏷯
+􏷐A charging battery affects the logic in the rest of the update􏷏
+􏶴
+    􏶲we'll assume the bus is charging if the bus its connected to has a higher voltage􏶱
+    if (􏵶bus source voltage􏵷 > 􏵴voltage􏵵){
+        􏵴is charging􏵵 = 􏵱;
+    }
+    else{
+        􏵴is charging􏵵 = 􏵰;
+    }
+􏶳
+
+􏷘-􏷗􏷒adjust voltage􏷑
+􏷰Adjust the voltage of the battery􏷯
+􏷐Accounts for whether the battery is charging or not􏷏
+􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶴
+    if (􏵴is charging􏵵){
+        􏵲adjust voltage while charging􏵳􏵶time delta_ms􏵷);
+    }
+    else{
+        􏵲adjust voltage without charging􏵳􏵶time delta_ms􏵷);
+    }
+􏶳
+
+􏷘-􏷗􏷒adjust voltage while charging􏷑
+􏷰An algorithm used to adjust the voltage when the battery is charging􏷯
+􏷐Uses algorithm with limit rate􏷏
+􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶴
+    􏵴voltage􏵵+= LimitRate(􏵴rated voltage􏵵, 􏵴voltage􏵵, (20.0f * ((􏵴amp draw􏵵/􏵴rated amp hours􏵵) / MS_PER_HOUR)), 􏵶time delta_ms􏵷);
+
+    􏶲ensure that the voltage never exceeds what the battery is rated at􏶱
+    if (􏵴voltage􏵵 > 􏵴rated voltage􏵵)
+    {
+        􏵴voltage􏵵 = 􏵴rated voltage􏵵;
+    }
+􏶳
+
+􏷘-􏷗􏷒adjust voltage without charging􏷑
+􏷰An algorithm used to adjust the voltage when the battery is not charging􏷯
+􏷐Uses algorithm with limit rate􏷏
+􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶴
+    􏵴voltage􏵵 += LimitRate(0.0f, 􏵴voltage􏵵, ((9.0f * (􏵴amp draw􏵵/(-1.0f * 􏵴rated amp hours􏵵))) / MS_PER_HOUR), 􏵶time delta_ms􏵷);
+􏶳
+
+􏷘-􏷗􏷒adjust amp draw􏷑
+􏶜c􏶝􏷆float􏷅􏷄bus amp draw􏷃􏷀the ampdraw of the bus in which the battery is connected to􏶿
+􏷰Adjust the amp draw of the battery.􏷯
+􏷐The amp draw adjusts differently if the battery is charging􏷏
+􏶴
+    if (􏵴voltage􏵵 > 0.0f){
+        if (􏵴is charging􏵵){
+            􏵴amp draw􏵵 = 10.0f * 􏵶bus amp draw􏵷 * (1.0f - (􏵴voltage􏵵 / 􏵴rated voltage􏵵));
+        }
+        else{
+            􏵴amp draw􏵵 = 􏵶bus amp draw􏵷;
+        }
+    }
+    else{
+        􏵴amp draw􏵵 = 0.0f;
+    }
+􏶳
+
+􏷘-􏷗􏷒adjust temperature􏷑
+􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏷰Adjust the temperature of the battery.􏷯
+􏷐Accounts for whether the battery has an overheat failure or not.􏷏
+􏶴
+    if (􏵴is charging􏵵 && 􏵴overheat failure􏵵){
+        􏵲adjust temperature with overheat􏵳􏵶time delta_ms􏵷);
+    }else{
+        􏵲adjust temperature without overheat􏵳􏵶time delta_ms􏵷);
+    }
+􏶳
+
+􏷘-􏷗􏷒adjust temperature with overheat􏷑
+􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏷰adjusts the temperature on an overheated battery based on a time delta.􏷯
+􏷐Uses algorithm with limit rate􏷏
+􏶴
+    􏶲formula to adjust an overheated battery over time􏶱
+    􏵴temperature_degc􏵵 += LimitRate(165.0, 􏵴temperature_degc􏵵, 0.002f, 􏵶time delta_ms􏵷);
+􏶳
+
+􏷘-􏷗􏷒adjust temperature without overheat􏷑
+􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏷰adjusts the temperature on an overheated battery based on a time delta.􏷯
+􏷐Uses algorithm with limit rate􏷏
+􏶴
+    􏶲formula to adjust non-overheated battery over time􏶱
+    􏵴temperature_degc􏵵 += LimitRate(􏵴normal temperature_degc􏵵,􏵴temperature_degc􏵵, 􏵴normal temperature rate􏵵, 􏵶time delta_ms􏵷);
+􏶳
+
+􏶨properties of the battery􏶧
+􏶦these properties are decided during its initalization􏶥
+􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬rated voltage􏶫􏶪0􏶩
+􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬rated amp hours􏶫􏶪0􏶩
+􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬normal temperature_degc􏶫􏶪0􏶩
+􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬normal temperature rate􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+
+􏶨whether or not the battery has an overheating failure􏶧
+􏶦the temperature is affected during an overheat failure􏶥
+􏶌􏶑􏶘-􏶙􏶮BOOL􏶭􏶬overheat failure􏶫􏶪0􏶩
+
+􏶨the voltage of the battery􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩
+
+􏶨the temperature of the battery􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬temperature_degc􏶫􏶪0􏶩
+
+􏶨whether or not the battery is charging􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬is charging􏶫􏶪0􏶩
+
+􏶨the amp draw of the battery􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬amp draw􏶫􏶪0􏶩

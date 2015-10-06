@@ -19,7 +19,7 @@ Therefore, using WIRE should never be done by the client using the generic graph
 Note 3: All other node types can be used to perform specific functionality as needed by the user, but the electrical graph itself does not
 rely on, or do anything special when encountering other node types; it simply stores them so they can be queried later.  Except for ground;
 It uses ground to know whether there is a complete path.􏶇
-􏶀node type􏶋
+􏵮i􏵯􏶀node type􏶋
 􏶆battery􏶅
 􏶆breaker􏶅
 􏶆bus􏶅
