@@ -6,20 +6,29 @@
 􏷬Trevor Hickey􏷫
 
 􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
-􏷤FfsCommon􏷣􏷢LimitRate()􏷡
-􏷤FfsConst􏷣􏷢MS_PER_HOUR􏷡
+􏷦BatteryChemistry􏷥􏷢HASA: BatteryChemistryE􏷡
+􏷤FfsCommon􏷣􏷢USES: LimitRate()􏷡
+􏷤FfsConst􏷣􏷢USES: MS_PER_HOUR􏷡
+􏷤math􏷣􏷢USES: pow()􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
 􏶠􏶐 will be in an invalid state until initialized􏶡
+􏶜c􏶝􏷆BatteryChemistryE􏷅􏷄chemistry􏷃􏷀the chemistry of the battery􏶿
+􏶜c􏶝􏷆int􏷅􏷄cell count􏷃􏷀the number of cells in the battery􏶿
 􏶜c􏶝􏷆float􏷅􏷄rated voltage􏷃􏷀the rated voltage od the battery􏶿
 􏶜c􏶝􏷆float􏷅􏷄rated amp hours􏷃􏷀the rated amp hours of the battery􏶿
+􏶜c􏶝􏷆float􏷅􏷄rate amperage􏷃􏷀the rate amperage of the battery􏶿
 􏶜c􏶝􏷆float􏷅􏷄normal temperature_degc􏷃􏷀the normal temperature of the battery􏶿
 􏶜c􏶝􏷆float􏷅􏷄normal temperature rate􏷃􏷀the normal temperature rate of the battery􏶿
 􏶴
     􏶲set all the local data during initalization􏶱
+    􏵴cell count􏵵 = 􏵶cell count􏵷;
+    􏵴chemistry􏵵 = 􏵶chemistry􏵷;
+    
     􏵴rated voltage􏵵 = 􏵶rated voltage􏵷;
     􏵴rated amp hours􏵵 = 􏵶rated amp hours􏵷;
+    􏵴rate amperage􏵵 = 􏵶rate amperage􏵷;
     􏵴normal temperature_degc􏵵 = 􏵶normal temperature_degc􏵷;
     􏵴normal temperature rate􏵵 = 􏵶normal temperature rate􏵷;
     
@@ -33,6 +42,9 @@
     
     􏶲assume the battery is not charging when created􏶱
     􏵴is charging􏵵 = 􏵰;
+    
+    􏶲assume the battery is grounded when created􏶱
+    􏵴is grounded􏵵 = 􏵱;
 􏶳
 
 􏷘+􏷗􏷒set overheat failure􏷑
@@ -44,25 +56,74 @@
     􏵴overheat failure􏵵 = 􏵶overheat failure􏵷;
 􏶳
 
-􏷘+􏷗􏷒update􏷑
+􏷘+􏷗􏷒set grounded􏷑
+􏶜c􏶝􏷆BOOL􏷅􏷄is grounded􏷃􏷀whether the battery is grounded or not􏶿
+􏷰set whether the battery is grounded􏷯
+􏷐A grounded/ungrounded battery will affect its voltage.􏷏
+􏶴
+    􏶲sets whether the battery is grounded􏶱
+    􏵴is grounded􏵵 = 􏵶is grounded􏵷;
+􏶳
+
+􏷘+􏷗􏷒update over time􏷑
 􏷰Update the battery over time using a time delta􏷯
 􏷐Updates the electrical properties, temperature, and determines if the battery is charging.􏷏
 􏶜c􏶝􏷆float􏷅􏷄bus source voltage􏷃􏷀the voltage of the bus that the battery is attached to􏶿
 􏶜c􏶝􏷆float􏷅􏷄bus amp draw􏷃􏷀the amperage of the bus that the battery is attached to􏶿
 􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏶴
+    float fPercentDischarged = 0.0f;
+    float fCellVoltage = 0.0f;
     
     􏶲determines whether the battery is charging which is used throughout the rest of the update􏶱
     􏵲sets whether battery is charging􏵳􏵶bus source voltage􏵷);
+
+    􏶲sets amp hours􏶱
+    􏵴amp hours􏵵 += 􏵴amp draw􏵵 * (􏵶time delta_ms􏵷 / MS_PER_HOUR);
+    􏵴amp hours􏵵 = LimitValue(􏵴amp hours􏵵, 􏵴rated amp hours􏵵, 0.0f);
     
-    􏶲adjust the voltage based on the time gone by􏶱
-    􏵲adjust voltage􏵳􏵶time delta_ms􏵷);
+    􏶲calculates percent discharged􏶱
+    fPercentDischarged = (1.0f - (􏵴amp hours􏵵 / 􏵴rated amp hours􏵵)) * 100.0f;
+    
+    􏶲calculates cell voltage􏶱
+    fCellVoltage = 􏵲get cell voltage􏵳􏵴chemistry􏵵,fPercentDischarged);
+    
+    􏶲calculate the voltage and wattage􏶱
+    􏵴voltage􏵵 = 􏵴is grounded􏵵 ? (fCellVoltage * 􏵴cell count􏵵) : 0.0f;
+    􏵴watts􏵵 = 􏵴voltage􏵵 * (-1.0f * 􏵶bus amp draw􏵷);
+    if (􏵴watts􏵵 > (􏵴rate amperage􏵵 * 􏵴voltage􏵵))
+    {
+        􏵴voltage􏵵 -= ((􏵴watts􏵵 - (􏵴rate amperage􏵵 * 􏵴voltage􏵵)) / 1440.0f);
+    }
     
     􏶲adjust the amp draw based on the bus's amp draw􏶱
     􏵲adjust amp draw􏵳􏵶bus amp draw􏵷);
 
     􏶲adjust the temperature based on the time gone by􏶱
     􏵲adjust temperature􏵳􏵶time delta_ms􏵷);
+􏶳
+
+
+􏷘-􏷗􏷒get cell voltage􏷑
+􏷰gets the cell voltage􏷯
+􏷐Uses the chemistry of the battery and percent discharged, to calculate a new cell voltage.􏷏
+􏶜c􏶝􏷆BatteryChemistryE􏷅􏷄chemistry􏷃􏷀the chemistry of the battery􏶿
+􏶜c􏶝􏷆float􏷅􏷄percent discharged􏷃􏷀the percent discharged of the battery over time􏶿
+􏶾float􏶽􏶼cell voltage􏶻􏶺the voltage of each cell in the battery􏶹
+􏶴
+    float fCellVoltage = 0.0f;
+    
+    switch (􏵶chemistry􏵷){
+        case BATTERY_CHEMISTRY_NICAD:
+        fCellVoltage = (float)((-0.000000000853033 * pow(􏵶percent discharged􏵷, 5)) + (0.000000198414583 * pow(􏵶percent discharged􏵷, 4)) - (0.000017461847809 * pow(􏵶percent discharged􏵷, 3)) + (0.000730626035162 * pow(􏵶percent discharged􏵷, 2)) - (0.014884639624881 * 􏵶percent discharged􏵷) + 1.2);
+        break;
+        case BATTERY_CHEMISTRY_LEAD_ACID:
+        fCellVoltage = (float)((-0.00000094 * pow(􏵶percent discharged􏵷, 3)) + (0.00012771 * pow(􏵶percent discharged􏵷, 2)) - (0.00666100 * 􏵶percent discharged􏵷) + 2.0);
+        break;
+        default:;
+    }
+    
+    return fCellVoltage;
 􏶳
 
 􏷘-􏷗􏷒sets whether battery is charging􏷑
@@ -79,40 +140,6 @@
     }
 􏶳
 
-􏷘-􏷗􏷒adjust voltage􏷑
-􏷰Adjust the voltage of the battery􏷯
-􏷐Accounts for whether the battery is charging or not􏷏
-􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
-􏶴
-    if (􏵴is charging􏵵){
-        􏵲adjust voltage while charging􏵳􏵶time delta_ms􏵷);
-    }
-    else{
-        􏵲adjust voltage without charging􏵳􏵶time delta_ms􏵷);
-    }
-􏶳
-
-􏷘-􏷗􏷒adjust voltage while charging􏷑
-􏷰An algorithm used to adjust the voltage when the battery is charging􏷯
-􏷐Uses algorithm with limit rate􏷏
-􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
-􏶴
-    􏵴voltage􏵵+= LimitRate(􏵴rated voltage􏵵, 􏵴voltage􏵵, (20.0f * ((􏵴amp draw􏵵/􏵴rated amp hours􏵵) / MS_PER_HOUR)), 􏵶time delta_ms􏵷);
-
-    􏶲ensure that the voltage never exceeds what the battery is rated at􏶱
-    if (􏵴voltage􏵵 > 􏵴rated voltage􏵵)
-    {
-        􏵴voltage􏵵 = 􏵴rated voltage􏵵;
-    }
-􏶳
-
-􏷘-􏷗􏷒adjust voltage without charging􏷑
-􏷰An algorithm used to adjust the voltage when the battery is not charging􏷯
-􏷐Uses algorithm with limit rate􏷏
-􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
-􏶴
-    􏵴voltage􏵵 += LimitRate(0.0f, 􏵴voltage􏵵, ((9.0f * (􏵴amp draw􏵵/(-1.0f * 􏵴rated amp hours􏵵))) / MS_PER_HOUR), 􏵶time delta_ms􏵷);
-􏶳
 
 􏷘-􏷗􏷒adjust amp draw􏷑
 􏶜c􏶝􏷆float􏷅􏷄bus amp draw􏷃􏷀the ampdraw of the bus in which the battery is connected to􏶿
@@ -164,8 +191,11 @@
 
 􏶨properties of the battery􏶧
 􏶦these properties are decided during its initalization􏶥
+􏶌􏶑􏶘-􏶙􏶮int􏶭􏶬cell count􏶫􏶪0􏶩
+􏶌􏶑􏶘-􏶙􏶮BatteryChemistryE􏶭􏶬chemistry􏶫􏶪0􏶩
 􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬rated voltage􏶫􏶪0􏶩
 􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬rated amp hours􏶫􏶪0􏶩
+􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬rate amperage􏶫􏶪0􏶩
 􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬normal temperature_degc􏶫􏶪0􏶩
 􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬normal temperature rate􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
@@ -176,11 +206,20 @@
 􏶨the voltage of the battery􏶧􏶦􏶥
 􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩
 
+􏶨the wattage of the battery􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬watts􏶫􏶪0􏶩
+
 􏶨the temperature of the battery􏶧􏶦􏶥
 􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬temperature_degc􏶫􏶪0􏶩
 
 􏶨whether or not the battery is charging􏶧􏶦􏶥
 􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬is charging􏶫􏶪0􏶩
+
+􏶨whether or not the battery is grounded􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬is grounded􏶫􏶪0􏶩
+
+􏶨the current amp hours of the battery􏶧􏶦􏶥
+􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬amp hours􏶫􏶪0􏶩
 
 􏶨the amp draw of the battery􏶧􏶦􏶥
 􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬amp draw􏶫􏶪0􏶩

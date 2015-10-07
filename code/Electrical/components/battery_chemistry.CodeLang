@@ -1,0 +1,12 @@
+􏶞global􏶟
+􏷲The chemistry type for a particular battery.􏷱
+􏷰The chemistry type used in a battery will affect its charge and drain behaviour.􏷯
+􏷮Component􏷭 􏷮Battery􏷭
+􏷬Nick Dean􏷫
+􏷬Trevor Hickey􏷫
+
+􏷲The chemistry type for a particular battery.􏷱
+􏷰The chemistry type used in a battery will affect its charge and drain behaviour.􏷯
+􏵮􏵯􏶀battery chemistry􏶋
+􏶆nicad􏶅􏶄0􏶃
+􏶆lead_acid􏶅
