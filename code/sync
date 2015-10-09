@@ -86,7 +86,7 @@ function Style-It(){
   
   #format the code once it's there
   clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/* > /dev/null 2>&1;
-  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/*.h > /dev/null 2>&1;
+  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/*.h > /dev/null 2>&1;
 }
 function Test-It(){
   
@@ -209,8 +209,8 @@ function Codelang-Transform(){
   
   #Electrical components
   cd Electrical/components;
-  Transfer-Object-Bad "battery" "Components/Electrical" "Components/Electrical"
-  Transfer-Global "battery_chemistry" "Components/Electrical/Battery" "Components/Electrical/Battery"
+  #Transfer-Object-Bad "battery" "Components/Electrical" "Components/Electrical"
+  #Transfer-Global "battery_chemistry" "Components/Electrical/Battery" "Components/Electrical/Battery"
   cd ../../;
   
 
@@ -229,6 +229,10 @@ function Codelang-Transform(){
   #Transfer-Object-Bad "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
   #Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
   cd ..;
+  
+  cd Connections/Configs;
+  Transfer-Global "GL_communication_config" "Connections/";
+  cd ../../;
 }
 
 
@@ -249,7 +253,7 @@ Codelang-Transform;
 #---------------------------#
 # Selected Transformations: #
 #---------------------------#
-Clang-Format-Some-Other-Files;
+#Clang-Format-Some-Other-Files;
 
 #-------------------------#
 # Global Transformations: #
