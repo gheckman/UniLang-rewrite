@@ -231,7 +231,17 @@ function Codelang-Transform(){
   cd ..;
   
   cd Connections/Configs;
-  Transfer-Global "GL_communication_config" "Connections/";
+  Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
+  Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
+  Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
+  Transfer-Global "Sep_communication_config" "Connections/UDP/SEP";
+  Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
+  Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
+  Transfer-Global "aural_communication_config" "Connections/UDP/Aural";
+  Transfer-Global "bug_eye_communication_config" "Connections/UDP/BugEye";
+  Transfer-Global "ctrl_loader_communication_config" "Connections/UDP/ControlLoader";
+  Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
+  Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
   cd ../../;
 }
 

@@ -2,9 +2,13 @@
 􏷲BugEye Connection Configuration􏷱
 􏷰IP addresses and port numbers􏷯
 􏷮Connections􏷭
-􏷬Joe Meyers􏷫
 􏷬Trevor Hickey􏷫
 
 􏵺􏵻􏵸􏵹􏵾Bugeye IP Address􏵿􏵼"172.31.1.130"􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye Gauge 1 IP Address􏵿􏵼"172.31.1.140"􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye Gauge 2 IP Address􏵿􏵼"172.31.1.141"􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye Gauge 3 IP Address􏵿􏵼"172.31.1.142"􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye Gauge 4 IP Address􏵿􏵼"172.31.1.143"􏵽
+
 􏵺􏵻􏵸􏵹􏵾Bugeye send port number􏵿􏵼9100􏵽
 􏵺􏵻􏵸􏵹􏵾Bugeye receive port number􏵿􏵼49055􏵽
