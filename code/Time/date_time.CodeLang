@@ -40,37 +40,58 @@ Reseting the time to a different value will require a re-initalize.
 􏶠Moving forward a number of milliseconds will properly adjust all of the other values.􏶡
 􏶜c􏶝􏷆unsigned int􏷅􏷄number of milliseconds􏷃􏷀the number of milliseconds to increase the current date time by􏶿
 􏶴
-􏶲increase the number of milliseconds.
-we assume this happens frequently enough that we don't have
-more than a day delay between millisecond updates.􏶱
+
+􏶲increase the number of milliseconds.􏶱
 􏵴milliseconds􏵵 += 􏵶number of milliseconds􏵷;
 
-􏶲handles milliseconds overflow
-wraps value for milliseconds and increments day during millisecond overflow􏶱
-if(􏵴milliseconds􏵵 >= NUMBER_OF_MILLISECONDS_IN_A_DAY)
-{
-    􏵴milliseconds􏵵 %= NUMBER_OF_MILLISECONDS_IN_A_DAY;
-    ++􏵴day􏵵;
-}
-
-􏶲handles day overflow
-resets value for day and increases the month by 1 during day overflow􏶱
-if(􏵴day􏵵 > NumberOfDaysInTheMonth(􏵴month􏵵,􏵴year􏵵))
-{
-    􏵴day􏵵 = 1;
-    ++􏵴month􏵵;
-}
-
-􏶲handles month overflow
-resets value for month and increases the year by 1 during month overflow􏶱
-if(􏵴month􏵵 > NUMBER_OF_MONTHS_IN_A_YEAR)
-{
-    􏵴month􏵵 = 1;
-    ++􏵴year􏵵;
-}
+􏶲the order of these functions is important, as one roll over, might cause another roll over.􏶱
+􏵲adjust days duing millisecond overflow􏵳);
+􏵲adjust months during day overflow􏵳);
+􏵲adjust years to during month overflow􏵳);
 
 􏶲max value of year is max the value of an unsigned int
 large enough for our use cases.􏶱
+􏶳
+
+􏷘-􏷗􏷒adjust days duing millisecond overflow􏷑
+􏷐If the millisecond counter is greater than the amount of milliseconds in a day, handle the roll over.􏷏
+􏶠This will potentially change milliseconds and day.􏶡
+􏶴
+    􏶲handles milliseconds overflow
+    wraps value for milliseconds and increments day during millisecond overflow􏶱
+    while(􏵴milliseconds􏵵 >= NUMBER_OF_MILLISECONDS_IN_A_DAY)
+    {
+        􏵴milliseconds􏵵 -= NUMBER_OF_MILLISECONDS_IN_A_DAY;
+        ++􏵴day􏵵;
+    }
+􏶳
+
+􏷘-􏷗􏷒adjust months during day overflow􏷑
+􏷐If the day counter is greater than the amount of days in a month, handle the roll over.
+This handles leap years.􏷏
+􏶠This will potentially change day and month.􏶡
+􏶴
+    􏶲handles day overflow
+    resets value for day and increases the month by 1 during day overflow􏶱
+    if(􏵴day􏵵 > NumberOfDaysInTheMonth(􏵴month􏵵,􏵴year􏵵))
+    {
+        􏵴day􏵵 = 1;
+        ++􏵴month􏵵;
+    }
+􏶳
+
+
+􏷘-􏷗􏷒adjust years to during month overflow􏷑
+􏷐If the month counter is greater than the amount of months in a year, handle the roll over.􏷏
+􏶠This will potentially change month and year.􏶡
+􏶴
+    􏶲handles month overflow
+    resets value for month and increases the year by 1 during month overflow􏶱
+    if(􏵴month􏵵 > NUMBER_OF_MONTHS_IN_A_YEAR)
+    {
+        􏵴month􏵵 = 1;
+        ++􏵴year􏵵;
+    }
 􏶳
 
 

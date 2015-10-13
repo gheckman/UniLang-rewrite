@@ -84,9 +84,17 @@ function Style-It(){
   #folder name it was exported to
   f2siName=`Pushed_Caps_Case $1`;
   
+  pathToFiles="$PATH_TO_CODE_ROOT""$2"/"$f2siName";
+  
   #format the code once it's there
   clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/* > /dev/null 2>&1;
-  #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/*.h > /dev/null 2>&1;
+  #recursively-remove-first-whitespace-lines-from-front-of-files --start-path "$pathToFiles" --file-extension h
+  #recursively-remove-first-whitespace-lines-from-front-of-files --start-path "$pathToFiles" --file-extension c
+  
+  #recursively-set-a-single-blank-line-to-the-end-of-files --start-path "$PATH_TO_CODE_ROOT""$2"/"$f2siName" --file-extension h
+  #recursively-set-a-single-blank-line-to-the-end-of-files --start-path "$PATH_TO_CODE_ROOT""$2"/"$f2siName" --file-extension c
+  set-a-single-blank-line-to-the-end-of-file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h
+  set-a-single-blank-line-to-the-end-of-file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c
 }
 function Test-It(){
   
@@ -167,16 +175,16 @@ function Codelang-Transform(){
 
   #Utilities
   cd Utilities;
-  #Transfer-Global "time_utilities" "Shared/ffs"
-  #Transfer-Global "date_utilities" "Shared/ffs"
+  Transfer-Global "time_utilities" "Shared/ffs"
+  Transfer-Global "date_utilities" "Shared/ffs"
   cd ..;
 
   #Time related
   cd Time;
-  #Transfer-Global "month" "Components/Time"
+  Transfer-Global "month" "Components/Time"
   #Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
-  #Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
-  #Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
+  Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
+  Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
   cd ..;
 
   #Electrical Generic related
@@ -231,17 +239,17 @@ function Codelang-Transform(){
   cd ..;
   
   cd Connections/Configs;
-  Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
-  Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
-  Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
-  Transfer-Global "Sep_communication_config" "Connections/UDP/SEP";
-  Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
-  Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
-  Transfer-Global "aural_communication_config" "Connections/UDP/Aural";
-  Transfer-Global "bug_eye_communication_config" "Connections/UDP/BugEye";
-  Transfer-Global "ctrl_loader_communication_config" "Connections/UDP/ControlLoader";
-  Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
-  Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
+  #Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
+  #Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
+  #Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
+  #Transfer-Global "Sep_communication_config" "Connections/UDP/SEP";
+  #Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
+  #Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
+  #Transfer-Global "aural_communication_config" "Connections/UDP/Aural";
+  #Transfer-Global "bug_eye_communication_config" "Connections/UDP/BugEye";
+  #Transfer-Global "ctrl_loader_communication_config" "Connections/UDP/ControlLoader";
+  #Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
+  #Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
   cd ../../;
 }
 
