@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
+#color related stuff
+function green_message() { echo -ne "\033[1;32m$@\033[0m";}
+function blue_message() { echo -ne "\033[1;34m$@\033[0m";}
+
 #nonmutatable globals
 ACTUAL_REPO="/home/malko/Desktop/work-related/fresh"
 CODE_ROOT="SimHost/UH72A VME/Src"
 TEST_ROOT="SimHost/Tests/Unit_Tests"
-
 PATH_TO_CODE_ROOT="$ACTUAL_REPO""/""$CODE_ROOT""/"
 PATH_TO_TEST_ROOT="$ACTUAL_REPO""/""$TEST_ROOT""/"
 
@@ -16,7 +19,7 @@ function Transfer-Global(){
   Remove-Generated-Code-From-Work-Area "$1";
 }
 function Transfer-Object-Good(){
-  Print-Whats-Happening "Object" "$1" 
+  Print-Whats-Happening "Good Object" "$1" 
   Export-It-Good "$1";
   Copy-It "$1" "$2";
   Style-It "$1" "$2";
@@ -24,7 +27,7 @@ function Transfer-Object-Good(){
   Remove-Generated-Code-From-Work-Area "$1";
 }
 function Transfer-Object-Bad(){
-  Print-Whats-Happening "Object" "$1" 
+  Print-Whats-Happening "Bad Object" "$1" 
   Export-It-Bad "$1";
   Copy-It "$1" "$2";
   Style-It "$1" "$2";
@@ -34,10 +37,12 @@ function Transfer-Object-Bad(){
 
 
 function Print-Whats-Happening(){
+
+    CapsCaseName=`Caps_Case "$2"`
     
     #print the name of the component or utily nicely
-    echo -n "$1"" - ";
-    Caps_Case "$2";
+    blue_message "$1"" - " $CapsCaseName;
+    echo "";
 }
 function Export-It-Good(){
 
@@ -68,7 +73,6 @@ function Copy-It(){
   
     #Copy headers into the actual code base (don't transfer folder)
     cp -rf $f2siName/*.h "$PATH_TO_CODE_ROOT""$2" 
-    #echo hi
     
   #if it's multiple files
   else
@@ -84,29 +88,62 @@ function Style-It(){
   #folder name it was exported to
   f2siName=`Pushed_Caps_Case $1`;
   
-  pathToFiles="$PATH_TO_CODE_ROOT""$2"/"$f2siName";
+  #basically for headers that don't get created in the folder (occurs when they are headers only)
+  PossibleHeaderName="$PATH_TO_CODE_ROOT""$2"/"$f2siName".h
   
-  #format the code once it's there
-  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/* > /dev/null 2>&1;
-  #recursively-remove-first-whitespace-lines-from-front-of-files --start-path "$pathToFiles" --file-extension h
-  #recursively-remove-first-whitespace-lines-from-front-of-files --start-path "$pathToFiles" --file-extension c
+  #format the code once it's there (fun fact: clang-format will remove the empty newline at the end; which is undesirable, but unavoidable)
+  #We just force format where we think the file is going to show up.  It might be a header file on its own,
+  #it might actually be in a newly created directory
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
+  clang-format-3.6 -style=file -i "$PossibleHeaderName" > /dev/null 2>&1;
   
-  #recursively-set-a-single-blank-line-to-the-end-of-files --start-path "$PATH_TO_CODE_ROOT""$2"/"$f2siName" --file-extension h
-  #recursively-set-a-single-blank-line-to-the-end-of-files --start-path "$PATH_TO_CODE_ROOT""$2"/"$f2siName" --file-extension c
-  set-a-single-blank-line-to-the-end-of-file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h
-  set-a-single-blank-line-to-the-end-of-file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c
+  #optionally do this:
+  #need to fix the bulk updater to just bail out if the file doesn't exist.  
+  #instead of having it create a file like it does now...
+  if [ -f "$PossibleHeaderName" ];
+  then
+    squeeze-whitespace-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
+  fi
+  
+  #remove-top-empty-lines -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  #remove-top-empty-lines -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  
+  #rtrim-lines -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  #rtrim-lines -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  
+  #whitespace-lines-to-empty-lines -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  #whitespace-lines-to-empty-lines -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  
+  squeeze-whitespace-lines -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  squeeze-whitespace-lines -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  
+  #Add the empty newline back to the files after formatting (removed by clang format)
+  if [ -f "$PossibleHeaderName" ];
+  then
+    set-a-single-blank-line-to-the-end-of-file -i "$PossibleHeaderName" > /dev/null 2>&1;
+  fi
+  set-a-single-blank-line-to-the-end-of-file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  set-a-single-blank-line-to-the-end-of-file -i "$PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  
+
+  
 }
 function Test-It(){
   
   #folder name it was exported to
   f2siName=`Pushed_Caps_Case $1`;
   
+  mkdir -p "$PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src";
   cp -rf "$f2siName""Wrapper" "$PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"
   clang-format-3.6 -style=file -i "$PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"/"$f2siName""Wrapper"/*.hpp
   clang-format-3.6 -style=file -i "$PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"/"$f2siName""Wrapper"/*.cpp
 }
 
 function Remove-Generated-Code-From-Work-Area(){
+
   #folder name it was exported to
   f2siName=`Pushed_Caps_Case $1`;
   
@@ -120,7 +157,7 @@ function Remove-Generated-Code-From-Work-Area(){
 }
 
 
-
+#Case Formatters:
 function Pushed_Caps_Case(){
       echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed "s/\( \|^\)\(.\)/\1\u\2/g" | tr -d " "
 }
@@ -182,30 +219,29 @@ function Codelang-Transform(){
   #Time related
   cd Time;
   Transfer-Global "month" "Components/Time"
-  #Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
+  Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
   Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
   Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
   cd ..;
 
   #Electrical Generic related
   cd Electrical/generic;
-  #Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Global "node_type" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Global "node_type" "Components/Electrical/Generic"
+  Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
   cd ../../;
 
   #Electrical Specific related
   cd Electrical/specific;
-  #Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Global "electrical_system_side" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  ##Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
   cd ../../;
 
   #Electrical Manager related
@@ -224,18 +260,18 @@ function Codelang-Transform(){
 
   #Other stuff
   cd Other;
-  #Transfer-Global "ffs_const" "Shared/ffs"
+  Transfer-Global "ffs_const" "Shared/ffs"
   cd ..;
   
   #Connection stuff
   cd Connections/J2;
   #Transfer-Global "j2_communication" "Connections/UDP/";
-  #Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
+  Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
   cd ../../;
   
   cd Components;
-  #Transfer-Object-Bad "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
-  #Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
+  Transfer-Object-Bad "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
+  Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
   cd ..;
   
   cd Connections/Configs;
@@ -251,6 +287,11 @@ function Codelang-Transform(){
   #Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
   #Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
   cd ../../;
+  
+  cd Concurrency;
+  Transfer-Global "time_thread" "Concurrency";
+  cd ../;
+  
 }
 
 
@@ -267,6 +308,7 @@ Codelang-Transform;
 #Cpp-Check-All-Files;
 #Splint-Check-All-Files;
 #Hungarian-Notation-Check-All-Files;
+#Detect-Casts-Not-Being-Explicitly-Made
 
 #---------------------------#
 # Selected Transformations: #
@@ -278,4 +320,6 @@ Codelang-Transform;
 #-------------------------#
 #Remove-Whitespace-Lines-At-The-Top-Of-Every-File;
 #Single-Newline-At-The-End-Of-Every-File;
+#Force-Keep-All-Doxygen-At-Filenames
+#Force-Wipe-All-Doxygen-At-Filenames
 

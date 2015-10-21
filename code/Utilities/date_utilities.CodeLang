@@ -10,8 +10,8 @@ Function for looking up how many days are in a certain month.
 􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 
 
-􏶰ce􏶯 􏶮unsigned int􏶭 􏶬number of milliseconds in a day􏶫􏶪86400000􏶩
-􏶰ce􏶯 􏶮unsigned int􏶭   􏶬number of months in a year􏶫􏶪12􏶩
+􏶘+􏶙􏶰ce􏶯􏶮unsigned int􏶭􏶬number of milliseconds in a day􏶫􏶪86400000􏶩
+􏶘+􏶙􏶰ce􏶯􏶮unsigned int􏶭􏶬number of months in a year􏶫􏶪12􏶩
 
 􏷘+􏷗􏷒number of days in the month􏷑
 􏷐Determine the number of days in a particular month based on the particular year􏷏
