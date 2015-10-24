@@ -229,7 +229,7 @@ function Codelang-Transform(){
   Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
   Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
   Transfer-Global "node_type" "Components/Electrical/Generic"
-  Transfer-Object-Bad "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Good "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
   Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
   Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
   cd ../../;
@@ -304,11 +304,13 @@ Codelang-Transform;
 #------------------#
 # Global Scanners: #
 #------------------#
-#Check-For-Duplicate-Headers;
 #Cpp-Check-All-Files;
 #Splint-Check-All-Files;
 #Hungarian-Notation-Check-All-Files;
-#Detect-Casts-Not-Being-Explicitly-Made
+#Detect-Casts-Not-Being-Explicitly-Made;
+#Detect-Duplicate-Headers-Used;
+#Detect-Wrong-Names-In_Doxygen-Comment;
+#Detect-Malformed-Meta-Doxygen-Comment;
 
 #---------------------------#
 # Selected Transformations: #

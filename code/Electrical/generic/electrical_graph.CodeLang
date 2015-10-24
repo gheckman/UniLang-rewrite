@@ -22,7 +22,7 @@
   􏵴number of nodes􏵵 = 0;
   
   􏶲establish a common ground􏶱
-  􏵴common ground􏵵 = AddNode(ptOutputs,"common ground",NODE_TYPE_GROUND,0,0.0f,􏵱);
+  􏵴common ground􏵵 = 􏵲add node􏵳"common ground",NODE_TYPE_GROUND,0,0.0f,􏵱);
 􏶳
 
 􏷘+􏷗􏷒add node􏷑
