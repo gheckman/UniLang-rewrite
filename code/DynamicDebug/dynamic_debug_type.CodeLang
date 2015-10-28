@@ -1,0 +1,13 @@
+􏶞global􏶟
+􏷲The various data types that a dynamic debug message may contain.􏷱
+􏷰Used for tag dispatching when sending dynamic data messages over the network.􏷯
+􏷮Debug􏷭 􏷮Communication􏷭
+􏷬Trevor Hickey􏷫
+
+􏶊The various data types that a dynamic debug message may contain.􏶉
+􏶈Used for tag dispatching when sending dynamic data messages over the network.􏶇
+􏵮􏵯􏶀dynamic debug type􏶋
+􏶆int􏶅􏶄0􏶃
+􏶆real􏶅
+􏶆bool􏶅
+􏶆string􏶅

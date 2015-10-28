@@ -212,36 +212,36 @@ function Codelang-Transform(){
 
   #Utilities
   cd Utilities;
-  Transfer-Global "time_utilities" "Shared/ffs"
-  Transfer-Global "date_utilities" "Shared/ffs"
+  #Transfer-Global "time_utilities" "Shared/ffs"
+  #Transfer-Global "date_utilities" "Shared/ffs"
   cd ..;
 
   #Time related
   cd Time;
-  Transfer-Global "month" "Components/Time"
-  Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
-  Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
-  Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
+  #Transfer-Global "month" "Components/Time"
+  #Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
   cd ..;
 
   #Electrical Generic related
   cd Electrical/generic;
-  Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  Transfer-Global "node_type" "Components/Electrical/Generic"
-  Transfer-Object-Good "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Global "node_type" "Components/Electrical/Generic"
+  #Transfer-Object-Good "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
   cd ../../;
 
   #Electrical Specific related
   cd Electrical/specific;
-  Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
   ##Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
   cd ../../;
 
   #Electrical Manager related
@@ -260,18 +260,18 @@ function Codelang-Transform(){
 
   #Other stuff
   cd Other;
-  Transfer-Global "ffs_const" "Shared/ffs"
+  #Transfer-Global "ffs_const" "Shared/ffs"
   cd ..;
   
   #Connection stuff
   cd Connections/J2;
   #Transfer-Global "j2_communication" "Connections/UDP/";
-  Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
+  #Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
   cd ../../;
   
   cd Components;
-  Transfer-Object-Bad "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
-  Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
+  #Transfer-Object-Bad "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
+  #Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
   cd ..;
   
   cd Connections/Configs;
@@ -289,7 +289,15 @@ function Codelang-Transform(){
   cd ../../;
   
   cd Concurrency;
-  Transfer-Global "time_thread" "Concurrency";
+  #Transfer-Global "time_thread" "Concurrency";
+  cd ../;
+  
+  cd DynamicDebug;
+  Transfer-Global "dynamic_debug_configuration" "Connections/UDP/DynamicDebug";
+  Transfer-Global "dynamic_debug_type" "Connections/UDP/DynamicDebug";
+  Transfer-Global "dynamic_debug" "Connections/UDP/DynamicDebug";
+  Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
+  Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
   cd ../;
   
 }
