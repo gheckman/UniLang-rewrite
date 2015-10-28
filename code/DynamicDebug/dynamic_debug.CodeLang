@@ -8,6 +8,8 @@ Due to the limitations of C, we cannot utilize templates or function overloading
 
 example usage:
 SendDebugBool(tSystem.bHasPower,"System/PowerRelated");
+
+http://conf.f2si.net/display/UHMEP/Dynamic+Debug+Data
 􏷯
 􏷮Debug􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
@@ -43,8 +45,8 @@ Watch out for implicit casts and truncation.􏶡
 
 􏷘+􏷗􏷒send debug bool􏷑
 􏷐Send a boolean value over the network to the dynamic debugger.􏷏
-􏶠The debug value sent over MUST be a bool.  
-Bytes can be used as well.  Ensure the value is only 1 or 0.􏶡
+􏶠The debug value sent over SHOULD be a BOOL.  
+BYTEs can be used as well.  Ensure the value is only 1 or 0.􏶡
 􏶜c􏶝􏷆BOOL􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄value path name􏷃􏷀A descriptive path name for the debug value.  Looks like file paths.􏶿
 􏶴
