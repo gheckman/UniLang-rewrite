@@ -5,11 +5,12 @@ Due to the message representing variant type data internally,
 it is recomended you create the message using one of its constructor functions.􏷯
 􏷮Debug􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
-􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 􏷦DynamicDebugMessageData􏷥􏷢USES: DynamicDebugMessageT􏷡
 􏷤DynamicDebugConfiguration􏷣􏷢USES: MAX_LENGTH_OF_DEBUG_PATH_VALUE, MAX_LENGTH_OF_DEBUG_STRING_VALUE, DYNAMIC_DEBUG_VERSION_NUMBER􏷡
 􏷤DynamicDebugType􏷣􏷢USES: DynamicDebugTypeE􏷡
 􏷤string􏷣􏷢USES: strcpy()􏷡
+􏷤Defs􏷣􏷢USES: BYTE􏷡
 
 􏷘+􏷗􏷒send message to the dynamic debugger􏷑
 􏷐Sends a generic debug message to the dynamic debugger.􏷏
@@ -22,10 +23,10 @@ it is recomended you create the message using one of its constructor functions.�
     􏶲For now:􏶱
     􏶲Take the generic debug message, and dispatch on its type to pack-up and send the packet over the network.􏶱
     switch (􏵶dynamic debug message􏵷.m_eDataType){
-        case MESSAGE_DATA_TYPE_INT:    􏵲send int udp packet􏵳􏵶dynamic debug message􏵷.m_nIntValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);         break;
-        case MESSAGE_DATA_TYPE_REAL:   􏵲send real udp packet􏵳􏵶dynamic debug message􏵷.m_dRealValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);       break;
-        case MESSAGE_DATA_TYPE_BOOL:   􏵲send bool udp packet􏵳􏵶dynamic debug message􏵷.m_bBoolValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);       break;
-        case MESSAGE_DATA_TYPE_STRING: 􏵲send string udp packet􏵳􏵶dynamic debug message􏵷.m_pucStringValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER); break;
+        case DYNAMIC_DEBUG_TYPE_INT:    􏵲send int udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_nIntValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);         break;
+        case DYNAMIC_DEBUG_TYPE_REAL:   􏵲send real udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_dRealValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);       break;
+        case DYNAMIC_DEBUG_TYPE_BOOL:   􏵲send bool udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_bBoolValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);       break;
+        case DYNAMIC_DEBUG_TYPE_STRING: 􏵲send string udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_szStringValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER); break;
     }
 􏶳
 
@@ -70,7 +71,7 @@ it is recomended you create the message using one of its constructor functions.�
 􏷘-􏷗􏷒send bool udp packet􏷑
 􏷐Uses parameters to send a debug udp packet to the dynamic debugger.􏷏
 􏶠􏶡
-􏶜c􏶝􏷆bool􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
+􏶜c􏶝􏷆BOOL􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
 􏶜c􏶝􏷆BYTE􏷅􏷄version􏷃􏷀The version number of the dynamic debug send protocol.􏶿
 􏶴

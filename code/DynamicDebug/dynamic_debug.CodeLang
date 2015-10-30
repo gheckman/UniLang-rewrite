@@ -9,14 +9,16 @@ Due to the limitations of C, we cannot utilize templates or function overloading
 example usage:
 SendDebugBool(tSystem.bHasPower,"System/PowerRelated");
 
-http://conf.f2si.net/display/UHMEP/Dynamic+Debug+Data
+This implementation is similar to Slippy, but not the same.
+Dynamic Debug: http://conf.f2si.net/display/UHMEP/Dynamic+Debug+Data
+Slippy: http://conf.f2si.net/display/UHMEP/UH-72A+IOS+Messaging
 􏷯
 􏷮Debug􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
-􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 􏷦DynamicDebugConfiguration􏷥􏷢USES: MAX_LENGTH_OF_DEBUG_PATH_VALUE, MAX_LENGTH_OF_DEBUG_STRING_VALUE􏷡
 􏷤DynamicDebugMessage􏷣􏷢USES: DynamicDebugMessageT􏷡
-􏷤DynamicDebugMessageSender􏷣􏷢USES: SendMessageToDynamicDebugger􏷡
+􏷤DynamicDebugSender􏷣􏷢USES: SendMessageToDynamicDebugger􏷡
 
 􏷘+􏷗􏷒send debug int􏷑
 􏷐Send an int value over the network to the dynamic debugger.􏷏
@@ -27,7 +29,7 @@ Watch out for implicit casts and truncation.􏶡
 􏶴
     􏶲Create debug message struct based on parameter data.􏶱
     􏶲Send it over the network so it can be seen in the dynamic debugger.􏶱
-    DynamicDebugMessageT tDebugMessage = 􏵲create dynamic debug message from int􏵳􏵶debug value􏵷,􏵶value path name􏵷);
+    DynamicDebugMessageT tDebugMessage = 􏵲construct dynamic debug message from int􏵳􏵶debug value􏵷,􏵶value path name􏵷);
     􏵲send message to the dynamic debugger􏵳tDebugMessage);
 􏶳
 
@@ -39,7 +41,7 @@ Watch out for implicit casts and truncation.􏶡
 􏶴
     􏶲Create debug message struct based on parameter data.􏶱
     􏶲Send it over the network so it can be seen in the dynamic debugger.􏶱
-    DynamicDebugMessageT tDebugMessage = 􏵲create dynamic debug message from real􏵳􏵶debug value􏵷,􏵶value path name􏵷);
+    DynamicDebugMessageT tDebugMessage = 􏵲construct dynamic debug message from real􏵳􏵶debug value􏵷,􏵶value path name􏵷);
     􏵲send message to the dynamic debugger􏵳tDebugMessage);
 􏶳
 
@@ -52,7 +54,7 @@ BYTEs can be used as well.  Ensure the value is only 1 or 0.􏶡
 􏶴
     􏶲Create debug message struct based on parameter data.􏶱
     􏶲Send it over the network so it can be seen in the dynamic debugger.􏶱
-    DynamicDebugMessageT tDebugMessage = 􏵲create dynamic debug message from bool􏵳􏵶debug value􏵷,􏵶value path name􏵷);
+    DynamicDebugMessageT tDebugMessage = 􏵲construct dynamic debug message from bool􏵳􏵶debug value􏵷,􏵶value path name􏵷);
     􏵲send message to the dynamic debugger􏵳tDebugMessage);
 􏶳
 
@@ -65,7 +67,7 @@ Must be null terminated.  Do not exceed the array size.􏶡
 􏶴
     􏶲Create debug message struct based on parameter data.􏶱
     􏶲Send it over the network so it can be seen in the dynamic debugger.􏶱
-    DynamicDebugMessageT tDebugMessage = 􏵲create dynamic debug message from string􏵳􏵶debug value􏵷,􏵶value path name􏵷);
+    DynamicDebugMessageT tDebugMessage = 􏵲construct dynamic debug message from string􏵳􏵶debug value􏵷,􏵶value path name􏵷);
     􏵲send message to the dynamic debugger􏵳tDebugMessage);
 􏶳
 
