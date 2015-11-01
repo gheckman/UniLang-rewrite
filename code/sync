@@ -46,19 +46,19 @@ function Print-Whats-Happening(){
 }
 function Export-It-Good(){
 
-  #export CodeLang stuff
+  #export unilang stuff
   #currently:
   # - f2si export C code (in directory)
   # - unit test wrapper for f2si components (in directory) 
-  CodeLang-compiler --exporter="f2si" --language="c" --style="good" "$1".CodeLang;
+  unilang-compiler --exporter="f2si" --language="c" --style="good" "$1".UniLang;
 }
 function Export-It-Bad(){
 
-  #export CodeLang stuff
+  #export unilang stuff
   #currently:
   # - f2si export C code (in directory)
   # - unit test wrapper for f2si components (in directory) 
-  CodeLang-compiler --exporter="f2si" --language="c" --style="bad" "$1".CodeLang;
+  unilang-compiler --exporter="f2si" --language="c" --style="bad" "$1".UniLang;
 }
 
 
@@ -207,8 +207,8 @@ function Hungarian-Notation-Check-All-Files(){
 }
 
 
-function Codelang-Transform(){
-  #name of CodeLang file / where to place in repo / where to place class wrapper
+function UniLang-Transform(){
+  #name of UniLang file / where to place in repo / where to place class wrapper
 
   #Utilities
   cd Utilities;
@@ -304,9 +304,9 @@ function Codelang-Transform(){
 
 
 #--------------------#
-# CodeLang -> F2si C #
+# UniLang -> F2si C  #
 #--------------------#
-Codelang-Transform;
+UniLang-Transform;
 
 
 #------------------#
