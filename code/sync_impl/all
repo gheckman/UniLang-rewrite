@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+#source all of the other files in this directory
+#could probably be a loop if the amount of files grow
+. "$BASE_DIRECTORY""/sync_impl/other"
