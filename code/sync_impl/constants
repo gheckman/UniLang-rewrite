@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+#nonmutatable globals
+ACTUAL_REPO="/home/malko/Desktop/work-related/fresh"
+CODE_ROOT="SimHost/UH72A VME/Src"
+TEST_ROOT="SimHost/Tests/Unit_Tests"
+PATH_TO_CODE_ROOT="$ACTUAL_REPO""/""$CODE_ROOT""/"
+PATH_TO_TEST_ROOT="$ACTUAL_REPO""/""$TEST_ROOT""/"
+FULL_PATH_TO_CODE_ROOT='/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src'

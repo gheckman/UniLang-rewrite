@@ -3,3 +3,13 @@
 #color related stuff
 function green_message() { echo -ne "\033[1;32m$@\033[0m";}
 function blue_message() { echo -ne "\033[1;34m$@\033[0m";}
+
+#Case Formatters:
+function Pushed_Caps_Case(){
+      echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed "s/\( \|^\)\(.\)/\1\u\2/g" | tr -d " "
+}
+
+#For printing nicely
+function Caps_Case(){
+  echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed -r 's/\<./\U&/g';
+}

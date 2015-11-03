@@ -1,18 +1,11 @@
 #!/usr/bin/env bash
 
-#nonmutatable globals
-ACTUAL_REPO="/home/malko/Desktop/work-related/fresh"
-CODE_ROOT="SimHost/UH72A VME/Src"
-TEST_ROOT="SimHost/Tests/Unit_Tests"
-PATH_TO_CODE_ROOT="$ACTUAL_REPO""/""$CODE_ROOT""/"
-PATH_TO_TEST_ROOT="$ACTUAL_REPO""/""$TEST_ROOT""/"
-
 function Transfer-Global(){
   Print-Whats-Happening "Global" "$1"
   Export-It-Good "$1";
   Copy-It "$1" "$2";
   Style-It "$1" "$2";
-  #Document-It "$1";
+  Document-It "$1";
   Remove-Generated-Code-From-Work-Area "$1";
 }
 
@@ -37,6 +30,7 @@ function Transfer-Object-Bad(){
 
 
 
+
 function Print-Whats-Happening(){
 
     CapsCaseName=`Caps_Case "$2"`
@@ -46,20 +40,13 @@ function Print-Whats-Happening(){
     echo "";
 }
 function Export-It-Good(){
-
-  #export unilang stuff
-  #currently:
-  # - f2si export C code (in directory)
-  # - unit test wrapper for f2si components (in directory) 
   unilang-compiler --exporter="f2si" --language="c" --style="good" "$1".UniLang;
 }
 function Export-It-Bad(){
-
-  #export unilang stuff
-  #currently:
-  # - f2si export C code (in directory)
-  # - unit test wrapper for f2si components (in directory) 
   unilang-compiler --exporter="f2si" --language="c" --style="bad" "$1".UniLang;
+}
+function Document-It(){
+  unilang-compiler --exporter="f2si" --language="plant-uml" --style="normal" "$1".UniLang;
 }
 
 
@@ -158,16 +145,6 @@ function Remove-Generated-Code-From-Work-Area(){
 }
 
 
-#Case Formatters:
-function Pushed_Caps_Case(){
-      echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed "s/\( \|^\)\(.\)/\1\u\2/g" | tr -d " "
-}
-
-#For printing nicely
-function Caps_Case(){
-  echo "$1" | tr _ " " | tr [A-Z] [a-z] | sed -r 's/\<./\U&/g';
-}
-
 function Clang-Format-Some-Other-Files(){
 echo "formatting other files...";
   #clang-format-3.6 -style=file -i "$PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.h"
@@ -198,12 +175,12 @@ function Check-For-Duplicate-Headers(){
   recursively-detect-redundant-header-files --start-path "$PATH_TO_CODE_ROOT" --file-extension cpp 
 }
 function Cpp-Check-All-Files(){
-  find "$PATH_TO_CODE_ROOT" -type f|while read f; do cppchecker "'""$f""'" --search-paths '/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src' '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
+  find "$PATH_TO_CODE_ROOT" -type f|while read f; do cppchecker "'""$f""'" --search-paths "$FULL_PATH_TO_CODE_ROOT" '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
 }
 function Splint-Check-All-Files(){
-  find "$PATH_TO_CODE_ROOT" -type f|while read f; do splint-checker "'""$f""'" --search-paths '/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src' '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
+  find "$PATH_TO_CODE_ROOT" -type f|while read f; do splint-checker "'""$f""'" --search-paths "$FULL_PATH_TO_CODE_ROOT" '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
 }
 function Hungarian-Notation-Check-All-Files(){
-  find "$PATH_TO_CODE_ROOT" -type f|while read f; do f2si-hungarian-notation-validator "'""$f""'" --search-paths '/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src' '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
+  find "$PATH_TO_CODE_ROOT" -type f|while read f; do f2si-hungarian-notation-validator "'""$f""'" --search-paths "$FULL_PATH_TO_CODE_ROOT" '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
 }
 
