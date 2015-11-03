@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-#color related stuff
-function green_message() { echo -ne "\033[1;32m$@\033[0m";}
-function blue_message() { echo -ne "\033[1;34m$@\033[0m";}
-
 #nonmutatable globals
 ACTUAL_REPO="/home/malko/Desktop/work-related/fresh"
 CODE_ROOT="SimHost/UH72A VME/Src"
@@ -16,24 +12,29 @@ function Transfer-Global(){
   Export-It-Good "$1";
   Copy-It "$1" "$2";
   Style-It "$1" "$2";
+  #Document-It "$1";
   Remove-Generated-Code-From-Work-Area "$1";
 }
+
 function Transfer-Object-Good(){
-  Print-Whats-Happening "Good Object" "$1" 
-  Export-It-Good "$1";
-  Copy-It "$1" "$2";
-  Style-It "$1" "$2";
-  Test-It "$1" "$3";
-  Remove-Generated-Code-From-Work-Area "$1";
-}
+   Print-Whats-Happening "Good Object" "$1"
+   Export-It-Good "$1";
+   Copy-It "$1" "$2";
+   Style-It "$1" "$2";
+   Test-It "$1" "$3";
+   #Document-It "$1";
+   Remove-Generated-Code-From-Work-Area "$1";
+ }
 function Transfer-Object-Bad(){
-  Print-Whats-Happening "Bad Object" "$1" 
-  Export-It-Bad "$1";
-  Copy-It "$1" "$2";
-  Style-It "$1" "$2";
-  Test-It "$1" "$3";
-  Remove-Generated-Code-From-Work-Area "$1";
-}
+   Print-Whats-Happening "Bad Object" "$1" 
+   Export-It-Bad "$1";
+   Copy-It "$1" "$2";
+   Style-It "$1" "$2";
+   Test-It "$1" "$3";
+   #Document-It "$1";
+   Remove-Generated-Code-From-Work-Area "$1";
+ }
+
 
 
 function Print-Whats-Happening(){
@@ -204,101 +205,5 @@ function Splint-Check-All-Files(){
 }
 function Hungarian-Notation-Check-All-Files(){
   find "$PATH_TO_CODE_ROOT" -type f|while read f; do f2si-hungarian-notation-validator "'""$f""'" --search-paths '/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src' '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
-}
-
-
-function UniLang-Transform(){
-  #name of UniLang file / where to place in repo / where to place class wrapper
-
-  #Utilities
-  cd Utilities;
-  #Transfer-Global "time_utilities" "Shared/ffs"
-  #Transfer-Global "date_utilities" "Shared/ffs"
-  cd ..;
-
-  #Time related
-  cd Time;
-  #Transfer-Global "month" "Components/Time"
-  #Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
-  #Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
-  #Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
-  cd ..;
-
-  #Electrical Generic related
-  cd Electrical/generic;
-  #Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Global "node_type" "Components/Electrical/Generic"
-  #Transfer-Object-Good "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  cd ../../;
-
-  #Electrical Specific related
-  cd Electrical/specific;
-  #Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  ##Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  cd ../../;
-
-  #Electrical Manager related
-  cd Electrical/manager;
-  #Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
-  #Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
-  #Transfer-Global "electrical_updater" "SystemManagers/Electrical"
-  cd ../../;
-  
-  #Electrical components
-  cd Electrical/components;
-  #Transfer-Object-Bad "battery" "Components/Electrical" "Components/Electrical"
-  #Transfer-Global "battery_chemistry" "Components/Electrical/Battery" "Components/Electrical/Battery"
-  cd ../../;
-  
-
-  #Other stuff
-  cd Other;
-  #Transfer-Global "ffs_const" "Shared/ffs"
-  cd ..;
-  
-  #Connection stuff
-  cd Connections/J2;
-  #Transfer-Global "j2_communication" "Connections/UDP/";
-  #Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
-  cd ../../;
-  
-  cd Components;
-  #Transfer-Object-Bad "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
-  #Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
-  cd ..;
-  
-  cd Connections/Configs;
-  #Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
-  #Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
-  #Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
-  #Transfer-Global "Sep_communication_config" "Connections/UDP/SEP";
-  #Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
-  #Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
-  #Transfer-Global "aural_communication_config" "Connections/UDP/Aural";
-  #Transfer-Global "bug_eye_communication_config" "Connections/UDP/BugEye";
-  #Transfer-Global "ctrl_loader_communication_config" "Connections/UDP/ControlLoader";
-  #Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
-  #Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
-  cd ../../;
-  
-  cd Concurrency;
-  #Transfer-Global "time_thread" "Concurrency";
-  cd ../;
-  
-  cd DynamicDebug;
-  Transfer-Global "dynamic_debug_configuration" "Connections/UDP/DynamicDebug";
-  Transfer-Global "dynamic_debug_type" "Connections/UDP/DynamicDebug";
-  Transfer-Global "dynamic_debug" "Connections/UDP/DynamicDebug";
-  Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
-  Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
-  cd ../;
-  
 }
 

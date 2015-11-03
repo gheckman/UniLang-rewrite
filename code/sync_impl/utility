@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+#color related stuff
+function green_message() { echo -ne "\033[1;32m$@\033[0m";}
+function blue_message() { echo -ne "\033[1;34m$@\033[0m";}
