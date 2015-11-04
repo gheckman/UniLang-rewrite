@@ -86,11 +86,11 @@ function UniLang-Transform(){
   cd ../;
   
   cd DynamicDebug;
-  Transfer-Global "dynamic_debug_configuration" "Connections/UDP/DynamicDebug";
-  Transfer-Global "dynamic_debug_type" "Connections/UDP/DynamicDebug";
-  Transfer-Global "dynamic_debug" "Connections/UDP/DynamicDebug";
-  Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
-  Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
+  #Transfer-Global "dynamic_debug_configuration" "Connections/UDP/DynamicDebug";
+  #Transfer-Global "dynamic_debug_type" "Connections/UDP/DynamicDebug";
+  #Transfer-Global "dynamic_debug" "Connections/UDP/DynamicDebug";
+  #Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
+  #Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
   cd ../;
   
 }
