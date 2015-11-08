@@ -18,9 +18,18 @@ function Transfer-Object-Good(){
    #Document-It "$1";
    Remove-Generated-Code-From-Work-Area "$1";
  }
-function Transfer-Object-Bad(){
-   Print-Whats-Happening "Bad Object" "$1" 
-   Export-It-Bad "$1";
+function Transfer-Object-Bad-Bools(){
+   Print-Whats-Happening "Bad Object" "$1" "(BOOL)"
+   Export-It-Bad-Bools "$1";
+   Copy-It "$1" "$2";
+   Style-It "$1" "$2";
+   Test-It "$1" "$3";
+   #Document-It "$1";
+   Remove-Generated-Code-From-Work-Area "$1";
+ }
+function Transfer-Object-Bad-Enums(){
+   Print-Whats-Happening "Bad Object" "$1" "(ENUM)"
+   Export-It-Bad-Enums "$1";
    Copy-It "$1" "$2";
    Style-It "$1" "$2";
    Test-It "$1" "$3";
@@ -42,8 +51,11 @@ function Print-Whats-Happening(){
 function Export-It-Good(){
   unilang-compiler --exporter="f2si" --language="c" --style="good" "$1".UniLang;
 }
-function Export-It-Bad(){
-  unilang-compiler --exporter="f2si" --language="c" --style="bad" "$1".UniLang;
+function Export-It-Bad-Bools(){
+  unilang-compiler --exporter="f2si" --language="c" --style="bad-bools" "$1".UniLang;
+}
+function Export-It-Bad-Enums(){
+  unilang-compiler --exporter="f2si" --language="c" --style="bad-enums" "$1".UniLang;
 }
 function Document-It(){
   unilang-compiler --exporter="f2si" --language="plant-uml" --style="normal" "$1".UniLang;

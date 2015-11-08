@@ -1,0 +1,14 @@
+􏶞global􏶟
+􏷲BugEye Connection Configuration􏷱
+􏷰IP addresses and port numbers􏷯
+􏷮Connections􏷭
+􏷬Trevor Hickey􏷫
+
+􏵺􏵻􏵸􏵹􏵾Bugeye Conc IP Address􏵿􏵼"172.31.129.130"􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye Gauge 1 IP Address􏵿􏵼"172.31.129.140"􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye Gauge 2 IP Address􏵿􏵼"172.31.129.141"􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye Gauge 3 IP Address􏵿􏵼"172.31.129.142"􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye Gauge 4 IP Address􏵿􏵼"172.31.129.143"􏵽
+
+􏵺􏵻􏵸􏵹􏵾Bugeye conc send portnumber􏵿􏵼9100􏵽
+􏵺􏵻􏵸􏵹􏵾Bugeye conc receive portnumber􏵿􏵼49055􏵽

@@ -12,29 +12,29 @@ function UniLang-Transform(){
   #Time related
   cd Time;
   #Transfer-Global "month" "Components/Time"
-  #Transfer-Object-Bad "date_time" "Components/Time" "Components/Time"
-  #Transfer-Object-Bad "millisecond_timer" "Components/Time" "Components/Time"
-  #Transfer-Object-Bad "simulation_clock" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad-Bools "date_time" "Components/Time" "Components/Time"
+  Transfer-Object-Bad-Bools "millisecond_timer" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad-Bools "simulation_clock" "Components/Time" "Components/Time"
   cd ..;
 
   #Electrical Generic related
   cd Electrical/generic;
-  #Transfer-Object-Bad "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad-Bools "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad-Bools "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
   #Transfer-Global "node_type" "Components/Electrical/Generic"
   #Transfer-Object-Good "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad-Bools "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad-Bools "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
   cd ../../;
 
   #Electrical Specific related
   cd Electrical/specific;
-  #Transfer-Object-Bad "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  ##Transfer-Object-Bad "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  ##Transfer-Object-Bad-Bools "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
   cd ../../;
 
   #Electrical Manager related
@@ -46,7 +46,7 @@ function UniLang-Transform(){
   
   #Electrical components
   cd Electrical/components;
-  #Transfer-Object-Bad "battery" "Components/Electrical" "Components/Electrical"
+  #Transfer-Object-Bad-Bools "battery" "Components/Electrical" "Components/Electrical"
   #Transfer-Global "battery_chemistry" "Components/Electrical/Battery" "Components/Electrical/Battery"
   cd ../../;
   
@@ -63,7 +63,7 @@ function UniLang-Transform(){
   cd ../../;
   
   cd Components;
-  #Transfer-Object-Bad "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
+  #Transfer-Object-Bad-Bools "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
   #Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
   cd ..;
   

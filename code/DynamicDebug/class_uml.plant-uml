@@ -1,9 +1,0 @@
-@startuml
-class dynamic_debug_sender {
-+send message to the dynamic debugger()
--send int udp packet()
--send real udp packet()
--send bool udp packet()
--send string udp packet()
-}
-@enduml
