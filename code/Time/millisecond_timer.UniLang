@@ -30,7 +30,7 @@ Pause and reset functions will also update the total elapsed time.􏶡
 
 􏷘+􏷗􏷒set pause state􏷑
 􏷐Update the pause state of the timer􏷏
-􏶠Pausing the timer may also derive a new total elasped time􏶡
+􏶠Pausing the timer may also derive a new total elapsed time􏶡
 􏶜c􏶝􏷆BOOL􏷅􏷄pause􏷃􏷀whether or not to pause the timer􏶿
 􏶴
 􏶲Set whether the 􏶏 is paused or unpaused.􏶱
@@ -82,7 +82,7 @@ if (􏵴paused􏵵){
 􏶠This is dependent on whether the timer is paused of not.􏶡
 􏶴
 if(!􏵴paused􏵵){
-    􏶲update the elaspsed time, and reset the tick marker for next time􏶱
+    􏶲update the elapsed time, and reset the tick marker for next time􏶱
     􏵴elapsed time_ms􏵵 += TicksToMilliseconds(tickGet() - 􏵴last update tick amount􏵵);
     􏵴last update tick amount􏵵 = tickGet();
 }

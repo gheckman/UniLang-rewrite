@@ -19,7 +19,7 @@ function Transfer-Object-Good(){
    Remove-Generated-Code-From-Work-Area "$1";
  }
 function Transfer-Object-Bad-Bools(){
-   Print-Whats-Happening "Bad Object" "$1" "(BOOL)"
+   Print-Whats-Happening "Bad Object (BOOLS)" "$1"
    Export-It-Bad-Bools "$1";
    Copy-It "$1" "$2";
    Style-It "$1" "$2";
@@ -28,7 +28,7 @@ function Transfer-Object-Bad-Bools(){
    Remove-Generated-Code-From-Work-Area "$1";
  }
 function Transfer-Object-Bad-Enums(){
-   Print-Whats-Happening "Bad Object" "$1" "(ENUM)"
+   Print-Whats-Happening "Bad Object (ENUMS)" "$1"
    Export-It-Bad-Enums "$1";
    Copy-It "$1" "$2";
    Style-It "$1" "$2";
