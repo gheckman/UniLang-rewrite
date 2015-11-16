@@ -49,16 +49,16 @@ function Print-Whats-Happening(){
     echo "";
 }
 function Export-It-Good(){
-  unilang-compiler --exporter="f2si" --language="c" --style="good" --recursive_dependency_paths="$ROOT_OF_UNILANG_CODE" "$1".UniLang;
+  unilang-compiler --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="c" --style="good" "$1".UniLang;
 }
 function Export-It-Bad-Bools(){
-  unilang-compiler --exporter="f2si" --language="c" --style="bad-bools" --recursive_dependency_paths="$ROOT_OF_UNILANG_CODE" "$1".UniLang;
+  unilang-compiler --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="c" --style="bad-bools" "$1".UniLang;
 }
 function Export-It-Bad-Enums(){
-  unilang-compiler --exporter="f2si" --language="c" --style="bad-enums" --recursive_dependency_paths="$ROOT_OF_UNILANG_CODE" "$1".UniLang;
+  unilang-compiler --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="c" --style="bad-enums" "$1".UniLang;
 }
 function Document-It(){
-  unilang-compiler --exporter="f2si" --language="plant-uml" --style="normal" --recursive_dependency_paths="$ROOT_OF_UNILANG_CODE" "$1".UniLang;
+  unilang-compiler --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="plant-uml" --style="normal" "$1".UniLang;
 }
 
 
