@@ -451,18 +451,18 @@ but it could be other information as well􏶡
     
     􏶲switches on the main switch panel􏶱
     
-    􏵶plc􏵷->m_bOverheadEmShedBusOnDI;
+    //􏵶plc􏵷->m_bOverheadEmShedBusOnDI;
     
-    􏵶plc􏵷->m_bMainSwitchPnlBatMstrEngageDI;
-    􏵶plc􏵷->m_bMainSwitchPnlBatMstrOffDI;
+    //􏵶plc􏵷->m_bMainSwitchPnlBatMstrEngageDI;
+    //􏵶plc􏵷->m_bMainSwitchPnlBatMstrOffDI;
     
-    􏵶plc􏵷->m_bOverheadBusTie1OffDI;
-    􏵶plc􏵷->m_bOverheadBusTie1ResDI;
-    􏵶plc􏵷->m_bOverheadBusTie2OffDI;
-    􏵶plc􏵷->m_bOverheadBusTie2ResDI;
+    //􏵶plc􏵷->m_bOverheadBusTie1OffDI;
+    //􏵶plc􏵷->m_bOverheadBusTie1ResDI;
+    //􏵶plc􏵷->m_bOverheadBusTie2OffDI;
+    //􏵶plc􏵷->m_bOverheadBusTie2ResDI;
     
-    􏵶plc􏵷->m_bMainSwitchPnlGen2ResetDI;
-    􏵶plc􏵷->m_bMainSwitchPnlGen2OffDI;
-    􏵶plc􏵷->m_bMainSwitchPnlGen1ResetDI;
-    􏵶plc􏵷->m_bMainSwitchPnlGen1OffDI;
+    //􏵶plc􏵷->m_bMainSwitchPnlGen2ResetDI;
+    //􏵶plc􏵷->m_bMainSwitchPnlGen2OffDI;
+    //􏵶plc􏵷->m_bMainSwitchPnlGen1ResetDI;
+    //􏵶plc􏵷->m_bMainSwitchPnlGen1OffDI;
 􏶳

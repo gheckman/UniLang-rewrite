@@ -5,35 +5,42 @@
 BASE_DIRECTORY="$(dirname "$0")"
 
 #include the rest of the script code (sourced from different files)
-. "$BASE_DIRECTORY""/sync_impl/all"
+. "$BASE_DIRECTORY""/.sync_impl/all"
 
-#--------------------#
-# UniLang -> F2si C  #
-#--------------------#
-UniLang-Transform;
+function Main(){
+  #convert good code into terrible f2si code.
+  #this take the good code repo, and puts the converted files, into an f2si repo.
+  #--------------------#
+  # UniLang -> F2si C  #
+  #--------------------#
+  UniLang-Transform;
 
 
-#------------------#
-# Global Scanners: #
-#------------------#
-#Cpp-Check-All-Files;
-#Splint-Check-All-Files;
-#Hungarian-Notation-Check-All-Files;
-#Detect-Casts-Not-Being-Explicitly-Made;
-#Detect-Duplicate-Headers-Used;
-#Detect-Wrong-Names-In_Doxygen-Comment;
-#Detect-Malformed-Meta-Doxygen-Comment;
+  #------------------#
+  # Global Scanners: #
+  #------------------#
+  #Cpp-Check-All-Files;
+  #Splint-Check-All-Files;
+  #Hungarian-Notation-Check-All-Files;
+  #Detect-Casts-Not-Being-Explicitly-Made;
+  #Detect-Duplicate-Headers-Used;
+  #Detect-Wrong-Names-In_Doxygen-Comment;
+  #Detect-Malformed-Meta-Doxygen-Comment;
 
-#---------------------------#
-# Selected Transformations: #
-#---------------------------#
-#Clang-Format-Some-Other-Files;
+  #---------------------------#
+  # Selected Transformations: #
+  #---------------------------#
+  #Clang-Format-Some-Other-Files;
 
-#-------------------------#
-# Global Transformations: #
-#-------------------------#
-#Remove-Whitespace-Lines-At-The-Top-Of-Every-File;
-#Single-Newline-At-The-End-Of-Every-File;
-#Force-Keep-All-Doxygen-At-Filenames
-#Force-Wipe-All-Doxygen-At-Filenames
+  #-------------------------#
+  # Global Transformations: #
+  #-------------------------#
+  #Remove-Whitespace-Lines-At-The-Top-Of-Every-File;
+  #Single-Newline-At-The-End-Of-Every-File;
+  #Force-Keep-All-Doxygen-At-Filenames
+  #Force-Wipe-All-Doxygen-At-Filenames
+}
+
+#The entry point of this script
+Main
 

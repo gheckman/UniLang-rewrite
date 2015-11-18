@@ -45,17 +45,8 @@ Behaves like this when traversing:
 􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
 􏷦NodeType􏷥􏷢HASA: NodeTypeE􏷡
 􏷦Junction􏷥􏷢HASA: JunctionOutputsT􏷡
+􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME, MAX_NUMBER_OF_JUNCTIONS_IN_NODE􏷡
 􏷤string􏷣􏷢USES: strcpy()􏷡
-
-􏵺pre-defined space restrictions􏵻
-􏵸the max number of characters that can make up a node's name􏵹
-􏵾max number of characters in node name􏵿
-􏵼64􏵽
-
-􏵺pre-defined space restrictions􏵻
-􏵸the max number of junctions that can be a part of a node􏵹
-􏵾max number of junctions in node􏵿
-􏵼16􏵽
 
 
 􏷘+􏷗􏷒􏶐􏷑

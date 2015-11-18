@@ -1,0 +1,32 @@
+􏶞global􏶟
+􏷲Defined size restrictions for various arrays used by graph components􏷱
+􏷰If errors are shown while using the graph, a particular limit has been hit.  
+Hitting the limits and getting notified should not cause problems for the actual running code,
+but the particular item will not be added to the array.􏷯
+􏷮Electrical_System􏷭 􏷮Electrical_Configuration􏷭
+􏷬Trevor Hickey􏷫
+
+􏵺pre-defined space restrictions for the electrical system􏵻
+􏵸the max number of nodes that can be in the electrical graph􏵹
+􏵾max number of electrical nodes􏵿
+􏵼900􏵽
+
+􏵺pre-defined space restrictions for the electrical system􏵻
+􏵸the max number of characters that can make up a node's name􏵹
+􏵾max number of characters in node name􏵿
+􏵼1􏵽
+
+􏵺pre-defined space restrictions for the electrical system􏵻
+􏵸the max number of junctions that can be a part of a node􏵹
+􏵾max number of junctions in node􏵿
+􏵼4􏵽
+
+􏵺pre-defined space restrictions for the electrical system􏵻
+􏵸the maximum number of nodes a graph can hold􏵹
+􏵾max length of paths that lead to ground􏵿
+􏵼128􏵽
+
+􏵺pre-defined space restrictions for the electrical system􏵻
+􏵸the maximum number of paths that can be discovered and stored􏵹
+􏵾max number of valid paths through the circuit􏵿
+􏵼128􏵽

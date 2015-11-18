@@ -58,14 +58,14 @@
     
     􏶲We take in the DC Power system, and a list of failures.
     We apply the failures to the DC Power system.􏶱
-    ApplyElectricalMalfunctions(􏵶system􏵷, &􏵶inputs􏵷->m_tFailures);
+    ApplyElectricalMalfunctions(􏵶system􏵷, &􏵶inputs􏵷->m_tMalfunctions);
     
     􏶲We observe the switch states from the PLC, 
     and apply changes to the circuitry based on the switch positions and internal state􏶱
-    􏵲change circuitry based on switch state􏵳􏵶system􏵷, &􏵶inputs􏵷->m_tSwitches);
+    //􏵲change circuitry based on switch state􏵳􏵶system􏵷, &􏵶inputs􏵷->m_tSwitches);
 
     􏶲We pop any breakers that need to be triggered to pop􏶱
-    􏵲pop breakers􏵳􏵶system􏵷, &􏵶inputs􏵷->m_tPanelBreakers);
+    //􏵲pop breakers􏵳􏵶system􏵷, &􏵶inputs􏵷->m_tPanelBreakers);
 􏶳
 
 􏷘-􏷗􏷒update electrical data across graph􏷑

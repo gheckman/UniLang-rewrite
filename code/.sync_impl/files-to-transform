@@ -4,68 +4,69 @@ function UniLang-Transform(){
   #name of UniLang file / where to place in repo / where to place class wrapper
 
   #Utilities
-  cd Utilities;
+  cd Other/Utilities;
   #Transfer-Global "time_utilities" "Shared/ffs"
   #Transfer-Global "date_utilities" "Shared/ffs"
-  cd ..;
+  cd -;
 
   #Time related
-  cd Time;
+  cd Systems/Time;
   #Transfer-Global "month" "Components/Time"
   #Transfer-Object-Bad-Bools "date_time" "Components/Time" "Components/Time"
-  Transfer-Object-Bad-Bools "millisecond_timer" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad-Bools "millisecond_timer" "Components/Time" "Components/Time"
   #Transfer-Object-Bad-Bools "simulation_clock" "Components/Time" "Components/Time"
-  cd ..;
+  cd -;
 
   #Electrical Generic related
-  cd Electrical/generic;
+  cd Systems/Electrical/generic;
   #Transfer-Object-Bad-Bools "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
   #Transfer-Object-Bad-Bools "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
   #Transfer-Global "node_type" "Components/Electrical/Generic"
-  #Transfer-Object-Good "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  #Transfer-Object-Bad-Bools "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
   #Transfer-Object-Bad-Bools "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
   #Transfer-Object-Bad-Bools "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  cd ../../;
+  #Transfer-Global "electrical_config" "Components/Electrical/Generic"
+  cd -;
 
   #Electrical Specific related
-  cd Electrical/specific;
-  #Transfer-Object-Bad-Bools "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  ##Transfer-Object-Bad-Bools "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  cd ../../;
+  cd Systems/Electrical/specific;
+  Transfer-Object-Bad-Bools "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  cd -;
 
   #Electrical Manager related
-  cd Electrical/manager;
+  cd Systems/Electrical/manager;
   #Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
   #Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
   #Transfer-Global "electrical_updater" "SystemManagers/Electrical"
-  cd ../../;
+  cd -;
   
   #Electrical components
-  cd Electrical/components;
+  cd Systems/Electrical/components;
   #Transfer-Object-Bad-Bools "battery" "Components/Electrical" "Components/Electrical"
   #Transfer-Global "battery_chemistry" "Components/Electrical/Battery" "Components/Electrical/Battery"
-  cd ../../;
+  cd -;
   
 
   #Other stuff
   cd Other;
   #Transfer-Global "ffs_const" "Shared/ffs"
-  cd ..;
+  cd -;
   
   #Connection stuff
   cd Connections/J2;
   #Transfer-Global "j2_communication" "Connections/UDP/";
   #Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
-  cd ../../;
+  cd -;
   
   cd Components;
   #Transfer-Object-Bad-Bools "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
   #Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
-  cd ..;
+  cd -;
   
   cd Connections/Configs;
   #Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
@@ -79,18 +80,18 @@ function UniLang-Transform(){
   #Transfer-Global "ctrl_loader_communication_config" "Connections/UDP/ControlLoader";
   #Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
   #Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
-  cd ../../;
+  cd -;
   
   cd Concurrency;
   #Transfer-Global "time_thread" "Concurrency";
-  cd ../;
+  cd -;
   
-  cd DynamicDebug;
+  cd Other/DynamicDebug;
   #Transfer-Global "dynamic_debug_configuration" "Connections/UDP/DynamicDebug";
   #Transfer-Global "dynamic_debug_type" "Connections/UDP/DynamicDebug";
   #Transfer-Global "dynamic_debug" "Connections/UDP/DynamicDebug";
   #Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
   #Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
-  cd ../;
+  cd -;
   
 }

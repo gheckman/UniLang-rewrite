@@ -15,13 +15,13 @@ Initializing a 􏶐 will construct all of its nodes into the generic electrical 
 It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
-  􏶲create all the internal nodes inside the graph data structure􏶱
+  //create all the internal nodes inside the graph data structure
   CreateNodes(ptOutputs,􏵶graph􏵷);
   
-  􏶲connect these newly created nodes􏶱
+  //connect these newly created nodes
   CreateWires(ptOutputs,􏵶graph􏵷);
   
-  􏶲apply any nodes to ground that should be􏶱
+  //apply any nodes to ground that should be
   ApplyNodesToGround(ptOutputs,􏵶graph􏵷);
 􏶳
 
@@ -30,50 +30,23 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶠This will give all of the node a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
-  􏶲create all of the vertexes that are part of the 􏶐
-  the essential bus is technically outside the 􏶐,
-  but we include it here for conceptual organization􏶱
+  //create all of the vertexes that are part of the 􏶐
+  //the nonessential bus is technically outside the 􏶐,
+  //but we include it here for conceptual organization
   ElectricalGraphInputsT tInputs = {0};
   tInputs.m_bAddNode = 􏵱;
   
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery");
-  tInputs.m_eType = NODE_TYPE_BATTERY;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴battery􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery hot bus");
+  //add node to graph
+  strcpy(tInputs.m_szName, "main bus");
   tInputs.m_eType = NODE_TYPE_BUS;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴hot bus􏵵 = 􏵶graph􏵷->m_uId;
+  􏵴main bus􏵵 = 􏵶graph􏵷->m_uId;
   
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery relay");
-  tInputs.m_eType = NODE_TYPE_RELAY;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵰;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴relay􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery bus");
-  tInputs.m_eType = NODE_TYPE_BUS;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴bus􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery bus fuse 1");
+  //add node to graph
+  strcpy(tInputs.m_szName, "fuse 1");
   tInputs.m_eType = NODE_TYPE_FUSE;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
@@ -81,8 +54,8 @@ It will store the IDs given back by the graph so that they may be queried later 
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   􏵴fuse 1􏵵 = 􏵶graph􏵷->m_uId;
   
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery bus fuse 2");
+  //add node to graph
+  strcpy(tInputs.m_szName, "fuse 2");
   tInputs.m_eType = NODE_TYPE_FUSE;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
@@ -90,8 +63,8 @@ It will store the IDs given back by the graph so that they may be queried later 
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   􏵴fuse 2􏵵 = 􏵶graph􏵷->m_uId;
   
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery bus fuse 3");
+  //add node to graph
+  strcpy(tInputs.m_szName, "fuse 3");
   tInputs.m_eType = NODE_TYPE_FUSE;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
@@ -99,23 +72,50 @@ It will store the IDs given back by the graph so that they may be queried later 
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   􏵴fuse 3􏵵 = 􏵶graph􏵷->m_uId;
   
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "external power relay");
+  //add node to graph
+  strcpy(tInputs.m_szName, "fuse 4");
+  tInputs.m_eType = NODE_TYPE_FUSE;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴fuse 4􏵵 = 􏵶graph􏵷->m_uId;
+  
+  //add node to graph
+  strcpy(tInputs.m_szName, "nonessential bus relay");
   tInputs.m_eType = NODE_TYPE_RELAY;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵰;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴external power relay􏵵= 􏵶graph􏵷->m_uId;
+  􏵴nonessential bus relay􏵵 = 􏵶graph􏵷->m_uId;
   
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "external power unit");
-  tInputs.m_eType = NODE_TYPE_EPU;
+  //add node to graph
+  strcpy(tInputs.m_szName, "shed bus relay");
+  tInputs.m_eType = NODE_TYPE_RELAY;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵰;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴shed bus relay􏵵 = 􏵶graph􏵷->m_uId;
+  
+  //add node to graph
+  strcpy(tInputs.m_szName, "bus tie relay");
+  tInputs.m_eType = NODE_TYPE_RELAY;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵰;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏵴bus tie relay􏵵 = 􏵶graph􏵷->m_uId;
+  
+  //add node to graph
+  strcpy(tInputs.m_szName, "nonessential bus");
+  tInputs.m_eType = NODE_TYPE_BUS;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴external power unit􏵵 = 􏵶graph􏵷->m_uId;
+  􏵴nonessential bus􏵵 = 􏵶graph􏵷->m_uId;
 􏶳
 
 􏷘-􏷗􏷒create wires􏷑
@@ -123,73 +123,75 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶠The nodes being connected will need to be created first.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
 􏶴
-  􏶲connect the related components􏶱
+  //connect the related components
   ElectricalGraphInputsT tInputs = {0};
   tInputs.m_bAddWire = 􏵱;
   
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴battery􏵵;
-  tInputs.m_uNodeY = 􏵴hot bus􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴hot bus􏵵;
-  tInputs.m_uNodeY = 􏵴relay􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴relay􏵵;
-  tInputs.m_uNodeY = 􏵴bus􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴bus􏵵;
-  tInputs.m_uNodeY = 􏵴external power relay􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴external power relay􏵵;
-  tInputs.m_uNodeY = 􏵴external power unit􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴bus􏵵;
+  //connect two nodes together
+  tInputs.m_uNodeX = 􏵴main bus􏵵;
   tInputs.m_uNodeY = 􏵴fuse 1􏵵;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴bus􏵵;
+  //connect two nodes together
+  tInputs.m_uNodeX = 􏵴main bus􏵵;
   tInputs.m_uNodeY = 􏵴fuse 2􏵵;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
   
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴bus􏵵;
+  //connect two nodes together
+  tInputs.m_uNodeX = 􏵴main bus􏵵;
   tInputs.m_uNodeY = 􏵴fuse 3􏵵;
   tInputs.m_fResistance = 0.0f;
   tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  
+  //connect two nodes together
+  tInputs.m_uNodeX = 􏵴main bus􏵵;
+  tInputs.m_uNodeY = 􏵴fuse 4􏵵;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  
+  //connect two nodes together
+  tInputs.m_uNodeX = 􏵴main bus􏵵;
+  tInputs.m_uNodeY = 􏵴bus tie relay􏵵;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  
+  //connect two nodes together
+  tInputs.m_uNodeX = 􏵴fuse 1􏵵;
+  tInputs.m_uNodeY = 􏵴nonessential bus relay􏵵;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  
+  //connect two nodes together
+  tInputs.m_uNodeX = 􏵴fuse 2􏵵;
+  tInputs.m_uNodeY = 􏵴shed bus relay􏵵;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  
+  //connect two nodes together
+  tInputs.m_uNodeX = 􏵴nonessential bus relay􏵵;
+  tInputs.m_uNodeY = 􏵴nonessential bus􏵵;
+  tInputs.m_fResistance = 0.0f;
+  tInputs.m_fExpectedAmperage = 0.0f;
+  tInputs.m_bHasFlow = 􏵱;
+  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  
+  
 􏶳
 
 􏷘-􏷗􏷒apply nodes to ground􏷑
@@ -197,65 +199,61 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶠The nodes being connected to ground will need to be created first.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
 􏶴
-  􏶲apply any nodes to ground that should be􏶱
+  //apply any nodes to ground that should be
   ElectricalGraphInputsT tInputs = {0};
   tInputs.m_bConnectNodeToCommonGround = 􏵱;
-  
-  􏶲connect node to common ground􏶱
-  tInputs.m_uNode = 􏵴battery􏵵;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect node to common ground􏶱
-  tInputs.m_uNode = 􏵴hot bus􏵵;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect node to common ground􏶱
-  tInputs.m_uNode = 􏵴bus􏵵;
+   
+  //connect node to common ground
+  tInputs.m_uNode = 􏵴nonessential bus􏵵;
   UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
 􏶳
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬battery􏶫􏶪0􏶩
+and receive back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬main bus􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬hot bus􏶫􏶪0􏶩
-
-􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
-􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬relay􏶫􏶪0􏶩
-
-􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
-􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bus􏶫􏶪0􏶩
-
-􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
-􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
+and receive back the actual node object.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 1􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
+and receive back the actual node object.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 2􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
+and receive back the actual node object.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 3􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬external power relay􏶫􏶪0􏶩
+and receive back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 4􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬external power unit􏶫􏶪0􏶩
+and receive back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nonessential bus relay􏶫􏶪0􏶩
 
+􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and receive back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬shed bus relay􏶫􏶪0􏶩
+
+􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and receive back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bus tie relay􏶫􏶪0􏶩
+
+􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and receive back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nonessential bus􏶫􏶪0􏶩
+
+􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
+􏶦This ID will be used to query the generic electrical graph
+and receive back the actual node object.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬shed bus􏶫􏶪0􏶩

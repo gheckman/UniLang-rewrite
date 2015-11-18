@@ -7,10 +7,7 @@ of the overall path list returned to the user.􏷯
 
 􏷦stddef􏷥􏷢HASA: size_t􏷡
 􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
-
-􏵺the maximum number of nodes a graph can hold􏵻
-􏵾max length of paths that lead to ground􏵿
-􏵼128􏵽
+􏷦ElectricalConfig􏷥􏷢USES: MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND􏷡
 
 
 􏷘+􏷗􏷒􏶐􏷑

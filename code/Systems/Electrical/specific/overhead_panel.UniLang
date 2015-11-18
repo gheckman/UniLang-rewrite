@@ -140,7 +140,7 @@ and puts them into the generic electrical graph data structure.􏷏
 􏶠Used to construct a device node into the graph, and then set that node to common ground.􏶡
 􏶜􏶝􏷆size_t*const􏷅􏷄node id􏷃􏷀the id to be set when creating the device􏶿
 􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the device being added􏶿
-􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistence of the device being added􏶿
+􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the device being added􏶿
 􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular device􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the device allows electricity to flow through it.􏶿
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
@@ -170,7 +170,7 @@ and puts them into the generic electrical graph data structure.􏷏
 􏶠Used to construct a bus node into the graph, and then set that node to common ground.􏶡
 􏶜􏶝􏷆size_t*const􏷅􏷄node id􏷃􏷀the id to be set when creating the bus􏶿
 􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the bus being added􏶿
-􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistence of the bus being added􏶿
+􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the bus being added􏶿
 􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular bus􏶿
 􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the bus allows electricity to flow through it.􏶿
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
@@ -308,7 +308,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴sand filt􏵵,"SAND FILT",0,5.0f,􏵱,􏵶graph􏵷);     //CB017
+    CreateDeviceAndApplyToGround(ptOutputs,&􏵴sand filt􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"SAND FILT",0,5.0f,􏵱,􏵶graph􏵷);     //CB017
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴wiper􏵵,"WIPER",0,15.0f,􏵱,􏵶graph􏵷);        //CB018
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴tq n2􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"TQ N2",0,3.0f,􏵱,􏵶graph􏵷);         //CB019
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴ovsp􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"OVSP",0,5.0f,􏵱,􏵶graph􏵷);         //CB020
@@ -444,7 +444,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒create right panel devices for row 7􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 7,
 and put them into the generic electrical graph data structure.􏷏
-􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
+􏶠This will give all of the created devices a valid id for querying the graph later.􏶡  
 􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴start􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"START",0,5.0f,􏵱,􏵶graph􏵷);        //CB026
@@ -455,7 +455,9 @@ and put them into the generic electrical graph data structure.􏷏
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴ovsp􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"OVSP",0,5.0f,􏵱,􏵶graph􏵷);         //CB031
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴tq n2􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"TQ N2",0,3.0f,􏵱,􏵶graph􏵷);         //CB032
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴rotor rpm􏵵,"ROTOR RPM",0,1.0f,􏵱,􏵶graph􏵷);     //CB033
+    CreateDeviceAndApplyToGround(ptOutputs,&􏵴sand filt􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"SAND FILT",0,5.0f,􏵱,􏵶graph􏵷); //CB034
 􏶳
+
 
 􏷘-􏷗􏷒create right panel devices for row 8􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 8,
@@ -512,6 +514,7 @@ and put them into the generic electrical graph data structure.􏷏
       ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ign􏵵[unIndex]);
       ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴start􏵵[unIndex]);
       ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴tq n2􏵵[unIndex]);
+      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴sand filt􏵵[unIndex]);
 
       //row 8
       ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴gen􏵵[unIndex]);
@@ -606,7 +609,6 @@ and put them into the generic electrical graph data structure.􏷏
   ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dwnlnk adu b􏵵);
 
   //row 7
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴sand filt􏵵);
   ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴wiper􏵵);
   ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rotor rpm􏵵);
   
@@ -691,7 +693,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬shed bus􏶫􏶪0􏶩
 
 􏶨Row 1 􏶏 devices􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬stby hor bat􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ic amp􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ics cab􏶫􏶪0􏶩
@@ -703,7 +705,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bat em ex lt􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨Row 2 􏶏 devices􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬vhf tx1􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms1􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms blw􏶫􏶪0􏶩
@@ -723,7 +725,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬com5 xcvr􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨Row 3 􏶏 devices􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fcds2 backup􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pt st cp􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ap2􏶫􏶪0􏶩
@@ -741,7 +743,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶨􏶧􏶦􏶥
 
 􏶨Row 4 􏶏 devices􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fcdm􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬nd􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬pfd􏶫􏶪0􏶩
@@ -757,7 +759,7 @@ and put them into the generic electrical graph data structure.􏷏
 
 
 􏶨Row 5 􏶏 devices􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ics􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬instr lights􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬p1 sas􏶫􏶪0􏶩
@@ -775,7 +777,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬vhf tx2􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨Row 6 􏶏 devices􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬floats􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cont􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cc pil􏶫􏶪0􏶩
@@ -794,8 +796,8 @@ and put them into the generic electrical graph data structure.􏷏
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk adu b􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨Row 7 􏶏 devices􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬sand filt􏶫􏶪0􏶩
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
+􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬sand filt􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬wiper􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ovsp􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬prime p􏶫􏶪0􏶩
@@ -808,7 +810,7 @@ and put them into the generic electrical graph data structure.􏷏
 
 
 􏶨Row 8 􏶏 devices􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬gen􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬bt􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fire e􏶫􏶪0􏶩
@@ -819,7 +821,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬vemd􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨The ID of a node that is conceptually stored on the control console􏶧
-􏶦This ID will be used to query the generic electrical graph and recieve back the actual device node.􏶥
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cabin monitor􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dvr􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mx15 imager􏶫􏶪0􏶩

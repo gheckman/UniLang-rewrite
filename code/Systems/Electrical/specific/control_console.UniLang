@@ -79,7 +79,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 
 􏶨The ID of a node that is conceptually stored in the 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
-and recieve back the actual node object.􏶥
+and receive back the actual node object.􏶥
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cabin monitor􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dvr􏶫􏶪0􏶩
 􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mx15 imager􏶫􏶪0􏶩

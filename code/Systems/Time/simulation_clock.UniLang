@@ -31,7 +31,7 @@ It can also be reset to another time if desired.􏷯
 
 􏷘+􏷗􏷒reset􏷑
 􏷐Reset the clock to a new date and time.􏷏
-􏶠Ressetting the clock will not affect its pause state􏶡
+􏶠Resetting the clock will not affect its pause state􏶡
 􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀current month of the year. valid range: (1 - 12)􏶿
 􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀the current calendar day of the month.  valid range: (1 - 31)􏶿
 􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀the current year.  valid range: any positive year number, that fits the size of the type.􏶿
