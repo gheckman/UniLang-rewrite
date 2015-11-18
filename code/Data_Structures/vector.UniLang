@@ -1,0 +1,83 @@
+􏶞object􏶟
+􏷲A basic generic vector type for adding and accessing a dynamic number of elements.􏷱
+􏷰The capacity of the vector is equal to its size.
+Be sure to type cast the void* returned when accessing.
+This is a typical practice of void pointers.􏷯
+􏷮Vector􏷭 􏷮Data Structure􏷭
+􏷬Trevor Hickey􏷫
+
+􏷤stdio􏷣􏷢USES: malloc(), realloc(), free(), sizeof()􏷡
+
+􏷘+􏷗􏷒􏶐􏷑
+􏷐Initialize the 􏶐􏷏
+􏶠􏶐 will be set to an empty state with a size of 0􏶡
+􏶴
+􏶲start as an empty vector􏶱
+􏵴size􏵵 = 0;
+
+􏶲start with a capacity of 1 for the initial allocation􏶱
+􏶲1 is arbitary.  It assumes that someone will at least add 1 element and allocates that memory upfront.􏶱
+􏵴capacity􏵵 = 1;
+
+􏶲initialze the internal dynamic array.􏶱
+􏶲this array starts with an initial capacity, and will grow as more elements are added􏶱
+􏵴elements􏵵 = malloc(sizeof(void *) * 􏵴capacity􏵵);
+􏶳
+
+􏷘+􏷗􏷒add􏷑
+􏷐Adds an element to the end of the 􏶐􏷏
+􏶠Potentially increases the capacity if more room is needed.  Increases the size.
+The added item will be the last item.􏶡
+􏶜c􏶝􏷆void*􏷅􏷄new element􏷃􏷀the new capacity to resize the internal array to.􏶿
+􏶴
+
+    􏶲increase the size of the internal array if we are already full􏶱
+    if (􏵴size􏵵 == 􏵴capacity􏵵){
+        
+        􏶲allocate space for one more item􏶱
+        􏵲resize􏵳􏵴capacity􏵵 + 1);
+    }
+    
+    􏶲there should be enough room to add the new element now􏶱
+    􏵴elements􏵵[􏵴size􏵵++] = 􏵶new element􏵷;
+􏶳
+
+􏷘-􏷗􏷒resize􏷑
+􏷐Resize the internal array.􏷏
+􏶠This is done when new space is needed for a newly inserted element.􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄new capacity􏷃􏷀the new capacity to resize the internal array to.􏶿
+􏶴
+    􏶲Change the size of the internal array (most likely increasing it).􏶱
+    void** NewElements = realloc(􏵴elements􏵵, sizeof(void *) * 􏵶new capacity􏵷);
+    
+    􏶲Ensure the allocation was succesful before applying it.􏶱
+    if (NewElements){
+        􏵴elements􏵵 = NewElements;
+        􏵴capacity􏵵 = 􏵶new capacity􏵷;
+    }
+􏶳
+
+
+􏷘+􏷗􏷒~􏶐􏷑
+􏷐Destruct the 􏶐􏷏
+􏶠This function must be called to free the internal allocated memory before 􏶐 goes out of scope.􏶡
+􏶴
+    􏶲clear all of the dynamic memory from the internal array􏶱
+    􏶲after this call, 􏶐 can safely fall out of scope.􏶱
+    free(􏵴elements􏵵);
+􏶳
+
+
+􏶨the number of elements currently in the 􏶐􏶧
+􏶦This can be used for iteration of the elements.
+There is no hard limit on the size.  The internal array will grow to accommodate for new inserted elements.􏶥
+􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬size􏶫􏶪0􏶩
+
+􏶨the amount of space allocated for the interal array􏶧
+􏶦different implementations do different initial capacity, and have the capacity grow at different rates.
+We will increase the capacity by one every time we need to add a new element to a full array.􏶥
+􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬capacity􏶫􏶪1􏶩
+
+􏶨the internal array for all of our generic elements􏶧
+􏶦when accessing an element, you will need to type cast to the appropiate pointer type before dereferencing􏶥
+􏶘-􏶙􏶮void**􏶭􏶬elements􏶫􏶪0􏶩

@@ -3,6 +3,10 @@
 function UniLang-Transform(){
   #name of UniLang file / where to place in repo / where to place class wrapper
 
+  cd Data_Structures;
+  Transfer-Object-Bad-Bools "vector" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  cd -;
+  
   #Utilities
   cd Other/Utilities;
   #Transfer-Global "time_utilities" "Shared/ffs"
@@ -30,12 +34,12 @@ function UniLang-Transform(){
 
   #Electrical Specific related
   cd Systems/Electrical/specific;
-  Transfer-Object-Bad-Bools "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad-Bools "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad-Bools "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad-Bools "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad-Bools "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  Transfer-Object-Bad-Bools "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  #Transfer-Object-Bad-Bools "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
   cd -;
 
   #Electrical Manager related
