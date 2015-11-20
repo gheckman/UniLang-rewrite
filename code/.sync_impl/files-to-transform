@@ -1,81 +1,71 @@
 #!/usr/bin/env bash
 
-function UniLang-Transform(){
-  #name of UniLang file / where to place in repo / where to place class wrapper
+function Silently_Go_Back_To_The_Previous_Pwd(){
+  cd - > /dev/null 2>&1;
+}
+function Step_In_Call_Function_Step_Out(){
+  cd $1;                                #step in
+  $2;                                   #call function
+  Silently_Go_Back_To_The_Previous_Pwd; #step out
+}
 
-  cd Data_Structures;
+#name of UniLang file / where to place in repo / where to place class wrapper
+function Transfer_Data_Structures(){ :
   Transfer-Object-Bad-Bools "vector" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  cd -;
-  
-  #Utilities
-  cd Other/Utilities;
-  #Transfer-Global "time_utilities" "Shared/ffs"
-  #Transfer-Global "date_utilities" "Shared/ffs"
-  cd -;
+}
 
-  #Time related
-  cd Systems/Time;
-  #Transfer-Global "month" "Components/Time"
-  #Transfer-Object-Bad-Bools "date_time" "Components/Time" "Components/Time"
-  #Transfer-Object-Bad-Bools "millisecond_timer" "Components/Time" "Components/Time"
-  #Transfer-Object-Bad-Bools "simulation_clock" "Components/Time" "Components/Time"
-  cd -;
-
-  #Electrical Generic related
-  cd Systems/Electrical/generic;
-  #Transfer-Object-Bad-Bools "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad-Bools "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Global "node_type" "Components/Electrical/Generic"
-  #Transfer-Object-Bad-Bools "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad-Bools "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Object-Bad-Bools "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
-  #Transfer-Global "electrical_config" "Components/Electrical/Generic"
-  cd -;
-
-  #Electrical Specific related
-  cd Systems/Electrical/specific;
-  #Transfer-Object-Bad-Bools "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  #Transfer-Object-Bad-Bools "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
-  cd -;
-
-  #Electrical Manager related
-  cd Systems/Electrical/manager;
-  #Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
-  #Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
-  #Transfer-Global "electrical_updater" "SystemManagers/Electrical"
-  cd -;
-  
-  #Electrical components
-  cd Systems/Electrical/components;
-  #Transfer-Object-Bad-Bools "battery" "Components/Electrical" "Components/Electrical"
-  #Transfer-Global "battery_chemistry" "Components/Electrical/Battery" "Components/Electrical/Battery"
-  cd -;
-  
-
-  #Other stuff
-  cd Other;
-  #Transfer-Global "ffs_const" "Shared/ffs"
-  cd -;
-  
-  #Connection stuff
-  cd Connections/J2;
-  #Transfer-Global "j2_communication" "Connections/UDP/";
-  #Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
-  cd -;
-  
-  cd Components;
-  #Transfer-Object-Bad-Bools "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
-  #Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
-  cd -;
-  
-  cd Connections/Configs;
+function Transfer_Utilities(){ :
+  Transfer-Global "time_utilities" "Shared/ffs"
+  Transfer-Global "date_utilities" "Shared/ffs"
+}
+function Transfer_Time(){ :
+  Transfer-Global "month" "Components/Time"
+  Transfer-Object-Bad-Bools "date_time" "Components/Time" "Components/Time"
+  Transfer-Object-Bad-Bools "millisecond_timer" "Components/Time" "Components/Time"
+  Transfer-Object-Bad-Bools "simulation_clock" "Components/Time" "Components/Time"
+}
+function Transfer_Electrical_Generic(){ :
+  Transfer-Object-Bad-Bools "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad-Bools "node" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Global "node_type" "Components/Electrical/Generic"
+  Transfer-Object-Bad-Bools "electrical_graph" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad-Bools "path" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Object-Bad-Bools "paths" "Components/Electrical/Generic" "Components/Electrical/Generic"
+  Transfer-Global "electrical_config" "Components/Electrical/Generic"
+}
+function Transfer_Electrical_Specific(){ :
+  Transfer-Object-Bad-Bools "after_junction_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "battery_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "diode_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "distribution_box" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "overhead_panel" "Components/Electrical/Specific" "Components/Electrical/Specific"
+  Transfer-Object-Bad-Bools "D_C_power_system" "Components/Electrical/Specific" "Components/Electrical/Specific"
+}
+function Transfer_Electrical_Manager(){ :
+  Transfer-Global "electrical_input_setter" "SystemManagers/Electrical"
+  Transfer-Global "electrical_malfunction_applier" "SystemManagers/Electrical"
+  Transfer-Global "electrical_updater" "SystemManagers/Electrical"
+}
+function Transfer_Electrical_Components(){ :
+  Transfer-Object-Bad-Bools "battery" "Components/Electrical" "Components/Electrical"
+  Transfer-Global "battery_chemistry" "Components/Electrical/Battery" "Components/Electrical/Battery"
+}
+function Transfer_Other(){ :
+  Transfer-Global "ffs_const" "Shared/ffs"
+}
+function Transfer_J2(){ :
+  Transfer-Global "j2_communication" "Connections/UDP/";
+  Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
+  Transfer-Global "ground_contact_location" "Connections/UDP/J2Communication/";
+}
+function Transfer_Components(){ :
+  Transfer-Object-Bad-Bools "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
+  Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
+}
+function Transfer_Connections_Config(){ :
   #Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
   #Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
-  #Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
+  Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
   #Transfer-Global "Sep_communication_config" "Connections/UDP/SEP";
   #Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
   #Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
@@ -84,18 +74,35 @@ function UniLang-Transform(){
   #Transfer-Global "ctrl_loader_communication_config" "Connections/UDP/ControlLoader";
   #Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
   #Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
-  cd -;
+}
+function Transfer_Concurrency(){ :
+  Transfer-Global "time_thread" "Concurrency";
+}
+function Transfer_Dynamic_Debug(){ :
+  Transfer-Global "dynamic_debug_configuration" "Connections/UDP/DynamicDebug";
+  Transfer-Global "dynamic_debug_type" "Connections/UDP/DynamicDebug";
+  Transfer-Global "dynamic_debug" "Connections/UDP/DynamicDebug";
+  Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
+  Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
+}
+
+
+function UniLang-Transform(){
   
-  cd Concurrency;
-  #Transfer-Global "time_thread" "Concurrency";
-  cd -;
-  
-  cd Other/DynamicDebug;
-  #Transfer-Global "dynamic_debug_configuration" "Connections/UDP/DynamicDebug";
-  #Transfer-Global "dynamic_debug_type" "Connections/UDP/DynamicDebug";
-  #Transfer-Global "dynamic_debug" "Connections/UDP/DynamicDebug";
-  #Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
-  #Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
-  cd -;
+  #Step into a Unilang directory.  Compile and transfer code into the real codebase.
+  #                              PATH                            FUNCTION
+  #Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
+  #Step_In_Call_Function_Step_Out "Other/Utilities"               Transfer_Utilities;
+  #Step_In_Call_Function_Step_Out "Systems/Time"                  Transfer_Time;
+  #Step_In_Call_Function_Step_Out "Systems/Electrical/generic"    Transfer_Electrical_Generic;
+  #Step_In_Call_Function_Step_Out "Systems/Electrical/specific"   Transfer_Electrical_Specific;
+  #Step_In_Call_Function_Step_Out "Systems/Electrical/manager"    Transfer_Electrical_Manager;
+  #Step_In_Call_Function_Step_Out "Systems/Electrical/components" Transfer_Electrical_Components;
+  #Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
+  Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
+  #Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
+  Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
+  #Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;
+  #Step_In_Call_Function_Step_Out "Other/DynamicDebug"            Transfer_Dynamic_Debug;
   
 }

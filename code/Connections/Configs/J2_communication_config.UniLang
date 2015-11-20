@@ -1,9 +1,17 @@
 􏶞global􏶟
 􏷲J2 Connection Configuration􏷱
 􏷰IP addresses and port numbers􏷯
-􏷮Connections􏷭
+􏷮J2 System􏷭 􏷮Connections􏷭
 􏷬Trevor Hickey􏷫
 
-􏵺􏵻􏵸􏵹􏵾J2 IP Address􏵿􏵼"172.31.2.50"􏵽
+􏵺The IP of the flight model machine􏵻􏵸􏵹􏵾J2 IP Address􏵿􏵼"172.31.2.50"􏵽
 􏵺􏵻􏵸􏵹􏵾J2 send port number􏵿􏵼49000􏵽
 􏵺􏵻􏵸􏵹􏵾J2 receive port number􏵿􏵼49050􏵽
+
+
+􏵺The rate at which J2 will send high speed data messages􏵻􏵸􏵹􏵾J2 high speed transmission rate hz􏵿􏵼100􏵽
+􏵺The rate at which J2 will send low speed data messages􏵻􏵸every 6 frames􏵹􏵾J2 low speed transmission rate hz􏵿􏵼16.67􏵽
+􏵺The rate at which J2 will send engine data messages􏵻􏵸every 2 frames􏵹􏵾J2 engine transmission rate hz􏵿􏵼50􏵽
+
+􏵺The rate at which SimHost will send high speed data messages􏵻􏵸􏵹􏵾SimHost high speed transmission rate hz􏵿􏵼100􏵽
+􏵺The rate at which SimHost will send low speed data messages􏵻􏵸every 6 frames􏵹􏵾SimHost low speed transmission rate hz􏵿􏵼16.67􏵽

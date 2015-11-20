@@ -1,20 +1,17 @@
 􏶞global􏶟
 􏷲J2 System Connection􏷱
-􏷰test􏷯
+􏷰Sends and receives J2 flight model messages􏷯
 􏷮J2_Connection􏷭
 􏷬Trevor Hickey􏷫
 
 􏷤Defs􏷣􏷢USES: BYTE, WORD, DWORD􏷡
-􏷤sysLib􏷣􏷢USES: sysClkRateGet()􏷡
-􏷤stdioLib􏷣􏷢USES: perror()􏷡
 􏷤strLib􏷣􏷢USES: memcpy()􏷡
+􏷤stdioLib􏷣􏷢USES: perror()􏷡
 􏷤SocketManager􏷣􏷢USES: SocketSend(), SocketReceive(), DATA_BUFFER_SIZE􏷡
 􏷤SocketList􏷣􏷢USES: SOCKET_GEN_J2_SEND, SOCKET_GEN_J2_RECEIVE􏷡
 􏷤TimeUtilities􏷣􏷢USES: DelayTaskNumberOfMilliseconds()􏷡
-􏷤inetLib􏷣􏷢USES: inet_addr􏷡
 􏷤OwnShip􏷣􏷢USES: WriteJ2Data()􏷡
 􏷤J2CommunicationConfig􏷣􏷢USES: J2_TASKDELAY_MS􏷡
-􏷤UdpStruct􏷣􏷢􏷡
 
 􏷘+􏷗􏷒J2 receive􏷑
 􏷐Used to sequence incoming J2 Messages.􏷏

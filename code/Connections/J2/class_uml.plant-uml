@@ -1,0 +1,4 @@
+@startuml
+class ground_contact_location {
+}
+@enduml

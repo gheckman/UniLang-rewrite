@@ -9,17 +9,17 @@ but the particular item will not be added to the array.􏷯
 􏵺pre-defined space restrictions for the electrical system􏵻
 􏵸the max number of nodes that can be in the electrical graph􏵹
 􏵾max number of electrical nodes􏵿
-􏵼900􏵽
+􏵼256􏵽
 
 􏵺pre-defined space restrictions for the electrical system􏵻
 􏵸the max number of characters that can make up a node's name􏵹
 􏵾max number of characters in node name􏵿
-􏵼1􏵽
+􏵼64􏵽
 
 􏵺pre-defined space restrictions for the electrical system􏵻
 􏵸the max number of junctions that can be a part of a node􏵹
 􏵾max number of junctions in node􏵿
-􏵼4􏵽
+􏵼16􏵽
 
 􏵺pre-defined space restrictions for the electrical system􏵻
 􏵸the maximum number of nodes a graph can hold􏵹

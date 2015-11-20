@@ -1,0 +1,8 @@
+@startuml
+class date_utilities {
++number of days in the month()
++is leap year()
++number of milliseconds in a day : unsigned int
++number of months in a year : unsigned int
+}
+@enduml
