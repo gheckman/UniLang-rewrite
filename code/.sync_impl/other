@@ -5,7 +5,7 @@ function Transfer-Global(){
   Export-It-Good "$1";
   Copy-It "$1" "$2";
   Style-It "$1" "$2";
-  Document-It "$1";
+  #Document-It "$1";
   Remove-Generated-Code-From-Work-Area "$1";
 }
 

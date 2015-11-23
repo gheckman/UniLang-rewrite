@@ -6,18 +6,25 @@ This is a typical practice of void pointers.􏷯
 􏷮Vector􏷭 􏷮Data Structure􏷭
 􏷬Trevor Hickey􏷫
 
+􏷦stddef􏷥􏷢HASA: size_t􏷡
 􏷤stdio􏷣􏷢USES: malloc(), realloc(), free(), sizeof()􏷡
+􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
 􏶠􏶐 will be set to an empty state with a size of 0􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄type size􏷃􏷀the size of the types that will be held in the homogeneous container.􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄initial capacity􏷃􏷀pre allocate a certain number of elements upon initialization.􏶿
 􏶴
 􏶲start as an empty vector􏶱
 􏵴size􏵵 = 0;
 
+􏶲store the size of each element.  (Such a byte count will  become underivable through void*)􏶱
+􏵴type size􏵵 = 􏵶type size􏵷;
+
 􏶲start with a capacity of 1 for the initial allocation􏶱
 􏶲1 is arbitary.  It assumes that someone will at least add 1 element and allocates that memory upfront.􏶱
-􏵴capacity􏵵 = 1;
+􏵴capacity􏵵 = 􏵶initial capacity􏵷;
 
 􏶲initialze the internal dynamic array.􏶱
 􏶲this array starts with an initial capacity, and will grow as more elements are added􏶱
@@ -39,7 +46,25 @@ The added item will be the last item.􏶡
     }
     
     􏶲there should be enough room to add the new element now􏶱
-    􏵴elements􏵵[􏵴size􏵵++] = 􏵶new element􏵷;
+    memset(􏵴elements􏵵[􏵴size􏵵],􏵶new element􏵷,􏵴type size􏵵);
+    
+    􏶲increase our size now that the insertion is complete.􏶱
+    ++􏵴size􏵵;
+􏶳
+􏷘+􏷗􏷒get􏷑
+􏷐Get an element at a particular index􏷏
+􏶠If an invalid index is given, NULL is returned􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the item to get􏶿
+􏶚􏶛􏶾void*􏶽􏶼selected element􏶻􏶺the selected element of the 􏶐 from the given index􏶹
+􏶴
+
+􏶲if the index is valid, return it.􏶱
+if (􏵲valid index􏵳􏵶index􏵷)){
+    return 􏵴elements􏵵[􏵶index􏵷];
+}
+
+􏶲if the index is NOT valid, return NULL.􏶱
+return NULL;
 􏶳
 
 􏷘-􏷗􏷒resize􏷑
@@ -57,6 +82,16 @@ The added item will be the last item.􏶡
     }
 􏶳
 
+􏷘-􏷗􏷒valid index􏷑
+􏷐Check if an integer is a valid index􏷏
+􏶠True is returned if the index is an addressable element in the vector.
+False is returned if it is an out of range index􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index to test for validity of􏶿
+􏶚c􏶛􏶾BOOL􏶽􏶼is valid index􏶻􏶺whether the index is valid for the current state of the 􏶐􏶹
+􏶴
+    􏶲Ensure the index is in range􏶱
+    return 􏵶index􏵷 >= 0 && 􏵶index􏵷 < 􏵴size􏵵;
+􏶳
 
 􏷘+􏷗􏷒~􏶐􏷑
 􏷐Destruct the 􏶐􏷏
@@ -66,7 +101,6 @@ The added item will be the last item.􏶡
     􏶲after this call, 􏶐 can safely fall out of scope.􏶱
     free(􏵴elements􏵵);
 􏶳
-
 
 􏶨the number of elements currently in the 􏶐􏶧
 􏶦This can be used for iteration of the elements.
@@ -81,3 +115,7 @@ We will increase the capacity by one every time we need to add a new element to 
 􏶨the internal array for all of our generic elements􏶧
 􏶦when accessing an element, you will need to type cast to the appropiate pointer type before dereferencing􏶥
 􏶘-􏶙􏶮void**􏶭􏶬elements􏶫􏶪0􏶩
+
+􏶨the size of each element in the homogeneous container.􏶧
+􏶦this is important to know, as acquiring a value upon insertion is done through void pointers as a means of generality.􏶥
+􏶘-􏶙􏶮size_t􏶭􏶬type size􏶫􏶪0􏶩
