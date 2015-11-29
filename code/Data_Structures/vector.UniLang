@@ -35,7 +35,7 @@ This is a typical practice of void pointers.􏷯
 􏷐Adds an element to the end of the 􏶐􏷏
 􏶠Potentially increases the capacity if more room is needed.  Increases the size.
 The added item will be the last item.􏶡
-􏶜c􏶝􏷆void*􏷅􏷄new element􏷃􏷀the new capacity to resize the internal array to.􏶿
+􏶜􏶝􏷆void*􏷅􏷄new element􏷃􏷀the new capacity to resize the internal array to.􏶿
 􏶴
 
     􏶲increase the size of the internal array if we are already full􏶱
@@ -46,7 +46,8 @@ The added item will be the last item.􏶡
     }
     
     􏶲there should be enough room to add the new element now􏶱
-    memset(􏵴elements􏵵[􏵴size􏵵],􏵶new element􏵷,􏵴type size􏵵);
+    􏵴elements􏵵[􏵴size􏵵] = malloc(􏵴type size􏵵);
+    memcpy(􏵴elements􏵵[􏵴size􏵵],􏵶new element􏵷,􏵴type size􏵵);
     
     􏶲increase our size now that the insertion is complete.􏶱
     ++􏵴size􏵵;
@@ -99,7 +100,17 @@ False is returned if it is an out of range index􏶡
 􏶴
     􏶲clear all of the dynamic memory from the internal array􏶱
     􏶲after this call, 􏶐 can safely fall out of scope.􏶱
+    
+    􏶲loop over and delete each element pointed to by the void ptrs􏶱
+    size_t unIndex=0;
+    for (;unIndex < 􏵴size􏵵; ++unIndex){
+        free(􏵴elements􏵵[unIndex]);
+    }
+    
+    􏶲then delete the actual void* array􏶱
     free(􏵴elements􏵵);
+    
+    􏶲I think this is why c++ has the delete[] as a short hand􏶱
 􏶳
 
 􏶨the number of elements currently in the 􏶐􏶧
@@ -107,13 +118,13 @@ False is returned if it is an out of range index􏶡
 There is no hard limit on the size.  The internal array will grow to accommodate for new inserted elements.􏶥
 􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬size􏶫􏶪0􏶩
 
-􏶨the amount of space allocated for the interal array􏶧
+􏶨the amount of space allocated for the internal array􏶧
 􏶦different implementations do different initial capacity, and have the capacity grow at different rates.
 We will increase the capacity by one every time we need to add a new element to a full array.􏶥
 􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬capacity􏶫􏶪1􏶩
 
 􏶨the internal array for all of our generic elements􏶧
-􏶦when accessing an element, you will need to type cast to the appropiate pointer type before dereferencing􏶥
+􏶦when accessing an element, you will need to type cast to the appropriate pointer type before dereferencing􏶥
 􏶘-􏶙􏶮void**􏶭􏶬elements􏶫􏶪0􏶩
 
 􏶨the size of each element in the homogeneous container.􏶧

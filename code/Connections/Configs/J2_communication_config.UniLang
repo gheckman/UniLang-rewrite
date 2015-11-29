@@ -5,8 +5,10 @@
 􏷬Trevor Hickey􏷫
 
 􏵺The IP of the flight model machine􏵻􏵸􏵹􏵾J2 IP Address􏵿􏵼"172.31.2.50"􏵽
-􏵺􏵻􏵸􏵹􏵾J2 send port number􏵿􏵼49000􏵽
-􏵺􏵻􏵸􏵹􏵾J2 receive port number􏵿􏵼49050􏵽
+􏵺􏵻􏵸􏵹􏵾J2 send data port number􏵿􏵼49000􏵽
+􏵺􏵻􏵸􏵹􏵾J2 receive data port number􏵿􏵼49050􏵽
+􏵺􏵻􏵸􏵹􏵾J2 send control port number􏵿􏵼49001􏵽
+􏵺􏵻􏵸􏵹􏵾J2 receive control port number􏵿􏵼49051􏵽
 
 􏵺􏵻􏵸􏵹􏵾J2 taskdelay ms􏵿􏵼10􏵽
 
