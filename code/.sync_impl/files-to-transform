@@ -91,7 +91,7 @@ function UniLang-Transform(){
   
   #Step into a Unilang directory.  Compile and transfer code into the real codebase.
   #                              PATH                            FUNCTION
-  #Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
+  Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
   #Step_In_Call_Function_Step_Out "Other/Utilities"               Transfer_Utilities;
   #Step_In_Call_Function_Step_Out "Systems/Time"                  Transfer_Time;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/generic"    Transfer_Electrical_Generic;
@@ -99,9 +99,9 @@ function UniLang-Transform(){
   #Step_In_Call_Function_Step_Out "Systems/Electrical/manager"    Transfer_Electrical_Manager;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/components" Transfer_Electrical_Components;
   #Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
-  Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
+  #Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
   #Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
-  Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
+  #Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
   #Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;
   #Step_In_Call_Function_Step_Out "Other/DynamicDebug"            Transfer_Dynamic_Debug;
   
