@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
 
 #nonmutatable globals
-ACTUAL_REPO="/home/malko/Desktop/work-related/fresh"
-CODE_ROOT="SimHost/UH72A VME/Src"
-TEST_ROOT="SimHost/Tests/Unit_Tests"
-PATH_TO_CODE_ROOT="$ACTUAL_REPO""/""$CODE_ROOT""/"
-PATH_TO_TEST_ROOT="$ACTUAL_REPO""/""$TEST_ROOT""/"
-FULL_PATH_TO_CODE_ROOT='/home/malko/Desktop/work-related/fresh/SimHost/UH72A VME/Src'
+
+#PATHS
+FULL_PATH_TO_ROOT_OF_ACTUAL_REPO='/home/malko/Desktop/work-related/fresh'
 FULL_PATH_TO_UNICODE_ROOT='/home/malko/Desktop/UniLang-rewrite/code'
+LOCAL_SOURCE_ROOT='SimHost/UH72A VME/Src'
+LOCAL_TEST_ROOT='SimHost/Tests/Unit_Tests'
+
+#derived
+FULL_PATH_TO_CODE_ROOT="$FULL_PATH_TO_ROOT_OF_ACTUAL_REPO""/""$LOCAL_SOURCE_ROOT""/"
+FULL_PATH_TO_TEST_ROOT="$FULL_PATH_TO_ROOT_OF_ACTUAL_REPO""/""$LOCAL_TEST_ROOT""/"
+
+#OTHER
+TRANSCOMPILER_TOOL='unilang-transcompiler';
+UNILANG_FILE_EXTENSION='Unilang';
