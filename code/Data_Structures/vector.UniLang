@@ -37,21 +37,52 @@ This is a typical practice of void pointers.􏷯
 The added item will be the last item.􏶡
 􏶜􏶝􏷆void*􏷅􏷄new element􏷃􏷀the new capacity to resize the internal array to.􏶿
 􏶴
+    
+    􏶲adjust the allocation space if needed,􏶱
+    􏶲and if there is enough room, add the new element􏶱
+    if (􏵲ensure there is enough space􏵳)){
+        
+        􏶲adds the new element􏶱
+        􏵴elements􏵵[􏵴size􏵵] = malloc(􏵴type size􏵵);
+        memcpy(􏵴elements􏵵[􏵴size􏵵],􏵶new element􏵷,􏵴type size􏵵);
+        
+        􏶲increase our size now that the insertion is complete.􏶱
+        ++􏵴size􏵵;
+    }
+􏶳
 
+􏷘-􏷗􏷒ensure there is enough space􏷑
+􏷐ensure there is enough space, by possibly resizing the internal array.􏷏
+􏶠if resizing the array is needed, but it cannot be preformed, FALSE is returned.􏶡
+􏶚􏶛􏶾BOOL􏶽􏶼available space􏶻􏶺whether there is enough space to add an item􏶹
+􏶴
+    􏶲whether there is enough space to add an item􏶱
+    BOOL bAvailableSpace = TRUE;
+    
     􏶲increase the size of the internal array if we are already full􏶱
     if (􏵴size􏵵 == 􏵴capacity􏵵){
         
-        􏶲allocate space for one more item􏶱
-        􏵲resize􏵳􏵴capacity􏵵 + 1);
+        􏶲double capacity when allocating more space􏶱
+        bAvailableSpace = 􏵲resize􏵳􏵲determine resize amount􏵳));
     }
     
-    􏶲there should be enough room to add the new element now􏶱
-    􏵴elements􏵵[􏵴size􏵵] = malloc(􏵴type size􏵵);
-    memcpy(􏵴elements􏵵[􏵴size􏵵],􏵶new element􏵷,􏵴type size􏵵);
-    
-    􏶲increase our size now that the insertion is complete.􏶱
-    ++􏵴size􏵵;
+    return bAvailableSpace;
 􏶳
+
+􏷘-􏷗􏷒determine resize amount􏷑
+􏷐determines the rate at which to resize the vector􏷏
+􏶠handles any changes where capacities 0 and up􏶡
+􏶚􏶛􏶾size_t􏶽􏶼new capacity􏶻􏶺the new cpacity amount for resizing􏶹
+􏶴
+    􏶲handle edge case of 0 capacity􏶱
+    if (􏵴capacity􏵵 == 0){
+        return 1;
+    }
+    
+    􏶲double capacity when allocating more space􏶱
+    return 􏵴capacity􏵵 * 2;
+􏶳
+
 􏷘+􏷗􏷒get􏷑
 􏷐Get an element at a particular index􏷏
 􏶠If an invalid index is given, NULL is returned􏶡
@@ -72,7 +103,12 @@ return NULL;
 􏷐Resize the internal array.􏷏
 􏶠This is done when new space is needed for a newly inserted element.􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄new capacity􏷃􏷀the new capacity to resize the internal array to.􏶿
+􏶚􏶛􏶾BOOL􏶽􏶼successful reallocation􏶻􏶺whether memory was successfully reallocated􏶹
 􏶴
+
+    􏶲whether memory was successfully reallocated􏶱
+    BOOL bSuccessfulRealloc = TRUE;
+    
     􏶲Change the size of the internal array (most likely increasing it).􏶱
     void** NewElements = realloc(􏵴elements􏵵, sizeof(void *) * 􏵶new capacity􏵷);
     
@@ -80,7 +116,12 @@ return NULL;
     if (NewElements){
         􏵴elements􏵵 = NewElements;
         􏵴capacity􏵵 = 􏵶new capacity􏵷;
+        bSuccessfulRealloc = TRUE;
+    }else{
+        bSuccessfulRealloc = FALSE;
     }
+    
+    return bSuccessfulRealloc;
 􏶳
 
 􏷘-􏷗􏷒valid index􏷑
@@ -88,7 +129,7 @@ return NULL;
 􏶠True is returned if the index is an addressable element in the vector.
 False is returned if it is an out of range index􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index to test for validity of􏶿
-􏶚c􏶛􏶾BOOL􏶽􏶼is valid index􏶻􏶺whether the index is valid for the current state of the 􏶐􏶹
+􏶚􏶛􏶾BOOL􏶽􏶼is valid index􏶻􏶺whether the index is valid for the current state of the 􏶐􏶹
 􏶴
     􏶲Ensure the index is in range􏶱
     return 􏵶index􏵷 >= 0 && 􏵶index􏵷 < 􏵴size􏵵;

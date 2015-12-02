@@ -8,7 +8,7 @@
 􏷤strLib􏷣􏷢USES: memcpy()􏷡
 􏷤stdioLib􏷣􏷢USES: perror()􏷡
 􏷤SocketManager􏷣􏷢USES: SocketSend(), SocketReceive(), DATA_BUFFER_SIZE􏷡
-􏷤SocketList􏷣􏷢USES: SOCKET_GEN_J2_SEND, SOCKET_GEN_J2_RECEIVE􏷡
+􏷤SocketList􏷣􏷢USES: SOCKET_GEN_J2_DATA_SEND, SOCKET_GEN_J2_DATA_RECEIVE􏷡
 􏷤TimeUtilities􏷣􏷢USES: DelayTaskNumberOfMilliseconds()􏷡
 􏷤OwnShip􏷣􏷢USES: WriteJ2Data()􏷡
 􏷤J2CommunicationConfig􏷣􏷢USES: J2_TASKDELAY_MS􏷡
@@ -18,12 +18,7 @@
 􏶠This is an infinitely running task.􏶡
 􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
 􏶴
-    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
-    int nBytesReceived = 0, nByteIndex = 0, nAlignSize = 0;
-    int nReturnStatus = 0;
-    BYTE *pucByteAlign = NULL;
     J2InConnectionDataT tJ2Data;
-
     memset(&tJ2Data, 0, sizeof(tJ2Data));
 
     while(1)
@@ -32,31 +27,65 @@
         􏶲Read from Ownship in case we are only changing part of J2InConnectionDataT􏶱
         ReadJ2Data(&tJ2Data);
         
-        􏶲Read UDP data􏶱
-        nBytesReceived = SocketReceive(SOCKET_GEN_J2_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
-
-        􏶲report errors when receiving UDP data has failed􏶱
-        if(nBytesReceived == ERROR){
-            
-            􏶲we want to return error for Watchdog task􏶱
-            perror("ProcessSocketMessage error");
-            nReturnStatus = 1;
-            􏶲TODO: send error to Watchdog here􏶱
-            
-        }
-        else{
-            􏶲TODO: send timestamp to watchdog task􏶱
-            􏶲timestamp,  nBytesReceived, ... ?􏶱
-        }
-
-        􏶲process message and parse data received into the input communication data here􏶱
-        􏶲...􏶱
+        􏵲receive data message􏵳&tJ2Data);
+        􏵲receive control message􏵳&tJ2Data);
 
         􏶲Write data back into Ownship􏶱
         WriteJ2Data(&tJ2Data);
     }
 
-    return nReturnStatus;
+    return 0;
+􏶳
+
+􏷘-􏷗􏷒receive data message􏷑
+􏷐receives the J2 data message􏷏
+􏶠gets the data message from the J2 flight model and writes into the J2 Data􏶡
+􏶜c􏶝􏷆J2InConnectionDataT*􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶴
+    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
+    int nBytesReceived = 0, nByteIndex = 0, nAlignSize = 0;
+    int nReturnStatus = 0;
+    BYTE *pucByteAlign = NULL;
+    
+    􏶲Read UDP data􏶱
+    nBytesReceived = SocketReceive(SOCKET_GEN_J2_DATA_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
+    
+    􏶲report errors when receiving UDP data has failed􏶱
+    if(nBytesReceived == ERROR){
+        
+        􏵲report receive failure to watchdog􏵳);
+        
+    }
+    else{
+        􏵲report receive success to watchdog􏵳);
+    }
+    
+    􏶲process message and parse data received into the input communication data here...􏶱
+􏶳
+􏷘-􏷗􏷒receive control message􏷑
+􏷐receives the J2 control message􏷏
+􏶠gets the control message from the J2 flight model and writes into the J2 Data􏶡
+􏶜c􏶝􏷆J2InConnectionDataT*􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶴
+    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
+    int nBytesReceived = 0, nByteIndex = 0, nAlignSize = 0;
+    int nReturnStatus = 0;
+    BYTE *pucByteAlign = NULL;
+    
+    􏶲Read UDP data􏶱
+    nBytesReceived = SocketReceive(SOCKET_GEN_J2_CONTROL_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
+    
+    􏶲report errors when receiving UDP data has failed􏶱
+    if(nBytesReceived == ERROR){
+        
+        􏵲report receive failure to watchdog􏵳);
+        
+    }
+    else{
+        􏵲report receive success to watchdog􏵳);
+    }
+    
+    􏶲process message and parse data received into the input communication data here...􏶱
 􏶳
 
 􏷘+􏷗􏷒J2 send􏷑
@@ -64,39 +93,69 @@
 􏶠This is an infinitely running task.􏶡
 􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
 􏶴
-    int nByteCount = 0;
-    int nReturnStatus = 0;
-    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
-
-    DelayTaskNumberOfMilliseconds(1000);
-    memset(pucDataBuffer, 0, DATA_BUFFER_SIZE);
-
     while(1)
     {
-        // fill data buffer
+        􏶲send messages to J2 at particular transmission rates􏶱
+        􏵲periodically send data message􏵳);
+        􏵲periodically send control message􏵳);
+        
 
-        nByteCount = 􏵲fill buffer􏵳pucDataBuffer, sizeof(pucDataBuffer));
-
-        // if either of these returns is non-zero, flag the error
-        if(nByteCount == 0)
-        {
-            perror("J2 tx buffer failure");
-            // TODO: report error to Watchdog
-        }
-        else if(SocketSend(SOCKET_GEN_J2_SEND, (char *)pucDataBuffer, nByteCount) == ERROR)
-        {
-            perror("J2 transmit failure");
-            // TODO: report error to Watchdog
-        }
-
-        // Delay
+        􏶲delay the task􏶱
         DelayTaskNumberOfMilliseconds(J2_TASKDELAY_MS);
     }
 
-    return nReturnStatus;
+    return 0;
 􏶳
 
-􏷘-􏷗􏷒fill buffer􏷑
+􏷘-􏷗􏷒periodically send data message􏷑
+􏷐sends the data message to J2 flight model at the appropiate transmission rate􏷏
+􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶴
+    􏶲initializes data buffer information􏶱
+    int nByteCount = 0;
+    int nReturnStatus = 0;
+    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
+    memset(pucDataBuffer, 0, DATA_BUFFER_SIZE);
+    
+    􏶲fill the data buffer􏶱
+    nByteCount = 􏵲fill data buffer􏵳pucDataBuffer, sizeof(pucDataBuffer));
+
+    􏶲handle any data buffer errors􏶱
+    if(nByteCount == 0){
+        􏵲report buffer failure to watchdog􏵳);
+    }
+    
+    􏶲if there are no errors, send the message to J2􏶱
+    else if(SocketSend(SOCKET_GEN_J2_DATA_SEND, (char *)pucDataBuffer, nByteCount) == ERROR){
+        􏵲report send failure to watchdog􏵳);
+    }
+
+􏶳
+􏷘-􏷗􏷒periodically send control message􏷑
+􏷐sends the data message to J2 flight model at the appropiate transmission rate􏷏
+􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶴
+    􏶲initializes data buffer information􏶱
+    int nByteCount = 0;
+    int nReturnStatus = 0;
+    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
+    memset(pucDataBuffer, 0, DATA_BUFFER_SIZE);
+    
+    􏶲fill the data buffer􏶱
+    nByteCount = 􏵲fill control buffer􏵳pucDataBuffer, sizeof(pucDataBuffer));
+
+    􏶲handle any data buffer errors􏶱
+    if(nByteCount == 0){
+        􏵲report buffer failure to watchdog􏵳);
+    }
+    
+    􏶲if there are no errors, send the message to J2􏶱
+    else if(SocketSend(SOCKET_GEN_J2_CONTROL_SEND, (char *)pucDataBuffer, nByteCount) == ERROR){
+        􏵲report send failure to watchdog􏵳);
+    }
+􏶳
+
+􏷘-􏷗􏷒fill data buffer􏷑
 􏷐Used to fill buffer for sending outgoing J2 messages.􏷏
 􏶠Called before sending out a J2 Message.􏶡
 􏶜􏶝􏷆BYTE *const􏷅􏷄data buffer􏷃􏷀The data buffer to fill with the outgoing J2 message.􏶿
@@ -110,4 +169,51 @@
     nByteCount += sizeof(int);
 
     return nByteCount;
+􏶳
+􏷘-􏷗􏷒fill control buffer􏷑
+􏷐Used to fill buffer for sending outgoing J2 messages.􏷏
+􏶠Called before sending out a J2 Message.􏶡
+􏶜􏶝􏷆BYTE *const􏷅􏷄data buffer􏷃􏷀The data buffer to fill with the outgoing J2 message.􏶿
+􏶜c􏶝􏷆int􏷅􏷄data buffer size􏷃􏷀The size of the data buffer􏶿
+􏶾int􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
+􏶴
+    int nByteCount = 0;
+
+    􏶲TODO: fill buffer for send here􏶱
+    *(int *)􏵶data buffer􏵷 = 0;
+    nByteCount += sizeof(int);
+
+    return nByteCount;
+􏶳
+
+􏷘-􏷗􏷒report buffer failure to watchdog􏷑
+􏷐handles buffer failures encountered􏷏
+􏶠notifies watchdog and reports error􏶡
+􏶴
+    perror("J2 tx buffer failure");
+    􏶲TODO: report to watchdog􏶱
+􏶳
+
+􏷘-􏷗􏷒report send failure to watchdog􏷑
+􏷐handles send failures encountered􏷏
+􏶠notifies watchdog and reports error􏶡
+􏶴
+    perror("J2 transmit failure");
+    􏶲TODO: report to watchdog􏶱
+􏶳
+
+􏷘-􏷗􏷒report receive success to watchdog􏷑
+􏷐handles recieve success encountered􏷏
+􏶠notifies watchdog with the relevant health information􏶡
+􏶴
+    􏶲TODO: send timestamp to watchdog task􏶱
+        􏶲timestamp,  nBytesReceived, ... ?􏶱
+􏶳
+
+􏷘-􏷗􏷒report receive failure to watchdog􏷑
+􏷐handles receive failures encountered􏷏
+􏶠notifies watchdog and reports error􏶡
+􏶴
+perror("ProcessSocketMessage error");
+􏶲TODO: report to watchdog􏶱
 􏶳
