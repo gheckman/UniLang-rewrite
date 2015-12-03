@@ -135,6 +135,42 @@ False is returned if it is an out of range index􏶡
     return 􏵶index􏵷 >= 0 && 􏵶index􏵷 < 􏵴size􏵵;
 􏶳
 
+􏷘+􏷗􏷒remove􏷑
+􏷐removes an element at a particular index􏷏
+􏶠If an invalid index is given, NULL is returned􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the item to remove􏶿
+􏶴
+    􏶲only attempt to remove the item if it is at a valid index􏶱
+    if (􏵲valid index􏵳􏵶index􏵷)){
+    
+        􏶲free the element at the specified index􏶱
+        free(􏵴elements􏵵[􏵶index􏵷]);
+        
+        􏶲starting at the deleted index, iterate over each element and point them to their greater indexed neighbor.􏶱
+        􏶲this will continue until we reach the last element which we will ignore (no need to set it to NULL)􏶱
+        􏶲this effectively shifts all the elements down an index from the deletion point.􏶱
+        􏶲afterward, we decrement the size, making the last element unaccessable.􏶱
+        􏵲shift elements from deleted index􏵳􏵶index􏵷);
+
+        􏶲decrement the size􏶱
+        --􏵴size􏵵;
+        
+    }
+􏶳
+
+􏷘-􏷗􏷒shift elements from deleted index􏷑
+􏷐shifts all elements down from an index that is assumed to be deleted.􏷏
+􏶠this is done through pointer swapping of neighboring elements􏶡
+􏶜c􏶝􏷆size_t􏷅􏷄deleted index􏷃􏷀the index that represents the deleted element.  Everything to the right, needs shifted one element to the left.􏶿
+􏶴
+    􏶲shift each element one by one starting at the deletion point􏶱
+    􏶲forget about the last element􏶱
+    size_t unIndex=􏵶deleted index􏵷;
+    for (;unIndex < 􏵴size􏵵-1; ++unIndex){
+        􏵴elements􏵵[unIndex] = 􏵴elements􏵵[unIndex+1];
+    }
+􏶳
+
 􏷘+􏷗􏷒~􏶐􏷑
 􏷐Destruct the 􏶐􏷏
 􏶠This function must be called to free the internal allocated memory before 􏶐 goes out of scope.􏶡
