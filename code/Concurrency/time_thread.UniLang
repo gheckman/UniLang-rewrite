@@ -25,7 +25,6 @@ while (1)
     
     􏶲update the state of the global singleton􏶱
     􏶲this reads and writes with Ownship􏶱
-    UpdateTimeSystem();
 
     􏶲Delay the task a certain number of milliseconds􏶱
     DelayTaskNumberOfMilliseconds(TASK_DELAY_AMOUNT_MS);
