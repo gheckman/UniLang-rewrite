@@ -10,7 +10,7 @@ Functions for converting between ticks and milliseconds based on the clock rate.
 􏷤sysLib􏷣􏷢USES: sysClkRateGet()􏷡
 􏷤stdioLib􏷣􏷢USES: BOOL􏷡
 
-􏷘+􏷗􏷒tick period in milliseconds􏷑
+􏷘+􏷗􏷒uncached tick period in milliseconds􏷑
 􏷐Get the tick period of the system clock in terms of milliseconds.􏷏
 􏶠queries the clock rate using the VxWorks API􏶡
 􏶾float􏶽􏶼number of milliseconds per tick􏶻􏶺the tick period of the system clock in terms of milliseconds􏶹
@@ -21,6 +21,25 @@ and convert the value to the duration of each tick in milliseconds.
 example: A clock rate of 1,000 ticks per second, will create a
 tick period of 1 millisecond.􏶱
     return 1000.0f * (1.0f / (float)sysClkRateGet());
+􏶳
+
+􏷘+􏷗􏷒tick period in milliseconds􏷑
+􏷐Get the tick period of the system clock in terms of milliseconds.􏷏
+􏶠queries the clock rate using the VxWorks API􏶡
+􏶾float􏶽􏶼number of milliseconds per tick􏶻􏶺the tick period of the system clock in terms of milliseconds􏶹
+􏶴
+
+    􏶲it is preferred to only run this calculation once, and cache the result.􏶱
+    􏶲this function expected to be used instead of the uncached dynamic one.􏶱
+    static BOOL s_bAlreadyCalled = FALSE;
+    static int s_nResult_ms = 0.0f;
+    
+    if (!s_bAlreadyCalled){
+        s_nResult_ms = 􏵲uncached tick period in milliseconds􏵳);
+        s_bAlreadyCalled = TRUE;
+    }
+    
+    return s_nResult_ms;
 􏶳
 
 􏷘+􏷗􏷒milliseconds to ticks􏷑
