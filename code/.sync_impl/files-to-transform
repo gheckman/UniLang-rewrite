@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 function Silently_Go_Back_To_The_Previous_Pwd(){
-  cd - > /dev/null 2>&1;
+  popd > /dev/null 2>&1;
 }
 function Step_In_Call_Function_Step_Out(){
-  cd $1;                                #step in
+  pushd $1 > /dev/null 2>&1;;         #step in
   $2;                                   #call function
   Silently_Go_Back_To_The_Previous_Pwd; #step out
 }
@@ -85,10 +85,8 @@ function Transfer_Dynamic_Debug(){ :
   Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
   Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
 }
+function Transform-And_Transfer-SimHost-Files(){ :
 
-
-function UniLang-Transform(){ :
-  
   #Step into a Unilang directory.  Compile and transfer code into the real codebase.
   #                              PATH                            FUNCTION
   #Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
@@ -104,5 +102,11 @@ function UniLang-Transform(){ :
   #Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
   #Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;
   #Step_In_Call_Function_Step_Out "Other/DynamicDebug"            Transfer_Dynamic_Debug;
+}
+
+
+function UniLang-Transform(){ :
+  
+  Step_In_Call_Function_Step_Out "SimHost" Transform-And_Transfer-SimHost-Files;
   
 }
