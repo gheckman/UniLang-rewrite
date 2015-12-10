@@ -59,10 +59,10 @@ large enough for our use cases.􏶱
 􏶴
     􏶲handles milliseconds overflow
     wraps value for milliseconds and increments day during millisecond overflow􏶱
-    while(􏵴milliseconds􏵵 >= NUMBER_OF_MILLISECONDS_IN_A_DAY)
+    if(􏵴milliseconds􏵵 >= NUMBER_OF_MILLISECONDS_IN_A_DAY)
     {
-        􏵴milliseconds􏵵 -= NUMBER_OF_MILLISECONDS_IN_A_DAY;
-        ++􏵴day􏵵;
+        􏵴day􏵵 += (􏵴milliseconds􏵵 / NUMBER_OF_MILLISECONDS_IN_A_DAY);
+        􏵴milliseconds􏵵 %= NUMBER_OF_MILLISECONDS_IN_A_DAY;
     }
 􏶳
 
@@ -71,12 +71,14 @@ large enough for our use cases.􏶱
 This handles leap years.􏷏
 􏶠This will potentially change day and month.􏶡
 􏶴
+    unsigned int uNumberOfDaysInTheMonth = NumberOfDaysInTheMonth(􏵴month􏵵, 􏵴year􏵵);
+    
     􏶲handles day overflow
     resets value for day and increases the month by 1 during day overflow􏶱
-    if(􏵴day􏵵 > NumberOfDaysInTheMonth(􏵴month􏵵,􏵴year􏵵))
+    if(􏵴day􏵵 > uNumberOfDaysInTheMonth)
     {
-        􏵴day􏵵 = 1;
-        ++􏵴month􏵵;
+        􏵴month􏵵 += (􏵴day􏵵 / uNumberOfDaysInTheMonth);
+        􏵴day􏵵 %= uNumberOfDaysInTheMonth;
     }
 􏶳
 
@@ -89,8 +91,8 @@ This handles leap years.􏷏
     resets value for month and increases the year by 1 during month overflow􏶱
     if(􏵴month􏵵 > NUMBER_OF_MONTHS_IN_A_YEAR)
     {
-        􏵴month􏵵 = 1;
-        ++􏵴year􏵵;
+        􏵴year􏵵 += (􏵴month􏵵 / NUMBER_OF_MONTHS_IN_A_YEAR);
+        􏵴month􏵵 %= NUMBER_OF_MONTHS_IN_A_YEAR;
     }
 􏶳
 

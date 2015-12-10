@@ -2,6 +2,14 @@
 
 #nonmutatable globals
 
+#OTHER
+TRANSCOMPILER_TOOL='unilang-transcompiler';
+UNILANG_FILE_EXTENSION='UniLang';
+
+###################
+# SIMHOST RELATED #
+###################
+
 #PATHS
 FULL_PATH_TO_ROOT_OF_ACTUAL_REPO='/home/malko/Desktop/work-related/fresh'
 FULL_PATH_TO_UNICODE_ROOT='/home/malko/Desktop/UniLang-rewrite/code'
@@ -12,6 +20,8 @@ LOCAL_TEST_ROOT='SimHost/Tests/Unit_Tests'
 FULL_PATH_TO_CODE_ROOT="$FULL_PATH_TO_ROOT_OF_ACTUAL_REPO""/""$LOCAL_SOURCE_ROOT""/"
 FULL_PATH_TO_TEST_ROOT="$FULL_PATH_TO_ROOT_OF_ACTUAL_REPO""/""$LOCAL_TEST_ROOT""/"
 
-#OTHER
-TRANSCOMPILER_TOOL='unilang-transcompiler';
-UNILANG_FILE_EXTENSION='UniLang';
+###########################
+# VXWORKS WRAPPER RELATED #
+###########################
+
+FULL_PATH_TO_VXWORKS_WRAPPERS='/home/malko/Desktop/work-related/external-unit-test-deps/For_Linux/VxWorks_Wrappers'

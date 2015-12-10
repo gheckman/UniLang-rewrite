@@ -112,7 +112,7 @@ return NULL;
     􏶲Change the size of the internal array (most likely increasing it).􏶱
     void** NewElements = realloc(􏵴elements􏵵, sizeof(void *) * 􏵶new capacity􏵷);
     
-    􏶲Ensure the allocation was succesful before applying it.􏶱
+    􏶲Ensure the allocation was successful before applying it.􏶱
     if (NewElements){
         􏵴elements􏵵 = NewElements;
         􏵴capacity􏵵 = 􏵶new capacity􏵷;
@@ -149,7 +149,7 @@ False is returned if it is an out of range index􏶡
         􏶲starting at the deleted index, iterate over each element and point them to their greater indexed neighbor.􏶱
         􏶲this will continue until we reach the last element which we will ignore (no need to set it to NULL)􏶱
         􏶲this effectively shifts all the elements down an index from the deletion point.􏶱
-        􏶲afterward, we decrement the size, making the last element unaccessable.􏶱
+        􏶲afterward, we decrement the size, making the last element unaccessible.􏶱
         􏵲shift elements from deleted index􏵳􏵶index􏵷);
 
         􏶲decrement the size􏶱
@@ -197,7 +197,7 @@ There is no hard limit on the size.  The internal array will grow to accommodate
 
 􏶨the amount of space allocated for the internal array􏶧
 􏶦different implementations do different initial capacity, and have the capacity grow at different rates.
-We will increase the capacity by one every time we need to add a new element to a full array.􏶥
+We will increase the capacity by *2 every time we need to add a new element to a full array.􏶥
 􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬capacity􏶫􏶪1􏶩
 
 􏶨the internal array for all of our generic elements􏶧

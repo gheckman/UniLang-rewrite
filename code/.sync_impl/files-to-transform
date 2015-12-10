@@ -4,7 +4,7 @@ function Silently_Go_Back_To_The_Previous_Pwd(){
   popd > /dev/null 2>&1;
 }
 function Step_In_Call_Function_Step_Out(){
-  pushd $1 > /dev/null 2>&1;;         #step in
+  pushd $1 > /dev/null 2>&1;          #step in
   $2;                                   #call function
   Silently_Go_Back_To_The_Previous_Pwd; #step out
 }
@@ -89,8 +89,8 @@ function Transform-And_Transfer-SimHost-Files(){ :
 
   #Step into a Unilang directory.  Compile and transfer code into the real codebase.
   #                              PATH                            FUNCTION
-  #Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
-  Step_In_Call_Function_Step_Out "Other/Utilities"               Transfer_Utilities;
+  Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
+  #Step_In_Call_Function_Step_Out "Other/Utilities"               Transfer_Utilities;
   #Step_In_Call_Function_Step_Out "Systems/Time"                  Transfer_Time;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/generic"    Transfer_Electrical_Generic;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/specific"   Transfer_Electrical_Specific;
