@@ -19,10 +19,10 @@ function Transfer_Utilities(){ :
   Transfer-Global "date_utilities" "Shared/ffs"
 }
 function Transfer_Time(){ :
-  Transfer-Global "month" "Components/Time"
+  #Transfer-Global "month" "Components/Time"
   Transfer-Object-Bad-Bools "date_time" "Components/Time" "Components/Time"
-  Transfer-Object-Bad-Bools "millisecond_timer" "Components/Time" "Components/Time"
-  Transfer-Object-Bad-Bools "simulation_clock" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad-Bools "millisecond_timer" "Components/Time" "Components/Time"
+  #Transfer-Object-Bad-Bools "simulation_clock" "Components/Time" "Components/Time"
 }
 function Transfer_Electrical_Generic(){ :
   Transfer-Object-Bad-Bools "junction" "Components/Electrical/Generic" "Components/Electrical/Generic"
@@ -89,9 +89,9 @@ function Transform-And_Transfer-SimHost-Files(){ :
 
   #Step into a Unilang directory.  Compile and transfer code into the real codebase.
   #                              PATH                            FUNCTION
-  Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
+  #Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
   #Step_In_Call_Function_Step_Out "Other/Utilities"               Transfer_Utilities;
-  #Step_In_Call_Function_Step_Out "Systems/Time"                  Transfer_Time;
+  Step_In_Call_Function_Step_Out "Systems/Time"                  Transfer_Time;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/generic"    Transfer_Electrical_Generic;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/specific"   Transfer_Electrical_Specific;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/manager"    Transfer_Electrical_Manager;
