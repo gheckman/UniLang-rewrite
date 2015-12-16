@@ -45,7 +45,7 @@ Reseting the time to a different value will require a re-initalize.
 􏵴milliseconds􏵵 += 􏵶number of milliseconds􏵷;
 
 􏶲the order of these functions is important, as one roll over, might cause another roll over.􏶱
-􏵲adjust days duing millisecond overflow􏵳);
+􏵲adjust days during millisecond overflow􏵳);
 􏵲adjust months during day overflow􏵳);
 􏵲adjust years to during month overflow􏵳);
 
@@ -53,7 +53,7 @@ Reseting the time to a different value will require a re-initalize.
 large enough for our use cases.􏶱
 􏶳
 
-􏷘-􏷗􏷒adjust days duing millisecond overflow􏷑
+􏷘-􏷗􏷒adjust days during millisecond overflow􏷑
 􏷐If the millisecond counter is greater than the amount of milliseconds in a day, handle the roll over.􏷏
 􏶠This will potentially change milliseconds and day.􏶡
 􏶴
