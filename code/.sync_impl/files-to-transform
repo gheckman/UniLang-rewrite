@@ -58,6 +58,8 @@ function Transfer_J2(){ :
   Transfer-Global "j2_communication" "Connections/UDP/";
   Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/";
   Transfer-Global "ground_contact_location" "Connections/UDP/J2Communication/";
+  Transfer-Global "j2_network_packing" "Connections/UDP/J2Communication/";
+  Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
 }
 function Transfer_Components(){ :
   Transfer-Object-Bad-Bools "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
@@ -66,7 +68,6 @@ function Transfer_Components(){ :
 function Transfer_Connections_Config(){ :
   #Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
   #Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
-  Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
   #Transfer-Global "Sep_communication_config" "Connections/UDP/SEP";
   #Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
   #Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
@@ -98,9 +99,9 @@ function Transform-And_Transfer-SimHost-Files(){ :
   #Step_In_Call_Function_Step_Out "Systems/Electrical/manager"    Transfer_Electrical_Manager;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/components" Transfer_Electrical_Components;
   #Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
-  #Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
+  Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
   #Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
-  #Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
+  Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
   #Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;
   #Step_In_Call_Function_Step_Out "Other/DynamicDebug"            Transfer_Dynamic_Debug;
 }

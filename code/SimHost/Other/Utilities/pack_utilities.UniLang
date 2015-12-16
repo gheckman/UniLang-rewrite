@@ -1,6 +1,7 @@
 􏶞global􏶟
-􏷲Utilities for packing data to network buffers􏷱
-􏷰Functions for packing ints, floats, and doubles to BYTE buffers􏷯
+􏷲Utilities for packing / unpacking on network data buffers􏷱
+􏷰Deals with endianness and address invariance. not padding/offsets
+Relies on architecture for endianness􏷯
 􏷮Pack Utilities􏷭 􏷮Network􏷭 􏷮Utilities􏷭
 􏷬Dave Corapi􏷫
 􏷬Trevor Hickey􏷫
@@ -10,279 +11,162 @@
 􏷤FfsCommon.h􏷣􏷢USES: DwordReverseByteOrder􏷡
 􏷤strLib.h􏷣􏷢USES: memcpy()􏷡
 
-
-􏷘+􏷗􏷒pack int in big endian􏷑
-􏷐Packs a int into a big endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆int􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏶴
-    memcpy(􏵶data buffer􏵷,&􏵶pack data􏵷, sizeof(int));
-    return sizeof(int);
-􏶳
-
-􏷘+􏷗􏷒unpack int in big endian􏷑
-􏷐Unpacks a int stored as big endian from a data buffer􏷏
-􏶠􏶡
-􏶜c􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆int*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
-􏶴
-    memcpy(􏵶unpack data􏵷, 􏵶data buffer􏵷, sizeof(int));
-    return sizeof(int);
-􏶳
-
-􏷘+􏷗􏷒pack int in little endian􏷑
-􏷐Packs a int into a little endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆int􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏶴
-    􏵲pack int in big endian􏵳􏵶data buffer􏵷,􏵶pack data􏵷);
-    DwordReverseByteOrder(􏵶data buffer􏵷, sizeof(int));
-    return sizeof(int);
-􏶳
-
-􏷘+􏷗􏷒unpack int in little endian􏷑
-􏷐Unpacks a int stored as little endian from a data buffer􏷏
-􏶠􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆int*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
-􏶴
-    DwordReverseByteOrder(􏵶data buffer􏵷, sizeof(int));
-    return 􏵲unpack int in big endian􏵳􏵶data buffer􏵷,􏵶unpack data􏵷);
-􏶳
-
-
-
-
-
-􏷘+􏷗􏷒pack unsigned int in big endian􏷑
-􏷐Packs a unsigned int into a big endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆unsigned int􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏶴
-    return 􏵲pack type in big endian format􏵳􏵶data buffer􏵷,&􏵶pack data􏵷,sizeof(unsigned int));
-􏶳
-
-􏷘+􏷗􏷒unpack unsigned int in big endian􏷑
-􏷐Unpacks a unsigned int stored as big endian from a data buffer􏷏
-􏶠􏶡
-􏶜c􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆unsigned int*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
-􏶴
-    return 􏵲unpack type stored in big endian format􏵳􏵶data buffer􏵷,􏵶unpack data􏵷,sizeof(unsigned int));
-􏶳
-
-􏷘+􏷗􏷒pack unsigned int in little endian􏷑
-􏷐Packs a unsigned int into a little endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆unsigned int􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏶴
-    return 􏵲pack type in little endian format􏵳􏵶data buffer􏵷,&􏵶pack data􏵷,sizeof(unsigned int));
-􏶳
-
-􏷘+􏷗􏷒unpack unsigned int in little endian􏷑
-􏷐Unpacks a unsigned int stored as little endian from a data buffer􏷏
-􏶠􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆unsigned int*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
-􏶴
-    return 􏵲unpack type stored in little endian format􏵳􏵶data buffer􏵷,􏵶unpack data􏵷,sizeof(unsigned int));
-􏶳
-
-
-
-
-
-􏷘+􏷗􏷒pack type in big endian format􏷑
+􏷘+􏷗􏷒pack big endian 4 byte invariance􏷑
 􏷐Packs a type into a big endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆void*􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄pack data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
+􏶠DWORDs are revered if needed􏶡
+􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜c􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
 􏶴
-    memcpy(􏵶data buffer􏵷,􏵶pack data􏵷, 􏵶pack data size􏵷);
-    return 􏵶pack data size􏵷;
+    􏶲pack data into the byte array􏶱
+    memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
+    
+    􏶲increment our buffer iterator for the next pack􏶱
+    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
+    
 􏶳
 
-􏷘+􏷗􏷒unpack type stored in big endian format􏷑
+􏷘+􏷗􏷒unpack big endian 4 byte invariance􏷑
 􏷐Unpacks a type stored as big endian from a data buffer􏷏
-􏶠􏶡
-􏶜c􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆void*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄unpack data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
+􏶠unpacked􏶡
+􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
 􏶴
-    memcpy(􏵶unpack data􏵷, 􏵶data buffer􏵷,􏵶unpack data size􏵷);
-    return 􏵶unpack data size􏵷;
+    􏶲unpack data from byte array􏶱
+    memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    
+    􏶲increment our buffer iterator for the next unpack􏶱
+    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
 
-􏷘+􏷗􏷒pack type in little endian format􏷑
+􏷘+􏷗􏷒pack little endian 4 byte invariance􏷑
 􏷐Packs a type into a little endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆void*􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄pack data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
+􏶠􏶡
+􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜c􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
 􏶴
-    􏵲pack type in big endian format􏵳􏵶data buffer􏵷,􏵶pack data􏵷,􏵶pack data size􏵷);
-    DwordReverseByteOrder(􏵶data buffer􏵷,􏵶pack data size􏵷);
-    return 􏵶pack data size􏵷;
+    􏶲pack data into the byte array􏶱
+    memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
+    
+    􏶲reverse the packed data so that it is in little endian􏶱
+    DwordReverseByteOrder(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    
+    􏶲increment our buffer iterator for the next pack􏶱
+    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
 
-􏷘+􏷗􏷒unpack type stored in little endian format􏷑
+􏷘+􏷗􏷒unpack little endian 4 byte invariance􏷑
 􏷐Unpacks a type stored as little endian from a data buffer􏷏
 􏶠􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆void*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄unpack data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
+􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
 􏶴
-    􏵲unpack type stored in big endian format􏵳􏵶data buffer􏵷,􏵶unpack data􏵷,􏵶unpack data size􏵷);
-    DwordReverseByteOrder(􏵶unpack data􏵷,􏵶unpack data size􏵷);
-    return 􏵶unpack data size􏵷;
-􏶳
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-􏷘+􏷗􏷒pack float in big endian􏷑
-􏷐Packs a float into a big endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆float􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏶴
-    memcpy(􏵶data buffer􏵷,&􏵶pack data􏵷, sizeof(float));
-    return sizeof(float);
-􏶳
-
-􏷘+􏷗􏷒unpack float in big endian􏷑
-􏷐Unpacks a float stored as big endian from a data buffer􏷏
-􏶠􏶡
-􏶜c􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆float*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
-􏶴
-    memcpy(􏵶unpack data􏵷, 􏵶data buffer􏵷, sizeof(float));
-    return sizeof(float);
-􏶳
-
-􏷘+􏷗􏷒pack float in little endian􏷑
-􏷐Packs a float into a little endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆float􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏶴
-    􏵲pack float in big endian􏵳􏵶data buffer􏵷,􏵶pack data􏵷);
-    DwordReverseByteOrder(􏵶data buffer􏵷, sizeof(float));
+    􏶲unpack data from byte array􏶱
+    memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
-    return sizeof(float);
+    􏶲reverse the unpacked data so that it is back to big endian􏶱
+    DwordReverseByteOrder(􏵶data􏵷,􏵶data size􏵷);
+
+    􏶲increment our buffer iterator for the next unpack􏶱
+    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
 
-􏷘+􏷗􏷒unpack float in little endian􏷑
-􏷐Unpacks a float stored as little endian from a data buffer􏷏
+
+􏷘+􏷗􏷒pack big endian 2 byte invariance􏷑
+􏷐Packs a type into a big endian data buffer􏷏
 􏶠􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆float*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
+􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜c􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
 􏶴
-    DwordReverseByteOrder(􏵶data buffer􏵷, sizeof(float));
-    return 􏵲unpack float in big endian􏵳􏵶data buffer􏵷,􏵶unpack data􏵷);
-􏶳
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-􏷘+􏷗􏷒pack double in big endian􏷑
-􏷐Packs a double into a big endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆double􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏶴
-    memcpy(􏵶data buffer􏵷,&􏵶pack data􏵷, sizeof(double));
-    return sizeof(double);
-􏶳
-
-􏷘+􏷗􏷒unpack double in big endian􏷑
-􏷐Unpacks a double stored as big endian from a data buffer􏷏
-􏶠􏶡
-􏶜c􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆double*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
-􏶴
-    memcpy(􏵶unpack data􏵷, 􏵶data buffer􏵷, sizeof(double));
-    return sizeof(double);
-􏶳
-
-􏷘+􏷗􏷒pack double in little endian􏷑
-􏷐Packs a double into a little endian data buffer􏷏
-􏶠Uses a union type and iterates over the byte storage􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆double􏷅􏷄pack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏶴
-    􏵲pack double in big endian􏵳􏵶data buffer􏵷,􏵶pack data􏵷);
-    DwordReverseByteOrder(􏵶data buffer􏵷, sizeof(double));
+    􏶲pack data into the byte array􏶱
+    memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
-    return sizeof(double);
+    􏶲increment our buffer iterator for the next pack􏶱
+    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
+    
 􏶳
 
-􏷘+􏷗􏷒unpack double in little endian􏷑
-􏷐Unpacks a double stored as little endian from a data buffer􏷏
+􏷘+􏷗􏷒unpack big endian 2 byte invariance􏷑
+􏷐Unpacks a type stored as big endian from a data buffer􏷏
 􏶠􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆double*􏷅􏷄unpack data􏷃􏷀Data to be copied into buffer􏶿
-􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes unpacked􏶹
+􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
 􏶴
-    DwordReverseByteOrder(􏵶data buffer􏵷, sizeof(double));
-    return 􏵲unpack double in big endian􏵳􏵶data buffer􏵷,􏵶unpack data􏵷);
+    􏶲unpack data from byte array􏶱
+    memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    
+    􏶲increment our buffer iterator for the next unpack􏶱
+    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
+
+􏷘+􏷗􏷒pack little endian 2 byte invariance􏷑
+􏷐Packs a type into a little endian data buffer􏷏
+􏶠􏶡
+􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜c􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
+􏶴
+    􏶲pack data into the byte array􏶱
+    memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
+    
+    􏶲reverse the packed data so that it is in little endian􏶱
+    ReverseByteOrder(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    
+    􏶲increment our buffer iterator for the next pack􏶱
+    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
+􏶳
+
+􏷘+􏷗􏷒unpack little endian 2 byte invariance􏷑
+􏷐Unpacks a type stored as little endian from a data buffer􏷏
+􏶠􏶡
+􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
+􏶴
+    􏶲unpack data from byte array􏶱
+    memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    
+    􏶲reverse the unpacked data so that it is back to big endian􏶱
+    ReverseByteOrder(􏵶data􏵷,􏵶data size􏵷);
+
+    􏶲increment our buffer iterator for the next unpack􏶱
+    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
+􏶳
+
+
+
+
+
+
 
 
 

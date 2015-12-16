@@ -192,6 +192,7 @@
 􏶴
     perror("J2 tx buffer failure");
     􏶲TODO: report to watchdog􏶱
+    􏶲watchdog not implemented􏶱
 􏶳
 
 􏷘-􏷗􏷒report send failure to watchdog􏷑
@@ -200,6 +201,7 @@
 􏶴
     perror("J2 transmit failure");
     􏶲TODO: report to watchdog􏶱
+    􏶲watchdog not implemented􏶱
 􏶳
 
 􏷘-􏷗􏷒report receive success to watchdog􏷑
@@ -207,7 +209,8 @@
 􏶠notifies watchdog with the relevant health information􏶡
 􏶴
     􏶲TODO: send timestamp to watchdog task􏶱
-        􏶲timestamp,  nBytesReceived, ... ?􏶱
+    􏶲timestamp,  nBytesReceived, ... ?􏶱
+    􏶲watchdog not implemented􏶱
 􏶳
 
 􏷘-􏷗􏷒report receive failure to watchdog􏷑
@@ -215,5 +218,6 @@
 􏶠notifies watchdog and reports error􏶡
 􏶴
 perror("ProcessSocketMessage error");
-􏶲TODO: report to watchdog􏶱
+    􏶲TODO: report to watchdog􏶱
+    􏶲watchdog not implemented􏶱
 􏶳

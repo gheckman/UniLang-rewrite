@@ -1,0 +1,19 @@
+􏶞global􏶟
+􏷲packs and unpacks the relevant J2 messages􏷱
+􏷰Based off version 2.0 of the ICD􏷯
+􏷮J2_Connection􏷭􏷮Network􏷭
+􏷬Trevor Hickey􏷫
+􏷦SendToJ2Messages.h􏷥􏷢USES: SendHighSpeedMessageT􏷡
+􏷦stddef.h􏷥􏷢USES: size_t􏷡
+
+􏷘+􏷗􏷒pack j2 high speed send message􏷑
+􏷐Used to fill buffer for sending outgoing J2 high speed message.􏷏
+􏶠Called before sending out a J2 Message.􏶡
+􏶜􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to pack the message in􏶿
+􏶜c􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to pack􏶿
+􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
+􏶴
+    size_t nByteIterator = 0;
+
+    return nByteCount;
+􏶳
