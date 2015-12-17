@@ -12,7 +12,6 @@
 
 􏵺􏵻􏵸􏵹􏵾J2 taskdelay ms􏵿􏵼10􏵽
 
-
 􏵺The rate at which J2 will send high speed data messages􏵻􏵸􏵹􏵾J2 high speed transmission rate hz􏵿􏵼100􏵽
 􏵺The rate at which J2 will send low speed data messages􏵻􏵸every 6 frames􏵹􏵾J2 low speed transmission rate hz􏵿􏵼16.67􏵽
 􏵺The rate at which J2 will send engine data messages􏵻􏵸every 2 frames􏵹􏵾J2 engine transmission rate hz􏵿􏵼50􏵽
