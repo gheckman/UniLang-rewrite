@@ -199,7 +199,7 @@
 􏷐handles send failures encountered􏷏
 􏶠notifies watchdog and reports error􏶡
 􏶴
-    perror("J2 transmit failure");
+    perror("J2 tx failure");
     􏶲TODO: report to watchdog􏶱
     􏶲watchdog not implemented􏶱
 􏶳
