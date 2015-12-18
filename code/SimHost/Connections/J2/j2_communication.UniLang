@@ -149,20 +149,20 @@
         fLowTimer_ms += fDeltaTime_ms;
         
         􏶲if too much time has passed􏶱
-        if (fHighTimer_ms > SIMHOST_HIGH_SPEED_TRANSMISSION_RATE_MS){
+        if (fHighTimer_ms > SIMHOST_HIGH_SPEED_TRANSMISSION_DELAY_MS){
         
             􏶲keep extra time􏶱
-            fHighTimer_ms -= SIMHOST_HIGH_SPEED_TRANSMISSION_RATE_MS;
+            fHighTimer_ms -= SIMHOST_HIGH_SPEED_TRANSMISSION_DELAY_MS;
             
             􏶲send high speed message􏶱
             􏵲send high speed message􏵳&tHigh);
         }
         
         􏶲if too much time has passed􏶱
-        if (fLowTimer_ms > SIMHOST_LOW_SPEED_TRANSMISSION_RATE_MS){
+        if (fLowTimer_ms > SIMHOST_LOW_SPEED_TRANSMISSION_DELAY_MS){
         
             􏶲keep extra time􏶱
-            fLowTimer_ms -= SIMHOST_LOW_SPEED_TRANSMISSION_RATE_MS;
+            fLowTimer_ms -= SIMHOST_LOW_SPEED_TRANSMISSION_DELAY_MS;
             
             􏶲send low speed message􏶱
             􏵲send low speed message􏵳&tLow);
@@ -188,7 +188,7 @@
         
 
         􏶲delay the task􏶱
-        DelayTaskNumberOfMilliseconds(J2_TASKDELAY_MS);
+        DelayTaskNumberOfMilliseconds(J2_TASK_DELAY_MS);
     }
 
     return 0;
@@ -247,7 +247,7 @@
 􏶳
 
 􏷘-􏷗􏷒send high speed message􏷑
-􏷐sends the data message to J2 flight model at the appropriate transmission rate􏷏
+􏷐sends the data message to J2 flight model􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
 􏶜􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
@@ -267,7 +267,7 @@
 
 􏶳
 􏷘-􏷗􏷒send low speed message􏷑
-􏷐sends the data message to J2 flight model at the appropriate transmission rate􏷏
+􏷐sends the data message to J2 flight model􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
 􏶜􏶝􏷆SendLowSpeedMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
@@ -287,7 +287,7 @@
 􏶳
 
 􏷘-􏷗􏷒send reposition message􏷑
-􏷐sends the data message to J2 flight model at the appropriate transmission rate􏷏
+􏷐sends the data message to J2 flight model􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
 􏶜c􏶝􏷆SendRepositionMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
@@ -304,7 +304,7 @@
 􏶳
 
 􏷘-􏷗􏷒send version message􏷑
-􏷐sends the data message to J2 flight model at the appropriate transmission rate􏷏
+􏷐sends the data message to J2 flight model􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
 􏶜c􏶝􏷆SendVersionRequestMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
@@ -319,7 +319,6 @@
     􏶲call socket send, and handle any errors that occur􏶱
     􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND);
 􏶳
-
 
 
 

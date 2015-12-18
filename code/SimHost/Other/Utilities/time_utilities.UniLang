@@ -32,14 +32,14 @@ tick period of 1 millisecond.􏶱
     􏶲it is preferred to only run this calculation once, and cache the result.􏶱
     􏶲this function expected to be used instead of the uncached dynamic one.􏶱
     static BOOL s_bAlreadyCalled = FALSE;
-    static int s_nResult_ms = 0.0f;
+    static float s_fResult_ms = 0.0f;
     
     if (!s_bAlreadyCalled){
-        s_nResult_ms = 􏵲uncached tick period in milliseconds􏵳);
+        s_fResult_ms = 􏵲uncached tick period in milliseconds􏵳);
         s_bAlreadyCalled = TRUE;
     }
     
-    return s_nResult_ms;
+    return s_fResult_ms;
 􏶳
 
 􏷘+􏷗􏷒milliseconds to ticks􏷑

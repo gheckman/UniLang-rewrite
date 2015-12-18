@@ -24,6 +24,7 @@
 􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬mps to knots􏶫             􏶪1.943844􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬knots to mps􏶫             􏶪0.514444􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬feet to meters􏶫           􏶪0.3048􏶩
+􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬meters to feet􏶫              􏶪3.28084􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬ms per hour􏶫              􏶪3600000􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬ms per minute􏶫            􏶪60000􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬ms per second􏶫            􏶪1000􏶩
