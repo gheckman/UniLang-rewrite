@@ -6,18 +6,26 @@
 
 􏷤Defs􏷣􏷢USES: BYTE, WORD, DWORD􏷡
 􏷤strLib􏷣􏷢USES: memcpy()􏷡
+􏷤string􏷣􏷢USES: memcmp()􏷡
 􏷤stdioLib􏷣􏷢USES: perror()􏷡
-􏷤SocketManager􏷣􏷢USES: SocketSend(), SocketReceive(), DATA_BUFFER_SIZE􏷡
+􏷤SocketManager􏷣􏷢USES: SocketSend(), SocketReceive(), MAX_J2_MESSAGE_SIZE􏷡
 􏷤SocketList􏷣􏷢USES: SOCKET_GEN_J2_DATA_SEND, SOCKET_GEN_J2_DATA_RECEIVE􏷡
 􏷤TimeUtilities􏷣􏷢USES: DelayTaskNumberOfMilliseconds()􏷡
 􏷤OwnShip􏷣􏷢USES: WriteJ2Data()􏷡
 􏷤J2CommunicationConfig􏷣􏷢USES: J2_TASKDELAY_MS􏷡
+􏷤SendToJ2Messages􏷣􏷢USES: all messages that get sent to J2􏷡
+􏷤ReceiveFromJ2Messages􏷣􏷢USES: all messages that get received from J2􏷡
+􏷤J2MessageTypes􏷣􏷢􏷡
+􏷤J2NetworkPacking􏷣􏷢USES: pack and unpack functions􏷡
+􏷤stddef.h􏷣􏷢USES: size_t􏷡
 
 􏷘+􏷗􏷒J2 receive􏷑
 􏷐Used to sequence incoming J2 Messages.􏷏
 􏶠This is an infinitely running task.􏶡
 􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
 􏶴
+    
+    􏶲Creates J2 data that will be filled􏶱
     J2InConnectionDataT tJ2Data;
     memset(&tJ2Data, 0, sizeof(tJ2Data));
 
@@ -27,8 +35,8 @@
         􏶲Read from Ownship in case we are only changing part of J2InConnectionDataT􏶱
         ReadJ2Data(&tJ2Data);
         
-        􏵲receive data message􏵳&tJ2Data);
-        􏵲receive control message􏵳&tJ2Data);
+        􏵲handle incoming data messages􏵳&tJ2Data);
+        􏵲handle incoming control messages􏵳&tJ2Data);
 
         􏶲Write data back into Ownship􏶱
         WriteJ2Data(&tJ2Data);
@@ -37,55 +45,63 @@
     return 0;
 􏶳
 
-􏷘-􏷗􏷒receive data message􏷑
+􏷘-􏷗􏷒handle incoming data messages􏷑
 􏷐receives the J2 data message􏷏
 􏶠gets the data message from the J2 flight model and writes into the J2 Data􏶡
-􏶜c􏶝􏷆J2InConnectionDataT*􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶜􏶝􏷆J2InConnectionDataT*const􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
 􏶴
-    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
-    int nBytesReceived = 0, nByteIndex = 0, nAlignSize = 0;
-    int nReturnStatus = 0;
-    BYTE *pucByteAlign = NULL;
+
+    􏶲buffer data􏶱
+    BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
+    int nBytesReceived = 0;
     
     􏶲Read UDP data􏶱
     nBytesReceived = SocketReceive(SOCKET_GEN_J2_DATA_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
     
-    􏶲report errors when receiving UDP data has failed􏶱
-    if(nBytesReceived == ERROR){
-        
-        􏵲report receive failure to watchdog􏵳);
-        
-    }
-    else{
-        􏵲report receive success to watchdog􏵳);
-    }
+    􏶲Error handling on UDP data.  Watchdog related􏶱
+    􏵲report receive status􏵳nBytesReceived);
     
-    􏶲process message and parse data received into the input communication data here...􏶱
+    􏶲process message and parse data received into the input communication data􏶱
+    􏶲decide what data message was received, and receive it􏶱
+    switch(pucDataBuffer[0]){
+        case J2_TO_SIMHOST_MESSAGE_TYPE_HIGH_SPEED:
+            UnpackJ2HighSpeedReceivedMessage(pucDataBuffer,&􏵶J2Data􏵷->m_tHighSpeedMessage);
+            break;
+        case J2_TO_SIMHOST_MESSAGE_TYPE_LOW_SPEED:
+            UnpackJ2LowSpeedReceivedMessage(pucDataBuffer,&􏵶J2Data􏵷->m_tLowSpeedMessage);
+            break;
+        case J2_TO_SIMHOST_MESSAGE_TYPE_ENGINE:
+            UnpackJ2EngineReceivedMessage(pucDataBuffer,&􏵶J2Data􏵷->m_tEngineMessage);
+            break;
+        default:;
+    }
 􏶳
-􏷘-􏷗􏷒receive control message􏷑
+􏷘-􏷗􏷒handle incoming control messages􏷑
 􏷐receives the J2 control message􏷏
 􏶠gets the control message from the J2 flight model and writes into the J2 Data􏶡
-􏶜c􏶝􏷆J2InConnectionDataT*􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶜􏶝􏷆J2InConnectionDataT*const􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
 􏶴
-    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
-    int nBytesReceived = 0, nByteIndex = 0, nAlignSize = 0;
-    int nReturnStatus = 0;
-    BYTE *pucByteAlign = NULL;
+    􏶲buffer data􏶱
+    BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
+    int nBytesReceived = 0;
     
     􏶲Read UDP data􏶱
     nBytesReceived = SocketReceive(SOCKET_GEN_J2_CONTROL_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
     
-    􏶲report errors when receiving UDP data has failed􏶱
-    if(nBytesReceived == ERROR){
-        
-        􏵲report receive failure to watchdog􏵳);
-        
-    }
-    else{
-        􏵲report receive success to watchdog􏵳);
-    }
+    􏶲Error handling on UDP data.  Watchdog related􏶱
+    􏵲report receive status􏵳nBytesReceived);
     
-    􏶲process message and parse data received into the input communication data here...􏶱
+    􏶲process message and parse data received into the input communication data􏶱
+    􏶲decide what data message was received, and receive it􏶱
+    switch(pucDataBuffer[0]){
+        case J2_TO_SIMHOST_MESSAGE_TYPE_REPOSITION_REPLY:
+            UnpackJ2RepositionReceivedMessage(pucDataBuffer,&􏵶J2Data􏵷->m_tRepositionMessageReply);
+            break;
+        case J2_TO_SIMHOST_MESSAGE_TYPE_VERSION:
+            UnpackJ2VersionReceivedMessage(pucDataBuffer,&􏵶J2Data􏵷->m_tVersionMessage);
+            break;
+        default:;
+    }
 􏶳
 
 􏷘+􏷗􏷒J2 send􏷑
@@ -93,11 +109,82 @@
 􏶠This is an infinitely running task.􏶡
 􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
 􏶴
+
+    􏶲all of the data that will be updated and sent to J2􏶱
+    SendHighSpeedMessageT tHigh;
+    SendLowSpeedMessageT tLow;
+    SendRepositionMessageT tReposition;
+    SendVersionRequestMessageT tVersion;
+    
+    
+    􏶲for keeping track of change in time􏶱
+    float fDeltaTime_ms = 0.0f;
+    float fPreviousTime_ms = 0.0f;
+    TimeSystemOutputsT tSimTimer;
+    
+    􏶲for handling individual transmission rates􏶱
+    float fHighTimer_ms = 0;
+    float fLowTimer_ms = 0;
+    
+    􏶲we want to set all the padding to zero.􏶱
+    􏶲this way, we can compare two structs of the same type with memcmp later􏶱
+    memset(&tHigh,0,sizeof(tHigh));
+    memset(&tLow,0,sizeof(tLow));
+    memset(&tReposition,0,sizeof(tReposition));
+    memset(&tVersion,0,sizeof(tVersion));
+    
+    􏶲wait a second􏶱
+    DelayTaskNumberOfMilliseconds(1000);
+    
     while(1)
     {
-        􏶲send messages to J2 at particular transmission rates􏶱
-        􏵲periodically send data message􏵳);
-        􏵲periodically send control message􏵳);
+    
+        􏶲add delta times􏶱
+        ReadTimeSystemOutput(&tSimTimer);
+        fDeltaTime_ms = ((float)tSimTimer.m_nElapsedSimulatorTime_ms - fPreviousTime_ms);
+        fPreviousTime_ms = (float)tSimTimer.m_nElapsedSimulatorTime_ms;
+        
+        􏶲increment time gone by on transmit timers􏶱
+        fHighTimer_ms += fDeltaTime_ms;
+        fLowTimer_ms += fDeltaTime_ms;
+        
+        􏶲if too much time has passed􏶱
+        if (fHighTimer_ms > SIMHOST_HIGH_SPEED_TRANSMISSION_RATE_MS){
+        
+            􏶲keep extra time􏶱
+            fHighTimer_ms -= SIMHOST_HIGH_SPEED_TRANSMISSION_RATE_MS;
+            
+            􏶲send high speed message􏶱
+            􏵲send high speed message􏵳&tHigh);
+        }
+        
+        􏶲if too much time has passed􏶱
+        if (fLowTimer_ms > SIMHOST_LOW_SPEED_TRANSMISSION_RATE_MS){
+        
+            􏶲keep extra time􏶱
+            fLowTimer_ms -= SIMHOST_LOW_SPEED_TRANSMISSION_RATE_MS;
+            
+            􏶲send low speed message􏶱
+            􏵲send low speed message􏵳&tLow);
+        }
+        
+        
+        􏶲if reposition has changed􏶱
+        if (􏵲reposition has changed􏵳&tReposition)){
+        
+            􏶲send reposition message􏶱
+            􏵲send reposition message􏵳&tReposition);
+        }
+        
+        􏶲if version has changed􏶱
+        if (􏵲version has changed􏵳&tVersion)){
+        
+            􏶲send version message􏶱
+            􏵲send version message􏵳&tVersion);
+        }
+        
+        
+    
         
 
         􏶲delay the task􏶱
@@ -107,83 +194,167 @@
     return 0;
 􏶳
 
-􏷘-􏷗􏷒periodically send data message􏷑
-􏷐sends the data message to J2 flight model at the appropiate transmission rate􏷏
+􏷘-􏷗􏷒reposition has changed􏷑
+􏷐update the reposition message, and decide if it changed􏷏
+􏶠equality is checked with memcmp, so its important that both structs were memset to zero􏶡
+􏶜􏶝􏷆SendRepositionMessageT*const􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
+􏶾BOOL􏶽􏶼changed􏶻􏶺whether the message has changed or not􏶹
+􏵦􏵧􏵤the message will be updated as an out parameter while comparing its equality to the previous state􏵥
+􏶴
+    SendRepositionMessageT tNewMessage;
+    BOOL bHasChanged = FALSE;
+    
+    􏶲we want to set all the padding to zero.􏶱
+    􏶲this way, we can compare two structs of the same type with memcmp later􏶱
+    memset(&tNewMessage,0,sizeof(tNewMessage));
+    
+    􏶲source new message􏶱
+    􏶲TODO: ...􏶱
+    
+    􏶲determine if the message has changed􏶱
+    bHasChanged = !memcmp(􏵶message􏵷,&tNewMessage,sizeof(tNewMessage));
+    
+    􏶲update the message􏶱
+    *􏵶message􏵷 = tNewMessage;
+    
+    return bHasChanged;
+􏶳
+
+􏷘-􏷗􏷒version has changed􏷑
+􏷐update the version message, and decide if it changed􏷏
+􏶠equality is checked with memcmp, so its important that both structs were memset to zero􏶡
+􏶜􏶝􏷆SendVersionRequestMessageT*const􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
+􏶾BOOL􏶽􏶼changed􏶻􏶺whether the message has changed or not􏶹
+􏵦􏵧􏵤the message will be updated as an out parameter while comparing its equality to the previous state􏵥
+􏶴
+    SendVersionRequestMessageT tNewMessage;
+    BOOL bHasChanged = FALSE;
+    
+    􏶲we want to set all the padding to zero.􏶱
+    􏶲this way, we can compare two structs of the same type with memcmp later􏶱
+    memset(&tNewMessage,0,sizeof(tNewMessage));
+    
+    􏶲source new message􏶱
+    􏶲TODO: ...􏶱
+    
+    􏶲determine if the message has changed􏶱
+    bHasChanged = !memcmp(􏵶message􏵷,&tNewMessage,sizeof(tNewMessage));
+    
+    􏶲update the message􏶱
+    *􏵶message􏵷 = tNewMessage;
+    
+    return bHasChanged;
+􏶳
+
+􏷘-􏷗􏷒send high speed message􏷑
+􏷐sends the data message to J2 flight model at the appropriate transmission rate􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶜􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱
-    int nByteCount = 0;
-    int nReturnStatus = 0;
-    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
-    memset(pucDataBuffer, 0, DATA_BUFFER_SIZE);
+    BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
+    size_t uByteCount=0;
+    memset(pucDataBuffer, 0, MAX_J2_MESSAGE_SIZE);
+    
+    􏶲source new message􏶱
+    􏶲TODO: 􏶱
     
     􏶲fill the data buffer􏶱
-    nByteCount = 􏵲fill data buffer􏵳pucDataBuffer, sizeof(pucDataBuffer));
+    uByteCount = PackJ2HighSpeedSendMessage(pucDataBuffer,􏵶message􏵷);
+    
+    􏶲call socket send, and handle any errors that occur􏶱
+    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND);
 
+􏶳
+􏷘-􏷗􏷒send low speed message􏷑
+􏷐sends the data message to J2 flight model at the appropriate transmission rate􏷏
+􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶜􏶝􏷆SendLowSpeedMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
+􏶴
+    􏶲initializes data buffer information􏶱
+    BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
+    size_t uByteCount=0;
+    memset(pucDataBuffer, 0, MAX_J2_MESSAGE_SIZE);
+    
+    􏶲source new message􏶱
+    􏶲TODO: 􏶱
+    
+    􏶲fill the data buffer􏶱
+    uByteCount = PackJ2LowSpeedSendMessage(pucDataBuffer,􏵶message􏵷);
+    
+    􏶲call socket send, and handle any errors that occur􏶱
+    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND);
+􏶳
+
+􏷘-􏷗􏷒send reposition message􏷑
+􏷐sends the data message to J2 flight model at the appropriate transmission rate􏷏
+􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶜c􏶝􏷆SendRepositionMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
+􏶴
+    􏶲initializes data buffer information􏶱
+    BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
+    size_t uByteCount=0;
+    memset(pucDataBuffer, 0, MAX_J2_MESSAGE_SIZE);
+    
+    􏶲fill the data buffer􏶱
+    uByteCount = PackJ2RepositionSendMessage(pucDataBuffer,􏵶message􏵷);
+    
+    􏶲call socket send, and handle any errors that occur􏶱
+    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND);
+􏶳
+
+􏷘-􏷗􏷒send version message􏷑
+􏷐sends the data message to J2 flight model at the appropriate transmission rate􏷏
+􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶜c􏶝􏷆SendVersionRequestMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
+􏶴
+    􏶲initializes data buffer information􏶱
+    BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
+    size_t uByteCount=0;
+    memset(pucDataBuffer, 0, MAX_J2_MESSAGE_SIZE);
+    
+    􏶲fill the data buffer􏶱
+    uByteCount = PackJ2VersionRequestMessage(pucDataBuffer,􏵶message􏵷);
+    
+    􏶲call socket send, and handle any errors that occur􏶱
+    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND);
+􏶳
+
+
+
+
+􏷘-􏷗􏷒send and handle errors􏷑
+􏷐sends a byte array through a socket, and handles any errors that occur in the process􏷏
+􏶠uses socket send and notifies to watchdog􏶡
+􏶜c􏶝􏷆int􏷅􏷄bytes packed􏷃􏷀the number of bytes packed􏶿
+􏶜c􏶝􏷆BYTE*􏷅􏷄buffer􏷃􏷀the buffer to send􏶿
+􏶜c􏶝􏷆int􏷅􏷄socket number􏷃􏷀the unique id for the particular socket􏶿
+􏶴
     􏶲handle any data buffer errors􏶱
-    if(nByteCount == 0){
+    if(􏵶bytes packed􏵷 == 0){
         􏵲report buffer failure to watchdog􏵳);
     }
     
     􏶲if there are no errors, send the message to J2􏶱
-    else if(SocketSend(SOCKET_GEN_J2_DATA_SEND, (char *)pucDataBuffer, nByteCount) == ERROR){
-        􏵲report send failure to watchdog􏵳);
-    }
-
-􏶳
-􏷘-􏷗􏷒periodically send control message􏷑
-􏷐sends the data message to J2 flight model at the appropiate transmission rate􏷏
-􏶠Uses a timer internally to only send the message when appropriate􏶡
-􏶴
-    􏶲initializes data buffer information􏶱
-    int nByteCount = 0;
-    int nReturnStatus = 0;
-    BYTE pucDataBuffer[DATA_BUFFER_SIZE];
-    memset(pucDataBuffer, 0, DATA_BUFFER_SIZE);
-    
-    􏶲fill the data buffer􏶱
-    nByteCount = 􏵲fill control buffer􏵳pucDataBuffer, sizeof(pucDataBuffer));
-
-    􏶲handle any data buffer errors􏶱
-    if(nByteCount == 0){
-        􏵲report buffer failure to watchdog􏵳);
-    }
-    
-    􏶲if there are no errors, send the message to J2􏶱
-    else if(SocketSend(SOCKET_GEN_J2_CONTROL_SEND, (char *)pucDataBuffer, nByteCount) == ERROR){
+    else if(SocketSend(􏵶socket number􏵷, (char *)􏵶buffer􏵷, 􏵶bytes packed􏵷) == ERROR){
         􏵲report send failure to watchdog􏵳);
     }
 􏶳
 
-􏷘-􏷗􏷒fill data buffer􏷑
-􏷐Used to fill buffer for sending outgoing J2 messages.􏷏
-􏶠Called before sending out a J2 Message.􏶡
-􏶜􏶝􏷆BYTE *const􏷅􏷄data buffer􏷃􏷀The data buffer to fill with the outgoing J2 message.􏶿
-􏶜c􏶝􏷆int􏷅􏷄data buffer size􏷃􏷀The size of the data buffer􏶿
-􏶾int􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
+􏷘-􏷗􏷒report receive status􏷑
+􏷐reports any failures or successes related to receiving data􏷏
+􏶠notifies watchdog􏶡
+􏶜c􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the number of bytes received which will indicate a possible error􏶿
 􏶴
-    int nByteCount = 0;
-
-    􏶲TODO: fill buffer for send here􏶱
-    *(int *)􏵶data buffer􏵷 = 0;
-    nByteCount += sizeof(int);
-
-    return nByteCount;
-􏶳
-􏷘-􏷗􏷒fill control buffer􏷑
-􏷐Used to fill buffer for sending outgoing J2 messages.􏷏
-􏶠Called before sending out a J2 Message.􏶡
-􏶜􏶝􏷆BYTE *const􏷅􏷄data buffer􏷃􏷀The data buffer to fill with the outgoing J2 message.􏶿
-􏶜c􏶝􏷆int􏷅􏷄data buffer size􏷃􏷀The size of the data buffer􏶿
-􏶾int􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
-􏶴
-    int nByteCount = 0;
-
-    􏶲TODO: fill buffer for send here􏶱
-    *(int *)􏵶data buffer􏵷 = 0;
-    nByteCount += sizeof(int);
-
-    return nByteCount;
+    􏶲report errors when receiving UDP data has failed􏶱
+    if(􏵶bytes received􏵷 == ERROR){
+        
+        􏵲report receive failure to watchdog􏵳);
+        
+    }
+    else{
+        􏵲report receive success to watchdog􏵳);
+    }
 􏶳
 
 􏷘-􏷗􏷒report buffer failure to watchdog􏷑

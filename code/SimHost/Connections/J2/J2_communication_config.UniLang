@@ -10,11 +10,13 @@
 􏵺􏵻􏵸􏵹􏵾J2 send control port number􏵿􏵼49001􏵽
 􏵺􏵻􏵸􏵹􏵾J2 receive control port number􏵿􏵼49051􏵽
 
-􏵺􏵻􏵸􏵹􏵾J2 taskdelay ms􏵿􏵼10􏵽
+􏵺􏵻􏵸􏵹􏵾J2 taskdelay ms􏵿􏵼5􏵽
 
-􏵺The rate at which J2 will send high speed data messages􏵻􏵸􏵹􏵾J2 high speed transmission rate hz􏵿􏵼100􏵽
-􏵺The rate at which J2 will send low speed data messages􏵻􏵸every 6 frames􏵹􏵾J2 low speed transmission rate hz􏵿􏵼16.67􏵽
-􏵺The rate at which J2 will send engine data messages􏵻􏵸every 2 frames􏵹􏵾J2 engine transmission rate hz􏵿􏵼50􏵽
+􏵺􏵻􏵸􏵹􏵾max j2 message size􏵿􏵼4096􏵽
 
-􏵺The rate at which SimHost will send high speed data messages􏵻􏵸􏵹􏵾SimHost high speed transmission rate hz􏵿􏵼100􏵽
-􏵺The rate at which SimHost will send low speed data messages􏵻􏵸every 6 frames􏵹􏵾SimHost low speed transmission rate hz􏵿􏵼16.67􏵽
+􏵺The rate at which J2 will send high speed data messages􏵻􏵸􏵹􏵾J2 high speed transmission rate ms􏵿􏵼10􏵽
+􏵺The rate at which J2 will send low speed data messages􏵻􏵸every 6 frames􏵹􏵾J2 low speed transmission rate ms􏵿􏵼60􏵽
+􏵺The rate at which J2 will send engine data messages􏵻􏵸every 2 frames􏵹􏵾J2 engine transmission rate ms􏵿􏵼20􏵽
+
+􏵺The rate at which SimHost will send high speed data messages􏵻􏵸􏵹􏵾SimHost high speed transmission rate ms􏵿􏵼10􏵽
+􏵺The rate at which SimHost will send low speed data messages􏵻􏵸every 6 frames􏵹􏵾SimHost low speed transmission rate ms􏵿􏵼60􏵽
