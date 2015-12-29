@@ -1,15 +1,15 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲Utilities for packing / unpacking on network data buffers􏷱
 􏷰Deals with endianness and address invariance. not padding/offsets
 Relies on architecture for endianness􏷯
 􏷮Pack Utilities􏷭 􏷮Network􏷭 􏷮Utilities􏷭
 􏷬Dave Corapi􏷫
 􏷬Trevor Hickey􏷫
-􏷦Defs.h􏷥􏷢USES: BYTE􏷡
-􏷦stddef.h􏷥􏷢USES: size_t􏷡
-􏷦stdioLib.h􏷥􏷢USES: BOOL􏷡
-􏷤FfsCommon.h􏷣􏷢USES: DwordReverseByteOrder􏷡
-􏷤strLib.h􏷣􏷢USES: memcpy()􏷡
+􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
+􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
+􏷤􏷣􏷦stdioLib.h􏷥􏷢USES: BOOL􏷡
+􏶔􏶕􏶒FfsCommon.h􏶓􏶖USES: DwordReverseByteOrder􏶗
+􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
 
 􏷘+􏷗􏷒pack big endian 4 byte invariance􏷑
 􏷐Packs a type into a big endian data buffer􏷏
@@ -183,7 +183,10 @@ Relies on architecture for endianness􏷯
 
 􏷘+􏷗􏷒pack 8 bools into a byte􏷑
 􏷐Packs eight BOOLs into a single BYTE of a buffer􏷏
-􏶠uses bit shifts on each index of the bool array􏶡
+􏶠uses bit shifts on each index of the bool array
+note: the bits will be in reverse order of the bools passed in
+example: {􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵰}
+becomes: 01111111􏶡
 􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆BOOL*􏷅􏷄pack bools􏷃􏷀an array of 8 bools to pack into a byte􏶿
 􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹

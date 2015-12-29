@@ -1,14 +1,14 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲A simulated clock that manages a date and time automatically. 􏷱
 􏷰Once given a date and time to start at, it will handle the internal logic of updating the time
 during updates.  Since the clock is simulated, it can be paused and unpaused.  
 It can also be reset to another time if desired.􏷯
 􏷮Time􏷭 􏷮Simulation_Clock􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
-􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
-􏷦DateTime􏷥􏷢HASA: HASA: DateTimeOutputsT􏷡
-􏷦MillisecondTimer􏷥􏷢HASA: MillisecondTimerOutputsT􏷡
-􏷦Month􏷥􏷢USES: MonthE􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷤􏷣􏷦DateTime􏷥􏷢HASA: HASA: DateTimeOutputsT􏷡
+􏷤􏷣􏷦MillisecondTimer􏷥􏷢HASA: MillisecondTimerOutputsT􏷡
+􏷤􏷣􏷦Month􏷥􏷢USES: MonthE􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Create a clock at a specified date and time􏷏

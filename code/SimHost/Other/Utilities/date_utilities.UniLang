@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲Common functions relating to calendar dates.􏷱
 􏷰
 Function for determing if a year is a leap year.
@@ -6,8 +6,8 @@ Function for looking up how many days are in a certain month.
 􏷯
 􏷮Date Utilities􏷭 􏷮Date􏷭 􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
-􏷦Month􏷥􏷢USES: MonthE􏷡
-􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏷤􏷣􏷦Month􏷥􏷢USES: MonthE􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 
 
 􏶘+􏶙􏶰ce􏶯􏶮unsigned int􏶭􏶬number of milliseconds in a day􏶫􏶪86400000􏶩

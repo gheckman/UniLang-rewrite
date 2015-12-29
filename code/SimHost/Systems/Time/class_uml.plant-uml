@@ -1,6 +1,0 @@
-@startuml
-class month {
-+next month()
-+previous month()
-}
-@enduml

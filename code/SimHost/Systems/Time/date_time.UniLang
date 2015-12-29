@@ -1,4 +1,4 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲An adjustable date and a time with millisecond precision􏷱
 􏷰A replacement over time_t and struct tm from the standard C library.
 Due to the size and precision limitations of time_t and struct tm,
@@ -11,8 +11,8 @@ It accounts for leap years, but does not account for daylight savings time or le
 The year limit of datetime is now the max size of an unsigned int.􏷯
 􏷮Time􏷭 􏷮Date􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
-􏷦Month􏷥􏷢USES: MonthE􏷡
-􏷤DateUtilities􏷣􏷢USES: IsLeapYear()􏷡
+􏷤􏷣􏷦Month􏷥􏷢USES: MonthE􏷡
+􏶔􏶕􏶒DateUtilities􏶓􏶖USES: IsLeapYear()􏶗
 
 
 􏷘+􏷗􏷒􏶐􏷑

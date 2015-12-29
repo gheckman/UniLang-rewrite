@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲Common functions relating to VxWorks time.􏷱
 􏷰
 Functions for delaying tasks in terms of millisecond.
@@ -6,9 +6,9 @@ Functions for converting between ticks and milliseconds based on the clock rate.
 􏷯
 􏷮Time Utilities􏷭 􏷮Time􏷭 􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
-􏷤TaskLib􏷣􏷢USES: taskDelay()􏷡
-􏷤sysLib􏷣􏷢USES: sysClkRateGet()􏷡
-􏷤stdioLib􏷣􏷢USES: BOOL􏷡
+􏶔􏶕􏶒TaskLib􏶓􏶖USES: taskDelay()􏶗
+􏶔􏶕􏶒sysLib􏶓􏶖USES: sysClkRateGet()􏶗
+􏶔􏶕􏶒stdioLib􏶓􏶖USES: BOOL􏶗
 
 􏷘+􏷗􏷒uncached tick period in milliseconds􏷑
 􏷐Get the tick period of the system clock in terms of milliseconds.􏷏

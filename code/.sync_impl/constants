@@ -13,7 +13,7 @@ UNILANG_FILE_EXTENSION='UniLang';
 #PATHS
 FULL_PATH_TO_ROOT_OF_ACTUAL_REPO='/home/malko/Desktop/work-related/fresh'
 FULL_PATH_TO_UNICODE_ROOT='/home/malko/Desktop/UniLang-rewrite/code'
-LOCAL_SOURCE_ROOT='SimHost/UH72A VME/Src'
+LOCAL_SOURCE_ROOT='SimHost/UH72A_VME/Src'
 LOCAL_TEST_ROOT='SimHost/Tests/Unit_Tests'
 
 #derived

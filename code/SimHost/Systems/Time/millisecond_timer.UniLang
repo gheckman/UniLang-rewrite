@@ -1,13 +1,13 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲A stopwatch with millisecond precision􏷱
 􏷰A timer that starts paused at 0 milliseconds once constructed.
 It can be paused/unpaused, and reset.
 The millisecond timer only keeps track of the entire duration as an amount of milliseconds.􏷯
 􏷮Time􏷭 􏷮Timer􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
-􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
-􏷤TickLib􏷣􏷢USES: tickGet()􏷡
-􏷤TimeUtilities􏷣􏷢USES: TicksToMilliseconds()􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏶔􏶕􏶒TickLib􏶓􏶖USES: tickGet()􏶗
+􏶔􏶕􏶒TimeUtilities􏶓􏶖USES: TicksToMilliseconds()􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Create a timer􏷏
