@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲The front-end API to the Dynamic Debugger Library.  
 These functions allow particular data to be sent out over the network to the dynamic debugger application.􏷱
 􏷰Data is intended to be sent out over UDP to the dynamic debugger which will 
@@ -15,10 +15,10 @@ Slippy: http://conf.f2si.net/display/UHMEP/UH-72A+IOS+Messaging
 􏷯
 􏷮Debug􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
-􏷦stdioLib􏷥􏷢USES: BOOL􏷡
-􏷦DynamicDebugConfiguration􏷥􏷢USES: MAX_LENGTH_OF_DEBUG_PATH_VALUE, MAX_LENGTH_OF_DEBUG_STRING_VALUE􏷡
-􏷤DynamicDebugMessage􏷣􏷢USES: DynamicDebugMessageT􏷡
-􏷤DynamicDebugSender􏷣􏷢USES: SendMessageToDynamicDebugger􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏷤􏷣􏷦DynamicDebugConfiguration􏷥􏷢USES: MAX_LENGTH_OF_DEBUG_PATH_VALUE, MAX_LENGTH_OF_DEBUG_STRING_VALUE􏷡
+􏶔􏶕􏶒DynamicDebugMessage􏶓􏶖USES: DynamicDebugMessageT􏶗
+􏶔􏶕􏶒DynamicDebugSender􏶓􏶖USES: SendMessageToDynamicDebugger􏶗
 
 􏷘+􏷗􏷒send debug int􏷑
 􏷐Send an int value over the network to the dynamic debugger.􏷏

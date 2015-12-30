@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲packs and unpacks the relevant J2 messages􏷱
 􏷰Based off version 2.0 of the ICD.
 It would have been nice to automate the network packing/unpacking.
@@ -17,13 +17,15 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏷯
 􏷮J2_Connection􏷭􏷮Network􏷭
 􏷬Trevor Hickey􏷫
-􏷦J2MessageTypes.h􏷥􏷢USES: SimhostToJ2MessageTypeE􏷡
-􏷦SendToJ2Messages.h􏷥􏷢USES: SendHighSpeedMessageT, SendLowSpeedMessageT, SendRepositionMessageT􏷡
-􏷦ReceiveFromJ2Messages.h􏷥􏷢USES: RcvHighSpeedMessageT, RcvLowSpeedMessageT, RcvEngineDataMessageT, RepositionMessageReplyT, VersionMessageReplyT􏷡
-􏷦stddef.h􏷥􏷢USES: size_t􏷡
-􏷦Defs.h􏷥􏷢USES: BYTE􏷡
-􏷤PackUtilities.h􏷣􏷢USES: PackBigEndian4ByteInvariance(), UnpackBigEndian4ByteInvariance􏷡
-􏷤J2MessageHeader.h􏷣􏷢USES: J2MessageHeaderT􏷡
+
+􏷤􏷣􏷦J2MessageTypes.h􏷥􏷢USES: SimhostToJ2MessageTypeE􏷡
+􏷤􏷣􏷦SendToJ2Messages.h􏷥􏷢USES: SendHighSpeedMessageT, SendLowSpeedMessageT, SendRepositionMessageT􏷡
+􏷤􏷣􏷦ReceiveFromJ2Messages.h􏷥􏷢USES: RcvHighSpeedMessageT, RcvLowSpeedMessageT, RcvEngineDataMessageT, RepositionMessageReplyT, VersionMessageReplyT􏷡
+􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
+􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
+􏶔􏶕􏶒PackUtilities.h􏶓􏶖USES: PackBigEndian4ByteInvariance(), UnpackBigEndian4ByteInvariance􏶗
+􏶔􏶕􏶒J2MessageHeader.h􏶓􏶖USES: J2MessageHeaderT􏶗
+􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
 
 􏷘+􏷗􏷒pack j2 high speed send message􏷑
 􏷐Used to fill buffer for sending outgoing J2 high speed message.􏷏
@@ -181,7 +183,6 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶴
-    size_t uIndex = 0;
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchFlightControl,sizeof(􏵶message􏵷->m_fPitchFlightControl));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollFlightControl,sizeof(􏵶message􏵷->m_fRollFlightControl));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawFlightControl,sizeof(􏵶message􏵷->m_fYawFlightControl));
@@ -220,33 +221,22 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nSASMode,sizeof(􏵶message􏵷->m_nSASMode));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHeightAboveTerrain_feet,sizeof(􏵶message􏵷->m_fHeightAboveTerrain_feet));
     
+    􏶲contact point packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfContactPoints,sizeof(􏵶message􏵷->m_nNumberOfContactPoints));
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_CONTACT_LOCATION; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfGroundContactLocation_feet[uIndex],sizeof(􏵶message􏵷->m_pfGroundContactLocation_feet[uIndex]));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfGroundContactLocation_feet,sizeof(􏵶message􏵷->m_pfGroundContactLocation_feet[0]),􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
     
+    􏶲engine related packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfThrottle[uIndex],sizeof(􏵶message􏵷->m_pfThrottle[uIndex]));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfThrottle,sizeof(􏵶message􏵷->m_pfThrottle[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfMixture,sizeof(􏵶message􏵷->m_pfMixture[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
     
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfMixture[uIndex],sizeof(􏵶message􏵷->m_pfMixture[uIndex]));
-    }
-    
+    􏶲propeller packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfPropellers && uIndex < NUMBER_OF_PROPELLERS; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfPropPitch_degrees[uIndex],sizeof(􏵶message􏵷->m_pfPropPitch_degrees[uIndex]));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPropPitch_degrees,sizeof(􏵶message􏵷->m_pfPropPitch_degrees[0]),􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
     
+    􏶲fuel tank packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfTanks,sizeof(􏵶message􏵷->m_nNumberOfTanks));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfTanks && uIndex < NUM_FUEL_TANKS; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfFuelWeight_lbs,sizeof(􏵶message􏵷->m_pfFuelWeight_lbs));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfFuelWeight_lbs,sizeof(􏵶message􏵷->m_pfFuelWeight_lbs[0]),􏵶message􏵷->m_nNumberOfTanks,NUM_FUEL_TANKS);
     
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nFlag1,sizeof(􏵶message􏵷->m_nFlag1));
 􏶳
@@ -258,26 +248,21 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆SendLowSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶴
-    size_t uIndex = 0;
+
+    􏶲gear related packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfGears,sizeof(􏵶message􏵷->m_nNumberOfGears));
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfGears && uIndex < NUMBER_OF_LANDING_GEARS; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnGearRequestedPosition_pct[uIndex],sizeof(􏵶message􏵷->m_pnGearRequestedPosition_pct[uIndex]));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnGearRequestedPosition_pct,sizeof(􏵶message􏵷->m_pnGearRequestedPosition_pct[0]),􏵶message􏵷->m_nNumberOfGears,MAX_NUMBER_OF_LANDING_GEARS);
     
+    􏶲flap related packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfFlaps,sizeof(􏵶message􏵷->m_nNumberOfFlaps));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfFlaps && uIndex < NUMBER_OF_FLAPS; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnFlapRequestedPosition_pct[uIndex],sizeof(􏵶message􏵷->m_pnFlapRequestedPosition_pct[uIndex]));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnFlapRequestedPosition_pct,sizeof(􏵶message􏵷->m_pnFlapRequestedPosition_pct[0]),􏵶message􏵷->m_nNumberOfFlaps,MAX_NUMBER_OF_FLAPS);
     
+    􏶲speed brake related packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfSpeedBrakes,sizeof(􏵶message􏵷->m_nNumberOfSpeedBrakes));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfSpeedBrakes && uIndex < NUMBER_OF_SPEED_BREAKS; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct[uIndex],sizeof(􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct[uIndex]));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct,sizeof(􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct[0]),􏵶message􏵷->m_nNumberOfSpeedBrakes,MAX_NUMBER_OF_SPEED_BRAKES);
     
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fSeaLevelPressure_inHG,sizeof(􏵶message􏵷->m_fSeaLevelPressure_inHG));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fSeaLevelTemperature_F,sizeof(􏵶message􏵷->m_fSeaLevelTemperature_F));
+    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fSeaLevelTemperature_degf,sizeof(􏵶message􏵷->m_fSeaLevelTemperature_degf));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRunwayRoughness,sizeof(􏵶message􏵷->m_fRunwayRoughness));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWindMagnitude_kts,sizeof(􏵶message􏵷->m_fWindMagnitude_kts));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWindHeading,sizeof(􏵶message􏵷->m_fWindHeading));
@@ -288,49 +273,17 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCGOffsetY_in,sizeof(􏵶message􏵷->m_fCGOffsetY_in));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCGOffsetZ_in,sizeof(􏵶message􏵷->m_fCGOffsetZ_in));
     
-    
+    􏶲engine related packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnEngineStarterRunning[uIndex],sizeof(􏵶message􏵷->m_pnEngineStarterRunning[uIndex]));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnEngineStarterRunning,sizeof(􏵶message􏵷->m_pnEngineStarterRunning[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnBleedAir,sizeof(􏵶message􏵷->m_pnBleedAir[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnIgnitionOn,sizeof(􏵶message􏵷->m_pnIgnitionOn[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnEngineFlags1,sizeof(􏵶message􏵷->m_pnEngineFlags1[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnEngineInletState,sizeof(􏵶message􏵷->m_pnEngineInletState[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_fIceStatesEngine_in,sizeof(􏵶message􏵷->m_fIceStatesEngine_in[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_nEngineFailureFlags,sizeof(􏵶message􏵷->m_nEngineFailureFlags[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfIceStatesProp_in,sizeof(􏵶message􏵷->m_pfIceStatesProp_in[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
     
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnBleedAir[uIndex],sizeof(􏵶message􏵷->m_pnBleedAir[uIndex]));
-    }
-    
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnIgnitionOn[uIndex],sizeof(􏵶message􏵷->m_pnIgnitionOn[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnEngineFlags1[uIndex],sizeof(􏵶message􏵷->m_pnEngineFlags1[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnEngineInletState[uIndex],sizeof(􏵶message􏵷->m_pnEngineInletState[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIceStatesEngine_in[uIndex],sizeof(􏵶message􏵷->m_fIceStatesEngine_in[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nEngineFailureFlags[uIndex],sizeof(􏵶message􏵷->m_nEngineFailureFlags[uIndex]));
-    }
-    
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfPropellers && uIndex < NUMBER_OF_PROPELLERS; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfIceStatesProp_in[uIndex],sizeof(􏵶message􏵷->m_pfIceStatesProp_in[uIndex]));
-    }
     
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIceStateRightWing_in,sizeof(􏵶message􏵷->m_fIceStateRightWing_in));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIceStateLeftWing_in,sizeof(􏵶message􏵷->m_fIceStateLeftWing_in));
@@ -347,7 +300,6 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆SendRepositionMessageT *const􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶴
-    size_t uIndex = 0;
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nRepositionType,sizeof(􏵶message􏵷->m_nRepositionType));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dLatitude_deg,sizeof(􏵶message􏵷->m_dLatitude_deg));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dLongitude_deg,sizeof(􏵶message􏵷->m_dLongitude_deg));
@@ -357,32 +309,17 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAircraftPitch_deg,sizeof(􏵶message􏵷->m_fAircraftPitch_deg));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAircraftRoll_deg,sizeof(􏵶message􏵷->m_fAircraftRoll_deg));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fVerticalSpeed_ft_m,sizeof(􏵶message􏵷->m_fVerticalSpeed_ft_m));
+    
+    􏶲engine related packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnEngineRunning,sizeof(􏵶message􏵷->m_pnEngineRunning[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfEngineRpm,sizeof(􏵶message􏵷->m_pfEngineRpm[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfN1,sizeof(􏵶message􏵷->m_pfN1[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfN2,sizeof(􏵶message􏵷->m_pfN2[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
     
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pnEngineRunning[uIndex],sizeof(􏵶message􏵷->m_pnEngineRunning[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfEngineRpm[uIndex],sizeof(􏵶message􏵷->m_pfEngineRpm[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfN1[uIndex],sizeof(􏵶message􏵷->m_pfN1[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfN2[uIndex],sizeof(􏵶message􏵷->m_pfN2[uIndex]));
-    }
-    
+    􏶲propeller related packing􏶱
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfPropellers && uIndex < NUMBER_OF_PROPELLERS; ++uIndex){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_puPropellerRpm[uIndex],sizeof(􏵶message􏵷->m_puPropellerRpm[uIndex]));
-    }
+    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_puPropellerRpm,sizeof(􏵶message􏵷->m_puPropellerRpm[0]),􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
 􏶳
 
 
@@ -399,7 +336,6 @@ Implemented in order to test the pack version􏶡
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    size_t uIndex = 0;
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchFlightControl,sizeof(􏵶message􏵷->m_fPitchFlightControl));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollFlightControl,sizeof(􏵶message􏵷->m_fRollFlightControl));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawFlightControl,sizeof(􏵶message􏵷->m_fYawFlightControl));
@@ -438,33 +374,22 @@ Implemented in order to test the pack version􏶡
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nSASMode,sizeof(􏵶message􏵷->m_nSASMode));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHeightAboveTerrain_feet,sizeof(􏵶message􏵷->m_fHeightAboveTerrain_feet));
     
+    􏶲contact point packing􏶱
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfContactPoints,sizeof(􏵶message􏵷->m_nNumberOfContactPoints));
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_CONTACT_LOCATION; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfGroundContactLocation_feet[uIndex],sizeof(􏵶message􏵷->m_pfGroundContactLocation_feet[uIndex]));
-    }
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfGroundContactLocation_feet,sizeof(􏵶message􏵷->m_pfGroundContactLocation_feet[0]),􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
     
+    􏶲engine related unpacking􏶱
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfThrottle[uIndex],sizeof(􏵶message􏵷->m_pfThrottle[uIndex]));
-    }
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfThrottle,sizeof(􏵶message􏵷->m_pfThrottle[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfMixture,sizeof(􏵶message􏵷->m_pfMixture[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
     
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfMixture[uIndex],sizeof(􏵶message􏵷->m_pfMixture[uIndex]));
-    }
-    
+    􏶲propeller unpacking􏶱
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfPropellers && uIndex < NUMBER_OF_PROPELLERS; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfPropPitch_degrees[uIndex],sizeof(􏵶message􏵷->m_pfPropPitch_degrees[uIndex]));
-    }
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPropPitch_degrees,sizeof(􏵶message􏵷->m_pfPropPitch_degrees[0]),􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
     
+    􏶲fuel tank unpacking􏶱
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfTanks,sizeof(􏵶message􏵷->m_nNumberOfTanks));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfTanks && uIndex < NUM_FUEL_TANKS; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfFuelWeight_lbs,sizeof(􏵶message􏵷->m_pfFuelWeight_lbs));
-    }
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfFuelWeight_lbs,sizeof(􏵶message􏵷->m_pfFuelWeight_lbs[0]),􏵶message􏵷->m_nNumberOfTanks,NUM_FUEL_TANKS);
     
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nFlag1,sizeof(􏵶message􏵷->m_nFlag1));
 􏶳
@@ -476,7 +401,6 @@ Implemented in order to test the pack version􏶡
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆RcvHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    size_t uIndex = 0;
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dLatitude_deg,sizeof(􏵶message􏵷->m_dLatitude_deg));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dLongitude_deg,sizeof(􏵶message􏵷->m_dLongitude_deg));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dMSLAltitude_ft,sizeof(􏵶message􏵷->m_dMSLAltitude_ft));
@@ -510,10 +434,9 @@ Implemented in order to test the pack version􏶡
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fMagneticHeading_deg,sizeof(􏵶message􏵷->m_fMagneticHeading_deg));
     
     
+    􏶲landing gear unpacking􏶱
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfLandingGears,sizeof(􏵶message􏵷->m_nNumberOfLandingGears));
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfLandingGears && uIndex < NUMBER_OF_LANDING_GEARS; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfWeightOnLandingGear_lbs[uIndex],sizeof(􏵶message􏵷->m_pfWeightOnLandingGear_lbs[uIndex]));
-    }
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfWeightOnLandingGear_lbs,sizeof(􏵶message􏵷->m_pfWeightOnLandingGear_lbs[0]),􏵶message􏵷->m_nNumberOfLandingGears,MAX_NUMBER_OF_LANDING_GEARS);
     
     
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nFlag1,sizeof(􏵶message􏵷->m_nFlag1));
@@ -532,29 +455,17 @@ Implemented in order to test the pack version􏶡
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfCollectiveSerialActuators,sizeof(􏵶message􏵷->m_pfCollectiveSerialActuators));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCollectiveTrimActuators,sizeof(􏵶message􏵷->m_fCollectiveTrimActuators));
     
+    􏶲surface unpacking􏶱
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfSurfaces,sizeof(􏵶message􏵷->m_nNumberOfSurfaces));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfSurfaces && uIndex < NUMBER_OF_SURFACES; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfSurfaceQ[uIndex],sizeof(􏵶message􏵷->m_pfSurfaceQ[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfSurfaces && uIndex < NUMBER_OF_SURFACES; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfSurfaceAngleOfIncidence[uIndex],sizeof(􏵶message􏵷->m_pfSurfaceAngleOfIncidence[uIndex]));
-    }
-    
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nNumberOfSurfaces && uIndex < NUMBER_OF_SURFACES; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfSurfaceTorque,sizeof(􏵶message􏵷->m_pfSurfaceTorque));
-    }
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfSurfaceQ,sizeof(􏵶message􏵷->m_pfSurfaceQ[0]),􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfSurfaceAngleOfIncidence,sizeof(􏵶message􏵷->m_pfSurfaceAngleOfIncidence[0]),􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfSurfaceTorque,sizeof(􏵶message􏵷->m_pfSurfaceTorque[0]),􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
     
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fBuffetMagnitude,sizeof(􏵶message􏵷->m_fBuffetMagnitude));
     
+    􏶲spare bucket unpacking􏶱
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nSpareBucketSize,sizeof(􏵶message􏵷->m_nSpareBucketSize));
-    uIndex = 0;
-    for (; uIndex < 􏵶message􏵷->m_nSpareBucketSize && uIndex < MAX_SPARE_BUCKET_SIZE; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_pfSpareBucket[uIndex],sizeof(􏵶message􏵷->m_pfSpareBucket));
-    }
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfSpareBucket,sizeof(􏵶message􏵷->m_pfSpareBucket[0]),􏵶message􏵷->m_nSpareBucketSize,MAX_SPARE_BUCKET_SIZE);
 􏶳
 
 􏷘+􏷗􏷒unpack j2 low speed received message payload􏷑
@@ -564,7 +475,7 @@ Implemented in order to test the pack version􏶡
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆RcvLowSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fOutsideAirTemperture_F,sizeof(􏵶message􏵷->m_fOutsideAirTemperture_F));
+    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fOutsideAirTemperature_degf,sizeof(􏵶message􏵷->m_fOutsideAirTemperature_degf));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fOutsideAirPressure_inHg,sizeof(􏵶message􏵷->m_fOutsideAirPressure_inHg));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fNoseWheelPosition_deg,sizeof(􏵶message􏵷->m_fNoseWheelPosition_deg));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fMagneticVariation_deg,sizeof(􏵶message􏵷->m_fMagneticVariation_deg));
@@ -585,21 +496,21 @@ Implemented in order to test the pack version􏶡
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fN2_pct,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fN2_pct));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fTorque_ftlbs,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fTorque_ftlbs));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fFuelFlow_pph,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fFuelFlow_pph));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fOilTemperature_F,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fOilTemperature_F));
+        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fOilTemperature_degf,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fOilTemperature_degf));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fOilPressure_psi,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fOilPressure_psi));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fExhaustGasTemperture_F,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fExhaustGasTemperture_F));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fCylinderHeadTtemperture_F,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fCylinderHeadTtemperture_F));
+        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fExhaustGasTemperature_degf,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fExhaustGasTemperature_degf));
+        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fCylinderHeadTemperature_degf,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fCylinderHeadTemperature_degf));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fEngineRPM,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fEngineRPM));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fEngineThrust_lbs,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fEngineThrust_lbs));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fManifoldPressure_inHg,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fManifoldPressure_inHg));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fInletTurbineTemperture_C,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fInletTurbineTemperture_C));
+        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fInletTurbineTemperature_degc,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fInletTurbineTemperature_degc));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fBleedAirPressureGenerated_psi,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fBleedAirPressureGenerated_psi));
     }
 
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
 
     uIndex = 0;
-    for(; uIndex < 􏵶message􏵷->m_nNumberOfPropellers && uIndex < NUMBER_OF_PROPELLERS; ++uIndex){
+    for(; uIndex < 􏵶message􏵷->m_nNumberOfPropellers && uIndex < MAX_NUMBER_OF_PROPELLERS; ++uIndex){
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptPropeller[uIndex].m_fPropRPM,sizeof(􏵶message􏵷->m_ptPropeller[uIndex].m_fPropRPM));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptPropeller[uIndex].m_fPropPitch_deg,sizeof(􏵶message􏵷->m_ptPropeller[uIndex].m_fPropPitch_deg));
         UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentDirection_deg,sizeof(􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentDirection_deg));
@@ -627,13 +538,12 @@ Implemented in order to test the pack version􏶡
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆VersionMessageReplyT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    size_t uIndex = 0;
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fJ2Version,sizeof(􏵶message􏵷->m_fJ2Version));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAircraftModel,sizeof(􏵶message􏵷->m_fAircraftModel));
+    
+    􏶲dev item unpacking􏶱
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfDeveloperItems,sizeof(􏵶message􏵷->m_nNumberOfDeveloperItems));
-    for(; uIndex < 􏵶message􏵷->m_nNumberOfDeveloperItems && uIndex < MAX_DEV_ITEMS; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_szDevItem[uIndex],sizeof(􏵶message􏵷->m_szDevItem[uIndex]));
-    }
+    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_szDevItem,sizeof(􏵶message􏵷->m_szDevItem[0]),􏵶message􏵷->m_nNumberOfDeveloperItems,MAX_DEV_ITEMS);
 􏶳
 
 
@@ -700,7 +610,7 @@ Implemented in order to test the pack version􏶡
     size_t uByteIterator = 1;
     
     􏶲store the byte count to verify at the end of unpacking􏶱
-    memset(&tHeader.m_uByteCount,&􏵶buffer􏵷[uByteIterator],2);
+    memcpy(&tHeader.m_uByteCount,&􏵶buffer􏵷[uByteIterator],2);
     
     􏶲the message version􏶱
     tHeader.m_ucMessageVersion = 􏵶buffer􏵷[uByteIterator];

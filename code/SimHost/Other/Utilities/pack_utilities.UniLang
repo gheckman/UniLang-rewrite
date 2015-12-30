@@ -144,7 +144,7 @@ Relies on architecture for endianness􏷯
 
 􏷘+􏷗􏷒unpack little endian 2 byte invariance􏷑
 􏷐Unpacks a type stored as little endian from a data buffer􏷏
-􏶠􏶡
+􏶠􏶡 
 􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -169,14 +169,47 @@ Relies on architecture for endianness􏷯
 
 
 
+􏷘+􏷗􏷒pack first n array elements􏷑
+􏷐Packs only the first number of array elements specified into a data buffer􏷏
+􏶠􏶡 
+􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜c􏶝􏷆void*const􏷅􏷄array􏷃􏷀the array to be packed􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵪uNumberOfElements <= uArraySize􏵫􏵨the number of elements must not exceed the array size􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
+􏶴
+    size_t uIndex = 0;
+    for (; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
+    
+        􏶲increment void pointer the number of appropriate bytes based on element size during each iteration􏶱
+        􏵲pack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(char*)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
+    }
+􏶳
 
-
-
-
-
-
-
-
+􏷘+􏷗􏷒unpack first n array elements􏷑
+􏷐Unpacks only the first number of array elements specified into a data buffer􏷏
+􏶠􏶡 
+􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜􏶝􏷆void*􏷅􏷄array􏷃􏷀the array to be packed􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to unpack from the start of the array􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵪uNumberOfElements <= uArraySize􏵫􏵨the number of elements must not exceed the array size􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
+􏶴
+    size_t uIndex = 0;
+    for (; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
+    
+        􏶲increment void pointer the number of appropriate bytes based on element size during each iteration􏶱
+        􏵲unpack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(char*)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
+    }
+􏶳
 
 
 

@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲Message types sent to and from the SimHost and the flight model􏷱
 􏷰an enumerated type representing the type of message and how it should be parsed􏷯
 􏷮J2_Message_Types􏷭

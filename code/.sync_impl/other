@@ -164,8 +164,8 @@ echo "formatting other files...";
   #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Shared/ffs/FfsTypes.h"
   #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.h
   #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.c
-  #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Connections/UDP/J2Communication"/*.h
-  #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Connections/UDP/J2Communication"/*.c
+  clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Connections/UDP/J2Communication/J2Messages"/*.h
+  clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Connections/UDP/J2Communication/J2Messages"/*.c
 }
 
 function Single-Newline-At-The-End-Of-Every-File(){

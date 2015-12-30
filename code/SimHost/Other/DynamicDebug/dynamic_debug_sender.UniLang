@@ -1,16 +1,17 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲A generic C structure representing a dynamic debug message.􏷱
 􏷰A dynamic debug message can be created with different constructor functions.  
 Due to the message representing variant type data internally,
-it is recomended you create the message using one of its constructor functions.􏷯
+it is recommended you create the message using one of its constructor functions.􏷯
 􏷮Debug􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
-􏷦stdioLib􏷥􏷢USES: BOOL􏷡
-􏷦DynamicDebugMessageData􏷥􏷢USES: DynamicDebugMessageT􏷡
-􏷤DynamicDebugConfiguration􏷣􏷢USES: MAX_LENGTH_OF_DEBUG_PATH_VALUE, MAX_LENGTH_OF_DEBUG_STRING_VALUE, DYNAMIC_DEBUG_VERSION_NUMBER􏷡
-􏷤DynamicDebugType􏷣􏷢USES: DynamicDebugTypeE􏷡
-􏷤string􏷣􏷢USES: strcpy()􏷡
-􏷤Defs􏷣􏷢USES: BYTE􏷡
+
+􏷤􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏷤􏷣􏷦DynamicDebugMessageData􏷥􏷢USES: DynamicDebugMessageT􏷡
+􏶔􏶕􏶒DynamicDebugConfiguration􏶓􏶖USES: MAX_LENGTH_OF_DEBUG_PATH_VALUE, MAX_LENGTH_OF_DEBUG_STRING_VALUE, DYNAMIC_DEBUG_VERSION_NUMBER􏶗
+􏶔􏶕􏶒DynamicDebugType􏶓􏶖USES: DynamicDebugTypeE􏶗
+􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
+􏶔􏶕􏶒Defs􏶓􏶖USES: BYTE􏶗
 
 􏷘+􏷗􏷒send message to the dynamic debugger􏷑
 􏷐Sends a generic debug message to the dynamic debugger.􏷏
@@ -23,10 +24,24 @@ it is recomended you create the message using one of its constructor functions.�
     􏶲For now:􏶱
     􏶲Take the generic debug message, and dispatch on its type to pack-up and send the packet over the network.􏶱
     switch (􏵶dynamic debug message􏵷.m_eDataType){
-        case DYNAMIC_DEBUG_TYPE_INT:    􏵲send int udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_nIntValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);         break;
-        case DYNAMIC_DEBUG_TYPE_REAL:   􏵲send real udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_dRealValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);       break;
-        case DYNAMIC_DEBUG_TYPE_BOOL:   􏵲send bool udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_bBoolValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER);       break;
-        case DYNAMIC_DEBUG_TYPE_STRING: 􏵲send string udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_szStringValue,􏵶dynamic debug message􏵷.m_szPathName,DYNAMIC_DEBUG_VERSION_NUMBER); break;
+    
+        case DYNAMIC_DEBUG_TYPE_INT:
+            􏵲send int udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_nIntValue,􏵶dynamic debug message􏵷.m_szPathName);
+            break;
+            
+        case DYNAMIC_DEBUG_TYPE_REAL:
+            􏵲send real udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_dRealValue,􏵶dynamic debug message􏵷.m_szPathName);
+            break;
+            
+        case DYNAMIC_DEBUG_TYPE_BOOL:
+            􏵲send bool udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_bBoolValue,􏵶dynamic debug message􏵷.m_szPathName);
+            break;
+            
+        case DYNAMIC_DEBUG_TYPE_STRING:
+            􏵲send string udp packet􏵳􏵶dynamic debug message􏵷.m_uValue.m_szStringValue,􏵶dynamic debug message􏵷.m_szPathName);
+            break;
+            
+        default: perror("unknown type");
     }
 􏶳
 
@@ -35,37 +50,41 @@ it is recomended you create the message using one of its constructor functions.�
 􏶠􏶡
 􏶜c􏶝􏷆int􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
-􏶜c􏶝􏷆BYTE􏷅􏷄version􏷃􏷀The version number of the dynamic debug send protocol.􏶿
 􏶴
-/* TODO */
-􏶲turn parameters into UDP packet, and send.􏶱
-􏶲 - header?􏶱
-􏶲 - UDP message structure:􏶱
-􏶲 - Debug Type (byte)􏶱
-􏶲 - Version (byte)􏶱
-􏶲 - IValue Type (byte)􏶱
-􏶲 - Message Size (uint16)􏶱
-􏶲 - Data Payload (based on IValue)􏶱
-􏶲 - Name (Null Terminated)􏶱
+    􏶲the buffer to pack􏶱
+    BYTE pucMessage[50];
+    size_t uIterator=0;
+    
+    􏶲pack the header into the buffer􏶱
+    􏶲+1 so that we account for the '/0' as well􏶱
+    􏵲pack header􏵳pucMessage,uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_INT,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
+    
+    􏶲pack the debug value􏶱
+    PackBigEndian2ByteInvariance(pucMessage,uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
+    
+    
 􏶳
 
 􏷘-􏷗􏷒send real udp packet􏷑
 􏷐Uses parameters to send a debug udp packet to the dynamic debugger.􏷏
-􏶠􏶡
+􏶠􏶡 
 􏶜c􏶝􏷆double􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
-􏶜c􏶝􏷆BYTE􏷅􏷄version􏷃􏷀The version number of the dynamic debug send protocol.􏶿
 􏶴
-/* TODO */
-􏶲turn parameters into UDP packet, and send.􏶱
-􏶲 - header?􏶱
-􏶲 - UDP message structure:􏶱
-􏶲 - Debug Type (byte)􏶱
-􏶲 - Version (byte)􏶱
-􏶲 - IValue Type (byte)􏶱
-􏶲 - Message Size (uint16)􏶱
-􏶲 - Data Payload (based on IValue)􏶱
-􏶲 - Name (Null Terminated)􏶱
+    􏶲the buffer to pack􏶱
+    BYTE pucMessage[50];
+    size_t uIterator=0;
+    
+    􏶲pack the header into the buffer􏶱
+    􏶲+1 so that we account for the '/0' as well􏶱
+    􏵲pack header􏵳pucMessage,uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_REAL,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
+    
+    􏶲pack the debug value􏶱
+    PackBigEndian2ByteInvariance(pucMessage,uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
+    
+    􏶲pack the path name􏶱
+    􏶲+1 so that we pack the '/0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
 􏶳
 
 􏷘-􏷗􏷒send bool udp packet􏷑
@@ -73,18 +92,21 @@ it is recomended you create the message using one of its constructor functions.�
 􏶠􏶡
 􏶜c􏶝􏷆BOOL􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
-􏶜c􏶝􏷆BYTE􏷅􏷄version􏷃􏷀The version number of the dynamic debug send protocol.􏶿
 􏶴
-/* TODO */
-􏶲turn parameters into UDP packet, and send.􏶱
-􏶲 - header?􏶱
-􏶲 - UDP message structure:􏶱
-􏶲 - Debug Type (byte)􏶱
-􏶲 - Version (byte)􏶱
-􏶲 - IValue Type (byte)􏶱
-􏶲 - Message Size (uint16)􏶱
-􏶲 - Data Payload (based on IValue)􏶱
-􏶲 - Name (Null Terminated)􏶱
+    􏶲the buffer to pack􏶱
+    BYTE pucMessage[50];
+    size_t uIterator=0;
+    
+    􏶲pack the header into the buffer􏶱
+    􏶲+1 so that we account for the '/0' as well􏶱
+    􏵲pack header􏵳pucMessage,uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
+    
+    􏶲pack the debug value􏶱
+    PackBigEndian2ByteInvariance(pucMessage,uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
+    
+    􏶲pack the path name􏶱
+    􏶲+1 so that we pack the '/0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
 􏶳
 
 􏷘-􏷗􏷒send string udp packet􏷑
@@ -92,16 +114,82 @@ it is recomended you create the message using one of its constructor functions.�
 􏶠􏶡
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_STRING_VALUE]􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
-􏶜c􏶝􏷆BYTE􏷅􏷄version􏷃􏷀The version number of the dynamic debug send protocol.􏶿
 􏶴
-/* TODO */
-􏶲turn parameters into UDP packet, and send.􏶱
-􏶲 - header?􏶱
-􏶲 - UDP message structure:􏶱
-􏶲 - Debug Type (byte)􏶱
-􏶲 - Version (byte)􏶱
-􏶲 - IValue Type (byte)􏶱
-􏶲 - Message Size (uint16)􏶱
-􏶲 - Data Payload (based on IValue)􏶱
-􏶲 - Name (Null Terminated)􏶱
+    􏶲the buffer to pack􏶱
+    BYTE pucMessage[50];
+    size_t uIterator=0;
+    
+    􏶲pack the header into the buffer􏶱
+    􏶲+2 so that we account for both '/0' character which will be part of the message􏶱
+    􏵲pack header􏵳pucMessage,uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,strlen(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 2);
+    
+    􏶲pack the debug value􏶱
+    􏶲+1 so that we pack the '/0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,uIterator,􏵶debug value􏵷,strlen(􏵶debug value􏵷) + 1);
+    
+    􏶲pack the path name􏶱
+    􏶲+1 so that we pack the '/0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
 􏶳
+
+􏷘-􏷗􏷒pack header􏷑
+􏷐packs a dynamic debug header based on input parameters􏷏
+􏶠packs an array with header information, and increments an iterator for later packing of the payload􏶡
+􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜c􏶝􏷆DynamicDebugMessageTypeE􏷅􏷄message type􏷃􏷀the type of message being sent􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄payload size􏷃􏷀the size of the payload.  used as a sanity check by the receiver􏶿
+􏶴
+    􏶲get all of the header data in the appropriate types􏶱
+    􏶲*time not being sent in header􏶱
+    
+    􏶲who is sending the message, and who is receiving the message􏶱
+    BYTE ucSender  = DYNAMIC_DEBUG_DEVICE_HOST;
+    BYTE ucReceiver = DYNAMIC_DEBUG_DEVICE_DEBUG_SERVICE;
+    
+    􏶲The type of message that is being sent􏶱
+    WORD wType = 􏵶message type􏵷;
+    
+    􏶲*version currently excluded from message header􏶱
+    􏶲BYTE ucVersion = DYNAMIC_DEBUG_VERSION_NUMBER;􏶱
+    
+    􏶲To avoid race conditions, incrementing the count will need to be an atomic operation􏶱
+    􏶲we will use a semaphore to lock, increment the total count, apply it to our header, and then unlock.􏶱
+    WORD wCount = 􏵲calculate next count􏵳);
+    
+    􏶲The payload size of the message􏶱
+    WORD wSize = 􏵶payload size􏵷;
+    
+    􏶲pack the buffer in network byte order􏶱
+    PackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&ucSender,sizeof(ucSender));
+    PackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&ucReceiver,sizeof(ucReceiver));
+    PackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&wType,sizeof(wType));
+    PackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&wCount,sizeof(wCount));
+    PackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&wSize,sizeof(wSize));
+􏶳
+
+􏷘-􏷗􏷒calculate next count􏷑
+􏷐Calculates the next count of the message.􏷏
+􏶠The count must be incremented on each message, giving each message a unique count.  
+This function increments and returns a shared count in a thread safe manner.􏶡
+􏶾WORD􏶽􏶼count􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
+􏶴
+    􏶲a copy of the count to be used in the message header􏶱
+    WORD wCount;
+    
+    􏶲increment and apply the total count in a thread safe manner􏶱
+    SemaphoreTake(SEMAPHORE_DEBUG_DATA, SEMAPHORE_WAIT_FOREVER);
+    ++􏵴total messages sent􏵵;
+    wCount = 􏵴total messages sent􏵵;
+    SemaphoreGive(SEMAPHORE_DEBUG_DATA);
+    
+    return wCount;
+􏶳
+
+
+
+
+􏶨the total number of messages sent by the dynamic debugger􏶧
+􏶦starts at 0 when the sim starts, and continues to increment each packet sent out.  
+This value is a part of the message header and is used by receiver to send acks.􏶥
+􏶘-􏶙􏶰sc􏶯􏶮WORD􏶭􏶬total messages sent􏶫􏶪0􏶩

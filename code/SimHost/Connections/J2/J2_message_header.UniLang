@@ -1,11 +1,11 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲the header portion of a J2 message􏷱
 􏷰This portion of the message comes before the payload􏷯
 􏷮J2􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦stddef.h􏷥􏷢USES: size_t􏷡
-􏷦Defs.h􏷥􏷢USES: BYTE􏷡
+􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
+􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
 
 
 􏶨the type of the message􏶧
