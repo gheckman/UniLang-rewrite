@@ -6,7 +6,7 @@ Function for looking up how many days are in a certain month.
 􏷯
 􏷮Date Utilities􏷭 􏷮Date􏷭 􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
-􏷤􏷣􏷦Month􏷥􏷢USES: MonthE􏷡
+􏷤􏷣􏷦month􏷥􏷢USES: MonthE􏷡
 􏷤􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 
 

@@ -83,7 +83,7 @@ if (􏵴paused􏵵){
 􏶴
 if(!􏵴paused􏵵){
     􏶲update the elapsed time, and reset the tick marker for next time􏶱
-    􏵴elapsed time_ms􏵵 += TicksToMilliseconds(tickGet() - 􏵴last update tick amount􏵵);
+    􏵴elapsed time_ms􏵵 += (int)TicksToMilliseconds((float)(tickGet() - 􏵴last update tick amount􏵵));
     􏵴last update tick amount􏵵 = tickGet();
 }
 􏶳

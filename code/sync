@@ -8,7 +8,7 @@ BASE_DIRECTORY="$(dirname "$0")"
 . "$BASE_DIRECTORY""/.sync_impl/all"
 
 function Main(){
-
+  echo "started sync"
   #convert good code into terrible f2si code.
   #this take the good code repo, and puts the converted files, into an f2si repo.
   #--------------------#

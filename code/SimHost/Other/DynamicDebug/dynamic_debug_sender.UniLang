@@ -10,8 +10,11 @@ it is recommended you create the message using one of its constructor functions.
 􏷤􏷣􏷦DynamicDebugMessageData􏷥􏷢USES: DynamicDebugMessageT􏷡
 􏶔􏶕􏶒DynamicDebugConfiguration􏶓􏶖USES: MAX_LENGTH_OF_DEBUG_PATH_VALUE, MAX_LENGTH_OF_DEBUG_STRING_VALUE, DYNAMIC_DEBUG_VERSION_NUMBER􏶗
 􏶔􏶕􏶒DynamicDebugType􏶓􏶖USES: DynamicDebugTypeE􏶗
-􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
-􏶔􏶕􏶒Defs􏶓􏶖USES: BYTE􏶗
+􏶔􏶕􏶒string􏶓􏶖USES: strcpy(), strlen()􏶗
+􏶔􏶕􏶒Defs􏶓􏶖USES: BYTE, WORD􏶗
+􏶔􏶕􏶒SemaphoreManager􏶓􏶖USES: SemaphoreTake(), SemaphoreGive()􏶗
+􏶔􏶕􏶒SemaphoreList􏶓􏶖USES: SEMAPHORE_DEBUG_DATA􏶗
+􏶔􏶕􏶒PackUtilities􏶓􏶖USES: PackBigEndian2ByteInvariance()􏶗
 
 􏷘+􏷗􏷒send message to the dynamic debugger􏷑
 􏷐Sends a generic debug message to the dynamic debugger.􏷏
@@ -56,11 +59,11 @@ it is recommended you create the message using one of its constructor functions.
     size_t uIterator=0;
     
     􏶲pack the header into the buffer􏶱
-    􏶲+1 so that we account for the '/0' as well􏶱
-    􏵲pack header􏵳pucMessage,uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_INT,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
+    􏶲+1 so that we account for the '\0' as well􏶱
+    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_INTEGER,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
     
     􏶲pack the debug value􏶱
-    PackBigEndian2ByteInvariance(pucMessage,uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
     
     
 􏶳
@@ -76,15 +79,15 @@ it is recommended you create the message using one of its constructor functions.
     size_t uIterator=0;
     
     􏶲pack the header into the buffer􏶱
-    􏶲+1 so that we account for the '/0' as well􏶱
-    􏵲pack header􏵳pucMessage,uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_REAL,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
+    􏶲+1 so that we account for the '\0' as well􏶱
+    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_REAL,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
     
     􏶲pack the debug value􏶱
-    PackBigEndian2ByteInvariance(pucMessage,uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
     
     􏶲pack the path name􏶱
-    􏶲+1 so that we pack the '/0' as well􏶱
-    PackBigEndian2ByteInvariance(pucMessage,uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
+    􏶲+1 so that we pack the '\0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
 􏶳
 
 􏷘-􏷗􏷒send bool udp packet􏷑
@@ -98,15 +101,15 @@ it is recommended you create the message using one of its constructor functions.
     size_t uIterator=0;
     
     􏶲pack the header into the buffer􏶱
-    􏶲+1 so that we account for the '/0' as well􏶱
-    􏵲pack header􏵳pucMessage,uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
+    􏶲+1 so that we account for the '\0' as well􏶱
+    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
     
     􏶲pack the debug value􏶱
-    PackBigEndian2ByteInvariance(pucMessage,uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
     
     􏶲pack the path name􏶱
-    􏶲+1 so that we pack the '/0' as well􏶱
-    PackBigEndian2ByteInvariance(pucMessage,uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
+    􏶲+1 so that we pack the '\0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
 􏶳
 
 􏷘-􏷗􏷒send string udp packet􏷑
@@ -120,16 +123,16 @@ it is recommended you create the message using one of its constructor functions.
     size_t uIterator=0;
     
     􏶲pack the header into the buffer􏶱
-    􏶲+2 so that we account for both '/0' character which will be part of the message􏶱
-    􏵲pack header􏵳pucMessage,uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,strlen(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 2);
+    􏶲+2 so that we account for both '\0' character which will be part of the message􏶱
+    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,strlen(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 2);
     
     􏶲pack the debug value􏶱
-    􏶲+1 so that we pack the '/0' as well􏶱
-    PackBigEndian2ByteInvariance(pucMessage,uIterator,􏵶debug value􏵷,strlen(􏵶debug value􏵷) + 1);
+    􏶲+1 so that we pack the '\0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶debug value􏵷,strlen(􏵶debug value􏵷) + 1);
     
     􏶲pack the path name􏶱
-    􏶲+1 so that we pack the '/0' as well􏶱
-    PackBigEndian2ByteInvariance(pucMessage,uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
+    􏶲+1 so that we pack the '\0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
 􏶳
 
 􏷘-􏷗􏷒pack header􏷑
@@ -148,7 +151,7 @@ it is recommended you create the message using one of its constructor functions.
     BYTE ucReceiver = DYNAMIC_DEBUG_DEVICE_DEBUG_SERVICE;
     
     􏶲The type of message that is being sent􏶱
-    WORD wType = 􏵶message type􏵷;
+    WORD wType = (WORD)􏵶message type􏵷;
     
     􏶲*version currently excluded from message header􏶱
     􏶲BYTE ucVersion = DYNAMIC_DEBUG_VERSION_NUMBER;􏶱
@@ -158,7 +161,7 @@ it is recommended you create the message using one of its constructor functions.
     WORD wCount = 􏵲calculate next count􏵳);
     
     􏶲The payload size of the message􏶱
-    WORD wSize = 􏵶payload size􏵷;
+    WORD wSize = (WORD)􏵶payload size􏵷;
     
     􏶲pack the buffer in network byte order􏶱
     PackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&ucSender,sizeof(ucSender));
@@ -192,4 +195,4 @@ This function increments and returns a shared count in a thread safe manner.􏶡
 􏶨the total number of messages sent by the dynamic debugger􏶧
 􏶦starts at 0 when the sim starts, and continues to increment each packet sent out.  
 This value is a part of the message header and is used by receiver to send acks.􏶥
-􏶘-􏶙􏶰sc􏶯􏶮WORD􏶭􏶬total messages sent􏶫􏶪0􏶩
+􏶘-􏶙􏶰s􏶯􏶮WORD􏶭􏶬total messages sent􏶫􏶪0􏶩

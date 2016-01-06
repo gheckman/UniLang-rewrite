@@ -1,4 +1,4 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲A basic generic vector type for adding and accessing a dynamic number of elements.􏷱
 􏷰The capacity of the vector is equal to its size.
 Be sure to type cast the void* returned when accessing.
@@ -6,9 +6,11 @@ This is a typical practice of void pointers.􏷯
 􏷮Vector􏷭 􏷮Data Structure􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷤stdio􏷣􏷢USES: malloc(), realloc(), free(), sizeof()􏷡
-􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+
+􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏶔s􏶕􏶒stdlib.h􏶓􏶖USES: malloc(), realloc(), free(), sizeof()􏶗
+􏶔s􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
