@@ -3,7 +3,7 @@
 􏷰A dynamic debug message can be created with different constructor functions.  
 Due to the message representing variant type data internally,
 it is recommended you create the message using one of its constructor functions.  
-The reason we create this generic type in the first place, is so that the data can be store-able,
+The reason we create this generic type in the first place, is so that the data can be storable,
 and different message types can be iterated over.􏷯
 􏷮Debug􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫

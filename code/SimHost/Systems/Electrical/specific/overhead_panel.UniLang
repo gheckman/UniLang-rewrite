@@ -1,4 +1,4 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲􏶏 specific to the UH72A DC power system.􏷱
 􏷰Stores a collection of 􏶏 node IDs and builds them into the generic electrical graph.  
 The node Ids are for the left, center, and right circuit breaker panels.  
@@ -8,10 +8,10 @@ The center panel circuit breakers are derived from MEP Instrument Functionality 
 􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
-􏷦AircraftGeneralConst􏷥􏷢USES: ElectricalSystemSideE􏷡
-􏷤string􏷣􏷢USES: strcpy()􏷡
+􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤􏷣􏷦AircraftGeneralConst􏷥􏷢USES: ElectricalSystemSideE􏷡
+􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏

@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲Defined size restrictions for various arrays used by graph components􏷱
 􏷰If errors are shown while using the graph, a particular limit has been hit.  
 Hitting the limits and getting notified should not cause problems for the actual running code,

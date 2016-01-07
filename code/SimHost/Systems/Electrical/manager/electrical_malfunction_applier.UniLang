@@ -1,11 +1,11 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲Applies electrical malfunctions to the electrical graph triggered from the IOS data􏷱
 􏷰We assume the malfunctions have already been read into the input struct.􏷯
 􏷮Electrical_System􏷭 􏷮Malfunction_Applier􏷭
 􏷬Trevor Hickey􏷫
-􏷦ElectricalData􏷥􏷢USES: ElectricalMalfunctionsT􏷡
-􏷦DCPowerSystem􏷥􏷢USES: DCPowerSystemOutputsT􏷡
 
+􏷤􏷣􏷦ElectricalData􏷥􏷢USES: ElectricalMalfunctionsT􏷡
+􏷤􏷣􏷦DCPowerSystem􏷥􏷢USES: DCPowerSystemOutputsT􏷡
 
 􏷘+􏷗􏷒apply electrical malfunctions􏷑
 􏷐Applies electrical malfunctions to the electrical graph triggered from the IOS data􏷏

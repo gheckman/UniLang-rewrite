@@ -13,19 +13,20 @@ The year limit of datetime is now the max size of an unsigned int.􏷯
 􏷬Trevor Hickey􏷫
 􏷤􏷣􏷦Month􏷥􏷢USES: MonthE􏷡
 􏶔􏶕􏶒DateUtilities􏶓􏶖USES: IsLeapYear()􏶗
+􏶔􏶕􏶒math􏶓􏶖USES: fabs(), fmod()􏶗
 
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Set Time􏷏
 􏶠
 Set the 􏶐 to a particular date and time.
-Once a 􏶐 is initalized, it can only progress forward.  
-Reseting the time to a different value will require a re-initalize.
+Once a 􏶐 is initialized, it can only progress forward.  
+Reseting the time to a different value will require a re-initialize.
 􏶡
 􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀The month to start the date at􏶿
 􏶜c􏶝􏷆unsigned int􏷅􏷄day􏷃􏷀the number of days in a month to start the current date time at􏶿
 􏶜c􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year to set the date at􏶿
-􏶜c􏶝􏷆unsigned int􏷅􏷄milliseconds􏷃􏷀the number of milliseconds in a day to start the current date time at􏶿
+􏶜c􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀the number of milliseconds in a day to start the current date time at􏶿
 􏶴
 􏶲we assume the input parameters are valid􏶱
 􏵴day􏵵 = 􏵶day􏵷;
@@ -38,7 +39,7 @@ Reseting the time to a different value will require a re-initalize.
 􏷘+􏷗􏷒increase by number of milliseconds􏷑
 􏷐Increment the 􏶐 by a number of milliseconds.􏷏
 􏶠Moving forward a number of milliseconds will properly adjust all of the other values.􏶡
-􏶜c􏶝􏷆unsigned int􏷅􏷄number of milliseconds􏷃􏷀the number of milliseconds to increase the current date time by􏶿
+􏶜c􏶝􏷆double􏷅􏷄number of milliseconds􏷃􏷀the number of milliseconds to increase the current date time by􏶿
 􏶴
 
 􏶲increase the number of milliseconds.􏶱
@@ -59,10 +60,10 @@ large enough for our use cases.􏶱
 􏶴
     􏶲handles milliseconds overflow
     wraps value for milliseconds and increments day during millisecond overflow􏶱
-    if(􏵴milliseconds􏵵 >= NUMBER_OF_MILLISECONDS_IN_A_DAY)
+    if (fabs(􏵴milliseconds􏵵 - (double)NUMBER_OF_MILLISECONDS_IN_A_DAY) < 0.00001f || 􏵴milliseconds􏵵 > (double)NUMBER_OF_MILLISECONDS_IN_A_DAY)
     {
-        􏵴day􏵵 += (􏵴milliseconds􏵵 / NUMBER_OF_MILLISECONDS_IN_A_DAY);
-        􏵴milliseconds􏵵 %= NUMBER_OF_MILLISECONDS_IN_A_DAY;
+        􏵴day􏵵 += (unsigned int)(􏵴milliseconds􏵵 / (double)NUMBER_OF_MILLISECONDS_IN_A_DAY);
+        􏵴milliseconds􏵵 = fmod(􏵴milliseconds􏵵,NUMBER_OF_MILLISECONDS_IN_A_DAY);
     }
 􏶳
 
@@ -99,7 +100,7 @@ This handles leap years.􏷏
 
 􏶨the number of milliseconds of the current day􏶧
 􏶦expect the value to be in a valid range of (0 - 86,399,999)􏶥
-􏶌observe􏶑􏶘-􏶙􏶮unsigned int􏶭􏶬milliseconds􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶮double􏶭􏶬milliseconds􏶫􏶪0􏶩
 
 􏶨the current calendar day of the month􏶧
 􏶦expect the value to be in a valid range of (1 - 31)􏶥

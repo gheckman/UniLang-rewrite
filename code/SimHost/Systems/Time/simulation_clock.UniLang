@@ -16,7 +16,7 @@ It can also be reset to another time if desired.􏷯
 􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀the date month to start the clock at. valid range: (1 - 12)􏶿
 􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀the day of the month to start the clock at.  valid range: (1 - 31)􏶿
 􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀the date year to start the clock at.  valid range: any positive year number, that fits the size of the type.􏶿
-􏶜c􏶝􏷆int􏷅􏷄milliseconds􏷃􏷀how many milliseconds of the current day to start the time at.  valid range: (0 - 86,399,999)􏶿
+􏶜c􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀how many milliseconds of the current day to start the time at.  valid range: (0 - 86,399,999)􏶿
 􏶴
     􏶲construct date based on passed in values􏶱
     InitializeDateTime(&􏵴date time􏵵,
@@ -35,7 +35,7 @@ It can also be reset to another time if desired.􏷯
 􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀current month of the year. valid range: (1 - 12)􏶿
 􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀the current calendar day of the month.  valid range: (1 - 31)􏶿
 􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀the current year.  valid range: any positive year number, that fits the size of the type.􏶿
-􏶜c􏶝􏷆int􏷅􏷄milliseconds􏷃􏷀the number of milliseconds of the current day.  valid range: (0 - 86,399,999)􏶿
+􏶜c􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀the number of milliseconds of the current day.  valid range: (0 - 86,399,999)􏶿
 􏶴
     􏶲reset the timer and set the datetime to a new date and time􏶱
 
@@ -107,7 +107,7 @@ will already be up-to-date.􏶡
     tTimerInputs.m_bUpdate = 􏵰;
 
     􏶲use the updated timer to update the date and time􏶱
-    tDateTimeInputs.m_uNumberOfMilliseconds = 􏵴timer􏵵.m_nElapsedTime_ms;
+    tDateTimeInputs.m_dNumberOfMilliseconds = 􏵴timer􏵵.m_dElapsedTime_ms;
     UpdateDateTime(&􏵴date time􏵵,&tDateTimeInputs);
 
     􏶲reset timer for next update􏶱

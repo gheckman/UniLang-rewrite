@@ -1,12 +1,12 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲A 􏶏 specific to the UH72A DC power system.􏷱
 􏷰Stores a collection of 􏶏 node IDs and builds them into the generic electrical graph.􏷯
 􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
-􏷤string􏷣􏷢USES: strcpy()􏷡
+􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏

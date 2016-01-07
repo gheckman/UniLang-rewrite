@@ -1,16 +1,16 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲An electrical graph that can construct custom circuit configurations􏷱
 􏷰Intended to be generic enough to be used for a variety of electrical system use cases.􏷯
 􏷮Electrical_System􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦stddef􏷥  􏷢HASA: size_t􏷡
-􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
-􏷦Node􏷥    􏷢HASA: NodeOutputsT􏷡
-􏷦Paths􏷥   􏷢HASA: PathsOutputsT􏷡
-􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_ELECTRICAL_NODES􏷡
-􏷤NodeType􏷣􏷢USES: NodeTypeE􏷡
-􏷤stdio􏷣   􏷢USES: perror()􏷡
+􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷤􏷣􏷦Node􏷥􏷢HASA: NodeOutputsT􏷡
+􏷤􏷣􏷦Paths􏷥􏷢HASA: PathsOutputsT􏷡
+􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_ELECTRICAL_NODES􏷡
+􏶔􏶕􏶒NodeType􏶓􏶖USES: NodeTypeE􏶗
+􏶔􏶕􏶒stdio􏶓􏶖USES: perror()􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏

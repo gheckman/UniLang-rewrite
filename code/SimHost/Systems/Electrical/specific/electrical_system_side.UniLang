@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲A location enum for easy indexing into the left or right portion of the DC Power system􏷱
 􏷰The reason we conceptually split the DC power system into left and right sides,
 is becuase there is a lot of redundancy/symmetry throughout the system.  Although the left and right

@@ -83,14 +83,14 @@ if (􏵴paused􏵵){
 􏶴
 if(!􏵴paused􏵵){
     􏶲update the elapsed time, and reset the tick marker for next time􏶱
-    􏵴elapsed time_ms􏵵 += (int)TicksToMilliseconds((float)(tickGet() - 􏵴last update tick amount􏵵));
+    􏵴elapsed time_ms􏵵 += TicksToMilliseconds((float)(tickGet() - 􏵴last update tick amount􏵵));
     􏵴last update tick amount􏵵 = tickGet();
 }
 􏶳
 
 􏶨The amount of milliseconds that have gone by􏶧
 􏶦Will change on each update unless the timer is paused􏶥
-􏶌observe􏶑􏶘-􏶙􏶮int􏶭􏶬elapsed time_ms􏶫􏶪0􏶩
+􏶌observe􏶑􏶘-􏶙􏶮double􏶭􏶬elapsed time_ms􏶫􏶪0􏶩
 
 􏶨Whether the timer is paused or unpaused􏶧
 􏶦It can be changed during an update􏶥
@@ -98,4 +98,4 @@ if(!􏵴paused􏵵){
 
 􏶨The elapsed time from the last update􏶧
 􏶦Used internally to keep track of how much time has gone by since the last update.􏶥
-􏶘-􏶙􏶮int􏶭􏶬last update tick amount􏶫􏶪0􏶩
+􏶘-􏶙􏶮unsigned long􏶭􏶬last update tick amount􏶫􏶪0􏶩

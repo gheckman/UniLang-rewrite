@@ -1,4 +1,4 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲The connection points between electrical components (nodes)􏷱
 􏷰nodes contain junctions to describe where they can send current to.
 From a node's perspective, think of a junction like this:
@@ -6,8 +6,8 @@ From a node's perspective, think of a junction like this:
 􏷮Electrical_System􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
 
 
 􏷘+􏷗􏷒􏶐􏷑

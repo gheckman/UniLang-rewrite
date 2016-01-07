@@ -1,4 +1,4 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲A generic node type which represents an electrical component inside of an electrical graph.
 Components of an electrical graph that can be interconnected through use of a node.􏷱
 􏷰From a computer science perspective, a NodeT is the vertex of a graph.
@@ -41,12 +41,12 @@ Behaves like this when traversing:
 􏷮Time􏷭 􏷮Date􏷭 􏷮Component􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
-􏷦NodeType􏷥􏷢HASA: NodeTypeE􏷡
-􏷦Junction􏷥􏷢HASA: JunctionOutputsT􏷡
-􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME, MAX_NUMBER_OF_JUNCTIONS_IN_NODE􏷡
-􏷤string􏷣􏷢USES: strcpy()􏷡
+􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷤􏷣􏷦NodeType􏷥􏷢HASA: NodeTypeE􏷡
+􏷤􏷣􏷦Junction􏷥􏷢HASA: JunctionOutputsT􏷡
+􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME, MAX_NUMBER_OF_JUNCTIONS_IN_NODE􏷡
+􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
 
 
 􏷘+􏷗􏷒􏶐􏷑

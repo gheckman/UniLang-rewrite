@@ -15,6 +15,9 @@ it is recommended you create the message using one of its constructor functions.
 􏶔􏶕􏶒SemaphoreManager􏶓􏶖USES: SemaphoreTake(), SemaphoreGive()􏶗
 􏶔􏶕􏶒SemaphoreList􏶓􏶖USES: SEMAPHORE_DEBUG_DATA􏶗
 􏶔􏶕􏶒PackUtilities􏶓􏶖USES: PackBigEndian2ByteInvariance()􏶗
+􏶔􏶕􏶒SocketManager􏶓􏶖USES: SocketSend()􏶗
+􏶔􏶕􏶒SocketList􏶓􏶖USES: SOCKET_GEN_DEBUG_DATA_SEND􏶗
+􏶔􏶕􏶒stdioLib.h􏶓􏶖USES: perror()􏶗
 
 􏷘+􏷗􏷒send message to the dynamic debugger􏷑
 􏷐Sends a generic debug message to the dynamic debugger.􏷏
@@ -54,18 +57,7 @@ it is recommended you create the message using one of its constructor functions.
 􏶜c􏶝􏷆int􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
 􏶴
-    􏶲the buffer to pack􏶱
-    BYTE pucMessage[50];
-    size_t uIterator=0;
-    
-    􏶲pack the header into the buffer􏶱
-    􏶲+1 so that we account for the '\0' as well􏶱
-    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_INTEGER,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
-    
-    􏶲pack the debug value􏶱
-    PackBigEndian2ByteInvariance(pucMessage,&uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
-    
-    
+    􏵲send non string value􏵳&􏵶debug value􏵷,sizeof(􏵶debug value􏵷),DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_INTEGER,􏵶path name􏵷);
 􏶳
 
 􏷘-􏷗􏷒send real udp packet􏷑
@@ -74,20 +66,7 @@ it is recommended you create the message using one of its constructor functions.
 􏶜c􏶝􏷆double􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
 􏶴
-    􏶲the buffer to pack􏶱
-    BYTE pucMessage[50];
-    size_t uIterator=0;
-    
-    􏶲pack the header into the buffer􏶱
-    􏶲+1 so that we account for the '\0' as well􏶱
-    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_REAL,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
-    
-    􏶲pack the debug value􏶱
-    PackBigEndian2ByteInvariance(pucMessage,&uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
-    
-    􏶲pack the path name􏶱
-    􏶲+1 so that we pack the '\0' as well􏶱
-    PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
+    􏵲send non string value􏵳&􏵶debug value􏵷,sizeof(􏵶debug value􏵷),DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_REAL,􏵶path name􏵷);
 􏶳
 
 􏷘-􏷗􏷒send bool udp packet􏷑
@@ -96,20 +75,7 @@ it is recommended you create the message using one of its constructor functions.
 􏶜c􏶝􏷆BOOL􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
 􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
 􏶴
-    􏶲the buffer to pack􏶱
-    BYTE pucMessage[50];
-    size_t uIterator=0;
-    
-    􏶲pack the header into the buffer􏶱
-    􏶲+1 so that we account for the '\0' as well􏶱
-    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,sizeof(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 1);
-    
-    􏶲pack the debug value􏶱
-    PackBigEndian2ByteInvariance(pucMessage,&uIterator,&􏵶debug value􏵷,sizeof(􏵶debug value􏵷));
-    
-    􏶲pack the path name􏶱
-    􏶲+1 so that we pack the '\0' as well􏶱
-    PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
+    􏵲send non string value􏵳&􏵶debug value􏵷,sizeof(􏵶debug value􏵷),DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,􏵶path name􏵷);
 􏶳
 
 􏷘-􏷗􏷒send string udp packet􏷑
@@ -124,7 +90,7 @@ it is recommended you create the message using one of its constructor functions.
     
     􏶲pack the header into the buffer􏶱
     􏶲+2 so that we account for both '\0' character which will be part of the message􏶱
-    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_BOOLEAN,strlen(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 2);
+    􏵲pack header􏵳pucMessage,&uIterator,DYNAMIC_DEBUG_MESSAGE_TYPE_SEND_STRING,strlen(􏵶debug value􏵷) + strlen(􏵶path name􏵷) + 2);
     
     􏶲pack the debug value􏶱
     􏶲+1 so that we pack the '\0' as well􏶱
@@ -133,6 +99,9 @@ it is recommended you create the message using one of its constructor functions.
     􏶲pack the path name􏶱
     􏶲+1 so that we pack the '\0' as well􏶱
     PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
+    
+    􏶲send out the message􏶱
+    􏵲send and handle errors􏵳pucMessage,uIterator);
 􏶳
 
 􏷘-􏷗􏷒pack header􏷑
@@ -171,6 +140,35 @@ it is recommended you create the message using one of its constructor functions.
     PackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&wSize,sizeof(wSize));
 􏶳
 
+
+􏷘-􏷗􏷒send non string value􏷑
+􏷐packs and sends a non-string value message􏷏
+􏶠packing of strings must be done differently than normal types􏶡
+􏶜c􏶝􏷆void*const􏷅􏷄debug value􏷃􏷀The value to send as the payload of the UDP message.􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄value size􏷃􏷀The size of the value being sent􏶿
+􏶜c􏶝􏷆DynamicDebugMessageTypeE􏷅􏷄message type􏷃􏷀The size of the value being sent􏶿
+􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
+􏶴
+    􏶲the buffer to pack􏶱
+    BYTE pucMessage[50];
+    size_t uIterator=0;
+    
+    􏶲pack the header into the buffer􏶱
+    􏶲+1 so that we account for the '\0' as well􏶱
+    􏵲pack header􏵳pucMessage,&uIterator,􏵶message type􏵷,􏵶value size􏵷 + strlen(􏵶path name􏵷) + 1);
+    
+    􏶲pack the debug value􏶱
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶debug value􏵷,􏵶value size􏵷);
+    
+    􏶲pack the path name􏶱
+    􏶲+1 so that we pack the '\0' as well􏶱
+    PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷)+1);
+    
+    􏶲send out the message􏶱
+    􏵲send and handle errors􏵳pucMessage,uIterator);
+􏶳
+
+
 􏷘-􏷗􏷒calculate next count􏷑
 􏷐Calculates the next count of the message.􏷏
 􏶠The count must be incremented on each message, giving each message a unique count.  
@@ -188,6 +186,26 @@ This function increments and returns a shared count in a thread safe manner.􏶡
     
     return wCount;
 􏶳
+
+
+􏷘-􏷗􏷒send and handle errors􏷑
+􏷐Sends out the data buffer over the network􏷏
+􏶠relies on socket information􏶡
+􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶴
+    􏶲if byte count is zero, report buffer failure􏶱
+    􏶲if SocketSend fails, report send failure􏶱
+    if (􏵶buffer iterator􏵷 == 0)
+    {
+        perror("DynamicDebug tx buffer failure");
+    }
+    else if (SocketSend(SOCKET_GEN_DEBUG_DATA_SEND, (char *)􏵶buffer􏵷, 􏵶buffer iterator􏵷) == ERROR)
+    {
+        perror("DynamicDebug transmit data failure");
+    }
+􏶳
+
 
 
 

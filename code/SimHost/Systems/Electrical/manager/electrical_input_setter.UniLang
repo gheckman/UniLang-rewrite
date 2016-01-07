@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲Handles retrieving all of the electrical inputs from the various systems and connections􏷱
 􏷰These functions were separated out of the manager to lower the manager's dependency count.  
 The manager is then easier to read, and easier to test.  
@@ -6,10 +6,11 @@ These functions only exist to copy all of the data from various structures,
 and put it into the electrical system's inputs.􏷯
 􏷮Electrical_System􏷭 􏷮Input_Setter􏷭
 􏷬Trevor Hickey􏷫
-􏷦ElectricalData􏷥􏷢USES: ElectricalSystemInputsT􏷡
-􏷦PlcCommunication􏷥􏷢USES: PLCInConnectionDataT􏷡
-􏷤Ownship􏷣􏷢USES: Read functions􏷡
-􏷤AircraftGeneralConst􏷣􏷢USES: constants􏷡
+
+􏷤􏷣􏷦ElectricalData􏷥􏷢USES: ElectricalSystemInputsT􏷡
+􏷤􏷣􏷦PlcCommunication􏷥􏷢USES: PLCInConnectionDataT􏷡
+􏶔􏶕􏶒Ownship􏶓􏶖USES: Read functions􏶗
+􏶔􏶕􏶒AircraftGeneralConst􏶓􏶖USES: constants􏶗
 
 􏷘+􏷗􏷒set electrical inputs􏷑
 􏷐Fills the electrical manager's inputs with the appropriate data􏷏

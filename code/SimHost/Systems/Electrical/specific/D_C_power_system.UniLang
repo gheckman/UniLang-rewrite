@@ -1,19 +1,19 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲The entire UH72A DC power system.􏷱
 􏷰Contains both the DC power system circuit represented through a generic electrical graph,
 as well as a collection of node IDs to target any node on the graph directly.􏷯
 􏷮Electrical_System􏷭 􏷮Circuit_Box􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
-􏷦AfterJunctionBox􏷥 􏷢HASA: AfterJunctionBoxOutputsT􏷡
-􏷦BatteryBox􏷥       􏷢HASA: BatteryBoxOutputsT􏷡
-􏷦DiodeBox􏷥         􏷢HASA: DiodeBoxOutputsT􏷡
-􏷦DistributionBox􏷥  􏷢HASA: DistributionBoxOutputsT􏷡
-􏷦OverheadPanel􏷥  􏷢HASA: OverheadPanelOutputsT􏷡
-􏷤string􏷣􏷢USES: strcpy()􏷡
-􏷤AircraftGeneralConst􏷣􏷢USES: ElectricalSystemSideE􏷡
+􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
+􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤􏷣􏷦AfterJunctionBox􏷥􏷢HASA: AfterJunctionBoxOutputsT􏷡
+􏷤􏷣􏷦BatteryBox􏷥􏷢HASA: BatteryBoxOutputsT􏷡
+􏷤􏷣􏷦DiodeBox􏷥􏷢HASA: DiodeBoxOutputsT􏷡
+􏷤􏷣􏷦DistributionBox􏷥􏷢HASA: DistributionBoxOutputsT􏷡
+􏷤􏷣􏷦OverheadPanel􏷥􏷢HASA: OverheadPanelOutputsT􏷡
+􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
+􏶔􏶕􏶒AircraftGeneralConst􏶓􏶖USES: ElectricalSystemSideE􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
