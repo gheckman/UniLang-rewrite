@@ -1,10 +1,10 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲The entry point to running the time thread.􏷱
 􏷰The time thread is responsible for updating the time system at high priority.􏷯
 􏷮Concurrency􏷭 􏷮Time􏷭
 􏷬Trevor Hickey􏷫
-􏷤TimeManager􏷣􏷢USES: TimeManagerT􏷡
-􏷤TimeUtilities􏷣􏷢USES: DelayTaskNumberOfMilliseconds()􏷡
+􏶔􏶕􏶒TimeManager􏶓􏶖USES: TimeManagerT􏶗
+􏶔􏶕􏶒TimeUtilities􏶓􏶖USES: DelayTaskNumberOfMilliseconds()􏶗
 
 􏶨how long to delay the update of the time manager.􏶧
 􏶘-􏶙􏶰cs􏶯􏶮unsigned int􏶭􏶬task delay amount ms􏶫􏶪10􏶩

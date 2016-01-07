@@ -1,4 +1,4 @@
-􏶞global􏶟
+􏶞g􏶟
 􏷲Aural Connection Configuration􏷱
 􏷰IP addresses and port numbers􏷯
 􏷮Connections􏷭
@@ -6,6 +6,7 @@
 􏷬Trevor Hickey􏷫
 
 􏵺􏵻􏵸􏵹􏵾Aural IP Address􏵿􏵼"172.31.3.11"􏵽
-􏵺􏵻􏵸􏵹􏵾Aural send 1 port number􏵿􏵼49250􏵽
-􏵺􏵻􏵸􏵹􏵾Aural send 2 port number􏵿􏵼49251􏵽
-􏵺􏵻􏵸􏵹􏵾Aural receive port number􏵿􏵼49250􏵽
+􏵺􏵻􏵸􏵹􏵾AURAL_ASTI_ENV_SEND_PORT_NUMBER􏵿􏵼49250􏵽
+􏵺􏵻􏵸􏵹􏵾AURAL_ASTI_RADIO_COCKPIT_SEND_PORT_NUMBER􏵿􏵼49251􏵽
+􏵺􏵻􏵸􏵹􏵾AURAL_ASTI_RADIO_INSTRUCTOR_SEND_PORT_NUMBER􏵿􏵼49252􏵽
+􏵺􏵻􏵸􏵹􏵾AURAL_ATSI_RECEIVE_PORT_NUMBER􏵿􏵼49250􏵽

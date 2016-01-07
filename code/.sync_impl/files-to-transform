@@ -66,13 +66,13 @@ function Transfer_Components(){ :
   Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
 }
 function Transfer_Connections_Config(){ :
-  #Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
-  #Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
+  Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
+  Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
   #Transfer-Global "Sep_communication_config" "Connections/UDP/SEP";
-  #Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
-  #Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
-  #Transfer-Global "aural_communication_config" "Connections/UDP/Aural";
-  #Transfer-Global "bug_eye_communication_config" "Connections/UDP/BugEye";
+  Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
+  Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
+  Transfer-Global "aural_communication_config" "Connections/UDP/Aural";
+  Transfer-Global "bug_eye_communication_config" "Connections/UDP/BugEye";
   #Transfer-Global "ctrl_loader_communication_config" "Connections/UDP/ControlLoader";
   #Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
   #Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
@@ -98,11 +98,11 @@ function Transform-And_Transfer-SimHost-Files(){ :
   #Step_In_Call_Function_Step_Out "Systems/Electrical/specific"   Transfer_Electrical_Specific;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/manager"    Transfer_Electrical_Manager;
   #Step_In_Call_Function_Step_Out "Systems/Electrical/components" Transfer_Electrical_Components;
-  #Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
-  #Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
-  #Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
-  #Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
-  #Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;
+  Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
+  Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
+  Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
+  Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
+  Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;
   #Step_In_Call_Function_Step_Out "Other/DynamicDebug"            Transfer_Dynamic_Debug;
 }
 

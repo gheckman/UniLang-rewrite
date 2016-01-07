@@ -1,10 +1,10 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲A switch that can be in one 1 of 3 states.􏷱
 􏷰Used for three-way toggle switches, and other switches that can be in only 3 states.􏷯
 􏷮Component􏷭 􏷮Switch􏷭
 􏷬Trevor Hickey􏷫
 
-􏷦TriState􏷥􏷢HASA: TriStateE􏷡
+􏷤􏷣􏷦TriState􏷥􏷢HASA: TriStateE􏷡
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
