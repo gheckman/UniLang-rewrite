@@ -8,7 +8,6 @@ function Transfer-Global(){
   #Document-It "$1";
   Remove-Generated-Code-From-Work-Area "$1";
 }
-
 function Transfer-Object-Good(){
    Print-Whats-Happening "Good Object" "$1"
    Export-It-Good "$1";
@@ -17,7 +16,7 @@ function Transfer-Object-Good(){
    Test-It "$1" "$3";
    #Document-It "$1";
    Remove-Generated-Code-From-Work-Area "$1";
- }
+}
 function Transfer-Object-Bad-Bools(){
    Print-Whats-Happening "Bad Object (BOOLS)" "$1"
    Export-It-Bad-Bools "$1";
@@ -35,7 +34,16 @@ function Transfer-Object-Bad-Enums(){
    Test-It "$1" "$3";
    #Document-It "$1";
    Remove-Generated-Code-From-Work-Area "$1";
- }
+}
+function Transfer-Data(){
+   Print-Whats-Happening "Data" "$1"
+   Export-It-Good "$1";
+   Copy-It "$1" "$2";
+   Style-It "$1" "$2";
+   #Test-It "$1" "$3";
+   #Document-It "$1";
+}
+   
 
 
 
@@ -94,11 +102,11 @@ function Style-It(){
   #format the code once it's there (fun fact: clang-format will remove the empty newline at the end; which is undesirable, but unavoidable)
   #We just force format where we think the file is going to show up.  It might be a header file on its own,
   #it might actually be in a newly created directory
-  clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
-  clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
-  clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
-  clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
-  clang-format-3.6 -style=file -i "$PossibleHeaderName" > /dev/null 2>&1;
+  $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
+  $CLANG_FORMAT_TOOL -style=file -i "$PossibleHeaderName" > /dev/null 2>&1;
   
   #optionally do this:
   #need to fix the bulk updater to just bail out if the file doesn't exist.  
@@ -138,8 +146,8 @@ function Test-It(){
   
   mkdir -p "$FULL_PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src";
   cp -rf "$f2siName""Wrapper" "$FULL_PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"
-  clang-format-3.6 -style=file -i "$FULL_PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"/"$f2siName""Wrapper"/*.hpp
-  clang-format-3.6 -style=file -i "$FULL_PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"/"$f2siName""Wrapper"/*.cpp
+  $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"/"$f2siName""Wrapper"/*.hpp
+  $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_TEST_ROOT""$2"/"$f2siName"/"Linux/Src"/"$f2siName""Wrapper"/*.cpp
 }
 
 function Remove-Generated-Code-From-Work-Area(){
@@ -159,13 +167,13 @@ function Remove-Generated-Code-From-Work-Area(){
 
 function Clang-Format-Some-Other-Files(){
 echo "formatting other files...";
-  #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.h"
-  #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.c"
-  #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Shared/ffs/FfsTypes.h"
-  #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.h
-  #clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.c
-  clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Connections/UDP/J2Communication/J2Messages"/*.h
-  clang-format-3.6 -style=file -i "$FULL_PATH_TO_CODE_ROOT""Connections/UDP/J2Communication/J2Messages"/*.c
+  #$CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.h"
+  #$CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""Shared/ffs/FfsCommon.c"
+  #$CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""Shared/ffs/FfsTypes.h"
+  #$CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.h
+  #$CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""SystemManagers/Electrical"/*.c
+  $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""Connections/UDP/J2Communication/J2Messages"/*.h
+  $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""Connections/UDP/J2Communication/J2Messages"/*.c
 }
 
 function Single-Newline-At-The-End-Of-Every-File(){

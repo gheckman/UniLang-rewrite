@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+
+
+#stack based directory changing.  
+#Used to step into directories, and make conversion based on relative path,
+#steping out after can be done automatically.
 function Silently_Go_Back_To_The_Previous_Pwd(){
   popd > /dev/null 2>&1;
 }
@@ -53,7 +58,7 @@ function Transfer_Electrical_Manager(){ :
 
 function Transfer_Electrical_Manager_Data(){ :
   #data breakdown
-  Transfer-Object-Good "electrical_malfunctions" "SystemManagers/Electrical/ElectricalData"
+  Transfer-Data "electrical_malfunctions" "SystemManagers/Electrical/ElectricalData"
   #Transfer-Global "electrical_power_flags"
   #Transfer-Global "electrical_screen_data"
   #Transfer-Global "electrical_switches"

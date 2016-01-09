@@ -2,8 +2,12 @@
 
 #nonmutatable globals
 
-#OTHER
+#TOOL NAMES
 TRANSCOMPILER_TOOL='unilang-transcompiler';
+CLANG_FORMAT_TOOL='clang-format';
+
+
+
 UNILANG_FILE_EXTENSION='UniLang';
 
 ###################
