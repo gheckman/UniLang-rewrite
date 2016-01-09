@@ -6,7 +6,7 @@
 
 􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
 􏷤􏷣􏷦Path􏷥􏷢HASA: PathOutputsT􏷡
-􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND􏷡
+􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_VALID_PATHS_THROUGH_THE_CIRCUIT, MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND􏷡
 
 
 􏷘+􏷗􏷒􏶐􏷑

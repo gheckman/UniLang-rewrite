@@ -1,0 +1,65 @@
+􏶞o􏶟
+􏷲electrical malfunctions􏷱
+􏷰Derived from the malfunctions Excel sheet
+??s equal the ?? marks in the document.􏷯
+􏷮electrical􏷭􏷮malfunctions􏷭
+􏷬Trevor Hickey􏷫
+
+􏶨Batt relay fails open􏶧
+􏶦BAT DISCON caution advisory on CAD􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬battery relay fails􏶫􏵚􏵛􏶪􏶩
+
+􏶨Bus Tie 1 Fails Open􏶧
+􏶦No load sharing possible BUSTIE OPEN caution indication and battery will not be charged􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬bus tie 1 fails open􏶫􏵚􏵛􏶪􏶩
+
+􏶨Bus Tie 2 Fails Open􏶧
+􏶦No load sharing possible BUSTIE OPEN caution indication and battery will not be charged􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬bus tie 2 fails open􏶫􏵚􏵛􏶪􏶩
+
+􏶨malfunction on battery bus􏶧
+􏶦??􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬circuit battery bus􏶫􏵚􏵛􏶪􏶩
+
+􏶨Starter/Generator 1 temperature high􏶧
+􏶦amp range=?􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 1 starter generator overheat􏶫􏵚􏵛􏶪􏶩
+
+􏶨Starter/Generator 2 temperature high􏶧
+􏶦amp range=?􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 2 starter generator overheat􏶫􏵚􏵛􏶪􏶩
+
+􏶨Respective generator is disconnected from the power distribution system􏶧
+􏶦If one generator has failed, both non-essential buses are disconnected.
+If both generators are failed both non-essential buses and both shed buses are disconnected.
+BATT DISCH warning illuminated.􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 1 starter generator fail􏶫􏵚􏵛􏶪􏶩
+
+􏶨Respective generator is disconnected from the power distribution system􏶧
+􏶦If one generator has failed, both non-essential buses are disconnected.
+If both generators are failed both non-essential buses and both shed buses are disconnected.
+BATT DISCH warning illuminated.􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 2 starter generator fail􏶫􏵚􏵛􏶪􏶩
+
+
+􏶨Over voltage causes the generator to go offline.􏶧
+􏶦GEN DISCON caution indicated
++0 to +10? Vdc􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 1 starter generator overvoltage􏶫􏵚􏵛􏶪􏶩
+
+􏶨Over voltage causes the generator to go offline.􏶧
+􏶦GEN DISCON caution indicated
++0 to +10? Vdc􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 2 starter generator overvoltage􏶫􏵚􏵛􏶪􏶩
+
+􏶨Electrical short circuit causes buss voltage to drop below 12 volts.􏶧
+􏶦Short circuit on the affected bus.
+Power supply is interrupted to effected bus, shed bus and both non-essential bus systems.
+Power supply is guaranteed to unaffected main bus and both essential buses.􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬short circuit main bus 1􏶫􏵚􏵛􏶪􏶩
+
+􏶨Electrical short circuit causes buss voltage to drop below 12 volts.􏶧
+􏶦Short circuit on the affected bus.
+Power supply is interrupted to effected bus, shed bus and both non-essential bus systems.
+Power supply is guaranteed to unaffected main bus and both essential buses.􏶥
+􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬short circuit main bus 2􏶫􏵚􏵛􏶪􏶩

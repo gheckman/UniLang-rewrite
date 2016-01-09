@@ -1,15 +1,15 @@
-􏶞object􏶟
+􏶞o􏶟
 􏷲A charing and draining battery􏷱
 􏷰Contains electrical properties and temperatures that adjust over time.􏷯
 􏷮Electrical􏷭 􏷮Battery􏷭
 􏷬Nick Dean􏷫
 􏷬Trevor Hickey􏷫
 
-􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
-􏷦BatteryChemistry􏷥􏷢HASA: BatteryChemistryE􏷡
-􏷤FfsCommon􏷣􏷢USES: LimitRate()􏷡
-􏷤FfsConst􏷣􏷢USES: MS_PER_HOUR􏷡
-􏷤math􏷣􏷢USES: pow()􏷡
+􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
+􏷤􏷣􏷦BatteryChemistry􏷥􏷢HASA: BatteryChemistryE􏷡
+􏶔􏶕􏶒FfsCommon􏶓􏶖USES: LimitRate()􏶗
+􏶔􏶕􏶒FfsConst􏶓􏶖USES: MS_PER_HOUR􏶗
+􏶔􏶕􏶒math􏶓􏶖USES: pow()􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏

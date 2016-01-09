@@ -197,7 +197,7 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPitchSerialActuators,sizeof(􏵶message􏵷->m_pfPitchSerialActuators));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchTrimActuators,sizeof(􏵶message􏵷->m_fPitchTrimActuators));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfCollectiveSerialActuators,sizeof(􏵶message􏵷->m_pfCollectiveSerialActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchCollectiveTrimActuators,sizeof(􏵶message􏵷->m_fPitchCollectiveTrimActuators));
+    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCollectiveTrimActuators,sizeof(􏵶message􏵷->m_fCollectiveTrimActuators));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nYawControlOverrideFlag,sizeof(􏵶message􏵷->m_nYawControlOverrideFlag));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nPitchControlOverrideFlag,sizeof(􏵶message􏵷->m_nPitchControlOverrideFlag));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nRollControlOverrideFlag,sizeof(􏵶message􏵷->m_nRollControlOverrideFlag));
@@ -206,9 +206,9 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fLeftBrakes,sizeof(􏵶message􏵷->m_fLeftBrakes));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fNoseWheelControl,sizeof(􏵶message􏵷->m_fNoseWheelControl));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRotorBrake,sizeof(􏵶message􏵷->m_fRotorBrake));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nHookWinchFlag,sizeof(􏵶message􏵷->m_nHookWinchFlag));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookWinchLength_m,sizeof(􏵶message􏵷->m_fHookWinchLength_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookWinchPayloadMass_kg,sizeof(􏵶message􏵷->m_fHookWinchPayloadMass_kg));
+    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nWinchFlag,sizeof(􏵶message􏵷->m_nWinchFlag));
+    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchLength_m,sizeof(􏵶message􏵷->m_fWinchLength_m));
+    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadMass_kg,sizeof(􏵶message􏵷->m_fWinchPayloadMass_kg));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadX_m,sizeof(􏵶message􏵷->m_fWinchPayloadX_m));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadY_m,sizeof(􏵶message􏵷->m_fWinchPayloadY_m));
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadZ_m,sizeof(􏵶message􏵷->m_fWinchPayloadZ_m));
@@ -350,7 +350,7 @@ Implemented in order to test the pack version􏶡
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPitchSerialActuators,sizeof(􏵶message􏵷->m_pfPitchSerialActuators));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchTrimActuators,sizeof(􏵶message􏵷->m_fPitchTrimActuators));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfCollectiveSerialActuators,sizeof(􏵶message􏵷->m_pfCollectiveSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchCollectiveTrimActuators,sizeof(􏵶message􏵷->m_fPitchCollectiveTrimActuators));
+    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCollectiveTrimActuators,sizeof(􏵶message􏵷->m_fCollectiveTrimActuators));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nYawControlOverrideFlag,sizeof(􏵶message􏵷->m_nYawControlOverrideFlag));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nPitchControlOverrideFlag,sizeof(􏵶message􏵷->m_nPitchControlOverrideFlag));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nRollControlOverrideFlag,sizeof(􏵶message􏵷->m_nRollControlOverrideFlag));
@@ -359,9 +359,9 @@ Implemented in order to test the pack version􏶡
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fLeftBrakes,sizeof(􏵶message􏵷->m_fLeftBrakes));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fNoseWheelControl,sizeof(􏵶message􏵷->m_fNoseWheelControl));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRotorBrake,sizeof(􏵶message􏵷->m_fRotorBrake));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nHookWinchFlag,sizeof(􏵶message􏵷->m_nHookWinchFlag));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookWinchLength_m,sizeof(􏵶message􏵷->m_fHookWinchLength_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookWinchPayloadMass_kg,sizeof(􏵶message􏵷->m_fHookWinchPayloadMass_kg));
+    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nWinchFlag,sizeof(􏵶message􏵷->m_nWinchFlag));
+    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchLength_m,sizeof(􏵶message􏵷->m_fWinchLength_m));
+    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadMass_kg,sizeof(􏵶message􏵷->m_fWinchPayloadMass_kg));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadX_m,sizeof(􏵶message􏵷->m_fWinchPayloadX_m));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadY_m,sizeof(􏵶message􏵷->m_fWinchPayloadY_m));
     UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadZ_m,sizeof(􏵶message􏵷->m_fWinchPayloadZ_m));
