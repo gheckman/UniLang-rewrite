@@ -1,0 +1,36 @@
+# make.PENTIUM4diab - Diab compilation tools definitions for Pentium-4
+#
+# modification history
+# --------------------
+# 01f,03mar07,kkz  Changing alignment to 4, form default 16
+# 01e,17may05,zmm  Emulate GNU assembler's encoding of
+#                  fdivp/fdivrp/fsubp/fsubrp instructions. SPR 108421.
+# 01d,10oct04,mcm  Using the CPU name for the target switch. It is mapped to
+#                  X86 by the compiler.
+# 01c,20jan04,zmm  Redefined prepended underscore HLL_PREFIX for diab/pentium
+# 01b,10dec03,yvp  Added ABI_SPEC.
+# 01a,30sep03,sn  changed :vxworks55 to :$(DIAB_T_ENVIRON)
+# maxim		Initial
+#
+# DESCRIPTION
+# This file contains Pentium-4 specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+include $(TGT_DIR)/h/tool/diab/defs.diab
+CPU		= PENTIUM4
+TOOL		= diab
+
+TGT_FLAG	= -tPENTIUM4LH:$(DIAB_T_ENVIRON)
+
+TOOLENV		= pentium
+VX_CPU_FAMILY	= pentium
+ARCH_DIR        = i86
+ABI_SPEC        = x86
+
+CFLAGS_AS	+= -Wa,-Xmnem-mit,-Xemul-gnu-bug
+CC_OPTIM_NORMAL += -Xalign-functions=4
+
+HLL_PREFIX      =
+
+# end of make.PENTIUM4diab

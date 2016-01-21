@@ -1,0 +1,32 @@
+# defs.docs - makefile fragment for specifying documentation parameters
+#
+# modification history
+# --------------------
+# 01m,18nov11,jph  replace the versioned mapping file name with
+#                  mappingfile.txt
+# 01l,28jul11,jam  update mapping file for docs
+# 01k,12may11,jam  change mapping file version
+# 01j,06jan11,jph  check if mapping file exists
+# 01i,08nov10,jph  add mapping file
+# 01h,25oct10,jph  remove version
+# 01g,06jul09,kkz  Updating version number for VxWorks 6.8
+# 01f,24jun08,kkz  Use variable for version number
+# 01e,22jun07,kkz  Updating version number for docs
+# 01d,09mar06,kkz  Updating doc locations
+# 01c,25may05,kkz  Updating doc locations
+# 01b,29apr05,kkz  Updating docs directory path
+# 01a,28oct04,tpw  created
+#
+# DESCRIPTION
+# This file contains settings to configure the documentation build for the
+# USB component. It is expected that the variable DOC_AREA_USB be set to one
+# of 'usb', 'usb2', or 'usb_drivers' before including this file.
+
+# Check if mapping file exists
+ifneq ($(wildcard $(DOCS_ROOT)/mappingfile.txt),)
+-include $(wildcard $(DOCS_ROOT)/mappingfile.txt)
+endif
+
+DOC_DIR		= $(DOCS_ROOT)/$(DOC_USB_KERNEL_API)
+DOC_BOOK	= Wind_River_USB
+DOC_CHAPTER	= Wind_River_USB_API

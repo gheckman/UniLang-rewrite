@@ -1,0 +1,34 @@
+# make.XSCALEdiab - Diab compilation tools definitions for XSCALE
+#
+# modification history
+# --------------------
+# 01i,20aug08,mze  changing ENDIAN logic
+# 01h,19aug08,mze  TOOL changes
+# 01g,24jun08,pee  VSB adaptation.
+# 01f,30sep03,sn  changed :vxworks55 to :$(DIAB_T_ENVIRON)
+# 01e,14jan02,to   move 'include defs.arm' after TOOL and CPU definitions to be
+#                  consistent with gnu ones
+# 01d,18dec01,to   move common definitions to defs.arm
+# 01c,05dec01,jab  change :tornado, :simple ,etc. to :vxworks55
+# 01b,16nov01,t_m  Change sysInit entry
+# 01a,08nov01,t_m  Copied from make.ARMARCH4diab
+#
+# DESCRIPTION
+# This file contains XSCALE specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= XSCALE
+TOOL		= diab
+
+ifeq ($(BUILD_ENDIAN_SUFFIX),be)
+_WRS_CONFIG_ENDIAN ?= big
+else
+_WRS_CONFIG_ENDIAN ?= little
+endif
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+TGT_FLAG	= -tARMX$(TGT_FLAG_ENDIAN)S:$(DIAB_T_ENVIRON)
+
+# end of make.XSCALEdiab

@@ -1,0 +1,76 @@
+# make.PPC604gnu - GNU compilation tools definitions for PowerPC 604
+#
+# Copyright 1995-2004, 2006-2007, 2011, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 02h,12apr12,h_k  moved common env setting to defs.ppc.
+# 02g,13jun11,mze  add debug
+# 02f,12apr10,pee  locally enabling SMP build specs for bdgen
+# 02e,02aug07,mcm  GCC 4.1.2 has now implemented the -fno-implicit-fp option;
+#                  the option had been removed while there was no support for
+#                  it. 
+# 02d,15may07,mcm  Remove -mno-implicit-fp
+# 02c,19apr06,mcm  Fix for SPR#118479 - problem with Altivec options.
+# 02b,06feb04,pch  add missing -mno-implicit-fp
+# 02a,07nov03,c_c  Removed Compiler definitions.
+# 02a,05nov03,sn   Updated definitions of OPTION_ALTIVEC_C/AS for gcc3
+# 01z,31jan03,pch  Add PPC32 support
+# 01y,12feb02,sn   removed obsolete refs to GCC_EXEC_PREFIX
+# 01x,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 01w,16nov01,mil  Changed VX_CPU_FAMILY from PPC to ppc.
+# 01v,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01u,25oct01,jab  added OPTION_ALTIVEC_C make variable
+# 01t,23oct01,jab  added OPTION_ALTIVEC_AS
+# 01s,11oct01,dat  SPR 20403, OPTIM_DRIVER must have -fvolatile
+# 01r,20sep01,dat  Moving to h/tool/gnu
+# 01q,02apr01,kab  Removing -fvec: too invasive for full build
+# 01p,27mar01,pcs  ADD -fvec option to pull in altivec awareness in the
+#		   compiler in CC_ARCH_SPEC.
+# 01o,18oct00,sn   removed -fno-for-scope 
+# 01n,16oct00,sn   added include gnu; removed LIBS defn
+# 01m,09oct00,sn   Added -mcpu=604
+# 01l,18jan99,sn   Defined C++_TEMPLATE_INST
+# 01k,27oct98,ms   undid 01k
+# 01j,02apr98,pcn  Removed Objcopy changes from Tempest view
+# 01i,15dec97,pcn  Added Objcopy in BSP build.
+# 01h,18sep97,ms   added ARCH_DIR
+# 01g,04oct96,yp   Added -B option so compiler driver doesn't need EXEC_PREFIX,
+#		   added CC_ARCH_SPEC for machine specific flags
+# 01f,06aug96,tam  added -mstrict-align flag.
+# 01e,16jul96,tpr  removed EXTRA_DEFINE = -D_GNU_TOOL.
+# 01d,04mar96,tpr  removed -msdata flag.
+# 01c,23feb96,yp   added defs for ELF tools
+# 01b,14feb96,tpr  moved -msdata from EXTRA_DEFINE to CC_OPTIM_NORMAL.
+# 01a,12feb96,tpr  written from make.PPC603gnu 01c version.
+#
+# DESCRIPTION
+# This file contains PowerPC 604 specific definitions and flags for the
+# gnu tools (compiler, assembler, linker etc.)
+#*/
+
+CPU		= PPC604
+TOOL		= gnu
+
+_WRS_CONFIG_FP ?= hard
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+CC_ARCH_SPEC	= -mcpu=604
+
+ifeq ($(_WRS_CONFIG_FP),hard)
+ OPTION_ALTIVEC_AS = -Wa,-maltivec -mabi=altivec
+ OPTION_ALTIVEC_C  = -maltivec -mabi=altivec
+endif
+
+ifdef _BDGEN_
+MP_OPTION_PPC604_SMP = TRUE
+endif
+
+include $(TGT_DIR)/h/tool/gnu/defs.ppc
+
+# end of make.PPC604gnu

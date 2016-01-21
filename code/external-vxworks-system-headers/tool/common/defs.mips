@@ -1,0 +1,293 @@
+# defs.mips - MIPS specific definitions shared by all toolchains
+#
+# Copyright (c) 2002-2008, 2010-2011 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 02h,20sep11,rlg  removal of bcm products sb1 and bcm33xx
+# 02g,03mar11,slk  add xlp variant
+# 02f,05nov10,pch  CQ212178: avoid building rm7xxx
+# 02e,13aug10,slk  simplify defines for LMM enabled mode
+# 02d,20jul10,slk  add CC_DEFINES for LOCAL_UNMAPPED_BASE_ADRS
+# 02c,12may10,slk  add LD_UNMAPPED_FLAGS for large memory model support
+# 02c,30mar10,d_c  Add cav_cn5xxx and cav_cn6xxx variants
+# 02b,27aug08,slk  enable SDA for diab and gnu
+# 02a,19aug08,mze  TOOL changes
+# 01z,03jul08,pee  fixing SMP support for VSB configuration.
+# 01y,24jun08,pee  VSB.
+# 01x,08may08,slk  add mti24kx variant to SMP supported targets
+# 01w,17jul07,dcc  added SDA support. Not enabled yet because it is not ready.
+# 01v,09aug07,rlg  Changes for the MIPS Library restructuring
+# 01u,17jul07,jmt  Remove MIPSI32 support for mti5kx
+# 01t,06jun07,pes  Back out -g workaround for n32 builds.
+# 01s,04jun07,agf  Remove octeon5xxx
+# 01r,25may07,pes  Temporarily force -g compilation.
+# 01r,29may07,agf  add xlr variant
+# 01q,22may07,pes  Switch to n32 builds
+# 01p,17apr07,pes  Remove MIPSI64 builds for rm9xxx variant. Device has
+#                  non-compliant config register.
+# 01o,30mar07,pes  Enable octeon SMP builds.
+# 01n,14ma407,pee  adding generic option support
+# 01o,12mar07,pes  Update for MIPS library restructure.
+# 01n,20feb07,pes  Modify support matrix for new library builds.
+# 01m,20sep06,pes  Remove rm7000 and rm9000 variants from SMP builds for now.
+# 01l,18jul06,agf  add bcm33xx PAL
+# 01l,27jun06,pee  added TC_INFO for osconfig
+# 01m,19may06,pes  Add rm7k CPU_ARCH to library builds.
+# 01l,15may06,lei  Added VXBUILD & DIR_EXT for SMP build.
+# 01k,10jan06,pes  Add support for non-standard cache line sizes.
+# 01j,22mar05,rlg  Added _rm9xxx variant.
+# 01i,17feb05,pes  Added _mti24kx variant.
+# 01h,15nov04,agf  Removed variants not being shipped for v6.0
+# 01g,20jul04,fle  Added KERNEL_VMA_ADJUST definition
+# 01f,06apr04,yvp  Moved ABI_SPEC into h/tool/diab/make.MIPS*
+# 01e,10dec03,yvp  Added ABI_SPEC.
+# 01d,13nov03,c_c  Added CPU VARIANT definitions.
+# 01c,31mar03,sn   append to rather than overwrite LD_LINK_PATH_EXTRA
+#		   to allow other contributions (e.g. from defs.diab)
+# 01b,16jan02,pes  Define LD_LINK_PATH_EXTRA
+# 01a,09jan02,pes  written
+#
+# DESCRIPTION
+# This file contains MIPS specific definitions and flags to be
+# shared by all toolchains.
+#
+# NOTE
+# The file name comes from defs.$(VX_CPU_FAMILY)
+#
+# CPU VARIANTS
+# To compile part of the source tree for a CPU variant, first a tag must be
+# defined with which archive directory names are modified. In addition several
+# variables must be defined for each CPU variant build. Refer to the example
+# further below for more details. Note that CPU variant builds are normaly
+# started automatically at the end of the corresponding generic CPU build.
+# 
+
+BUILD_ENDIAN_SUFFIX_big =
+BUILD_ENDIAN_SUFFIX_little = le
+
+ABI_ENDIAN_SUFFIX_big = BE
+ABI_ENDIAN_SUFFIX_little = LE
+
+_WRS_CONFIG_ENDIAN ?= big
+_WRS_CONFIG_FP ?= hard
+
+ifeq ($(findstring le,$(TOOL)),le)
+override _WRS_CONFIG_ENDIAN = little
+endif
+
+ifeq  ($(findstring sf,$(TOOL)),sf)
+override _WRS_CONFIG_FP = soft
+endif
+
+ifeq ($(CPU),MIPSI3)
+DEFINE_CC	+= -D_WRS_MIPS_N32_ABI
+CFLAGS_AS	+= -D_WRS_MIPS_N32_ABI
+endif
+
+ifeq ($(CPU),MIPSI64)
+DEFINE_CC	+= -D_WRS_MIPS_N32_ABI
+CFLAGS_AS	+= -D_WRS_MIPS_N32_ABI
+endif
+
+ifeq ($(CPU),MIPSI64R2)
+DEFINE_CC	+= -D_WRS_MIPS_N32_ABI
+CFLAGS_AS	+= -D_WRS_MIPS_N32_ABI
+endif
+
+ifeq ($(_WRS_CONFIG_ENDIAN),little)
+DEFINE_CC	+= -DMIPSEL
+CFLAGS_AS	+= -DMIPSEL
+else
+DEFINE_CC	+= -DMIPSEB
+CFLAGS_AS	+= -DMIPSEB
+endif
+
+ifeq  ($(_WRS_CONFIG_FP),soft)
+# definitions for soft float
+DEFINE_CC	+= -DSOFT_FLOAT
+CFLAGS_AS	+= -DSOFT_FLOAT
+endif
+
+TOOLENV		= mips
+VX_CPU_FAMILY	= mips
+ARCH_DIR        = mips
+
+## bsp flags
+ROM_ENTRY       = romInit
+SYS_ENTRY       = sysInit
+USR_ENTRY       = usrInit
+
+LD_LINK_PATH_EXTRA += \
+	-L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_SPECIFIC_DIR)$(CPU_VARIANT)$(MINOR_OPTION_SUFFIX) \
+	-L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(CPU_VARIANT)$(MINOR_OPTION_SUFFIX)
+
+ifneq ($(CPU_VARIANT),)
+	DEFINE_CC += -DCPU_VARIANT=$(CPU_VARIANT) -DMIPSXX$(CPU_VARIANT)
+endif
+
+ifneq ($(LIB_DIR_TAG),)
+	DEFINE_CC += -DCPU_VARIANT=$(LIB_DIR_TAG) -DMIPSXX$(LIB_DIR_TAG)
+endif
+
+# override kernel vma adjust tool
+
+KERNEL_VMA_ADJUST	= $(BIN_DIR)/mipsBootPrep
+
+## CPU variants builds
+#
+# For CPU variants builds, the name of the directory(ies) where archives are 
+# installed is appended with a unique tag defined by LIB_DIR_TAG. The make
+# variable CPU_VARIANT_LIST define the whole list of these CPU variant tags
+# and should be updated everytime a new CPU variant build is introduced. For
+# instance:
+#	CPU_VARIANT_LIST = _cpuVariant1 _cpuVariant2 _cpuVariant3
+
+# only  _cav_cn[356]xxx, _mti24kx, _razaXLR  variants for SMP for now
+
+CPU_VARIANT_LIST_CONFIG_SMP_y   =      _cav_cn3xxx \
+				_cav_cn5xxx \
+				_cav_cn6xxx \
+				_mti24kx \
+                                _xlr \
+                                _xlp
+
+CPU_VARIANT_LIST_CONFIG_SMP_	= 	_mti4kx \
+				_mti5kx \
+				_mti24kx \
+				_tx49xx \
+				_vr55xx \
+				_rm9xxx \
+				_cav_cn3xxx \
+				_cav_cn5xxx \
+				_cav_cn6xxx \
+				_xlr \
+				_xlp
+
+CPU_VARIANT_LIST = $(CPU_VARIANT_LIST_CONFIG_SMP_$(_WRS_CONFIG_SMP))
+
+# Each CPU variant build must define the following variables:
+#
+#	- VX_ARCHIVE_LIST$(LIB_DIR_TAG): this is the list of archive(s) to 
+#	  build for this CPU variant. Note that $(LIB_DIR_TAG) must be equal
+#	  to one of the item defined in CPU_VARIANT_LIST. For instance:
+#	  	VX_ARCHIVE_LIST_cpuVariant1 = libarch.a libdrv.a
+#
+#	- CPU_VARIANT_CPU_TOOL_LIST$(LIB_DIR_TAG): this is the list of
+#	  CPU/TOOL combination(s) for which the CPU variant build must be
+#	  run. For instance:
+#		CPU_VARIANT_CPU_TOOL_LIST_cpuVariant2 = MIPSI2diab MIPSI3diab
+#
+# NOTE: CPU variant build(s) are kicked off by the default build rule
+# in target/h/make/rules.library.
+
+VX_ARCHIVE_LIST_mti4kx	= libarch.a
+VX_ARCHIVE_LIST_mti5kx	= libarch.a
+VX_ARCHIVE_LIST_mti24kx	= libarch.a
+VX_ARCHIVE_LIST_tx49xx	= libarch.a
+VX_ARCHIVE_LIST_vr55xx	= libarch.a
+VX_ARCHIVE_LIST_rm7xxx	= libarch.a
+VX_ARCHIVE_LIST_rm9xxx	= libarch.a
+VX_ARCHIVE_LIST_cav_cn3xxx = libarch.a
+VX_ARCHIVE_LIST_cav_cn5xxx = libarch.a
+VX_ARCHIVE_LIST_cav_cn6xxx = libarch.a
+VX_ARCHIVE_LIST_xlr	= libarch.a
+VX_ARCHIVE_LIST_xlp	= libarch.a
+
+
+CPU_VARIANT_CPU_TOOL_LIST_mti4kx	= MIPSI2sfdiab MIPSI2sfdiable \
+					  MIPSI32sfdiab MIPSI32sfdiable \
+					  MIPSI32R2sfdiab MIPSI32R2sfdiable
+
+CPU_VARIANT_CPU_TOOL_LIST_mti5kx	= MIPSI2sfdiab MIPSI2sfdiable \
+					  MIPSI3diab MIPSI3diable \
+					  MIPSI64diab MIPSI64diable \
+					  MIPSI64sfdiab MIPSI64sfdiable
+
+CPU_VARIANT_CPU_TOOL_LIST_mti24kx	= MIPSI2sfdiab MIPSI2sfdiable \
+					  MIPSI32R2diab MIPSI32R2diable \
+					  MIPSI32R2sfdiab MIPSI32R2sfdiable
+
+CPU_VARIANT_CPU_TOOL_LIST_tx49xx	= MIPSI2sfdiab MIPSI2sfdiable \
+					  MIPSI3diab MIPSI3diable
+
+CPU_VARIANT_CPU_TOOL_LIST_vr55xx	= MIPSI2sfdiab MIPSI2sfdiable \
+					  MIPSI3diab MIPSI3diable
+
+CPU_VARIANT_CPU_TOOL_LIST_rm7xxx	= MIPSI2sfdiab MIPSI2sfdiable \
+					  MIPSI3diab MIPSI3diable
+
+CPU_VARIANT_CPU_TOOL_LIST_rm9xxx	= MIPSI3diab MIPSI3diable
+
+CPU_VARIANT_CPU_TOOL_LIST_cav_cn3xxx	= MIPSI64R2sfdiab MIPSI64R2sfdiable
+
+CPU_VARIANT_CPU_TOOL_LIST_cav_cn5xxx	= MIPSI64R2sfdiab MIPSI64R2sfdiable
+
+CPU_VARIANT_CPU_TOOL_LIST_cav_cn6xxx	= MIPSI64R2sfdiab MIPSI64R2sfdiable
+
+CPU_VARIANT_CPU_TOOL_LIST_xlr		= MIPSI64sfdiab MIPSI64sfdiable
+
+CPU_VARIANT_CPU_TOOL_LIST_xlp		= MIPSI64R2diab MIPSI64R2diable
+
+ifeq ($(TC_INFO),TRUE)
+ifeq ($(findstring sf, $(TOOL)),sf)
+FP = soft
+else
+FP = hard
+endif
+ifeq ($(findstring le, $(TOOL)),le)
+ENDIAN = little
+else
+ENDIAN = big
+endif
+endif
+
+# SDA support is enabled for MIPS 
+
+ifeq ($(TOOL_FAMILY), diab)
+ifeq ($(SDA_DISABLE),)
+CC_SDA_FLAGS = -Xsmall-const=8 -Xsmall-data=8
+endif
+endif
+
+ifeq ($(TOOL_FAMILY), gnu)
+ifeq ($(SDA_DISABLE),)
+CC_SDA_FLAGS = -G8 -fno-common
+endif
+endif
+
+# default large memory model to disabled
+LOCAL_EXCPT_ADRS = $(LOCAL_MEM_LOCAL_ADRS)
+LARGE_MEMORY_MODEL_ENABLED = 0
+
+# large memory model build sets LARGE_MEMORY_MODEL_ENABLED
+ifeq ($(LMM_ENABLED), 1)
+LARGE_MEMORY_MODEL_ENABLED = 1
+LOCAL_EXCPT_ADRS = $(LOCAL_UNMAPPED_BASE_ADRS)
+SECTION_REMOVE_NAMES= -R .unmapped.data -R .unmapped.text -R .kseg0bss -R .vectors.text
+SECTION_SELECT_NAMES= -j .unmapped.data -j .unmapped.text -j .vectors.text
+BINARY_RENAME_SYMBOLS= --redefine-sym _binArrayStart=_unmappedBinArrayStart --redefine-sym binArrayStart=unmappedBinArrayStart --redefine-sym _binArrayEnd=_unmappedBinArrayEnd --redefine-sym binArrayEnd=unmappedBinArrayEnd
+endif
+
+ifeq ($(TOOL_FAMILY), gnu)
+LD_LOW_FLAGS += -defsym _VX_START_EXCPT_BASE=0x$(LOCAL_EXCPT_ADRS) -defsym LMM_ENABLED=$(LARGE_MEMORY_MODEL_ENABLED)
+LD_HIGH_FLAGS += -defsym _VX_START_EXCPT_BASE=0x$(LOCAL_EXCPT_ADRS) -defsym LMM_ENABLED=$(LARGE_MEMORY_MODEL_ENABLED)
+endif
+ifeq ($(TOOL_FAMILY), diab)
+LD_LOW_FLAGS += -D_VX_START_EXCPT_BASE=0x$(LOCAL_EXCPT_ADRS) -DLMM_ENABLED=$(LARGE_MEMORY_MODEL_ENABLED)
+LD_HIGH_FLAGS += -D_VX_START_EXCPT_BASE=0x$(LOCAL_EXCPT_ADRS) -DLMM_ENABLED=$(LARGE_MEMORY_MODEL_ENABLED)
+endif
+
+# BSP make builds need LOCAL_MEM_PHYS_ADRS for LMM builds
+ifneq ($(BSP2PRJ), TRUE)
+ifeq ($(LARGE_MEMORY_MODEL_ENABLED), 1)
+CC_DEFINES      += -DLOCAL_MEM_PHYS_ADRS=0x$(LOCAL_MEM_PHYS_ADRS)
+CC_DEFINES      += -DLOCAL_UNMAPPED_BASE_ADRS=0x$(LOCAL_UNMAPPED_BASE_ADRS)
+endif
+endif
+
+#end of defs.mips

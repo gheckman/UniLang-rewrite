@@ -1,0 +1,23 @@
+# defs.mips - MIPS specific definitions for the Diab toolchain
+#
+# modification history
+# --------------------
+# 01b,22may02,mem  Added -Xno-mips16-calls
+# 01a,08jan02,pes   written
+#
+# DESCRIPTION
+# This file contains MIPS specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+# NOTE
+# The file name comes from defs.$(VX_CPU_FAMILY)
+#
+
+include $(TGT_DIR)/h/tool/diab/defs.diab
+include $(TGT_DIR)/h/tool/common/defs.mips
+
+# Indicate that MIPS16 isn't supported, so that tail-call optimizations
+# can be enabled.
+CC_ARCH_SPEC += -Xno-mips16-calls
+
+# end of defs.mips

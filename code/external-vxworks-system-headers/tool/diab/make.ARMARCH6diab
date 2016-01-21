@@ -1,0 +1,28 @@
+# make.ARMARCH6diab - Diab compilation tools definitions for ARMARCH6
+#
+# modification history
+# --------------------
+# 01e,19aug08,mze  TGT_FLAG changes
+# 01d,25jun08,pee  VSB
+# 01c,27sep07,jb   Fix for DEFECT WIND00093069
+# 01b,31aug06,jb   Fix for Defect WIND00063709
+# 01a,06dec04,jb   Copied from make.ARMARCH5diab
+#
+# DESCRIPTION
+# This file contains ARMARCH6 specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= ARMARCH6
+TOOL		= diab
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+ifeq ($(VFPVARIANT),ARM1136)
+#Enable VFP Code generation
+TGT_FLAG        = -tARMV6$(TGT_FLAG_ENDIAN)V:$(DIAB_T_ENVIRON)
+else
+TGT_FLAG        = -tARMV6$(TGT_FLAG_ENDIAN)S:$(DIAB_T_ENVIRON)
+endif
+
+# end of make.ARMARCH6diab

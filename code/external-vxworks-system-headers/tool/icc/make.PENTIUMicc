@@ -1,0 +1,49 @@
+# make.PENTIUMcc - ICC compilation tools definitions for PENTIUM
+#
+# Copyright (c) 2010-2015 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01f,07apr15,rtm  fix for VXW6-80633 fvolatile warnings
+# 01e,13jun12,yjw  add -mia32 option.(WIND00350643)
+# 01d,13jun11,mze  add debug
+# 01c,12jul10,gvm  adding -fno-implicit-sse
+# 01b,02mar10,gvm  icc cannot do -fno-implicit-fp -fno-defer-pop yet
+# 01a,23feb10,mze  written based on make.PENTIUMgnu
+#
+# DESCRIPTION
+# This file contains PENTIUM specific definitions and flags for the ICC
+# software generation tools (compiler, assembler, linker etc.).
+#*/
+
+CPU             = PENTIUM
+TOOL            = icc
+
+include $(TGT_DIR)/h/tool/icc/defs.icc
+
+CC_OPTIM_XO = -O2
+CC_OPTIM_DEBUG =
+CC_OPTIM_DRIVER = $(CC_OPTIM_DEBUG)
+CC_OPTIM_NORMAL = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)
+CC_OPTIM_TARGET = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)
+
+# Generate code for (-march=) and schedule for (-mtune=) pentium
+CC_ARCH_SPEC	= -mtune=pentium -march=pentium -mia32 \
+                  -fno-implicit-fp-sse -nostdlib -fno-builtin
+
+TOOLENV         = pentium
+VX_CPU_FAMILY   = pentium
+ARCH_DIR        = i86
+ABI_SPEC        = x86
+
+CF              =
+
+HLL_PREFIX      =
+
+OBJCOPY_OLD_OMF	= -O a.out-i386 --gap-fill=0
+
+# end of make.PENTIUMicc

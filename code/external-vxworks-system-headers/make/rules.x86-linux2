@@ -1,0 +1,147 @@
+# rules.unix - host specific rules
+#
+# Copyright 1984-2007, Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01e,18nov11,jph  replace the versioned mapping file name with
+#                  mappingfile.txt
+# 01d,28jul11,jam  update mapping file for docs
+# 01c,12may11,jam  change mapping file version
+# 01b,06jan11,jph  check if mapping file exists
+# 01a,08nov10,jph  add mapping file
+# 01b,05nov10,???  added one more link for toc.xml
+# 01a,25oct10,jph  remove version
+# 01a,21oct10,???  change version
+# 03l,21oct10,???  change version
+# 03k,150ct10,sm   remove version name from the reference and add it to parent directory
+# 03j,01oct09,mmg  adding version number for htmllink rule as well
+# 03i,22sep09,mdk  adding version number to BSP docs
+# 03h,26sep08,mze  remove IPCOM_OBJ_DIR
+# 03g,18jun08,pee  VSB and cleanup
+# 03f,24mar08,pee  removed redundant | depend on intermediate file.
+# 03e,27feb08,pee  don't include depend file if it does not exist.
+# 03d,19oct07,pee  docs dependencies, WIND00105890
+# 03c,28sep07,pee  WIND00105890
+# 03b,27sep07,pee  backing off ...
+# 03a,11sep07,pee  change location of temporary tool option file to current
+#                  output directory.
+# 02z,13jul07,nic  SPR#56349 - Update dependency generation to
+#                  include C++ files.
+# 02y,19jun07,tpw  Use WRVX_COMPBASE vs. WIND_COMPONENTS correctly.
+# 02x,01jun07,tkf  ipcom_ipdomain now generated in _IPCOM_OBJ_DIR.
+# 02w,03mar07,tkf  Add dependency on IPCOM include path file for
+#                  depend.BSP_NAME targets.
+# 02v,17may05,lll  Replaced malfunctioning "\n"'s with echo ""
+# 02u,25apr05,kkz  Updating for new doc path
+# 02t,10jan05,lll  Standalone apigen, SPR#105634 and SPR#104090
+# 02s,06oct04,tpw  Switch BSP doc build forward to apigen.
+# 02r,10aug04,dgp  temporarily revert BSP doc build back to refgen
+# 02q,07jul04,c_c  Removed usage of romfs_image.h.
+# 02p,27may04,dgp  update BSP output and TOC directories
+# 02o,25may04,tpw  Switch on -missingok to reduce doc build error output.
+# 02n,11feb04,c_c  Added a NODEPENDOBJS list to filter files that should not
+#                  be parsed when generating dependencies (SPR 93380).
+# 02m,12jan04,bjl  changed refgen to apigen.
+# 02l,10dec03,c_c  fixed builds for BSP templates.
+# 02k,28nov03,c_c  Reinstated variable replacement.
+# 02j,26nov03,c_c  Fixed Linux simulator build.
+# 02i,07nov03,c_c  Unified build rules with WIN32 hosts.
+# 02h,02jul03,md   Added command (mkromfs) for building ROMFS image
+# 02g,12mar02,wsl  change BSP_Reference to VxWorks_BSP_Reference
+# 02f,27nov01,wsl  allow target.ref files but keep target.nr backward
+#                  compatibility
+# 02e,29oct01,jab  removed ld script rules
+# 02d,25oct01,dat  more gnu-diab changes
+# 02c,18oct01,jab  made dependency generation toolchain independent
+# 02b,01oct01,dat  consistent use of BSP_NAME macro
+# 02a,27aug01,wsl  add man pages
+# 01z,24jul01,r_s  diab specific rules added
+# 01y,28jun00,jab  force creation of LECFs.
+# 01x,17feb00,jab  added LECF generation rules. See notes at rules.
+# 01w,02feb99,sjw  use -M -MG in dependency generation so generated files
+#		   can be included in BSP files.
+# 01v,26oct98,ms   made dependency generation overridable from make.CPUTOOL
+# 01u,15oct98,fle  doc : renamed book for BSP and put boards reference into
+#                  board library
+# 01t,05oct98,ms   remove romInit.s dependeny generation for simulators
+# 01s,23sep98,fle  doc : adapted -preproc refgen new option
+# 01r,23sep98,fle  doc : changed bsp book name
+# 01r,22sep98,fle  doc : now use refgen instead of mangen
+# 01q,02jan97,dat  added DOC_FLAGS
+# 01p,21nov96,p_m  removed unwanted @ in bsp.1 rule
+# 01o,21nov96,p_m  changed bsp.1 mode prior to copy target.nr
+# 01n,19nov96,dat  mangen error output not dropped.  target.txt made in
+#		   bsp directory. SPRs 7507 and 7508.
+# 01m,15oct96,yp   made rule for include of dependency list silent SPR 4483
+# 01l,03oct96,dbt  added backslashes in the sed expressions (HPUX10 port).
+# 01k,30jul96,pad  undo change 01j, introduced here by mistake.
+# 01j,26jul96,pad  backslashed the $ in the sed expressions (AIX port).
+# 01i,10may96,dat  added -DINCLUDE_SCSI for man pages (SPR3941) added copyright
+# 01h,18mar96,dat  fixed cpp command for building man pages
+# 01g,06mar96,dat  added sed command to insert $TGT_DIR into depend output
+# 01f,08feb96,dat  used CONFIG_ALL in making dependency list
+# 01e,04nov95,p_m  took care of missing files in docs rule
+# 01d,06jul95,jcf  made sed script global.
+# 01c,21jun95,yp   added sed script to prevent hardwiring depend. list.
+# 01b,10jun95,yp   changed TARGET_DIR to BSP_NAME
+# 01a,01jun95,yp   created
+#
+# DESCRIPTION
+# This file contains rules that are host specific to the unix platform.
+
+## documentation build targets
+# Check if mapping file exists
+ifneq ($(wildcard $(DOCS_ROOT)/mappingfile.txt),)
+-include $(wildcard $(DOCS_ROOT)/mappingfile.txt)
+endif
+
+DOC_FILES := $(filter $(DOC_FILES),$(patsubst %.c,%,$(wildcard *.c)))
+
+.PHONY: $(DOC_FILES) htmllink
+
+man	: target.html docs
+
+docs: $(DOC_FILES) htmllink
+
+$(DOC_FILES): $(TOOL_OPTIONS_FILES_ALL)
+	@echo ""; echo "Processing $@.c ... "
+	@-$(CPP) $(CASFLAGS) $(OPTION_PP_COMMENT) $(DOC_FLAGS) $@.c 1> $@.i
+	-$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/apigen -mg -nostrict \
+	    -book VxWorks_APIs -chapter BSP_APIs \
+	    -category $(BSP_NAME) -missingok \
+	    -out $(DOC_DIR)/$(BSP_NAME) $@.i
+	-$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/apigen -mg -nostrict \
+	    -book VxWorks_APIs -chapter BSP_APIs \
+	    -category $(BSP_NAME) -missingok -config Auto2txt \
+	    -out $(MAN_PAGE_DIR)/$(BSP_NAME) $@.i
+	@-$(RM) $@.i
+
+htmllink:
+	@echo ""; echo "HTML linking ... "
+	-$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/htmlLink \
+	    $(DOC_DIR)/$(BSP_NAME)
+	@echo "Linking complete."
+	@date
+
+
+# The following variable assignment selects target.ref over target.nr, and
+# exists only to facilitate the transition from nroff markup to refgen
+# markup.  When target.nr joins its dinosaur brethren, this should be removed.
+
+TARGET_REF = target.ref
+ifeq (,$(wildcard target.ref))
+  TARGET_REF = target.nr
+endif
+
+target.html:
+	@echo ""; echo "Processing $(TARGET_REF) ... "
+	-$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/apigen -mg -nostrict \
+	    -config bsp2html -book VxWorks_APIs -chapter BSP_APIs -missingok \
+	    -out $(DOC_DIR)/$(BSP_NAME) $(TARGET_REF)
+	-$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/apigen -mg -nostrict \
+	    -config bsp2txt -book VxWorks_APIs -chapter BSP_APIs -missingok \
+	    -out $(MAN_PAGE_DIR)/$(BSP_NAME) $(TARGET_REF)
+
+
+

@@ -1,0 +1,220 @@
+# defs.option - makefile definitions related to option builds
+#
+# Copyright (c) 1984-2006 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+#
+# modification history
+# --------------------
+# 01z,15sep10,xhs  support IPLITE
+# 01y,05feb10,mry  Add ipmacsec lib
+# 01x,11jun09,dwb  Adding vxdot1x
+# 01w,16dec08,mry  Add wps lib
+# 01v,25mar09,pee  WIND00160969
+# 01u,11feb09,ggz  Move coreip and bridge into CVS
+# 01u,03dec08,f_g  Added ipsctp to IP_LIB_BASE_NAMES.
+# 01t,25aug08,pee  adding to the list.
+# 01t,25aug08,pee  adding files to inet6 list.
+# 01s,30jun08,mze  allow -inet6only as a OPT and removed the -fr variations
+# 01r,30may08,dlk  Added vxmux to IP_LIB_BASE_NAMES.
+# 01q,29oct07,mry  Merging ipsupp/ipeap changes
+# 01p,10sep07,mry  Add 8021x lib
+# 01o,05oct07,pee  adding INET / INET6 definition and caching. Moved from
+#                  ipcom.
+# 01n,20sep07,pee  WIND00105231
+# 01m,01jun06,tkf  Add netcommon, netapps, and netwrap to IP_LIB_BASE_NAMES.
+# 01l,26dec06,tkf  Define IPBASIC for bootrom* targets (as workaround for
+#                  CQ84418).
+# 01k,14dec06,tkf  Define IPBASIC if OPT==-basic.
+# 01j,13dec06,tkf  Added OPT=-basic option.
+# 01k,17oct06,kch  Removed unsupported directories from IP_LIB_BASE_NAMES.
+#                  Also added ipradius to IP_LIB_BASE_NAMES.
+# 01j,22sep06,dlk  Add interpeak stack support. Remove virtual stack OPTS.
+# 01i,09jan06,kch  Include firewall to the -inet6 build option for MSP.
+# 01h,15apr05,kch  Changed 'inet6_fr' to '-inet6_fr' and 'inet6_vs_fr'
+#                  to '-inet6_vs_fr'.
+# 01g,14apr05,kch  Fixed SUPPORTED_OPTIONS such that virtual stack build 
+#                  options will be supported for MSP only. Added ROUTER_STACK 
+#                  setting to virtual stack option builds.
+# 01f,31mar05,kch  Added the -vs, -vs_fr, -inet6_vs and inet6_vs_fr build 
+#                  options for virtual stack.
+# 01e,23sep04,dlk  Use OPT_DEFINE instead of EXTRA_DEFINE. Using
+#                  EXTRA_DEFINE requires 'override', which breaks later
+#                  additions to EXTRA_DEFINE (e.g. in some BSPs) which
+#                  don't use 'override'.
+# 01d,02sep04,dlk  Remove dsi from -inet6 builds. Tighten check
+#                  on OPT validity. Add aim to free build libraries.
+#		   Do not modify ADDED_CFLAGS.
+# 01c,04may04,dlk  Added the -inet6_fr build option. Remove references
+#                  to the fpio library.
+# 01b,20apr04,dlk  Added -inet6 build option.
+# 01a,04feb04,dlk  written.
+#
+# DESCRIPTION
+#
+# This file is included in Makefiles to establish information related
+# to option builds, in particular the lists of libraries which support
+# particular option builds.
+#
+
+# Protect against multiple inclusion.
+ifeq ($(DEFS_OPTION),)
+DEFS_OPTION = TRUE
+
+# For GPP build, the environment variable $FEATURE_SET is either set to "gpp"
+# or simply not defined at all. Here it is assumed that the top-level Feature 
+# Set Makefile (if exist) has verified the setting of the $FEATURE_SET 
+# variable (if defined).
+
+ifeq ($(FEATURE_SET),)
+_GPP_BUILD = TRUE
+else
+ifeq ($(FEATURE_SET),gpp)
+_GPP_BUILD = TRUE
+endif
+endif
+
+# Supported build options for all products
+
+ifeq ($(WIND_IPLITE),true)
+SUPPORTED_OPTIONS = -inet6 -basic
+else
+SUPPORTED_OPTIONS = -inet6only -inet6 -basic
+endif
+
+# Supported build options for MSP platform products. 
+ifeq ($(_GPP_BUILD),)
+SUPPORTED_OPTIONS +=
+endif
+
+# Check that OPT is valid. If not, fail.
+
+_empty_ =
+_space_ = $(_empty_) $(_empty_)
+
+ifneq ($(OPT),)
+ifneq ($(findstring $(_space_),$(OPT)),)
+$(error OPT may not contain spaces: "$(OPT)")
+endif
+ifeq ($(filter $(OPT), $(SUPPORTED_OPTIONS)),)
+$(error OPT="$(OPT)" is unsupported. Allowed: $(SUPPORTED_OPTIONS))
+endif
+endif
+
+# It's ugly to have to list these explicitly here, but not _too_ ugly.
+# Note that these are IPPROD values, which are sometimes different from
+# the top level directory names; in some cases, several IPPROD values fall
+# under the same top level directory.
+#
+# Several of these won't be used or built for VxWorks.
+# Please keep in alphabetical order.
+
+IP_LIB_BASE_NAMES := \
+agent \
+coex \
+devkit \
+engine \
+ipappl \
+ipcci \
+ipcom \
+ipcom_vxworks \
+ipdhcpc6 \
+ipdhcpr \
+ipdhcps \
+ipdhcps6 \
+ipeap \
+ip8021x \
+ipwps \
+ipfirewall \
+iphwcrypto \
+ipike \
+ipipsec2 \
+ipmcp \
+ipmcrypto \
+ipmip6 \
+ipmip6mn \
+ipmipfa \
+ipmipha \
+ipmipmn \
+ipmpls \
+ipnet \
+ipnet_krn \
+ipppp \
+iprip \
+ipripng \
+ipradius \
+ipsctp \
+ipsntp \
+ipssh \
+iptcp \
+mibtable \
+snmp_agt \
+snmpv3 \
+vxcompat \
+vxmux \
+vxbridge \
+vxcoreip \
+wrsnmp \
+vxdot1x \
+ipmacsec
+
+IP_COMPONENT_LIB_BASE_NAMES = ipcrypto ipcrypto_apps ipdiameter ipmip4 ipmip iprohc ipssl ipwlan
+
+ifeq ($(OPT),-inet6)
+    export _INET6_BUILD := 1
+    OPT_DEFINE += -DINET6
+endif
+
+LIB_BASE_NAMES-inet6 := netcommon netapps netwrap $(IP_LIB_BASE_NAMES) $(IP_COMPONENT_LIB_BASE_NAMES)
+ifeq ($(_GPP_BUILD),)
+LIB_BASE_NAMES-inet6 +=
+endif
+
+ifeq ($(OPT),-basic)
+    OPT_DEFINE += -DIPBASIC
+endif
+
+# Workaround for CQ84418
+bootrom bootrom_uncmp bootrom_res bootrom_res_high: OPT_DEFINE += -DIPBASIC
+
+LIB_BASE_NAMES-basic := netcommon netapps netwrap $(IP_LIB_BASE_NAMES)
+
+###
+# The following section is added to support IPv6-Only build. The macro INET
+# is always defined by default unless the INET6_ONLY macro is defined
+#
+# This code fragment is not to be use during vxWorks image build since
+# the macros INET6_ONLY, INET6 are not guranteed to be defined.
+#
+ifeq ($(BSP_NAME),)
+
+ifeq ($(findstring -inet6only,$(OPT)),-inet6only)
+_INET6_ONLY_BUILD = 1
+else
+ifeq ($(findstring -inet6,$(OPT)),-inet6)
+_INET6_BUILD = 1
+endif
+
+endif
+
+ifneq ($(_INET6_ONLY_BUILD),)
+ifeq ($(filter -DINET6,$(EXTRA_DEFINE)),)
+EXTRA_DEFINE += -DINET6
+endif
+else
+ifeq ($(filter -DINET,$(EXTRA_DEFINE)),)
+EXTRA_DEFINE += -DINET
+endif
+ifneq ($(_INET6_BUILD),)
+ifeq ($(filter -DINET6,$(EXTRA_DEFINE)),)
+EXTRA_DEFINE += -DINET6
+endif
+endif
+endif
+
+endif
+
+endif # ifeq ($(DEFS_OPTION),)

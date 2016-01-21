@@ -1,0 +1,84 @@
+# make.SIMNTgnu - GNU compilation tools definitions for NTSIM
+#
+# Copyright (c) 1998-2003,2005,2010 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 02c,13jun11,mze  add debug
+# 02b,27oct10,elp  added -fno-omit-frame-pointer.
+# 02a,28jun10,elp  adding required -mno-red-zone, fno-implicit-fp.
+# 01z,12jan10,elp  64bits support
+# 01y,30nov05,mcm  Updates for GCC 3.4.4
+# 01x,10dec03,yvp  Added ABI_SPEC.
+# 01w,07nov03,c_c  Removed Compiler definitions.
+# 01v,31mar03,jmp  removed MACH_DEP redefinition, there is now a sysALib.s on
+#                  SIMNT.
+# 01u,18feb03,jmp  modified to use pentium toolchain on SIMNT.
+# 01t,12feb02,sn   removed obsolete refs to GCC_EXEC_PREFIX
+# 01s,05feb02,tpw  Fix SPR 72107, PECOFF stabs not being relocated within GDB.
+# 01r,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 01q,28nov01,tpw  Fix SPRs 30726 and 70932, stray sections causing trouble.
+# 01p,20nov01,jmp  changed VX_CPU_FAMILY to simpc instead of SIMNT.
+# 01o,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01n,25sep01,dat  Location of defs.gnu changed to tool/gnu
+# 01m,10apr01,sn   Remove --force-stabs-reloc hack
+# 01l,21mar01,mrs  Fix up flags.
+# 01k,16oct00,sn   added include gnu; removed LIBS defn
+# 01j,31mar99,tdl  Added $(LD_PARTIAL_LAST_FLAGS)
+# 01i,17dec98,sn   Added def'n of C++_TEMPLATE_INST
+# 01h,07jul98,cym  removed sysAlib.o from MACH_DEP
+#		   added --subsystem=windows to LD_FLAGS.
+# 01g,29jun98,cym  removed .exe extension from executables.
+# 01f,16jun98,sn   fixed def'n of TOOLENV
+#                  ensure that WIN32 and WINNT macros are *not* defined
+# 01e,29apr98,cym  added .exe extension to executables
+# 01d,13mar98,jmb  fix vxWorks.st build
+# 01c,13mar98,jmb  fix bsp link
+# 01b,05mar98,jmb  cleaned up (partial)
+# 01a,19jan98,jmb  cribbed from make.I80386gnu
+#
+# DESCRIPTION
+# This file contains SIMNT specific definitions and flags for the GNU
+# software generation tools (compiler, assembler, linker etc.).
+#*/
+
+CPU		= SIMNT
+TOOL		= gnu
+CM		= large
+
+include $(TGT_DIR)/h/tool/gnu/defs.gnu
+
+CC_OPTIM_DEBUG =
+CC_OPTIM_XO = -O2
+CC_OPTIM_DRIVER = $(CC_OPTIM_DEBUG) -fvolatile -nostdlib -fno-builtin -fno-defer-pop
+CC_OPTIM_NORMAL = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -nostdlib -fno-builtin -fno-defer-pop
+CC_OPTIM_TARGET = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fvolatile -nostdlib -fno-builtin -fno-defer-pop
+
+ifdef _WRS_CONFIG_LP64
+CC_ARCH_SPEC	= -m64 -mcmodel=$(CM) -mno-red-zone -fno-implicit-fp \
+		  -fno-omit-frame-pointer
+LINK_FLAGS_EXTRA= -m elf_x86_64_vxworks
+else
+# Generate code for (-march=) and schedule for (-mtune=) pentium
+
+CC_ARCH_SPEC	= -mtune=i486 -march=i486
+endif
+
+
+TOOLENV		= pentium
+VX_CPU_FAMILY	= simpc
+ARCH_DIR	= simnt
+
+ifdef _WRS_CONFIG_LP64
+ABI_SPEC        = x86-64
+else
+ABI_SPEC        = x86
+endif
+
+CF		=
+
+# end of make.SIMNTgnu

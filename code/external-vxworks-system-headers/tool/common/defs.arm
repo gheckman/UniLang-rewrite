@@ -1,0 +1,151 @@
+# defs.arm - ARM specific definitions shared by all toolchains
+#
+# Copyright (c) 2001, 2003, 2005, 2006-2008, 2010 Wind River Systems, Inc.
+#
+# The right to copy, distribute or otherwise make use of this software
+# may be licensed only pursuant to the terms of an applicable Wind River
+# license agreement.
+#
+# modification history
+# --------------------
+# 01m,12nov10,jdw  Fix HW/SW floating point support (WIND00241091)
+# 01l,13jul10,fao  add be8 support.
+# 01k,19sep08,pee  fixing FP for TC.
+# 01j,20aug08,mze  set ENDIAN to little if not defaulted
+# 01i,19aug08,mze  TOOL changes
+# 01h,24jun08,pee  VSB adaptation.
+# 01g,27mar08,m_h  Add MMUless ARM7tdmi variant
+# 01f,14mar07,pee  added generic option support and LIB_ROOT support
+# 01e,27jun06,pee  added TC_INFO for osconfig
+# 01e,20jun06,jb  Remove 920t as variant
+# 01d,31jan06,m_h  Manzano Variant
+# 01c,28nov05,jb   Adding 920 as a CPU Variant
+# 01b,10dec03,yvp  Added ABI_SPEC.
+# 01a,18dec01,to   written
+#
+# DESCRIPTION
+# This file contains ARM specific definitions and flags to be
+# shared by all toolchains.
+#
+# NOTE
+# The file name comes from defs.$(VX_CPU_FAMILY)
+#
+
+TOOLENV		= arm
+VX_CPU_FAMILY	= arm
+ARCH_DIR	= arm
+ABI_SPEC        = arm
+
+ROM_ENTRY	= romInit
+USR_ENTRY	= usrInit
+SYS_ENTRY	= sysInit
+
+BUILD_ENDIAN_SUFFIX_big = be
+BUILD_ENDIAN_SUFFIX_be8 = be8
+BUILD_ENDIAN_SUFFIX_little =
+
+BUILD_FP_PREFIX_soft =
+_WRS_CONFIG_FP ?= soft
+
+# tool may already be stripped but ENDIAN may not be set
+_WRS_CONFIG_ENDIAN ?= little
+
+ifeq ($(findstring be,$(TOOL)),be)  
+    override _WRS_CONFIG_ENDIAN = big
+    export _WRS_CONFIG_ENDIAN
+    ifneq  ($(findstring be,$(TOOL_SPECIFIC_DIR)),be)
+        override TOOL_SPECIFIC_DIR = $(TOOL_FAMILY)be
+    endif
+    ifneq  ($(findstring be,$(TOOL_COMMON_DIR)),be)
+        override TOOL_COMMON_DIR = commonbe
+    endif
+endif
+
+ifeq ($(findstring be8,$(TOOL)),be8)  
+    override _WRS_CONFIG_ENDIAN = be8
+    export _WRS_CONFIG_ENDIAN
+    ifneq  ($(findstring be8,$(TOOL_SPECIFIC_DIR)),be8)
+        override TOOL_SPECIFIC_DIR = $(TOOL_FAMILY)be8
+    endif
+    ifneq  ($(findstring be8,$(TOOL_COMMON_DIR)),be8)
+        override TOOL_COMMON_DIR = commonbe8
+    endif
+endif
+
+
+ifeq ($(_WRS_CONFIG_ENDIAN),big)
+    # definitions for big endian
+    DEFINE_CC	+= -DARMEB
+    OBJCOPY_OLD_OMF	= -O coff-arm-big
+else
+    ifeq ($(_WRS_CONFIG_ENDIAN),be8)
+        # definitions for be8 endian
+        DEFINE_CC	+= -DARMEB -DARMBE8
+        OBJCOPY_OLD_OMF	= -O coff-arm-big
+    else
+        # definitions for little endian
+        DEFINE_CC	+= -DARMEL
+        OBJCOPY_OLD_OMF	= -O coff-arm-little
+    endif
+endif
+
+LD_LINK_PATH_EXTRA += \
+        -L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_SPECIFIC_DIR)$(CPU_VARIANT)$(MINOR_OPTION_SUFFIX) \
+        -L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(CPU_VARIANT)$(MINOR_OPTION_SUFFIX)
+
+## CPU variants builds
+#
+# For CPU variants builds, the name of the directory(ies) where archives are
+# installed is appended with a unique tag defined by LIB_DIR_TAG. The make
+# variable CPU_VARIANT_LIST define the whole list of these CPU variant tags
+# and should be updated everytime a new CPU variant build is introduced. For
+# instance:
+#   CPU_VARIANT_LIST = _cpuVariant1 _cpuVariant2 _cpuVariant3
+
+CPU_VARIANT_LIST    =   _manzano _armarch4mmuless
+
+# Each CPU variant build must define the following variables:
+#
+#   - VX_ARCHIVE_LIST$(LIB_DIR_TAG): this is the list of archive(s) to
+#     build for this CPU variant. Note that $(LIB_DIR_TAG) must be equal
+#     to one of the item defined in CPU_VARIANT_LIST. For instance:
+#       VX_ARCHIVE_LIST_cpuVariant1 = libarch.a libdrv.a
+#
+#   - CPU_VARIANT_CPU_TOOL_LIST$(LIB_DIR_TAG): this is the list of
+#     CPU/TOOL combination(s) for which the CPU variant build must be
+#     run. For instance:
+#       CPU_VARIANT_CPU_TOOL_LIST_cpuVariant2 = MIPS32diab MIPS64diab
+#
+# NOTE: CPU variant build(s) are kicked off by the default build rule
+# in target/h/make/rules.library.
+
+VX_ARCHIVE_LIST_manzano = libarch.a
+
+CPU_VARIANT_CPU_TOOL_LIST_manzano = XSCALEdiab XSCALEdiabbe
+
+ifeq ($(LIB_DIR_TAG),_manzano)
+        DEFINE_CC += -DARMCPUMANZANO
+endif
+
+VX_ARCHIVE_LIST_armmmuless = libarch.a
+
+CPU_VARIANT_CPU_TOOL_LIST_armarch4mmuless = ARMARCH4diab ARMARCH4diabbe
+
+ifeq ($(LIB_DIR_TAG),_armarch4mmuless)
+        DEFINE_CC += -DARMCPUMMULESS
+endif
+
+ifeq ($(TC_INFO),TRUE)
+    FP ?= soft
+    ifeq ($(findstring be, $(TOOL)),be)
+        ENDIAN = big
+    else
+        ENDIAN = little
+    endif
+    ifeq ($(findstring be8, $(TOOL)),be8)
+        ENDIAN = be8
+    endif
+endif
+
+
+# end of defs.arm

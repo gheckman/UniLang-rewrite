@@ -1,0 +1,11 @@
+# rules-lib.x86-win32 - host specific rules
+#
+# modification history
+# --------------------
+# 02a,24sep03,c_c  now use unix defaults
+#
+# DESCRIPTION
+# This file contains the makefile rules that are specific to Windows to build
+# vxWorks libraries.  
+
+include $(WIND_BASE)/target/h/make/rules-lib.unix

@@ -1,0 +1,180 @@
+# defs.unix - standard unix host specific makefile
+#
+# Copyright 1995-2007, Wind River Systems.
+#
+# modification history
+# --------------------
+# 02s,08oct08,pee  WIND00137789.
+# 02r,30apr08,pee  vsb tuning.
+# 02q,11mar08,pee  vsb
+# 02p,08mar07,pee  added support for generic option framework
+# 02o,06sep05,h_k  added USRENTRY. (SPR #111954)
+# 02n,09may05,j_c  merging 02l and 02m changes from the 2 branches
+# 02m,22apr05,h_a  Redoing a LIB_ROOT change that was erratically undone
+# 02m,19apr05,tpw  Adjust to new docs location as of WB18
+# 02l,18Apr05,pee  Added support for precomp objects
+# 02l,07apr05,h_a  Definition of LIB_ROOT for externel lib targets
+# 02l,07apr05,h_a  LIB_ROOT to replace $(TGT_DIR)/lib for building components
+# 02k,02sep04,c_c  Modified tclsh location.
+# 02j,07jul04,c_c  Removed usage of romfs_image.h.
+# 02i,15jul04,kab  SPR 99488: requires /bin/echo
+# 02h,26may04,dgp  remove references to refgen.tcl
+# 02g,26apr04,f_b  Removed absolute path to objcopy to prepare for new
+#                  directory structure and align with how nm & size are found
+# 02f,20feb04,c_c  Avoid eror message if no file is given to sed.
+# 02e,09feb04,fle  Adapted to new host utilities locations
+# 02d,12jan04,pad  Now call directly makeSymTbl.tcl instead of the Unix and
+#                  Windows wrapper files (SPR #92936).
+# 02c,01dec03,c_c  Added macros for postprocessing dependencies.
+# 02b,26nov03,bpn  Fixed DIRCHAR macro.
+# 02a,07nov03,c_c  Unified build rules with WIN32 hosts.
+# 01z,09oct03,md   make ROMFS location resident in project root
+# 01y,02jul03,md   added ROMFS variables
+# 01x,17apr02,jab  added NULL_DEVICE make variable
+# 01w,14dec01,tam  added CMD_SEPARATOR def
+# 01v,02nov01,tam  added RMDIR
+# 01u,01nov01,jab  added MKDIR
+# 01t,20oct01,dat  Relocting tool specific macros
+# 01s,27aug01,wsl  add man pages
+# 01r,19dec00,rec  add endian flag to CPP definition
+# 01q,06dec00,sn  removed -xc
+# 01q,08apr99,bc   Merge in objcopy invocations from Aeolus
+# 01p,07sep98,fle  added doc related variable : DOCS_ROOT
+# 01o,02apr98,pcn  Removed Objcopy changes from Tempest view
+# 01n,25feb98,ms   added NOP def, removed VX_CPU_FAMILY=$(TOOLENV) from CPP
+# 01m,15dec97,pcn  Added Objcopy in BSP build.
+# 01l,20oct97,tm   added constants to support objcopy gated by USE_OBJCOPY flag
+# 01k,10oct97,ms   added MV and ECHO. Don't define USRCONFIG, BOOTINIT, ...
+#                  macros if using new build rules.
+# 01j,17aug96,yp   Added definition of LIBDIR and BSPBUILD_TCL and DIRCHAR
+# 01i,18aug96,ms   use deflate to compress bootROM images
+# 01h,18apr96,dat
+#	          +yp  added MKPREP
+# 01g,06mar96,dat  removed makeVersion
+# 01f,13nov95,p_m  added DEMO_DIR.
+# 01e,03nov95,yp   Made CPP arch specific so .s.o targets don't get generate
+# 01d,24oct95,dat  recovered CONFIG_ALL macro
+# 01c,29jun95,kkk  added VXSIZE definition.
+# 01b,19jun95,yp   allowed arch. specific tools to be inherited from
+#                  make.$(CPU)$(TOOL)
+# 01a,01jun95,yp   created
+#
+# DESCRIPTION
+# This file contains default definitions, and flags used in building targets 
+# that are host specific to a standard unix environment.
+
+
+## directories
+
+BIN_DIR         = $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin
+FOUNDATION_DIR	= $(WIND_FOUNDATION_PATH)/$(WIND_HOST_TYPE)/bin
+
+ifeq ($(WIND_PROJECT_MAKEFILE),)
+TGT_DIR         = $(WIND_BASE)/target
+endif
+
+# temporay, until all occurent of LIB_ROOT are removed.
+LIB_ROOT = $(VSB_DIR)
+
+CONFIG_ALL      = $(TGT_DIR)/config/all
+DEMO_DIR	= $(TGT_DIR)/lib/obj$(CPU)$(TOOL)test
+LIBDIR		= $(LIB_ROOT)/$(LIBDIRNAME)
+PRECOMPBASE	= $(TGT_DIR)/precomp
+PRECOMPDIR	= $(TGT_DIR)/precomp/default$(MAJOR_OPTION_SUFFIX)/$(LIBDIRNAME)
+RESOURCE_DIR	= $(WIND_BASE)/host/resource
+
+## doc files
+
+DOCS_ROOT	= $(WIND_DOCS)/extensions/eclipse/plugins
+MAN_PAGE_DIR	= $(WIND_BASE)/man
+DOC_OPTS	= $(DOC_OPTS_MAN)
+DOC_OPTS_C_TCL	= -config CTcl2html
+DOC_OPTS_CPP	= -cpp
+DOC_OPTS_FILE	= -config File2html
+DOC_OPTS_MAN	= -mg -missingok
+
+## tools
+
+ENV_BIN		= VX_CPU_FAMILY=$(TOOLENV) $(BIN_DIR)/
+EXTRACT_BIN	= $(OBJCPY) $(EXTRACT_BIN_FLAG)
+BINXSYM		= $(OBJCPY) $(EXTRACT_SYM_FLAG)
+BINHEX		= $(OBJCPY) $(EXTRACT_HEX_FLAG)
+BINCONV		= $(OBJCPY)
+COMPRESS	= $(ENV_BIN)deflate
+ROMSIZEPROG	= $(ENV_BIN)romsize
+VXSIZEPROG	= $(ENV_BIN)vxsize
+MKSYMTBL	= $(TCL) $(WIND_BASE)/host/resource/hutils/tcl/makeSymTbl.tcl \
+		  $(TOOLENV)
+BINTOASM	= $(ENV_BIN)binToAsm
+MKPREP          = $(ENV_BIN)mkprep
+MG		= $(ENV_BIN)mg
+MKROMFS		= $(ENV_BIN)mkromfs
+LDOUT_SYMS      = true
+LDOUT_CONV      = true 
+LDOUT_HOST      = true 
+MV_BIN		= echo
+MKDIR		= mkdir -p
+RMDIR		= rm -f -r
+RM		= rm -f
+MV		= mv
+ECHO		= /bin/echo
+CP		= cp
+SED		= sed
+TR		= tr
+ASM_P1		= cat
+ASM_P2		= cat
+TARGET		=
+BSPBUILD_TCL	= $(BIN_DIR)/bspBuild.tcl
+NOP		= \#
+
+## macro for postprocessing dependencies
+
+PROCESS_DEP	= if [ -f $@ ]; then \
+	$(SED)  -e 's|^.*\.o|\$$\(LIBDIR\)/&|g' \
+		-e "s|$(TGT_DIR)|\\$$\(TGT_DIR\)|g" \
+		-e "s|$(WIND_GNU_PATH)|\\$$\(WIND_GNU_PATH\)|g" \
+		-e "s|$(WIND_DIAB_PATH)|\\$$\(WIND_DIAB_PATH\)|g" \
+		-e "s|$(WIND_BASE)|\\$$\(WIND_BASE\)|g" $@ > $@.post; \
+	$(MV) $@.post $@; fi
+
+PROCESS_DEP_PRECOMP	= if [ -f $@.precomp ]; then \
+	$(SED)  -e 's|^.*\.o|\$$\(PRECOMPDIR\)/&|g' \
+		-e "s|$(TGT_DIR)|\\$$\(TGT_DIR\)|g" \
+		-e "s|$(WIND_GNU_PATH)|\\$$\(WIND_GNU_PATH\)|g" \
+		-e "s|$(WIND_DIAB_PATH)|\\$$\(WIND_DIAB_PATH\)|g" \
+		-e "s|$(WIND_BASE)|\\$$\(WIND_BASE\)|g" $@.precomp >> $@; \
+	$(RM) $@.precomp; fi
+
+BSP_PROCESS_DEP	= if [ -f $@ ]; then \
+	$(SED)  -e "s|$(CONFIG_ALL)|\\$$\(CONFIG_ALL\)|g" \
+		-e "s|$(TGT_DIR)|\\$$\(TGT_DIR\)|g" \
+		-e "s|$(WIND_GNU_PATH)|\\$$\(WIND_GNU_PATH\)|g" \
+		-e "s|$(WIND_DIAB_PATH)|\\$$\(WIND_DIAB_PATH\)|g" \
+		-e "s|$(WIND_BASE)|\\$$\(WIND_BASE\)|g" $@ > $@.post; \
+	$(MV) $@.post $@; fi
+
+## DIRCHAR exists for compatibility reason. It should be removed
+DIRCHAR		= /
+
+## We now rely on the path to get the right tcl exe.
+TCL		= tclsh
+
+# REFGEN		= $(WTXTCL) $(RESOURCE_DIR)/doctools/apigen.pl
+HTMLLINK	= $(WTXTCL) $(RESOURCE_DIR)/doctools/htmlLink.tcl
+HTMLBOOK	= $(WTXTCL) $(RESOURCE_DIR)/doctools/htmlBook.tcl
+
+ifneq ($(NEW_RULES),TRUE)
+## files
+
+USRCONFIG	= $(CONFIG_ALL)/usrConfig.c
+USRENTRY	= $(CONFIG_ALL)/usrEntry.c
+BOOTCONFIG	= $(CONFIG_ALL)/bootConfig.c
+BOOTINIT	= $(CONFIG_ALL)/bootInit.c 
+DATASEGPAD	= $(CONFIG_ALL)/dataSegPad.c
+CONFIG_ALL_H    = $(CONFIG_ALL)/configAll.h
+endif
+
+## Miscellaneous
+
+CMD_SEPARATOR	= ;
+NULL_DEVICE	= /dev/null

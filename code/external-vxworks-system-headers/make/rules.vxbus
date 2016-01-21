@@ -1,0 +1,45 @@
+# rules.vxbus - makefile target rules for VxBus support
+#
+# Copyright 2006, Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01f,11jul08,dlk  Move EXTRA_INCLUDE additions to defs.bsp.
+# 01e,04jul07,ami  Rule vxbUsrCmdLine.c moved to
+#                  /target/config/comps/src/hwif/Makefile
+# 01d,28may07,vik  defect WIND00093423 and creating vxbUsrCmdLine.c
+# 01c,15may07,tor  restore cmdLineBuild
+# 01b,14may07,acm  remove cmdLineBuild support
+# 01a,30oct06,tor  written
+#
+# DESCRIPTION
+# This file contains rules used for command line build support
+# for VxBus modules.
+#
+# Currently, the only command line build support required for
+# VxBus is the file cmdLine.c, in the BSP directory.  This file
+# is generated automatically in the cmdLine.c rule below.
+# 
+# The rule for dynamic creation of vxbus commandline componets
+# is moved to <WIND_BASE>/target/config/comps/src/hwif/Makefile
+# This is to ensure that we have no dependency of vxbUsrCmdLine.c 
+# in BSP builds
+
+cmdLine.c: $(TGT_DIR)/config/comps/src/hwif/README $(WIND_BASE)/target/h/make/rules.vxbus
+	@echo rebuilding cmdLine.c ...
+	@$(RM) cmdLine.c
+	@echo '#ifndef INC_cmdLineH'            >> cmdLine.c
+	@echo '#define INC_cmdLineH'            >> cmdLine.c
+	@echo ''                                >> cmdLine.c
+	@echo '#ifndef PRJ_BUILD'               >> cmdLine.c
+	@echo ''                                >> cmdLine.c
+	@echo '#include <vxWorks.h>'            >> cmdLine.c
+	@echo '#include "config.h"'             >> cmdLine.c
+	@echo ''                                >> cmdLine.c
+	@echo '#include <util/cmdLineBuild.c>'  >> cmdLine.c
+	@echo ''                                >> cmdLine.c
+	@echo '#endif /* PRJ_BUILD */'          >> cmdLine.c
+	@echo ''                                >> cmdLine.c
+	@echo '#endif /* INC_cmdLineH */'       >> cmdLine.c
+	@echo done rebuilding cmdLine.c
+

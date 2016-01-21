@@ -1,0 +1,57 @@
+# make.PPC604diab - Diab compilation tools definitions for PowerPC 604
+#
+# Copyright 1995-2003 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01l,13apr10,pee  locally enabling SMP build specs for bdgen
+# 01k,17oct06,pch  add -Xstmw-slow for 745x
+# 01j,10oct06,pch  WIND00068356: add -Xstsw-slow for 745x/970
+# 01i,10aug04,pch  SPR 99846: Add support for _745x variant
+# 01h,05sep03,pch  parameterize Diab "environment" setting
+# 01g,31jan03,pch  Add PPC32 support
+# 01f,05dec01,jab  change :tornado, :simple ,etc. to :vxworks55
+# 01e,16nov01,mil  Changed VX_CPU_FAMILY from PPC to ppc.
+# 01d,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01c,25oct01,jab  added OPTION_ALTIVEC_C make variable
+# 01b,23oct01,jab  added OPTION_ALTIVEC_AS and PPC specific defs
+# 01a,16oct01,jab  Written from make.PPC604gnu 01r version.
+#
+# DESCRIPTION
+# This file contains PowerPC 604 specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+CPU		= PPC604
+TOOL		= diab
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+ifeq ($(LIB_DIR_TAG),_745x)
+  # Library build for 745x variant
+  # Enable AltiVec opcodes e.g. dssall, but not "vector" keyword.  Strictly 
+  # speaking, -Xkeywords=0x0 is only for C (not asm), but das does not object.
+  TGT_FLAG= -tPPC7400FV:$(DIAB_T_ENVIRON) -Xkeywords=0x0 -Xstsw-slow -Xstmw-slow
+else
+  ifeq ($(CPU_VARIANT),_745x)
+    # BSP build with CPU=PPC604 CPU_VARIANT=_745x also needs AV opcodes.
+    # Use CC_ARCH_SPEC since dld *does* object to -Xkeywords.
+    TGT_FLAG	  = -tPPC7400FV:$(DIAB_T_ENVIRON)
+    CC_ARCH_SPEC += -Xkeywords=0x0 -Xstsw-slow -Xstmw-slow
+  else
+    TGT_FLAG	  = -tPPC604FH:$(DIAB_T_ENVIRON)
+  endif
+endif
+
+TOOLENV		= ppc
+VX_CPU_FAMILY	= ppc
+ARCH_DIR        = ppc
+
+OPTION_ALTIVEC_AS = -tPPC7400FV:$(DIAB_T_ENVIRON)
+OPTION_ALTIVEC_C  = -tPPC7400FV:$(DIAB_T_ENVIRON) -Xkeywords=0x0
+
+ifdef _BDGEN_
+MP_OPTION_PPC604_SMP = TRUE
+endif
+
+
+# end of make.PPC604diab

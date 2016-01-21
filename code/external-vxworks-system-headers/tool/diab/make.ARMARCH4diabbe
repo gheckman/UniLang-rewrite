@@ -1,0 +1,25 @@
+# make.ARMARCH4diabbe - Diab compilation tools definitions for ARMARCH4
+#
+# modification history
+# --------------------
+# 01f,30sep03,sn  changed :vxworks55 to :$(DIAB_T_ENVIRON)
+# 01e,14jan02,to   move 'include defs.arm' after TOOL and CPU definitions to be
+#                  consistent with gnu ones
+# 01d,18dec01,to   move common definitions to defs.arm
+# 01c,05dec01,jab  change :tornado, :simple ,etc. to :vxworks55
+# 01b,16nov01,t_m  Change sysInit entry
+# 01a,08nov01,t_m  Copied from make.ARMARCH4
+#
+# DESCRIPTION
+# This file contains ARMARCH4 specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= ARMARCH4
+TOOL		= diabbe
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+TGT_FLAG	= -tARMES:$(DIAB_T_ENVIRON)
+
+# end of make.ARMARCH4diabbe

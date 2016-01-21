@@ -1,0 +1,93 @@
+# defs.pal - PAL related definitions for making libraries
+#
+# Copyright 2003-2009, Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01l,15oct10,pee  WIND00210572
+# 01k,21sep10,pee  WIND00234014
+# 01j,11dec09,mze  add echo to string
+# 01i,27jul09,pee  adding tags
+# 01h,20may09,pee  adding support for interface target
+# 01g,05nov08,mze  pass VSB_DIR down in recursive make
+# 01f,16sep08,pee  fixing recursion problem.
+# 01e,17jun08,pee  VSB adaptation
+# 01d,29apr05,md  added CPU variant make depend
+# 01c,15mar04,dlk Set DEFS_PAL. Fix modification history.
+# 01b,.......,c_c Added a definition for cleaning the CPU variant dependent
+#                 libraries.
+# 01a,.......,c_c written from  rules.library v 02b
+#
+
+## CPU variant builds:
+# List of CPU variant builds: CPU_VARIANT_TAG_LIST
+# This list is computed for the current CPU/TOOL combinaison. Note that CPU
+# variant build(s) are started as part of the 'Default' rule (see rules.library)
+
+# Defining DEFS_PAL non-empty is needed in defs.library by the option build
+# logic to ensure we don't skip any directory including this file,
+# particularly src/arch.
+DEFS_PAL = TRUE
+
+# this is a workaround to a deficiency in make 3.80.
+# will be fixed in 3.81
+# eval functions in defs.library cannot be put inside coditional, so the condition 
+# is tested here
+ifeq ($(DEFS_LIBRARY),)
+include $(TGT_DIR)/h/make/defs.library
+endif
+
+TOOL_TAG = $(BUILD_FP_PREFIX)$(TOOL_FAMILY)$(BUILD_ENDIAN_SUFFIX)
+
+ifneq ($(CPU_VARIANT_LIST),)
+CPU_VARIANT_TAG_LIST_TMP1 = 				\
+    $(foreach cpuVariantTag, $(CPU_VARIANT_LIST),	\
+	$(filter $(CPU)$(TOOL_TAG),				\
+	    $(CPU_VARIANT_CPU_TOOL_LIST$(cpuVariantTag)))$(cpuVariantTag))
+CPU_VARIANT_TAG_LIST_TMP2 = $(filter $(CPU)$(TOOL_TAG)%, 	\
+				$(CPU_VARIANT_TAG_LIST_TMP1))
+CPU_VARIANT_TAG_LIST = $(patsubst $(CPU)$(TOOL_TAG)%, %,	\
+			    $(CPU_VARIANT_TAG_LIST_TMP2))
+
+# Generate list of make commands for CPU variant builds: CPU_VARIANT_MAKE_CMD
+
+ifneq  ($(CPU_VARIANT_TAG_LIST),)
+CPU_VARIANT_MAKE_CMD = echo "Build of CPU variants" $(newline)
+CPU_VARIANT_MAKE_CMD += $(foreach cpuVariant, $(CPU_VARIANT_TAG_LIST), 	       \
+    $(tab) $(MAKE) CPU=$(CPU) TOOL=$(TOOL) VSB_DIR=$(VSB_DIR) LIB_DIR_TAG=$(cpuVariant) \
+	VX_ARCHIVE_LIST="$(VX_ARCHIVE_LIST$(cpuVariant))" TARGET=$(TARGET) \
+	NO_RECURSE=TRUE _WRS_CONFIG_FP=$(_WRS_CONFIG_FP) $(RECURSE_TARGET) $(newline))
+
+CPU_VARIANT_MAKE_CLEAN = echo "Removal of CPU variants" $(newline)
+CPU_VARIANT_MAKE_CLEAN += $(foreach cpuVariant, $(CPU_VARIANT_TAG_LIST), 	       \
+    $(tab) $(MAKE) CPU=$(CPU) TOOL=$(TOOL) VSB_DIR=$(VSB_DIR) LIB_DIR_TAG=$(cpuVariant) \
+	VX_ARCHIVE_LIST="$(VX_ARCHIVE_LIST$(cpuVariant))" TARGET=$(TARGET) \
+	NO_RECURSE=TRUE rclean $(newline)) 
+
+CPU_VARIANT_MAKE_DEPEND = echo "Build of CPU variant depend files" $(newline)
+CPU_VARIANT_MAKE_DEPEND += $(foreach cpuVariant, $(CPU_VARIANT_TAG_LIST), 	       \
+    $(tab) $(MAKE) CPU=$(CPU) TOOL=$(TOOL) VSB_DIR=$(VSB_DIR) LIB_DIR_TAG=$(cpuVariant) \
+	VX_ARCHIVE_LIST="$(VX_ARCHIVE_LIST$(cpuVariant))" TARGET=$(TARGET) \
+	NO_RECURSE=TRUE rdepend $(newline)) 
+
+CPU_VARIANT_MAKE_TAGS += @echo "Build of CPU variant kernel tags" $(newline)
+CPU_VARIANT_MAKE_TAGS += $(foreach cpuVariant, $(CPU_VARIANT_TAG_LIST),		\
+	$(tab) $(MAKE) CPU=$(CPU) TOOL=$(TOOL) VSB_DIR=$(VSB_DIR) LIB_DIR_TAG=$(cpuVariant) \
+	VX_ARCHIVE_LIST="$(VX_ARCHIVE_LIST$(cpuVariant))" TARGET=$(TARGET) \
+	NO_RECURSE=TRUE tags $(newline))
+
+CPU_VARIANT_MAKE_INTERFACE += @echo "Build of CPU variant interfaces" $(newline)
+CPU_VARIANT_MAKE_INTERFACE += $(foreach cpuVariant, $(CPU_VARIANT_TAG_LIST), 	       \
+    $(tab) $(MAKE) CPU=$(CPU) TOOL=$(TOOL) VSB_DIR=$(VSB_DIR) LIB_DIR_TAG=$(cpuVariant) \
+	VX_ARCHIVE_LIST="$(VX_ARCHIVE_LIST$(cpuVariant))" TARGET=$(TARGET) \
+	NO_RECURSE=TRUE interface $(newline)) 
+
+CPU_VARIANT_MAKE_CLEAN_INTERFACE += @echo "Removal of CPU variant interfaces" $(newline)
+CPU_VARIANT_MAKE_CLEAN_INTERFACE += $(foreach cpuVariant, $(CPU_VARIANT_TAG_LIST), 	       \
+    $(tab) $(MAKE) CPU=$(CPU) TOOL=$(TOOL) VSB_DIR=$(VSB_DIR) LIB_DIR_TAG=$(cpuVariant) \
+	VX_ARCHIVE_LIST="$(VX_ARCHIVE_LIST$(cpuVariant))" TARGET=$(TARGET) \
+	NO_RECURSE=TRUE clean_interface $(newline)) 
+
+endif
+endif
+

@@ -1,0 +1,24 @@
+# make.MIPSI64R2sfgnule - GNU tools definitions for MIPSI64R2 (soft float, little endian)
+#
+# Copyright 2007 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01a,20feb07,pes  created based on make.MIPS64gnule
+#
+# DESCRIPTION
+# This file contains MIPSI64R2 specific definitions and flags for the GNU
+# software generation tools (compiler, assembler, linker etc) when used
+# to generate a 64 bit compatible vxWorks in little-endian mode.
+#*/
+
+CPU		= MIPSI64R2
+TOOL		= sfgnule
+ABI_SPEC	= MIPS64LE
+
+include $(TGT_DIR)/h/tool/gnu/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   = -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   = -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.MIPSROM
+
+# end of make.MIPSI64R2sfgnule

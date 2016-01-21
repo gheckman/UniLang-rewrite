@@ -1,0 +1,56 @@
+# make.ARMARCH7gnu - GNU compilation tools definitions for ARMv7
+#
+# Copyright (c) 2009-2010, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01g,28sep12,jdw  Add ARM_USE_VFP flag
+# 01f,17nov10,jdw  Update to support both HW and SW FP builds
+# 01e,31jan10,fao  add be8 support
+# 01d,21oct09,j_b  force VFP as default due to vxprj CFLAGS generation issue
+# 01c,24sep09,j_b  fix VFP compiler options
+# 01b,20apr09,m_h  ARMv7 Support
+# 01a,27feb09,m_h   created from make.ARMARCH6gnu
+#
+# DESCRIPTION
+# This file contains ARM Architecture 7 little-endian-specific definitions
+# and flags for the GNU software generation tools (compiler, assembler,
+# linker etc.).
+#
+
+CPU	= ARMARCH7
+TOOL	= gnu
+
+# default before defs.arm
+_WRS_CONFIG_FP   ?= vector
+ifeq ($(TC_INFO),TRUE)
+    FP ?= vector
+endif
+
+include $(TGT_DIR)/h/tool/gnu/defs.arm
+
+# override definitions from defs.arm
+BUILD_FP_PREFIX_soft = sf
+
+# As shown by ccarm -dumpspecs,
+# -t7 = -mlittle-endian -march=armv7-a
+# -t5be = -mbig-endian -march=armv5 (t7be is not yet available)
+
+ifeq ($(_WRS_CONFIG_FP),vector)
+# Enable VFP code generation
+CC_ARCH_ENDIAN_SPEC_little = -t7 -mfpu=vfp -mfloat-abi=softfp
+CC_ARCH_ENDIAN_SPEC_be8 = -t5be  -Wa,-EB -mfpu=vfp -mfloat-abi=softfp
+EXTRA_DEFINE += -DARM_USE_VFP
+else
+# Enable software floating point code generation
+CC_ARCH_ENDIAN_SPEC_little = -t7 -msoft-float
+CC_ARCH_ENDIAN_SPEC_be8 = -t5be  -Wa,-EB -msoft-float
+endif
+
+CC_ARCH_SPEC    = $(CC_ARCH_ENDIAN_SPEC_$(_WRS_CONFIG_ENDIAN))
+
+# end of make.ARMARCH7gnu

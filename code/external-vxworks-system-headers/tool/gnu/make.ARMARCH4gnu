@@ -1,0 +1,41 @@
+# make.ARMARCH4gnu - GNU compilation tools definitions for ARM architecture 4
+#
+# modification history
+# --------------------
+# 01o,12dec11,my_  Add fast load support
+# 01n,25jun08,pee  VSB
+# 01m,05dec03,sn   updated flags for gcc 3.3.2
+# 01l,10jan02,to   move 'include defs.arm' after CPU and TOOL defines for
+#                  libgcc build
+# 01k,18dec01,to   move common definitions to defs.arm
+# 01j,16nov01,t_m  Change sysInit entry
+# 01i,06nov01,tpw  Add %.old rule to facilitate conversions to old OMFs
+# 01h,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01g,19oct01,jb   include of defs.gnu is out of sequence - fixed
+# 01f,10aug01,rec  add gnu 2.96 architecture definitions
+# 01f,25sep01,dat  Location of defs.gnu changed to tool/gnu
+# 01e,05jun01,mem  Remove HEX_FLAGS
+# 01d,30mar01,t_m  -fno-for-scope for C++ and rogue-wave
+# 01c,28feb01,t_m  merge in XScale changes
+# 01b,24aug00,rec  add support for big endian
+# 01a,26nov98,cdp  created from 01g of make.ARMSA110gnu.
+#
+# DESCRIPTION
+# This file contains ARM Architecture 4 little-endian-specific definitions
+# and flags for the GNU software generation tools (compiler, assembler,
+# linker etc.).
+#*/
+
+CPU		= ARMARCH4
+TOOL		= gnu
+
+include $(TGT_DIR)/h/tool/gnu/defs.arm
+
+LD_SCRIPT_ROM = -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.ARMARCH4ROM
+
+CC_ARCH_ENDIAN_SPEC_little = -t4
+CC_ARCH_ENDIAN_SPEC_big = -t4be  -Wa,-EB
+
+CC_ARCH_SPEC    = $(CC_ARCH_ENDIAN_SPEC_$(_WRS_CONFIG_ENDIAN))
+
+# end of make.ARMARCH4gnu

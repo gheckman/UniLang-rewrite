@@ -1,0 +1,39 @@
+# make.ARMARCH6gnu - GNU compilation tools definitions for ARM architecture 6
+#
+# Copyright (c) 2004, 2006, 2008-2009 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01e,24sep09,j_b  fix VFP compiler options
+# 01d,16sep08,j_b  replace t5 flag with t6 for little endian
+# 01c,25jun08,pee  VSB
+# 01b,31aug06,jb   Fix for Defect WIND00063709
+# 01a,06dec04,jb   Copied from make.ARMARCH5gnu
+#
+# DESCRIPTION
+# This file contains ARM Architecture 6 little-endian-specific definitions
+# and flags for the GNU software generation tools (compiler, assembler,
+# linker etc.).
+#*/
+
+CPU		= ARMARCH6
+TOOL		= gnu
+
+include $(TGT_DIR)/h/tool/gnu/defs.arm
+
+# As shown by ccarm -dumpspecs,
+# -t6 = -mlittle-endian -march=armv6
+# -t5be = -mbig-endian -march=armv5 (t6be is not yet available)
+
+ifeq ($(VFPVARIANT),ARM1136)
+# Enable VFP code generation
+CC_ARCH_ENDIAN_SPEC_little = -t6 -mfpu=vfp -mfloat-abi=softfp
+CC_ARCH_ENDIAN_SPEC_big = -t5be  -Wa,-EB -mfpu=vfp -mfloat-abi=softfp
+CC_ARCH_SPEC    = $(CC_ARCH_ENDIAN_SPEC_$(_WRS_CONFIG_ENDIAN))
+else
+CC_ARCH_ENDIAN_SPEC_little = -t6
+CC_ARCH_ENDIAN_SPEC_big = -t5be  -Wa,-EB
+CC_ARCH_SPEC    = $(CC_ARCH_ENDIAN_SPEC_$(_WRS_CONFIG_ENDIAN))
+endif
+
+# end of make.ARMARCH6gnu

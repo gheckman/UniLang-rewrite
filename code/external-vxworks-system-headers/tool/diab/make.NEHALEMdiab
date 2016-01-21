@@ -1,0 +1,35 @@
+# make.NEHALEMdiab - Diab compilation tools definitions for Nehalem
+#
+# Copyright (c) 2010 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01b,02nov10,sem  Update target flag to use correct CPU tag
+# 01a,22sep10,sem  created
+#
+# DESCRIPTION
+# This file contains Nehalem specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+include $(TGT_DIR)/h/tool/diab/defs.diab
+CPU		= NEHALEM
+TOOL		= diab
+
+TGT_FLAG	= -tNEHALEMLH:$(DIAB_T_ENVIRON)
+
+TOOLENV		= pentium
+VX_CPU_FAMILY	= pentium
+ARCH_DIR        = i86
+ABI_SPEC        = x86
+
+CFLAGS_AS	+= -Wa,-Xmnem-mit,-Xemul-gnu-bug
+CC_OPTIM_NORMAL += -Xalign-functions=4
+
+HLL_PREFIX      =
+
+# end of make.NEHALEMdiab

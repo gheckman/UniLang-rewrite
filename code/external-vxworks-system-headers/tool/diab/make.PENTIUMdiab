@@ -1,0 +1,31 @@
+# make.PENTIUMdiab - Diab compilation tools definitions for Pentium
+#
+# modification history
+# --------------------
+# 01b,17may05,zmm  Emulate GNU assembler's encoding of
+#                  fdivp/fdivrp/fsubp/fsubrp instructions. SPR 108421.
+# 01a,18nov03,zmm  Written based on make.PENTIUM3diab
+# maxim		Initial
+#
+# DESCRIPTION
+# This file contains Pentium specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+include $(TGT_DIR)/h/tool/diab/defs.diab
+CPU		= PENTIUM
+TOOL		= diab
+
+TGT_FLAG	= -tPENTIUMLH:$(DIAB_T_ENVIRON)
+
+TOOLENV		= pentium
+VX_CPU_FAMILY	= pentium
+ARCH_DIR        = i86
+ABI_SPEC        = x86
+
+CFLAGS_AS	+= -Wa,-Xmnem-mit,-Xemul-gnu-bug
+CC_OPTIM_NORMAL += -Xalign-functions=4
+
+HLL_PREFIX      =
+
+# end of make.PENTIUMdiab

@@ -1,0 +1,31 @@
+# make.ARMARCH4diab - Diab compilation tools definitions for ARMARCH4
+#
+# modification history
+# --------------------
+# 01j,12dec11,my_  Add fast load support
+# 01i,25jun08,pee  VSB
+# 01h,30sep03,sn  changed :vxworks55 to :$(DIAB_T_ENVIRON)
+# 01g,14jan02,to   move 'include defs.arm' after TOOL and CPU definitions to be
+#                  consistent with gnu ones
+# 01f,18dec01,to   move common definitions to defs.arm
+# 01e,05dec01,jab  change :tornado, :simple ,etc. to :vxworks55
+# 01d,16nov01,t_m  Change sysInit entry
+# 01c,08nov01,t_m  Remove CC_ARCH_SPEC and TGT_FLAG
+# 01b,07nov01,tam  removed extra space and added TOOL def
+# 01a,06nov01,tpw  Add %.old rule to facilitate conversions to old OMFs
+#
+# DESCRIPTION
+# This file contains ARMARCH4 specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= ARMARCH4
+TOOL		= diab
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+LD_SCRIPT_ROM = $(TGT_DIR)/h/tool/diab/ldscripts/link.ARMARCH4ROM
+
+TGT_FLAG	= -tARM$(TGT_FLAG_ENDIAN)S:$(DIAB_T_ENVIRON)
+
+# end of make.ARMARCH4diab

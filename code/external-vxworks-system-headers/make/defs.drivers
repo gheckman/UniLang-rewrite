@@ -1,0 +1,37 @@
+# defs.drivers - default documentation definitions for drivers
+#
+# Copyright 2005, Wind River Systems
+#
+# modification history
+# --------------------
+# 01f,18nov11,jph  replace the versioned mapping file name with
+#                  mappingfile.txt
+# 01e,28jul11,jam  update mapping file for docs
+# 01d,12may11,jam  change mapping file version
+# 01c,06jan11,jph  check if mapping file exists
+# 01b,08nov10,jph  add mapping file
+# 01a,25oct10,jph  remove version
+# 01a,19oct10,???  change version
+# 01g,18oct10,???  change version
+# 01f,22jul08,kkz  Updating API book names
+# 01e,04jun08,kkz  Use variables for doc version number
+# 01d,22jun07,kkz  Updating apidoc version number
+# 01c,09mar06,kkz Updated to 6.3
+# 01b,15sep05,kkz Updated to 6.2
+# 01a,15aug05,kkz Created 
+#
+# DESCRIPTION
+# This file is included in driver Makefiles to establish documentation defaults. 
+#
+#
+## docs flags and variables
+
+# Check if mapping file exists
+ifneq ($(wildcard $(DOCS_ROOT)/mappingfile.txt),)
+-include $(wildcard $(DOCS_ROOT)/mappingfile.txt)
+endif
+
+DOC_DIR		= $(DOCS_ROOT)/$(DOC_VX_DRV_API)
+DOC_BOOK	= VxWorks
+DOC_CHAPTER	= VxWorks_Driver_API_Reference
+

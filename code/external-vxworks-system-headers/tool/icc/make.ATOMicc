@@ -1,0 +1,77 @@
+# make.ATOMicc - ICC compilation tools definitions for ATOM
+#
+# Copyright (c) 2010-2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01f,27nov12,yjw  Add atom optimization.(WIND00380360)
+# 01e,14aug12,gvm  remove unknown options (WIND00271833)
+# 01d,13jun11,mze  add debug
+# 01c,31jan11,pee  WIND00252661
+# 01b,17nov10,sem  Fix ABI_SPEC LP64 typo (WIND00241926)
+# 01a,21sep10,sem  written
+#
+# DESCRIPTION
+# This file contains ATOM specific definitions and flags for the ICC
+# software generation tools (compiler, assembler, linker etc.).
+#*/
+
+CPU             = ATOM
+TOOL            = icc
+
+ifdef _WRS_CONFIG_LP64
+ifeq ($(LP64_MCMODEL),LARGE)
+CM              = large
+else
+CM              = kernel
+endif
+endif
+
+include $(TGT_DIR)/h/tool/icc/defs.icc
+
+CC_OPTIM_XO = -O2 
+CC_OPTIM_DEBUG =
+CC_OPTIM_DRIVER = $(CC_OPTIM_DEBUG)
+CC_OPTIM_NORMAL = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) 
+CC_OPTIM_TARGET = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)
+
+ifdef _WRS_CONFIG_LP64
+# Add warning options to help with the code adaptation to LP64
+CC_WARNINGS_LOW = -Wall -Wreturn-type \
+		  -Wmissing-prototypes -Wmissing-declarations \
+		  -Wconversion -Wformat
+
+# Generate LP64 code (-march=) for core2. The schedule (-mtune=) is
+# intentionally not specified so as to get it aligned to the -march option.
+
+CC_ARCH_SPEC    = -march=core2 -nostdlib -fno-builtin \
+		  -fno-defer-pop -m64 -fno-omit-frame-pointer \
+		  -mcmodel=$(CM) -mno-red-zone -fno-implicit-fp-sse
+
+LINK_FLAGS_EXTRA= -m elf_x86_64_vxworks
+else
+# Generate code for atom
+CC_ARCH_SPEC	= -xSSE3_ATOM -fno-implicit-fp-sse -nostdlib -fno-builtin
+
+endif
+
+TOOLENV         = pentium
+VX_CPU_FAMILY   = pentium
+ARCH_DIR        = i86
+
+ifdef _WRS_CONFIG_LP64
+ABI_SPEC        = x86-64
+else
+ABI_SPEC        = x86
+endif
+CF              =
+
+HLL_PREFIX      =
+
+OBJCOPY_OLD_OMF	= -O a.out-i386 --gap-fill=0
+
+# end of make.ATOMicc

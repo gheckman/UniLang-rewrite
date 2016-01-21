@@ -1,0 +1,30 @@
+# make.ARMARCH7Msfdiab - Diab compilation tools definitions for ARMARCH7M
+#
+# Copyright (c) 2012 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01a,2feb12,jdw  File created from make.ARMARCH7sfdiab
+#
+# DESCRIPTION
+# This file contains ARMARCH7M specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU	= ARMARCH7M
+TOOL	= sfdiab
+
+# default before defs.arm
+_WRS_CONFIG_FP   ?= soft
+ifeq ($(TC_INFO),TRUE)
+    FP ?= soft
+endif
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+# override definitions from defs.arm
+BUILD_FP_PREFIX_soft = sf
+
+TGT_FLAG        = -tARMV7MT2$(TGT_FLAG_ENDIAN)$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+
+# end of make.ARMARCH7Msfdiab

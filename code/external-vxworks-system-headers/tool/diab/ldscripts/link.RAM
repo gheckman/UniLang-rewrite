@@ -1,0 +1,134 @@
+/* link.RAM - diab linker command file for VxWorks: RAM */
+
+/* Copyright 2001-2013 Wind River Systems, Inc. */
+
+/* This file was automatically generated using tool/common/ldscripts. */
+
+/*
+modification history
+--------------------
+02b,12mar13,gvm  Fix for WIND00376986. Close alignment gap between _wrs_kernel_tls_vars_start and .tls_vars
+02a,06may10,slk  updates for large memory model support
+02e,12jan11,pgh  Place .copy.text and inflate.text into the .data section
+02d,09jul10,mcm  Adding .wrs_build_vars for GNU as well.
+02c,10mar10,gvm  updates for icc
+02b,16feb10,mcm  Update to allow the 'AT' directive introduced for .boot and
+                 .reset to be present for gnu only.
+02a,15feb10,mcm  Updates for GCC 4.3.3
+01z,24jul09,pee  adding wrs_build_vars section.
+01y,13nov08,mcm  Fix for WIND00143294 - gnu.linkonce.b sections not handled
+                 correctly. Also added .bss.* and .sbss.*
+01x,06may08,mcm  Changes for GNU Dwarf EH
+01w,16oct07,sn   WIND00107939:fixed LMAs of .sdata etc. for Diab
+01v,11jul07,pes  Update and rename generation of .kseg0data segment. (Renamed
+                 to .kseg0bss.) Add .rodata.cst16 segment.
+01u,07jul07,mcm  Fixing position of .tls* sections and adding support for tls
+                 for GCC.
+01t,08jun07,r_s  add support for Small Data Area segments.
+01s,09nov06,gvm  Support for .tls_data, .tls_vars, and associated absolute
+                 symbols in the Diab linker script
+01r,25aug05,dlk  Support .text.init, .text.fast, .data.init, .data.fast.
+01r,29jul05,slk  SPR 104264: fix MIPS romResident images
+01q,06may05,rlg  changes for MIPS specific devices
+01p,03jul04,f_b  Improved support for data alignment
+01o,12dec03,sn   added more .rodata.str1.* handlers
+01n,04dec03,sn   Diab: .rodata.* is not handled correctly by Diab linker; instead
+		 use specific names
+01m,28oct03,sn   Diab: collapse .rodata.cst* sections into .rodata
+01l,29may02,tpw  Diab: pad out sections, needed for MIPS byteswap. SPR 78076
+01k,24apr02,sn   GNU: SPR 75835 - added support for relocatable script link.OUT
+01j,19apr02,tpw  Diab: provide _etext for ColdFire. SPR 75122
+01i,06feb02,sn   Both: place .got2 to handle tramp.o (_x_gnu_tramp.o).
+01h,25jan02,tpw  GNU: give debug sections explicit 0 addresses.
+01g,14jan02,tpw  Diab: place .eh_frame data, in case of insistent GNU objects.
+01f,14dec01,tpw  Diab: provide both underscore options of wrs_kernel* here too.
+01e,05dec01,tpw  Both: Add .boot and .reset section support, for PPC 4xx series
+                 and Book E.
+01d,05dec01,tpw  Diab: Add .frame_info section to text region.
+01c,03dec01,jab  Diab: replaced LOAD() with AT()
+01b,14nov01,tpw  ALL: Correct some more bootrom/kernel issues.
+01b,06nov01,tpw  GNU: Add /DISCARD/ directive to discard uninteresting sections
+01a,01nov01,tpw  gnu script written
+01a,29oct01,jab  diab script written
+*/
+
+SECTIONS {
+  
+  GROUP BIND(_VX_START_TEXT) : {
+    .text (TEXT) : {
+      wrs_kernel_text_start = .; _wrs_kernel_text_start = .;
+      *(.text)
+      
+      wrs_kernel_text_fast = .; _wrs_kernel_text_fast = .;
+      *(.text.fast)
+      wrs_kernel_text_init = .; _wrs_kernel_text_init = .;
+      *(.text.init)
+      *(.rdata) *(.rodata) *(.rodata.cst16) *(.rodata.cst8) *(.rodata.cst4) *(.rodata.str1.1) *(.rodata.str1.2) *(.rodata.str1.4) *(.rodata.str1.8) *(.rodata.str1.16) *(.rodata.str1.32) *(.rodata.str1.64) *(.rodata.str1.128) *(.rodata.str1.256)
+      *(.init) *(.fini)
+      *(.frame_info)
+      . = ((. + 3) & ~3);
+    }
+    .wrs_build_vars (CONST) : {
+      *(.wrs_build_vars)
+      . = ((. + 3) & ~3);
+    }
+    .sdata2 (TEXT) : {
+      *(.sdata2)
+      . = ((. + 3) & ~3);
+    }
+    . = ((. + 3) & ~3);
+    etext = .; _etext = .;
+    wrs_kernel_text_end = .; _wrs_kernel_text_end = .;
+  }
+  GROUP BIND((etext + _VX_DATA_ALIGN - 1) & -_VX_DATA_ALIGN) : {
+    .data (DATA) : {
+      
+      wrs_kernel_data_start = .; _wrs_kernel_data_start = .;
+      *(.data)
+      wrs_kernel_data_fast = .; _wrs_kernel_data_fast = .;
+      *(.data.fast)
+      wrs_kernel_data_init = .; _wrs_kernel_data_init = .;
+      *(.data.init)
+      *(.eh_frame)	/* Some GNU objects insist on having .eh_frame data. */
+      *(.ctors)
+      *(.dtors)
+      *(.got2)
+      . = ((. + 3) & ~3);
+    }
+    wrs_kernel_tls_data_start = .; _wrs_kernel_tls_data_start = .;
+    .tls_data (DATA) : {
+      *(.tls_data)
+    }
+    wrs_kernel_tls_data_size = . - wrs_kernel_tls_data_start; _wrs_kernel_tls_data_size = . - _wrs_kernel_tls_data_start;
+    wrs_kernel_tls_data_align = ALIGNOF(.tls_data); _wrs_kernel_tls_data_align = ALIGNOF(.tls_data);
+    . = ((. + 7) & ~7);
+    wrs_kernel_tls_vars_start = .; _wrs_kernel_tls_vars_start = .;
+    .tls_vars (DATA) : {
+      *(.tls_vars)
+    }
+    wrs_kernel_tls_vars_size = RAWSIZEOF(.tls_vars); _wrs_kernel_tls_vars_size = RAWSIZEOF(.tls_vars);
+    . = ((. + 3) & ~3);
+    /* set gp for MIPS startup code */
+    _gp = ((. + 15) & ~15) + 0x7ff0;
+    
+    .sdata (DATA)  : {
+      *(.sdata)
+      . = ((. + 3) & ~3);
+    }
+    . = ((. + 3) & ~3);
+    edata = .; _edata = .;
+    wrs_kernel_data_end = .; _wrs_kernel_data_end = .;
+    .sbss (BSS) : {
+      wrs_kernel_bss_start = .; _wrs_kernel_bss_start = .;
+      *(.sbss)
+      . = ((. + 3) & ~3);
+    }
+    .bss (BSS) : {
+      *(.bss)
+      . = ((. + 3) & ~3);
+    }
+    . = ((. + 3) & ~3);
+    end = .; _end = .;
+    wrs_kernel_bss_end = .; _wrs_kernel_bss_end = .;
+  }
+}

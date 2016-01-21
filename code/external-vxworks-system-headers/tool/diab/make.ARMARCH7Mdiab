@@ -1,0 +1,51 @@
+# make.ARMARCH7Mdiab - Diab compilation tools definitions for ARMARCH7M
+#
+# Copyright (c) 2013 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01a,20aug13,mpc created 
+#
+# DESCRIPTION
+# This file contains ARMARCH7M specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU	= ARMARCH7M
+TOOL	= diab
+
+# default before defs.arm
+
+_WRS_CONFIG_FP   ?= vector
+ifeq ($(TC_INFO),TRUE)
+    FP ?= vector
+endif
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+# override definitions from defs.arm
+ 
+BUILD_FP_PREFIX_soft = sf
+
+ifneq ($(_WRS_CONFIG_FP), soft)
+
+# ARMARCH7M uses VFP instruction by default when compiling the
+# kernel. Enable the compiler to generate VFP instructions and set
+# the ARM_USE_VFP flag to select optimizations in code for vector 
+# floating point.
+
+EXTRA_DEFINE += -DARM_USE_VFP
+
+TGT_FLAG        = -tARMV7MT2LF:$(DIAB_T_ENVIRON)
+
+else
+
+TGT_FLAG        = -tARMV7MT2LS:$(DIAB_T_ENVIRON)
+
+endif 
+
+# end of make.ARMARCH7Mdiab

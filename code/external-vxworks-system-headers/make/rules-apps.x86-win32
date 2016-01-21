@@ -1,0 +1,10 @@
+#rules-apps.x86-win32
+#
+# modification history
+# --------------------
+# 01a,22oct03,c_c   Merged with Unix rules
+#
+# DESCRIPTION
+# This file contains rules that are host specific to sun4-solaris2 platform.
+
+include $(WIND_BASE)/target/h/make/rules-app.unix

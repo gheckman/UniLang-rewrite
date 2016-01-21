@@ -1,0 +1,197 @@
+# make.PPC32diab -  diab compilation tools definitions for generic PowerPC
+#
+# Copyright 2003-2006, 2008-2013 Wind River Systems, Inc.
+#
+# The right to copy, distribute or otherwise make use of this software
+# may be licensed only pursuant to the terms of an applicable Wind River
+# license agreement.
+#
+# modification history
+# --------------------
+# 02b,05feb13,h_k  replaced FH with FV option for e6500. (WIND00402696)
+# 02a,19sep12,h_k  added Altivec support to e6500.
+# 01z,30aug12,kk   updated to enable E6500 support
+# 01y,24jul12,h_k  added e6500 CPU variant support. (WIND00333229)
+# 01x,20dec12,wyt  added case for e500v2. (WIND00394937)
+# 01w,14feb12,h_k  added missing _WRS_HARDWARE_FP definition for e500mc
+#                  project builds. (WIND00333933)
+# 01v,04may11,syt  added support for PPC465
+# 01u,16dec10,x_z  set _WRS_HARDWARE_FP for hard-float 476
+# 01t,22oct09,pmr  move e500mc INCLUDE_HW_FP to appropriate section
+# 01s,09sep08,pee  fix e500v2 support.
+# 01r,03sep08,pmr  e500mc hard float
+# 01q,02sep08,pee  adding case for PPC32 e500v2
+# 01p,29aug08,mze  fix for 603
+# 01o,19aug08,mze  TOOL changes
+# 01n,22jul08,pee  adding VSB support for e500v2 FP
+# 01m,17jun08,pee  VSB adaptation
+# 01l,17oct06,pch  add -Xstmw-slow for 745x
+# 01k,10oct06,pch  WIND00068356: add -Xstsw-slow for 745x/970
+# 01j,06jun06,dtr  Add 603 soft/hard float support.
+# 01i,28mar05,dr   Adding definitions for LD_SCRIPT_RAM and LD_SCRIPT_ROM
+# 01h,28oct04,to   remove TOOLENV, etc. which are now defined in defs.ppc.
+# 01g,27may04,to   added -Xstmw-slow to avoid stmw/lmw alignment exception.
+# 01f,21may04,to   PPC970 support
+# 01e,10aug04,pch  SPR 99846: Add support for _745x variant
+# 01d,08jun04,pch  set _WRS_HARDWARE_FP for hard-float 440
+# 01c,04feb04,pch  PPC32 floating-point adjustments
+# 01b,05sep03,pch  parameterize Diab "environment" setting
+# 01a,06feb03,pch  Written from make.PPC603diab vn 01f & make.PPC32gnu vn 01b
+#
+# DESCRIPTION
+# This file contains definitions and flags for the diab tools
+# (compiler, assembler, linker etc.) to build for a generic
+# PowerPC with PPC60x hardware floating point.
+# If building for a specific processor (as a variant), 
+# defs.ppc will set its type number into PPC32VARIANT.
+#*/
+
+CPU		= PPC32
+TOOL		= diab
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+TGT_FLAG_FP_e500v2 = H
+
+_WRS_CONFIG_FP ?= hard
+
+LD_SCRIPT_RAM   = -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+                  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTRAM
+LD_SCRIPT_ROM   = -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+                  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTROM
+
+#settings apply to both soft and e500v2 FP values
+ifneq ($(_WRS_CONFIG_FP),hard)
+CC_COMPILER     += -Xstsw-slow
+C++_COMPILER    += -Xstsw-slow
+endif
+
+
+ifeq ($(LIB_DIR_TAG),_ppc604_745x)
+  # Library build for 745x variant
+  # Enable AltiVec opcodes e.g. dssall, but not "vector" keyword.  Strictly
+  # speaking, -Xkeywords=0x0 is only for C (not asm), but das does not object.
+  TGT_FLAG= -tPPC7400FV:$(DIAB_T_ENVIRON) -Xkeywords=0x0 -Xstsw-slow -Xstmw-slow
+else
+  ifeq ($(CPU_VARIANT),_ppc604_745x)
+    # BSP build with CPU=PPC32 CPU_VARIANT=_ppc604_745x also needs AV opcodes.
+    # Use CC_ARCH_SPEC since dld *does* object to -Xkeywords.
+    TGT_FLAG	  = -tPPC7400FV:$(DIAB_T_ENVIRON)
+    CC_ARCH_SPEC += -Xkeywords=0x0 -Xstsw-slow -Xstmw-slow
+  else
+    ifeq ($(PPC32VARIANT),465)
+      TGT_FLAG	  = -tPPC464F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+    else
+      ifeq ($(PPC32VARIANT),85XX)
+        ifeq ($(_WRS_CONFIG_FP),e500v2)
+          TGT_FLAG	  = -tPPCE500V2F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+        else
+          ifeq ($(LIB_DIR_TAG),_ppc85XX_e500v2)
+            TGT_FLAG      = -tPPCE500V2F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+          else
+            ifeq ($(LIB_DIR_TAG),_ppc85XX_e500mc)
+              TGT_FLAG	  = -tPPCE500MCF$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+            else
+              ifeq ($(LIB_DIR_TAG),_ppc85XX_e6500)
+                # Library build for e6500 variant
+                # Enable AltiVec opcodes e.g. dssall, but not "vector" keyword.
+                # Strictly speaking, -Xkeywords=0x0 is only for C (not asm),
+                # but das does not object.
+                TGT_FLAG  = -tPPCE6500FV:$(DIAB_T_ENVIRON) -Xkeywords=0x0
+              else
+                ifeq ($(CPU_VARIANT),_ppc85XX_e500mc)
+                  TGT_FLAG	= -tPPCE500MCF$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+                else
+                  ifeq ($(CPU_VARIANT),_ppc85XX_e6500)
+                    # BSP build with CPU=PPC32 CPU_VARIANT=_ppc85XX_e6500 also
+                    # needs AV opcodes.
+                    # Use CC_ARCH_SPEC since dld *does* object to -Xkeywords.
+                    TGT_FLAG	= -tPPCE6500FV:$(DIAB_T_ENVIRON)
+                    CC_ARCH_SPEC += -Xkeywords=0x0
+                  else
+                    TGT_FLAG	= -tPPCE500F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+                  endif
+                endif
+              endif
+            endif
+          endif
+        endif
+      else
+        ifeq ($(_WRS_CONFIG_FP),e500v2)
+          TGT_FLAG	  = -tPPCE500V2F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+        else
+          TGT_FLAG	  = -tPPC$(PPC32VARIANT)F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+        endif
+      endif
+    endif
+  endif
+endif
+
+ifeq ($(_WRS_CONFIG_FP),hard)
+ifeq ($(PPC32VARIANT),)
+  CC_ARCH_SPEC   += -Xstmw-slow -DPPC32_fp60x -Xstsw-slow
+  # *** TEMP HACK: enable AltiVec support for math/fioLib.c
+  # *** Remove this when the coprocessor abstraction
+  # *** supports printf/scanf format extensions.
+  OPTION_ALTIVEC_C  = -tPPCFV:$(DIAB_T_ENVIRON) -Xkeywords=0x0 -D_WRS_ALTIVEC_SUPPORT
+endif
+
+ifeq ($(PPC32VARIANT),604)
+  OPTION_ALTIVEC_AS = -tPPC7400FV:$(DIAB_T_ENVIRON)
+  OPTION_ALTIVEC_C  = -tPPC7400FV:$(DIAB_T_ENVIRON) -Xkeywords=0x0
+endif
+
+ifeq ($(PPC32VARIANT),440)
+  # inform ppc440.h that we are building for hardware FP
+  CC_ARCH_SPEC   += -D_WRS_HARDWARE_FP
+endif
+
+ifeq ($(PPC32VARIANT),465)
+  # inform ppc440.h that we are building for hardware FP
+  CC_ARCH_SPEC   += -D_WRS_HARDWARE_FP
+endif
+	
+ifeq ($(PPC32VARIANT),476)
+  # inform ppc476.h that we are building for hardware FP
+  CC_ARCH_SPEC   += -D_WRS_HARDWARE_FP
+endif
+
+ifeq ($(PPC32VARIANT),603)
+  # inform ppc603.h that we are building for hardware FP
+  CC_ARCH_SPEC   += -D_WRS_HARDWARE_FP
+endif
+
+ifeq ($(PPC32VARIANT),970)
+  CC_ARCH_SPEC		+= -Xstmw-slow -Xstsw-slow
+  OPTION_ALTIVEC_AS	= -tPPC970FV:$(DIAB_T_ENVIRON)
+  OPTION_ALTIVEC_C	= -tPPC970FV:$(DIAB_T_ENVIRON) -Xkeywords=0x0
+endif
+
+ifeq ($(LIB_DIR_TAG),_ppc85XX_e500mc)
+  # inform ppc85xx.h that we are building for hardware FP
+  CC_ARCH_SPEC   += -D_WRS_HARDWARE_FP
+endif
+
+ifeq ($(CPU_VARIANT),_ppc85XX_e500mc)
+  # inform ppc85xx.h that we are building for hardware FP
+  CC_ARCH_SPEC   += -D_WRS_HARDWARE_FP
+endif
+
+ifeq ($(LIB_DIR_TAG),_ppc85XX_e6500)
+  # inform ppc85xx.h that we are building for hardware FP
+  CC_ARCH_SPEC   += -D_WRS_HARDWARE_FP
+
+  OPTION_ALTIVEC_AS = -tPPCE6500FV:$(DIAB_T_ENVIRON)
+  OPTION_ALTIVEC_C  = -tPPCE6500FV:$(DIAB_T_ENVIRON) -Xkeywords=0x0
+endif
+
+ifeq ($(CPU_VARIANT),_ppc85XX_e6500)
+  # inform ppc85xx.h that we are building for hardware FP
+  CC_ARCH_SPEC   += -D_WRS_HARDWARE_FP
+
+  OPTION_ALTIVEC_AS = -tPPCE6500FV:$(DIAB_T_ENVIRON)
+  OPTION_ALTIVEC_C  = -tPPCE6500FV:$(DIAB_T_ENVIRON) -Xkeywords=0x0
+endif
+
+endif
+
+# end of make.PPC32diab

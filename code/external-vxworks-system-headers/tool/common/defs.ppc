@@ -1,0 +1,451 @@
+# defs.ppc - PPC specific definitions shared by all toolchains
+#
+# Copyright (c) 2002-2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 02v,16oct12,kch  Added mils haNet for e500mc.
+# 02u,04sep12,pfl  renamed libmilsvdk.a to libmils.a
+# 02z,01nov12,kk  fix merge issue, reinstate 465 for SMP
+# 02y,24jul12,h_k  added e6500 CPU variant support. (WIND00333229)
+# 03a,23apr12,h_k  removed PPC85XX _e500mc support. (WIND00346346)
+# 02z,25jan12,mze  Standardize ENDIAN
+# 02y,08mar12,h_k  removed libaim.a from VX_ARCHIVE_LIST_ppc465.
+#                  (WIND00320752)
+# 02x,14feb12,h_k  removed PPC860 build. (WIND00327400)
+# 02w,22nov11,x_s  added libaim.a for VX_ARCHIVE_LIST_ppc465
+# 02t,13may11,kab  Adding mils vdk for e500mc
+# 02v,03may11,syt  added support for PPC465
+# 02u,28feb11,x_s  added SMP support for PPC476
+# 02t,23feb11,agf  add Hypervisor VBI lib to e500v2 build
+# 02s,05nov10,pch  CQ212178: avoid building 970 for SMP
+# 02r,30sep10,kab  Restore e500mc builds
+# 02s,05nov10,pch  CQ212178: avoid building 970 for SMP
+# 02v,15dec10,x_z  added hard float point support for PPC476
+# 02u,30sep10,kab  Restore e500mc builds
+# 02t,23aug10,x_z  removed hard float and SMP support for _ppc476
+# 02s,12mar10,x_s  added _ppc476 cpu variant
+# 02r,07dec09,pmr  temporarily remove e500mc from build list
+# 02q,14nov09,to   GUEST: set CPU variants for GUEST
+# 02p,29jul09,pee  missed on CPU/TOOL combination in last checkin.
+# 02o,27jul09,pee  adding legacy CPU interface under PPC32
+# 02n,17oct08,pch  CQ140014: update comments re supported CPU_VARIANT settings
+# 02m,08sep08,pee  fixing TC_INFO.
+# 02l,02sep08,pmr  e500mc hard float
+# 02k,29aug08,pee  fixing TOOL in LD_LINK_TOOL_DIR.
+# 02j,26aug08,mze  typo
+# 02i,25aug08,mze  fix TC_INFO
+# 02h,21aug08,mze  test
+# 02g,19aug08,mze  TOOL changes
+# 02f,27jun08,pee  WIND000126394
+# 02e,30jun08,pee  modification to SMP support for VSB
+# 02d,27jun08,pee  fixing gnu/hard
+# 02c,12jun08,pee  VSB adaptation.
+# 02b,31mar08,pmr  add e500mc
+# 02a,12dec07,dtr  Fix FP reference.
+# 01z,28nov07,dtr  Define e500v2 FP type.
+# 01y,19nov07,dtr  Use e500v2 instead of ev2 for TOOL.
+# 01x,05nov07,dtr  Add ev2diab support for 85XX.
+# 01w,30aug07,dtr  Add e500 to SMP build.
+# 01v,19jul07,pch  CQ98899: settings of ADDED_CFLAGS must include "override"
+# 01u,09may07,dtr  Add e200 cpu variant build support.
+# 01t,05may07,dcc  moved VX_CPU_FAMILY definition.
+# 01s,08mar07,pee  added generic option support
+# 01r,27jun06,pee  added TC_INFO for osconfig
+# 01q,06jun06,dtr  Add 603 soft float support.
+# 01r,26may06,pch  Add PPC970 to SMP build
+# 01q,18apr06,lei  added VXBUILD & DIR_EXT to support for SMP build
+# 01p,15sep05,jlb  Add CPU_CLASS macro set to PPC32
+# 01o,18jul05,dtr  _e500v2 cpu variant added.
+# 01n,04apr05,kkz  removing PPC970 until it is shippable
+# 01p,25mar05,dtr  Add in 83xx and g2le CPU_VARIANT.
+# 01o,10feb05,pch  Add _ppc970.
+# 01n,12nov04,dtr  Adding in _ppc860 CPU variant.
+# 01m,26jul04,pch  SPR 99846: Add support for _745x variant
+# 01l,02jun04,mil  Removed libaim.a after consolidated into PPC32.
+# 01k,10may04,mil  Added libaim.a for ppc440, ppc60x and ppc85XX.
+# 01j,09apr04,rec  add PPC970
+# 01i,05apr04,mcm  Fix for SPR 95829 - added a new macro to help set the path
+#		   for Diab C++ libraries. Also fixed the assignments to
+#		   LD_LINK_PATH_ATEND and LD_LINK_PATH_EXTRA to use +=
+# 01h,04mar04,pch  temporarily disable ppc860 build
+# 01g,03mar04,mil  Added PPC85XX.
+# 01f,04feb04,pch  PPC32 floating-point adjustments
+#		   *** mention of libhwdb.a in variants of PPC32 is temporary
+#		   *** until it supports runtime selection among single-step,
+#		   *** emulation using breakpoints, and hands-off mode.
+# 01e,19dec03,kab  Add 440gx diab support
+# 01d,10dec03,yvp  Added ABI_SPEC.
+# 01c,19nov03,c_c  Added VX_CPU_FAMILY definition here.
+# 01b,30jan03,pch  add LD_LINK_PATH_ATEND to support generic build
+# 01a,12dec02,pch  written
+#
+# DESCRIPTION
+# This file contains PPC specific definitions and flags
+# to be shared by all toolchains.
+#
+# NOTE
+# The file name comes from defs.$(VX_CPU_FAMILY)
+#
+
+## map TOOL to TOOL_FAMILY, if not already done
+
+ifeq ($(TOOL_FAMILY),)
+ifeq  ($(findstring gnu,$(TOOL)),gnu)
+TOOL_FAMILY	= gnu
+else
+ifeq  ($(findstring diab,$(TOOL)),diab)
+TOOL_FAMILY	= diab
+endif
+endif
+endif
+
+VX_CPU_FAMILY	= ppc
+BUILD_ENDIAN_SUFFIX_big =
+BUILD_ENDIAN_SUFFIX_little = le
+
+include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/defs.$(TOOL_FAMILY)
+
+TOOLENV		= ppc
+ARCH_DIR	= ppc
+ABI_SPEC	= ppc
+CPU_CLASS	= PPC32
+
+ifeq ($(LIB_DIR_TAG),)
+    # We are not already building a variant, so set up variant lists
+    # for those processors which support them.
+    ifeq ($(CPU),PPC440)
+	# Base PPC440 supports the 440x4 core, used in the PPC440GP.
+	# The _x5 variant supports the 440x5 core, used in the PPC440GX
+	# and most other recent designs, which has a separate exception
+	# class for Machine Check.
+	CPU_VARIANT_LIST		= _x5
+	VX_ARCHIVE_LIST_x5		= libarch.a
+	CPU_VARIANT_CPU_TOOL_LIST_x5	= PPC440diab PPC440gnu
+    endif
+    ifeq ($(CPU),PPC85XX)
+	# Base PPC85XX supports the e500 core version used in the MPC8540,
+	# 8541, 8555, and 8560.
+	# The _e500v2 variant supports the e500v2 core, used in the MPC8548
+	# and 8572, which has extended addressing for MMU and data cache
+	# flush assist.
+	CPU_VARIANT_LIST		= _e500v2 _e200
+	VX_ARCHIVE_LIST_e500v2		= libarch.a
+	CPU_VARIANT_CPU_TOOL_LIST_e500v2 = PPC85XXsfdiab PPC85XXsfgnu \
+					   PPC85XXe500v2diab PPC85XXe500v2gnu
+	VX_ARCHIVE_LIST_e200		= libarch.a
+	CPU_VARIANT_CPU_TOOL_LIST_e200 = PPC85XXsfdiab PPC85XXsfgnu
+    endif
+
+    ifeq ($(CPU),PPC604)
+	# Base PPC604 supports 604, 604e, 750, 750CX, 750FX, 755, 7400, 7410.
+	# The _745x variant supports the MPC745x family, which have different
+	# synchronization requirements, mostly involving HID0 and MSR.
+	CPU_VARIANT_LIST		= _745x
+	VX_ARCHIVE_LIST_745x		= libarch.a
+	CPU_VARIANT_CPU_TOOL_LIST_745x	= PPC604diab PPC604gnu
+    endif
+
+    ifeq ($(CPU),PPC603)
+	# Base PPC603 supports 603, 603e, 826x, 828x, 824x.
+	# The _83xx variant supports the MPC83xx family, which have different
+	# cache sizes and support for additional secondary functionality.
+	# The _g2le variant supports the MPC827x and other members of the
+	# next generation of the MPC82xx family, which have additional
+	# functionality beyond the 603e core.
+	CPU_VARIANT_LIST		= _83xx _g2le
+	VX_ARCHIVE_LIST_83xx		= libarch.a
+	CPU_VARIANT_CPU_TOOL_LIST_83xx	= PPC603diab PPC603gnu
+	VX_ARCHIVE_LIST_g2le		= libarch.a
+	CPU_VARIANT_CPU_TOOL_LIST_g2le	= PPC603diab PPC603gnu
+
+    endif
+
+    ifeq ($(CPU),PPC32)
+      ifeq ($(_WRS_CONFIG_WRHV_GUEST),y)
+	CPU_VARIANT_LIST_CONFIG_VBI_E500MC_y = _ppc85XX_e500mc
+	CPU_VARIANT_LIST_CONFIG_VBI_E500MC_  = _ppc85XX _ppc85XX_e500v2
+	CPU_VARIANT_LIST = \
+	  $(CPU_VARIANT_LIST_CONFIG_VBI_E500MC_$(_WRS_CONFIG_VBI_PPC_E500MC))
+      else
+	# Variants of PPC32 are the same as the old PPC CPU names, but
+	# in lower case and with a leading underscore, and with one of
+	# the above-described settings appended as needed to support the
+	# corresponding hardware.  Each variant is built with either the
+	# hard- or soft-float TOOLs, as appropriate.  The 440, 603, e500mc,
+	# and e6500 are built both ways, because they are supported both with
+	# and without hardware FPUs.
+
+	# For SMP build only the _ppc604_745x, _ppc85XX, _ppc476 and _ppc465
+
+	CPU_VARIANT_LIST_CONFIG_SMP_y	= _ppc604_745x _ppc85XX \
+					  _ppc85XX_e500v2 _ppc85XX_e500mc \
+					  _ppc85XX_e6500 _ppc476 _ppc465
+
+	# Despite first appearances of the name, the following is for not-SMP.
+	CPU_VARIANT_LIST_CONFIG_SMP_	= _ppc403 _ppc405 _ppc440 _ppc440_x5 \
+					  _ppc465 _ppc476 \
+					  _ppc603 _ppc603_83xx _ppc603_g2le \
+					  _ppc604 _ppc604_745x _ppc85XX \
+					  _ppc85XX_e500v2 _ppc85XX_e200 \
+					  _ppc85XX_e500mc _ppc85XX_e6500 \
+					  _ppc860 _ppc970
+
+	CPU_VARIANT_LIST = $(CPU_VARIANT_LIST_CONFIG_SMP_$(_WRS_CONFIG_SMP))
+      endif
+
+	_ADDITIONAL_CPU_SUPPORT = $(_ADDITIONAL_CPU_SUPPORT_$(_WRS_CONFIG_FP)_$(_WRS_CONFIG_SMP))
+
+	_ADDITIONAL_CPU_SUPPORT_soft_ = PPC85XX PPC440 PPC603 PPC405 PPC476 PPC465
+	_ADDITIONAL_CPU_SUPPORT_hard_ = PPC604 PPC440 PPC603 PPC604 PPC476 PPC465
+	_ADDITIONAL_CPU_SUPPORT_e500v2_ = PPC85XX
+	_ADDITIONAL_CPU_SUPPORT_soft_y = PPC85XX
+	_ADDITIONAL_CPU_SUPPORT_hard_y = PPC604
+	_ADDITIONAL_CPU_SUPPORT_e500v2_y = PPC85XX
+
+	VX_ARCHIVE_LIST_ppc403			= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc403	= PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc405			= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc405	= PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc440			= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc440	= PPC32diab PPC32gnu \
+						  PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc440_x5		= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc440_x5	= PPC32diab PPC32gnu \
+						  PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc465			= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc465	= PPC32diab PPC32gnu \
+						  PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc476			= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc476	= PPC32diab PPC32gnu \
+						  PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc603			= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc603	= PPC32diab PPC32gnu \
+						  PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc603_83xx		= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc603_83xx	= PPC32diab PPC32gnu \
+						  PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc603_g2le		= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc603_g2le	= PPC32diab PPC32gnu \
+						  PPC32sfdiab PPC32sfgnu
+
+	VX_ARCHIVE_LIST_ppc604			= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc604	= PPC32diab PPC32gnu
+	VX_ARCHIVE_LIST_ppc604_745x		= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc604_745x	= PPC32diab PPC32gnu
+
+	VX_ARCHIVE_LIST_ppc85XX			= libarch.a libhwdb.a libwrhv.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc85XX	= PPC32sfdiab PPC32sfgnu
+	VX_ARCHIVE_LIST_ppc85XX_e500v2		= libarch.a libhwdb.a libwrhv.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc85XX_e500v2 = PPC32sfdiab PPC32sfgnu \
+						  PPC32e500v2diab PPC32e500v2gnu
+	VX_ARCHIVE_LIST_ppc85XX_e200		= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc85XX_e200 = PPC32sfdiab PPC32sfgnu
+
+	VX_ARCHIVE_LIST_ppc85XX_e500mc		= libarch.a libhwdb.a \
+						  libwrhv.a libmils.a libhaNet.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc85XX_e500mc = PPC32sfdiab PPC32sfgnu \
+						   PPC32diab PPC32gnu
+
+	VX_ARCHIVE_LIST_ppc85XX_e6500		= libarch.a libhwdb.a libwrhv.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc85XX_e6500 = PPC32sfdiab PPC32sfgnu \
+						  PPC32diab PPC32gnu
+
+	VX_ARCHIVE_LIST_ppc970			= libarch.a libhwdb.a
+	CPU_VARIANT_CPU_TOOL_LIST_ppc970	= PPC32diab PPC32gnu
+
+	PPC32VARIANT=
+    endif
+
+else
+    # LIB_DIR_TAG set => this is a library build for a CPU variant.
+
+    ifeq ($(CPU),PPC32)
+	# Remap LIB_DIR_TAG to CPU for CPP, and remember type number
+	# for use in setting TGT_FLAG or CC_ARCH_SPEC.
+	ifeq ($(LIB_DIR_TAG),_ppc440_x5)
+	    DEFINE_CC += -UCPU -DCPU=PPC440 -DCPU_VARIANT=_x5
+	    PPC32VARIANT=440
+	else
+	    ifeq ($(LIB_DIR_TAG),_ppc604_745x)
+		DEFINE_CC += -UCPU -DCPU=PPC604 -DCPU_VARIANT=_745x
+		PPC32VARIANT=604
+	    else
+	    	ifeq ($(LIB_DIR_TAG),_ppc603_83xx)
+		    DEFINE_CC += -UCPU -DCPU=PPC603 -DCPU_VARIANT=_83xx
+		    PPC32VARIANT=603
+		else
+	    	    ifeq ($(LIB_DIR_TAG),_ppc603_g2le)
+			DEFINE_CC += -UCPU -DCPU=PPC603 -DCPU_VARIANT=_g2le
+			PPC32VARIANT=603
+		    else
+	    		ifeq ($(LIB_DIR_TAG),_ppc85XX_e500v2)
+			    DEFINE_CC += -UCPU -DCPU=PPC85XX -DCPU_VARIANT=_e500v2
+			    PPC32VARIANT=85XX
+			else
+	    		    ifeq ($(LIB_DIR_TAG),_ppc85XX_e200)
+				DEFINE_CC += -UCPU -DCPU=PPC85XX -DCPU_VARIANT=_e200
+				PPC32VARIANT=85XX
+			    else
+	    			ifeq ($(LIB_DIR_TAG),_ppc85XX_e500mc)
+				    DEFINE_CC += -UCPU -DCPU=PPC85XX -DCPU_VARIANT=_e500mc
+				    PPC32VARIANT=85XX
+	    			else
+		  ifeq ($(LIB_DIR_TAG),_ppc85XX_e6500)
+		    DEFINE_CC += -UCPU -DCPU=PPC85XX -DCPU_VARIANT=_e6500
+		    PPC32VARIANT=85XX
+		  else
+	       		    	    ifeq ($(LIB_DIR_TAG),_ppc465)
+				    	DEFINE_CC += -UCPU -DCPU=PPC465
+				    	PPC32VARIANT=465
+	    		    	    else
+				        DEFINE_CC += -UCPU -DCPU=$(LIB_DIR_TAG:_ppc%=PPC%)
+				        PPC32VARIANT=$(LIB_DIR_TAG:_ppc%=%)
+	    		    	    endif
+				endif
+			    endif
+			endif
+		    endif
+		endif
+	    endif
+	endif
+    endif
+    else
+	DEFINE_CC += -DCPU_VARIANT=$(LIB_DIR_TAG)
+    endif
+
+endif
+
+# BSP builds for CPU variants set CPU_VARIANT
+ifneq ($(CPU_VARIANT),)
+
+    DEFINE_CC += -DCPU_VARIANT=$(CPU_VARIANT)
+
+    # prepended to the "normal" link path
+    LD_LINK_PATH_EXTRA += \
+      -L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_SPECIFIC_DIR)$(CPU_VARIANT)$(MINOR_OPTION_SUFFIX) \
+      -L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(CPU_VARIANT)$(MINOR_OPTION_SUFFIX)
+
+    # variants of PPC32 need CPP's "CPU" redefined and the type number saved
+    # as for LIB_DIR_TAG, so that the BSP can build processor-specific code;
+    # but use ADDED_CFLAGS instead of DEFINE_CC so that the project builder
+    # will pick up the redefinition.  "override" is needed to cover the case
+    # of ADDED_CFLAGS being set on the 'make' command line.
+    ifeq ($(CPU),PPC32)
+	ifeq ($(CPU_VARIANT),_ppc440_x5)
+	    override ADDED_CFLAGS += -UCPU -DCPU=PPC440 -UCPU_VARIANT -DCPU_VARIANT=_x5
+	    PPC32VARIANT=440
+	else
+	    ifeq ($(CPU_VARIANT),_ppc604_745x)
+		override ADDED_CFLAGS += -UCPU -DCPU=PPC604 -UCPU_VARIANT -DCPU_VARIANT=_745x
+		PPC32VARIANT=604
+ 	    else
+	    	ifeq ($(CPU_VARIANT),_ppc603_83xx)
+		    override ADDED_CFLAGS += -UCPU -DCPU=PPC603 -UCPU_VARIANT -DCPU_VARIANT=_83xx
+		    PPC32VARIANT=603
+	    	else
+	    	    ifeq ($(CPU_VARIANT),_ppc603_g2le)
+			override ADDED_CFLAGS += -UCPU -DCPU=PPC603 -UCPU_VARIANT -DCPU_VARIANT=_g2le
+			PPC32VARIANT=603
+	    	    else
+	    		ifeq ($(CPU_VARIANT),_ppc85XX_e500v2)
+			    override ADDED_CFLAGS += -UCPU -DCPU=PPC85XX -UCPU_VARIANT -DCPU_VARIANT=_e500v2
+			    PPC32VARIANT=85XX
+	    		else
+			    ifeq ($(CPU_VARIANT),_ppc85XX_e200)
+				override ADDED_CFLAGS += -UCPU -DCPU=PPC85XX -UCPU_VARIANT -DCPU_VARIANT=_e200
+				PPC32VARIANT=85XX
+	    		    else
+				ifeq ($(CPU_VARIANT),_ppc85XX_e500mc)
+				    override ADDED_CFLAGS += -UCPU -DCPU=PPC85XX -UCPU_VARIANT -DCPU_VARIANT=_e500mc
+				    PPC32VARIANT=85XX
+	    			else
+		  ifeq ($(CPU_VARIANT),_ppc85XX_e6500)
+		    override ADDED_CFLAGS += -UCPU -DCPU=PPC85XX -UCPU_VARIANT -DCPU_VARIANT=_e6500
+		    PPC32VARIANT=85XX
+	    	  else
+				    ifeq ($(CPU_VARIANT),_ppc465)
+					override ADDED_CFLAGS += -UCPU -DCPU=PPC465
+					PPC32VARIANT=465
+				    else
+					override ADDED_CFLAGS += -UCPU -DCPU=$(CPU_VARIANT:_ppc%=PPC%)
+					PPC32VARIANT=$(CPU_VARIANT:_ppc%=%)
+				    endif
+				endif
+			    endif
+			endif
+		    endif
+		endif
+	    endif
+	endif
+    endif
+  endif
+endif
+
+# Legacy BSP compatibility:  old BSP's specify CPU=PPC603 etc. and possibly a
+# CPU_VARIANT relative to the specified CPU.  Hard or soft float is implicit
+# in the CPU setting rather than being specified as part of the TOOL.  These
+# legacy settings require no special handling for compilation, which gets the
+# correct settings from the make.$(CPU)$(TOOL) files; but the link search path
+# needs to be adjusted to find libarch.a in its new location.
+
+# If specified CPU is not PPC32, look in PPC32 (appropriate variant first,
+# then base, both under appropriate TOOL depending on CPU) for anything not
+# found in the specified variant or CPU.  These go at the end of the link path.
+ifneq ($(CPU),PPC32)
+    VAR_OF_32=$(CPU:PPC%=_ppc%)$(CPU_VARIANT)
+    SF_32=
+    ifneq ($(CPU),PPC603)
+      ifneq ($(CPU),PPC604)
+	ifneq ($(CPU),PPC970)
+	  ifneq ($(BUILD_FP_PREFIX),e500v2)
+	    ifneq ($(BUILD_FP_PREFIX),sf)
+	     ifneq ($(findstring sf,$(TOOL)),sf)
+	      SF_32=sf
+	     endif
+	    endif
+	  endif
+	endif
+      endif
+    endif
+    # The LD_LINK_TOOL_DIR macro is used by defs.diab to set the path
+    # for the C++ libraries
+
+    LD_LINK_TOOL_DIR = $(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/PPC32$(CPU_OPTION_SUFFIX)/$(TOOL_SPECIFIC_DIR)
+    LD_LINK_PATH_ATEND += \
+      -L$(LD_LINK_TOOL_DIR)$(VAR_OF_32)$(MINOR_OPTION_SUFFIX) \
+      -L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/PPC32$(CPU_OPTION_SUFFIX)/$(SF_32)$(TOOL_COMMON_DIR)$(VAR_OF_32)$(MINOR_OPTION_SUFFIX) \
+      -L$(LD_LINK_TOOL_DIR)$(MINOR_OPTION_SUFFIX) \
+      -L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/PPC32$(CPU_OPTION_SUFFIX)/$(SF_32)$(TOOL_COMMON_DIR)$(MINOR_OPTION_SUFFIX)
+endif
+
+BUILD_FP_PREFIX_e500v2 = e500v2
+
+ifeq ($(SF_32),sf)
+_WRS_CONFIG_FP ?= soft
+endif
+
+ifeq ($(SF_32),e500v2)
+_WRS_CONFIG_FP ?= e500v2
+endif
+
+ifeq ($(TC_INFO),TRUE)
+FP = hard
+ifeq ($(_WRS_CONFIG_FP),soft)
+FP = soft
+endif
+ifeq ($(findstring e500v2, $(TOOL)),e500v2)
+FP = e500v2
+endif
+ifeq ($(_WRS_CONFIG_ENDIAN),little)
+ENDIAN = little
+else
+ENDIAN = big
+endif
+endif
+
+# end of defs.ppc

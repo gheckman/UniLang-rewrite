@@ -1,0 +1,35 @@
+# make.PPC603diab -  diab compilation tools definitions for PowerPC 603/604
+#
+# Copyright 1995-2003 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01h,06jun06,dtr  Allow support for software fp by fdefining hw fp
+#                  explicitlly.
+# 01g,05sep03,pch  parameterize Diab "environment" setting
+# 01f,31jan03,pch  Add PPC32 support
+# 01e,05dec01,jab  change :tornado, :simple ,etc. to :vxworks55
+# 01d,16nov01,mil  Changed VX_CPU_FAMILY from PPC to ppc.
+# 01c,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01b,23oct01,jab  added PPC specific definitions
+# 01a,16oct01,jab  Written from  make.PPC603gnu 01r version.
+#
+# DESCRIPTION
+# This file contains PowerPC 603/604 specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+CPU		= PPC603
+TOOL		= diab
+
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+CC_ARCH_SPEC    += -D_WRS_HARDWARE_FP
+TGT_FLAG	= -tPPC603FH:$(DIAB_T_ENVIRON)
+
+TOOLENV		= ppc
+VX_CPU_FAMILY	= ppc
+ARCH_DIR        = ppc
+
+# end of make.PPC603diab

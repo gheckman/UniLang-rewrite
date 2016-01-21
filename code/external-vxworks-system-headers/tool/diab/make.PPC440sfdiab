@@ -1,0 +1,35 @@
+# make.PPC440sfdiab -  Diab compilation tools definitions for PowerPC 440
+#
+# Copyright 1995-2002 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01o,09aug04,kab  SPR#100219: support for TOOL=sfdiab, sfgnu.
+# 01f,05sep03,pch  parameterize Diab "environment" setting
+# 01e,12dec02,pch  Add PPC32 support
+# 01d,10dec01,tpw  Ensure ROM_SIZE defaults to 0x0 if the macro is not set.
+# 01c,05dec01,tpw  Utilize DOTBOOT{RAM,ROM} linker scripts on all PPC4xx BSPs.
+# 01b,05dec01,jab  change :tornado, :simple ,etc. to :vxworks55
+# 01a,27nov01,pch  Written from make.PPC405diab vn 01d.
+#
+# DESCRIPTION
+# This file contains PowerPC 440 specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+CPU	= PPC440
+TOOL	= sfdiab
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+TGT_FLAG	= -tPPC440FS:$(DIAB_T_ENVIRON)
+
+LD_SCRIPT_RAM	= -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+		  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTRAM
+LD_SCRIPT_ROM	= -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+		  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTROM
+
+TOOLENV		= ppc
+VX_CPU_FAMILY	= ppc
+ARCH_DIR	= ppc
+
+# end of make.PPC440sfdiab

@@ -1,0 +1,64 @@
+# make.PENTIUM4gnu - GNU compilation tools definitions for PENTIUM4
+#
+# Copyright (c) 2001-2005,2008-2009 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01p,13jun11,mze  test
+# 01o,17sep09,pad  Removed -mno-sse[23] now that -fno-implicit-fp works.
+# 01n,12aug09,pad  Added -fno-implicit-fp option to prevent compiler to use
+#                  any floating point registers for non-floating point
+#                  operations. Temporarily added -mno-sse[23] until
+#                  -fno-implicit-fp works for SSE[x] registers too.
+# 01m,10oct08,rbc  WIND00132719. Remove -mno-sse and -mno-sse2. Move standard
+#                  flags to CC_ARCH_SPEC.
+# 01l,30nov05,mcm  Updates for GCC 3.4.4
+# 01k,28sep04,rec  add -mno-sse -mno-sse2
+# 01j,10dec03,yvp  Added ABI_SPEC.
+# 01i,07nov03,c_c  Removed Compiler definitions.
+# 01i,18nov03,sn   updated flags for GCC 3.3.2; use pentium4 specific
+#	           flags, rather than pentium3
+# 01h,24apr02,pai  redefined HLL_PREFIX for GNU ELF support (SPR 73382).
+# 01g,12feb02,sn   removed obsolete refs to GCC_EXEC_PREFIX
+# 01f,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 01e,06nov01,tpw  Add %.old rule to facilitate conversions to old OMFs
+# 01d,02nov01,hdn  used PENTIUM3's options temporary
+# 01c,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01b,25sep01,dat  Location of defs.gnu changed to tool/gnu
+# 01a,15aug01,hdn  written based on 01g version of make.PENTIUMgnu
+#
+# DESCRIPTION
+# This file contains PENTIUM4 specific definitions and flags for the GNU
+# software generation tools (compiler, assembler, linker etc.).
+#*/
+
+CPU             = PENTIUM4
+TOOL            = gnu
+
+include $(TGT_DIR)/h/tool/gnu/defs.gnu
+CC_OPTIM_XO = -O2
+CC_OPTIM_DEBUG =
+CC_OPTIM_DRIVER = $(CC_OPTIM_DEBUG) -fvolatile
+CC_OPTIM_NORMAL = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)
+CC_OPTIM_TARGET = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fvolatile
+
+# Generate code for (-march=) and schedule for (-mtune=) pentium
+CC_ARCH_SPEC	= -mtune=pentium4 -march=pentium4 \
+                 -nostdlib -fno-builtin -fno-defer-pop -fno-implicit-fp
+
+TOOLENV         = pentium
+VX_CPU_FAMILY   = pentium
+ARCH_DIR        = i86
+ABI_SPEC        = x86
+
+CF              = 
+
+HLL_PREFIX      =
+
+OBJCOPY_OLD_OMF	= -O a.out-i386 --gap-fill=0
+
+# end of make.PENTIUM4gnu

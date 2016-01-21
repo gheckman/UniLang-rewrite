@@ -1,0 +1,46 @@
+# make.XSCALEgnu - GNU compilation tools definitions for Intel XScale
+#
+# modification history
+# --------------------
+# 01k,20aug08,mze  adding ENDIAN default
+# 01j,24jun08,pee  VSB
+# 01i,05dec03,sn   updated flags for gcc 3.3.2
+# 01h,10jan02,to   move 'include defs.arm' after CPU and TOOL defines for
+#                  libgcc build
+# 01g,18dec01,to   move common definitions to defs.arm
+# 01f,16nov01,t_m  Change sysInit entry
+# 01e,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01d,19oct01,jb   include of defs.gnu is out of sequence - fixed
+# 01c,25sep01,dat  Location of defs.gnu changed to tool/gnu
+# 01b,05jun01,mem  Remove HEX_FLAGS
+# 01a,05apr01,t_m  add -fno-for-scope
+# 01a,22jan01,???  fix sarm to arm
+# 01b,09jan01,???  modify -mcpu for xscale...
+# 01a,26oct00,jb   Removing the OS and OPT references
+# 01b,24oct00,scm  modify compiler naming convention...
+# 01a,31aug00,scm  based on make.ARMSA110gnu
+#
+# DESCRIPTION
+# This file contains Intel XScale little-endian-specific definitions
+# and flags for the GNU software generation tools (compiler, assembler,
+# linker etc.).
+#*/
+
+CPU		= XSCALE
+TOOL		= gnu
+
+
+ifeq ($(BUILD_ENDIAN_SUFFIX),be)
+_WRS_CONFIG_ENDIAN ?= big
+else
+_WRS_CONFIG_ENDIAN ?= little
+endif
+
+include $(TGT_DIR)/h/tool/gnu/defs.arm
+
+CC_ARCH_ENDIAN_SPEC_little = -txscale
+CC_ARCH_ENDIAN_SPEC_big = -txscalebe  -Wa,-EB
+
+CC_ARCH_SPEC	= $(CC_ARCH_ENDIAN_SPEC_$(_WRS_CONFIG_ENDIAN))
+
+# end of make.XSCALEgnu

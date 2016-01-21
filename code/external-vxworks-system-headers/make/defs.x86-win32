@@ -1,0 +1,129 @@
+# defs.x86-win32 - Host specific default definitions
+#
+# Copyright 1995-2007 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 02s,13jul07,tkf  Substitue backslash chars with forwardslash in
+#                  WRVX_COMPBASE.
+# 02r,16may07,pee  WIND00094593
+# 02q,02dec05,pee  \ substitution in WIND_HOME
+# 02p,18apr05,pee  added support for precomp objects
+# 02o,25jun04,fle  SPR#98612 : defined ECHO as echo -e
+# 02n,20feb04,c_c  Avoid eror message if no file is given to sed.
+# 02m,12jan04,c_c  Fixed SPR 93116.
+# 02l,01dec03,c_c  Added dependencies processing overrides.
+# 02k,07nov03,c_c  Unified build rules with WIN32 hosts.
+# 02j,09oct03,md   make ROMFS location resident in project root
+# 02i,02jul03,md   added ROMFS variables
+# 02h,17apr02,jab  added NULL_DEVICE make variable
+# 02g,04feb02,fmk  change definition of MKSYMTBL to add .bat for x86-win32
+# 02f,11dec01,rbl  add OUTPUT_OPTION to get implicit rules working better on
+#                  Windows.
+#                  Don't redefine TGT_DIR if already defined, especially not 
+#                  with a backslash: project defines TGT_DIR with a forward 
+#                  slash and make is sensitive to the difference
+# 02f,14dec01,tam  added CMD_SEPARATOR def
+# 02e,02nov01,tam  added RMDIR
+# 02d,01nov01,jab  added MKDIR
+# 02c,20oct01,dat  Relocting tool specific macros
+# 02b,29may01,jb  Adding big-endian support
+# 01z,19dec00,rec  add endian flag to CPP definition
+# 01y,06dec00,sn   removed -xc
+# 01x,18jan99,sn   removed hack that worked around collect2 bug (now fixed)
+# 01w,05jan99,fle  added the DOC_OPTS_XXX flags
+# 01v,07dec98,sn   added comment indicating changes that will be required 
+#                  when we get collect2 working on windows.
+# 01u,10nov98,fle  added DOCS_DIR variable for man pages generation
+# 01t,26oct98,fle  added WTXTCL, REFGEN, HTMLLINK and HTMLBOOK variables for
+#                  documentation generation
+# 01t,08apr99,bc   Merge in objcopy invocations from Aeolus
+# 01s,21jul98,cym  changed cpp$(ARCH) to cc$(ARCH) -E
+# 01q,16jun98,sn   Corrected definition of CPP
+# 01p,02apr98,pcn  Removed Objcopy changes from Tempest view
+# 01o,15dec97,pcn  Added Objcopy in BSP build.
+# 01n,10oct97,ms   added MV and ECHO. Don't define USRCONFIG, BOOTINIT, ...
+#		   macros if using new build rules.
+# 01m,21jan97,j_k  Fixed DIRCHAR to be result of a macro.
+# 01l,17aug96,yp   Added definition of LIBDIR and BSPBUILD_TCL and DIRCHAR
+# 01k,18aug96,ms   use deflate to compress bootROM images
+# 01j,06jun96,dat  SPR 6141, proper use of TGT_DIR
+# 01i,18apr96,dat
+#	      +yp  added MKPREP
+# 01h,06mar96,dat  removed makeVersion
+# 01g,13nov95,p_m  added DEMO_DIR.
+# 01f,03nov95,yp   Made CPP arch specific .s.o targets don't get generate
+# 01g,24oct95,dat  recovered CONFIG_ALL
+# 01f,31jul95,jmb  changed 'rm' to 'vxrm' and added CC_DEBUG
+# 01e,28jul95,sks  removed 'echo' and replaced with '@rem' for 'true'
+# 01d,25jul95,jmb  added VX_CPU_FAMILY for romsize and vxsize
+# 01c,14jul95,yp   added definition for VXSIZEPROG
+# 01b,19jun95,yp   allowed arch. specific tools to be inherited from 
+#		   make.$(CPU)$(TOOL)
+# 01a,01jun95,yp   created
+#
+# DESCRIPTION
+# This file contains default definitions, and flags used in building targets 
+# that are host specific to win32.
+#
+
+MAKESHELL = sh.exe
+
+WIND_BASE	:= $(subst \,/,$(WIND_BASE))
+WIND_HOME	:= $(subst \,/,$(WIND_HOME))
+WRVX_COMPBASE := $(subst \,/,$(WRVX_COMPBASE))
+
+ifeq ($(LIBNAME),)
+LIBNAME		= lib$(CPU)$(TOOL)vx.a
+endif
+
+include $(TGT_DIR)/h/make/defs.unix
+
+
+## make internals
+
+# used by make for its predefined implicit rules. It is already
+# set for UNIX (compiled in to make), but it is not set for
+# Windows. 
+
+OUTPUT_OPTION   = -o $@
+
+# override some Unix definitions
+NULL_DEVICE	:= NULL
+VXSIZEPROG	= $(BIN_DIR)/vxsize $(VX_CPU_FAMILY)
+ROMSIZEPROG	= $(BIN_DIR)/romsize $(VX_CPU_FAMILY)
+ECHO		= echo -e
+
+## those overrides take care of '\r' management when processing dependencies,
+## plus the translation of '\' path delimiter that DIAB gives, to '/'
+## also take care of <drive>:// path that GNU may produce.
+
+PROCESS_DEP	= if [ -f $@ ]; then \
+		$(TR) -d '\r'< $@ > $@.tr; \
+		$(RM) $@; \
+		$(SED) -e 's|\\|/|g' -e 's|//|/|g' \
+		-e 's|^.*\.o|\$$\(LIBDIR\)/&|g' \
+		-e "s|$(TGT_DIR)|\\$$\(TGT_DIR\)|g" \
+		-e "s|$(WIND_BASE)|\\$$\(WIND_BASE\)|g" \
+		-e 's|/$$|\\|g' $@.tr > $@; \
+		$(RM) $@.tr; fi
+
+PROCESS_DEP_PRECOMP	= if [ -f $@.precomp ]; then \
+		$(TR) -d '\r'< $@.precomp > $@.precomp.tr; \
+		$(RM) $@.precomp; \
+		$(SED) -e 's|\\|/|g' -e 's|//|/|g' \
+		-e 's|^.*\.o|\$$\(PRECOMPDIR\)/&|g' \
+		-e "s|$(TGT_DIR)|\\$$\(TGT_DIR\)|g" \
+		-e "s|$(WIND_BASE)|\\$$\(WIND_BASE\)|g" \
+		-e 's|/$$|\\|g' $@.precomp.tr >> $@; \
+		$(RM) $@.precomp.tr; fi
+
+BSP_PROCESS_DEP	= if [ -f $@ ]; then \
+		$(TR) -d '\r'< $@ > $@.tr; \
+		$(RM) $@; \
+		$(SED) -e 's|\\|/|g' -e 's|//|/|g' \
+		-e "s|$(CONFIG_ALL)|\\$$\(CONFIG_ALL\)|g" \
+		-e "s|$(TGT_DIR)|\\$$\(TGT_DIR\)|g" \
+		-e "s|$(WIND_BASE)|\\$$\(WIND_BASE\)|g" \
+		-e 's|/$$|\\|g' $@.tr > $@; \
+		$(RM) $@.tr; fi

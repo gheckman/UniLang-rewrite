@@ -1,0 +1,71 @@
+# make.PPC85XXsfdiab -  diab compilation tools definitions for PowerPC e500 Core
+#
+# Copyright (c) 2001-2004, 2010, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01q,17apr12,h_k  disabled _e500mc support. (WIND00346346)
+# 01p,13apr10,pee  locally enabling SMP build specs for bdgen
+# 01o,09aug04,kab  SPR#100219: support for TOOL=sfdiab, sfgnu.
+# 01n,26sep03,mil  Added intrinsic mask to work around missing alloca.
+# 01m,26sep03,xav  Define SIZE macro using 5.1.2 diab ddump utility (-Z support)
+# 01l,13aug03,dtr  Removing hardware floating point option.
+# 01k,01aug03,xav  Set compilers values to specific e500 diab 5.1.2 values
+# 01j,04jun03,sn   E500 requires Diab >= 5.1.1
+# 01i,03jun03,dtr  Adding -Xstsw-slow and changing target flag to FF for 
+#                  single precision floating point support.
+# 01h,09may03,tpw  Fix typo
+# 01g,03oct02,mil  Changed flag from -tPPCE500FV to -tPPCE500FS.
+# 01f,03sep02,dtr  Changing compiler options to PPCE500.
+# 01e,05dec01,jab  change :tornado, :simple ,etc. to :vxworks55
+# 01d,16nov01,mil  Changed VX_CPU_FAMILY from PPC to ppc.
+# 01c,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01b,23oct01,jab  added PPC specific definitions
+# 01a,16oct01,jab  Written from  make.PPC603gnu 01r version.
+#
+# DESCRIPTION
+# This file contains PowerPC e500 specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+CPU		= PPC85XX
+TOOL		= sfdiab
+
+ifeq ($(LIB_DIR_TAG),_e500mc)
+ $(error LIB_DIR_TAG=_e500mc is not supported in this build spec!)
+else
+ ifeq ($(CPU_VARIANT),_e500mc)
+  $(error CPU_VARIANT=_e500mc is not supported in this build spec!)
+ endif
+endif
+
+_WRS_CONFIG_FP ?= soft
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+ifeq ($(_WRS_CONFIG_FP),e500v2)
+ TGT_FLAG	= -tPPCE500V2FH:$(DIAB_T_ENVIRON)
+ CC_COMPILER	+= -Xstsw-slow
+ C++_COMPILER	+= -Xstsw-slow
+else
+ TGT_FLAG	= -tPPCE500FS:$(DIAB_T_ENVIRON)
+endif
+
+LD_SCRIPT_RAM	= -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+		  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTRAM
+LD_SCRIPT_ROM	= -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+		  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTROM
+
+TOOLENV		= ppc
+VX_CPU_FAMILY	= ppc
+ARCH_DIR	= ppc
+
+ifdef _BDGEN_
+ MP_OPTION_PPC85XX_SMP = TRUE
+endif
+
+# end of make.PPC85XXsfdiab

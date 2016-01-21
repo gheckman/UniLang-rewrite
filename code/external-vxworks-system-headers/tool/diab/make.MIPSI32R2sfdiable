@@ -1,0 +1,25 @@
+# make.MIPSI32R2sfdiable -  Diab compilation tools definitions for MIPSI32R2sfle
+#
+# modification history
+# --------------------
+# 01b,20apr07,pes  Remove -X32=0 flag.
+# 01a,20feb07,pes  created based on make.MIPS32sfdiable
+#
+# DESCRIPTION
+# This file contains MIPSI32R2 (soft-float) specific definitions and flags
+# for the Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= MIPSI32R2
+TOOL		= sfdiable
+include $(TGT_DIR)/h/tool/diab/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSROM
+
+# Select MIPS32R2, little-endian (M), soft-float (S)
+TGT_FLAG        = -tMIPS32R2MS:$(DIAB_T_ENVIRON)
+
+ABI_SPEC        = MIPS32
+
+# end of make.MIPSI32R2sfdiable

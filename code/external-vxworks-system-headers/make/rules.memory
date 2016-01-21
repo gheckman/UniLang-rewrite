@@ -1,0 +1,29 @@
+# rules.memory - memory oriented build rules
+#
+# Copyright 2004 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01a,02jul04,fle  written
+
+# DESCRIPTION
+# For now this files only contains the adrsMacros rule which prints the list
+# of ADRS macros needed by the kernel files.
+#
+# This is used by the kernel configuration tool.
+#
+# SEE ALSO: vxprj
+#
+
+ifndef TGT_DIR
+TGT_DIR	= $(WIND_BASE)/target
+endif
+
+include $(TGT_DIR)/h/make/defs.memory
+
+ifneq ($(BSP2PRJ), TRUE)
+CC_DEFINES	+= $(ADRS_DEFINE)
+endif
+
+adrsMacros:
+	@ $(ECHO) $(ADRS_MACROS)

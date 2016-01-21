@@ -1,0 +1,501 @@
+# rules.vxWorks - makefile target rules for vxWorks projects
+#
+# Copyright (c) 1998-2002, 2004-2013, Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use 
+# of this software may be licensed only pursuant to the terms 
+# of an applicable Wind River license agreement. 
+#
+#
+# modification history
+# --------------------
+# 03r,29apr13,elp  only generate OSCB when munching kernel (CQ:WIND00295940).
+# 03q,02feb12,mze  add .CPP as a valid suffix
+# 03p,26jan12,mze  romResident incorrectly uses SYS_ENTRY should be ROM_ENTRY
+#                  WIND00165455
+# 03o,19jan11,pee  WIND00250470
+# 03n,17nov10,pee  WIND00184424
+# 03m,26oct10,pee  WIND00237910
+# 03l,21apr10,slk  add passing additional parameters to mipsBootPrep for
+#                  large memory model support
+# 03k,08feb10,pee  include defs.memory instead of rules.memory
+# 03j,12aug09,mze  remove $(OPTION_PASS_TO_LD) from LD_EXTRA_MODULES_LIST to
+#                  solve problems with BSPs including extra modules
+# 03i,17jul09,pee  adding usrEntry.o missing from last mod
+# 03h,25jun09,pee  change final link step to use libs instead of partial image
+# 03h,03jun09,pee  adding marker processing.
+# 03g,02mar09,pee  WIND00154816
+# 03f,18sep08,f_b  Fix for WIND00135103 to include information about the build
+#                  paths in VxWorks executable
+# 03e,12jun08,pee  fix for defect WIND000122948
+# 03d,22oct07,pee  WIND00105890
+# 03c,28sep07,pee  WIND00105890
+# 03b,27sep07,pee  backing off ...
+# 03a,11sep07,pee  adding support for intermediate ipcom file.
+# 02z,24aug07,pes  Add ROM_EXTRA macro for adding objects needed for all
+#		   ROMable builds.
+# 02y,13jul07,nic  Fixed SPR#84342 - remove duplicate linkage to ROMFS_IMAGE
+#                  in vxWorks_rom and vxWorks_romCompress
+# 02x,22jun07,dcc  added CC_SDA_FLAGS to symTbl build rules.
+# 02x,11jun07,pee  added support for mixed build mode (source only components)
+# 02w,07jun07,pee  reorganzied CC_SDA_FLAGS
+# 02v,07may07,pee  added generic options to compile version.o and usrEntry.o
+# 02u,05may07,dcc  added CC_SDA_FLAGS.
+# 02t,3jan07,zhr   WIND00087260 resolved the issue of a install-path with "-L"
+# 02s,28aug06,pee  added include to allow WB to pass large macros.WIND00058261
+#		   expanded EXTRA_MODULES to a file to allow large # of files
+# 02r,06Feb06,pee  added sypport for linker symbol definitions.
+# 02q,16jan06,pee  moved COMPONENT_LIBS usage to defs.link
+# 02p,060ct05,zhr  Fixed SPR#113315 
+# 02o,30sep05,zhr  Fixed SPR#112192
+# 02n,28sep05,pee  Modified source build rules 112947 & 112722
+# 02m,16aug05,pee  Added make depend rule
+# 02l,08Aug05,pee  Added explicit dependency on generated file.
+# 02l,18jul05,pee  Added intrinsics library to source build prototype rule
+# 02k,08jul05,pee  Added prototype support for building from source
+#		   Added option to generate map file
+# 02j,20Jun05,pee  Dependency generation and inclusion.
+# 02i,22apr05,edc  Added dependency on added COMP_LIBS.
+# 02h,07apr05,edc  Library paths for components
+# 02g,07jul04,c_c  Added romfs_image to the builds.
+# 02g,06jul04,fle  Added kernel VMA adjust
+# 02f,04mar04,fle  Do not assume ROM_FLAGS_EXTRA are only defined for rom
+#                  rules
+# 02e,28mar02,cym  don't perform POST_BUILD_RULE twice in rom targets
+# 02d,31jan02,fmk  remove redirection operator to generate symTbl.c
+# 02c,11dec01,rbl  get e.g. vxWorks_romCompress.hex image working
+# 02b,07dec01,tpw  Remove HEX_HIGH_FLAGS and HEX_LOW_FLAGS, and fix proj %.hex
+# 02a,12nov01,dat  added prj_default, fixes for gnu and diab projects
+# 01z,08nov01,tpw  Add LD_SCRIPT_RAM, LD_SCRIPT_ROM macros as appropriate.
+# 01y,06nov01,dat  Fix to romCompress rule, added escaped newline
+# 01x,30oct01,tam  removed CC_LIB from cyclic linking
+# 01w,09oct01,j_s  present LD_LINK_LIBS through LIBS, add cyclic link options
+#		   add support for build dependency on archives: vpath and
+#		   expansion of '-l<ar>' to 'lib<ar>.a'
+# 01v,25oct01,dat  Relocating tool specific macros
+# 01u,22oct01,cym  replacing BOOT_OBJS with romInit.o and romStart.o for
+#                  romResident builds.
+# 01t,06aug01,mem  Added LD_LINK_LIBS and LD_LINK_PATH
+# 01s,06apr00,dra  Added HEX_LOW_FLAGS and HEX_HIGH_FLAGS to support FRV
+#                  (Venus) toolchain.
+# 01r,31mar00,rsh  final merge es.tor2_0.mcore to tor2_0_0.es.coretools
+# 01q,02mar00,rsh  add .hex$(MAP_EXT) suffix to BINHEX_OUTPUT_FILE rules.
+# 01p,01mar00,rsh  adding rule to clean .hex related temp files for each rom
+#                  based image and remove POST_BUILD_RULE definition.
+# 01o,29feb00,rsh  adding definition of POST_BUILD_RULE to rm temporary
+#                  out.tmp1 and out.tmp2 files.
+# 01n,06jan00,dra updated for new .hex file generation.
+# 01m,04mar99,sn  added machinery to handle large projects
+# 01l,23feb99,sn  removed references to $(POST_MUNCH)
+# 01k,17nov98,sn  reworked munch for windows95
+# 01j,11nov98,sn  partially link using LD_PARTIAL
+# 01i,11nov98,sn  munch -> orderCtors
+# 01h,30oct98,yh  added deadweight removal hook.
+# 01g,26oct98,ms  added EXTRA_MODULES. romInit.o etc now part of BOOT_OBJS.
+# 01g,21apr99,bc  Alter BINXSYM command line for objcopy interface.
+# 01f,26aug98,ms  added POST_BUILD_RULE. Link against COMPONENT_LIBS.
+# 01e,07jul98,ms  added MAKE_SYM_CVT macro, added LDOUT_CONV to vxWorks.
+# 01d,29jun98,ms  renamed vxWorks_downLoadable to just vxWorks.
+# 01c,25jun98,ms  build rom* files is subdirectories. LDDEPS now comes first.
+# 01b,20may98,ms  fixed call to EXTRACT_BIN for windows host
+# 01a,18feb98,ms  created
+
+# rules/defs include tree for a linux host, PPC604 vxWorks project for diab
+#
+# +-> defs.project
+# |   +-> defs.link
+# |   |   +-> defs.option
+# |   +-> defs.x86-linux2
+# |   |   +-> defs.unix  
+# |   +-> defs.vxWorks
+# |   +-> make.PPC604diab
+# |       +-> defs.ppc
+# |           +-> defs.diab
+# |               +-> defs.common
+# +-> rules.project
+#     +-> rules.vxWorks
+#         +-> rules.memory
+#             +-> defs.memory
+
+include $(TGT_DIR)/h/make/defs.memory
+
+################################################################################
+#
+# Search for dependency archives in LD_LINK_PATH
+#
+
+vpath %.a $(patsubst -L%,%,$(LD_LINK_PATH))
+
+################################################################################
+#
+# generate link map if MAP=TRUE
+#
+
+ifeq ($(MAP), TRUE)
+MAPCMD = $(OPTION_CC_GENMAP)
+endif
+
+
+################################################################################
+#
+# rules for building a relocatable (i.e., partially linked) image
+#
+# The choice of relocatable image is controlled by the macro partialImage.o,
+# which defaults to the main rule partialImage.o.
+
+.SECONDARY : version.o
+
+.PHONY : version.o
+
+version.o: $(VERSION_C) $(CFG_GEN_FILES)
+	$(CC) $(CFLAGS) $(CFLAGS_OPTIONS_ALL) $(OPTION_OBJECT_ONLY) $(CC_SDA_FLAGS) $(VERSION_C)
+
+usrEntry.o: $(USR_ENTRY_C)
+	$(CC) $(CFLAGS) $(CFLAGS_OPTIONS_ALL) $(OPTION_OBJECT_ONLY) $(USR_ENTRY_C)
+
+
+# WB private include file to pass macros too large for command line
+ifneq ($(WRWB_VIP_MAKE_INCLUDE),)
+include $(WRWB_VIP_MAKE_INCLUDE)
+endif
+
+define _catsub
+	@echo $1 >> $2
+
+endef
+
+ifneq ($(EXTRA_MODULES),)
+
+EXTRA_MODULES_LIST_FILENAME = prjExtraModules.lst
+EXTRA_MODULES_LIST = $(PRJ_FULL_PATH)/$(EXTRA_MODULES_LIST_FILENAME)
+LD_EXTRA_MODULES_LIST = $(OPTION_INDIRECT_FILE)$(PRJ_FULL_PATH)/$(EXTRA_MODULES_LIST_FILENAME)
+RM_EXTRA_MODULES_LIST = $(RM) $(EXTRA_MODULES_LIST)
+CREATE_EXTRA_MODULES_LIST = $(foreach filename, $(EXTRA_MODULES),$(call _catsub, $(filename), $(EXTRA_MODULES_LIST)))
+
+endif
+
+
+# add component specific symbol definitions
+LDFLAGS += $(LINKER_SYMDEFS) $(_COMPONENT_LDFLAGS)
+
+COMP_OBJ_LIST = $(OPTION_PASS_TO_LD)$(OPTION_INDIRECT_FILE)$(PRJ_FULL_PATH)/compObjs.lst
+COMP_OBJ_LIST_FOR_LD = $(OPTION_INDIRECT_FILE)$(PRJ_FULL_PATH)/compObjs.lst
+
+partialImage.o: $(LDDEPS) $(PRJ_OBJS) $(EXTRA_MODULES) \
+        $(patsubst -l%,lib%.a,$(COMP_LIBS)) \
+	$(patsubst -l%,lib%.a,$(LIBS)) $(CC_LIB) $(PRJ_OBJS_FILE) version.o usrEntry.o \
+	$(PRJ_FULL_PATH)/compObjs.lst | src_build
+	$(RM_EXTRA_MODULES_LIST)
+	$(CREATE_EXTRA_MODULES_LIST)
+	- @ $(RM) $@
+ifneq   ($(findstring vxWorks_rom, $(DEFAULT_RULE)),)
+	$(LD_PARTIAL) usrEntry.o $(PRJ_OBJS_FOR_LD_PARTIAL) $(COMP_OBJ_LIST) \
+		$(LD_EXTRA_MODULES_LIST) version.o \
+		 $(LD_PARTIAL_START_GROUP) \
+		$(LD_LINK_PATH) $(COMP_LIBS) $(LIBS) \
+		$(LD_PARTIAL_END_GROUP)  $(CC_LIB) -o $@ $(MAPCMD)
+else
+	$(LD_PARTIAL) $(PRJ_OBJS_FOR_LD_PARTIAL) $(COMP_OBJ_LIST) $(LD_EXTRA_MODULES_LIST) \
+		version.o $(LD_PARTIAL_START_GROUP) \
+		$(LD_LINK_PATH) $(COMP_LIBS) $(LIBS) $(LD_PARTIAL_END_GROUP) $(CC_LIB) -o $@ $(MAPCMD)
+endif
+ifeq	($(REMOVE_DEADWEIGHT),TRUE)
+	$(TRIM_TOOL) $@ $@_trim
+	$(MV) $@_trim $@
+endif
+
+
+# FIXME should be moved to a common place. Depends on VXBUILD being set in the VIP
+DKM_DIR_LIST = $(VSB_DIR)/$(VX_CPU_FAMILY)$(ARCH_CLI_OPTION_SUFFIX)/$(CPU)$(CPU_CLI_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_CLI_OPTION_SUFFIX)/dkm
+DKM_DIR_LIST += $(WIND_BASE)/target/lib$(MAJOR_CLI_OPTION_SUFFIX)/$(VX_CPU_FAMILY)$(ARCH_CLI_OPTION_SUFFIX)/$(CPU)$(CPU_CLI_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_CLI_OPTION_SUFFIX)/dkm
+DKM_DIR_LIST += $(VSB_DIR)/$(VX_CPU_FAMILY)$(ARCH_CLI_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_CLI_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_CLI_OPTION_SUFFIX)/dkm
+DKM_DIR_LIST += $(WIND_BASE)/target/lib$(MAJOR_CLI_OPTION_SUFFIX)/$(VX_CPU_FAMILY)$(ARCH_CLI_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_CLI_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_CLI_OPTION_SUFFIX)/dkm
+
+ANALYSIS_DKM_DIR_LIST = $(wildcard $(addsuffix /analysis,$(DKM_DIR_LIST)))
+
+ifneq ($(ANALYSIS_DKM_DIR_LIST),)
+ANALYSIS_DKM_DIR = $(firstword $(ANALYSIS_DKM_DIR_LIST))
+endif
+
+genBuildVars3=$(if $($(1)),$(shell echo "set $(1) $($(1))" >>build_vars_list))
+genBuildVars2=$(foreach var,$(1),$(call genBuildVars3,$(var)))
+genBuildVars=$(call genBuildVars2,WIND_BASE VSB_DIR BSP_DIR ANALYSIS_DKM_DIR PRJ_FULL_PATH)
+cleanBuildVars=$(shell rm -f build_vars_list)
+
+################################################################################
+#
+# rules for building modules to be linked with the relocatable VxWorks
+#
+# The choice of optional modules to link with the partialImage.o above
+# is controlled by the macro POSTLINK_MODULES.
+# Any .o's added here must not call any vxWorks libraries, as they are
+# added *after* linking against the VxWorks libraries has been done.
+# By default, POSTLINK_MODULES is computed by looking at config.h,
+# If INCLUDE_CPLUS is defined, then ctdt.o is built.
+# If INCLUDE_STANDALONE_SYM_TBL is defined, then symTbl.o is built.
+
+# ctdt.o - support module for INCLUDE_CPLUS
+
+ctdt.o:	ctdt.c
+	- @ $(RM) $@
+	$(COMPILE_TRADITIONAL) $(CC_SDA_FLAGS) ctdt.c -o $@
+
+ctdt.c:		partialImage.o $(PRJ_OBJS_FILE_FOR_NM)
+	- @ $(RM) $@
+	$(call cleanBuildVars)
+	$(call genBuildVars)
+	$(NM) partialImage.o $(PRJ_OBJS_FOR_NM) | $(MUNCH) -vars build_vars_list -tags $(VSB_TAG_FILE_KERNEL) -oscb_gen > $@
+
+# symTbl.o - support module for INCLUDE_STANDALONE_SYM_TBL
+
+symTbl.o: symTbl.c
+	- @ $(RM) $@
+	$(COMPILE_SYMTBL) $(CC_SDA_FLAGS) symTbl.c -o $@
+
+symTbl.c:	partialImage.o
+	- @ $(RM) $@
+	$(CP) partialImage.o tmp.o
+	$(LDOUT_SYMS) tmp.o
+	$(MKSYMTBL) tmp.o $@
+	- @ $(RM) tmp.o
+
+###############################################################################
+#
+# rules for building rom startup code - slightly different for each image
+# 
+
+ROM_FLAGS_EXTRA	= $(CC_ROM_FLAGS)
+ifeq ($(basename $(DEFAULT_RULE)),vxWorks_romCompress)
+ROM_FLAGS_EXTRA	= $(CC_ROM_CMP_FLAGS)
+endif
+ifeq ($(basename $(DEFAULT_RULE)),vxWorks_romResident)
+ROM_FLAGS_EXTRA	= $(CC_ROM_RES_FLAGS)
+endif
+ifeq ($(basename $(DEFAULT_RULE)),vxWorks_rom)
+ROM_FLAGS_EXTRA	= $(CC_ROM_CPY_FLAGS)
+endif
+
+###############################################################################
+#
+# dependency generation
+#
+CFLAGS += $(OPTION_DEPEND_GEN_D)
+CFLAGS_AS += $(OPTION_DEPEND_GEN_D)
+
+################################################################################
+#
+# rules for building VxWorks images
+#
+
+# vxWorks	RAM based VxWorks image, linked to RAM_LOW_ADRS
+
+vxWorks:	partialImage.o $(ROMFS_IMAGE) $(POSTLINK_MODULES) version.o
+	- @ $(RM) $@
+	$(CC) $(CFLAGS) $(OPTION_OBJECT_ONLY) $(DATA_SEG_PAD_C)
+	$(LD) $(LDFLAGS) $(LD_ENTRY_OPT) $(SYS_ENTRY) $(LD_RAM_FLAGS) \
+		dataSegPad.o $(ROMFS_IMAGE) $(PRJ_OBJS_FOR_LD) $(COMP_OBJ_LIST_FOR_LD) $(LD_EXTRA_MODULES_LIST) \
+		version.o usrEntry.o $(LD_START_GROUP) \
+		$(LD_LINK_PATH) $(COMP_LIBS) $(LIBS) $(LD_END_GROUP) $(CC_LIB) $(POSTLINK_MODULES)\
+		$(LD_DATA_SEG_ALIGN) $(LD_SCRIPT_RAM) -o $@
+	$(LDOUT_CONV) $@
+	$(VXSIZEPROG) -v $(RAM_HIGH_ADRS) $(RAM_LOW_ADRS) $@
+ifneq ($(ADJUST_VMA), $(DEFAULT_ADJUST_VMA))
+ifeq ($(LMM_ENABLED), 1)
+	$(KERNEL_VMA_ADJUST) $@ $(LOCAL_MEM_LOCAL_ADRS) $(LOCAL_MEM_PHYS_ADRS)
+else
+	$(KERNEL_VMA_ADJUST) $@
+endif
+endif
+	$(MAKE_SYM)
+	$(MAKE_SYM_CVT)
+ifeq   (vxWorks, $(DEFAULT_RULE))
+	$(POST_BUILD_RULE)
+endif
+
+
+# vxWorks_romResident	ROM resident image
+
+vxWorks_romResident: 	partialImage.o $(ROMFS_IMAGE) $(POSTLINK_MODULES) \
+			romInit.o romStart.o $(IMI) $(ROM_EXTRA)
+	- @ $(RM) $@
+	$(CC) $(CFLAGS) $(OPTION_OBJECT_ONLY) $(DATA_SEG_PAD_C)
+	$(LD) $(LDFLAGS) $(RES_LDFLAGS) $(LD_ENTRY_OPT) $(ROM_ENTRY) \
+		$(LD_ROM_RES_FLAGS) dataSegPad.o romInit.o romStart.o \
+		$(ROM_EXTRA) partialImage.o $(ROMFS_IMAGE) $(POSTLINK_MODULES) \
+		$(LD_SCRIPT_ROM) -o $@
+	$(LDOUT_CONV) $@
+	$(ROMSIZEPROG) -b $(ROM_SIZE) $@
+	$(MAKE_SYM)
+	$(MAKE_SYM_CVT)
+	$(POST_BUILD_RULE)
+
+# vxWorks_rom	RAM based image that starts in ROM.
+#	The relocation stub is linked to ROM_TEXT_ADRS and RAM_HIGH_ADRS.
+#	The main image is linked to RAM_LOW_ADRS.
+#	The relocation is done as a straight copy.
+
+vxWorks_rom:	vxWorks $(BOOT_OBJS) \
+        $(patsubst -l%,lib%.a,$(COMP_LIBS)) \
+	$(patsubst -l%,lib%.a,$(LIBS)) $(CC_LIB) $(IMI) version.o
+	- @ $(RM) $@ $<.o tmp.Z $<.Z.s $<.Z.o
+	$(CP) $< $<.o
+	$(LDOUT_HOST) $<.o
+ifneq ($(LMM_ENABLED), 1)
+	$(EXTRACT_BIN) $<.o tmp.Z
+	$(BINTOASM) tmp.Z > $<.Z.s
+	$(CC) $(OPTION_OBJECT_ONLY) $(CFLAGS_AS) $<.Z.s -o $<.Z.o
+	$(LD) $(LDFLAGS) $(RES_LDFLAGS) $(LD_ENTRY_OPT) $(ROM_ENTRY) \
+		$(LD_ROM_CPY_FLAGS) $(BOOT_OBJS) version.o \
+		$(CC_LIB) $(LD_START_GROUP) $(LD_LINK_PATH) \
+		$(COMP_LIBS) $(LIBS) $(LD_END_GROUP) $<.Z.o $(CC_LIB) \
+		$(LD_SCRIPT_ROM) -o $@
+	- @ $(RM) $<.o tmp.Z $<.Z.s $<.Z.o
+else
+# vxWorks.o minus sections moving to tmp2
+	$(EXTRACT_BIN) $(SECTION_REMOVE_NAMES) $<.o tmp1.Z
+	$(BINTOASM) tmp1.Z > $<.Z.s
+	$(CC) $(OPTION_OBJECT_ONLY) $(CFLAGS_AS) $<.Z.s -o $<.Z.o
+# selected sections from vxWorks.o not in tmp.bin
+	$(EXTRACT_BIN) $(SECTION_SELECT_NAMES) $<.o tmp2.Z
+	@echo "XXX vxWorks_rom check 3"
+	$(BINTOASM) tmp2.Z > $<.tmp2.Z.s
+	$(CC) $(OPTION_OBJECT_ONLY) $(CFLAGS_AS) $<.tmp2.Z.s -o $<.tmp2.Z.o
+	$(OBJCPY) $(BINARY_RENAME_SYMBOLS) $<.tmp2.Z.o
+	$(LD) $(LDFLAGS) $(RES_LDFLAGS) $(LD_ENTRY_OPT) $(ROM_ENTRY) \
+		$(LD_ROM_CPY_FLAGS) $(BOOT_OBJS) version.o \
+		$(CC_LIB) $(LD_START_GROUP) $(LD_LINK_PATH) \
+		$(COMP_LIBS) $(LIBS) $(LD_END_GROUP) $<.Z.o $<.tmp2.Z.o \
+		$(CC_LIB) \
+		$(LD_SCRIPT_ROM) -o $@
+	- @ $(RM) $<.o tmp1.Z $<.Z.s $<.Z.o tmp2.Z $<.tmp2.Z.s $<.tmp2.Z.o
+endif
+	$(ROMSIZEPROG) -b $(ROM_SIZE) $@
+	$(LDOUT_CONV) $@
+	$(POST_BUILD_RULE)
+
+# vxWorks_romCompress	RAM based image that starts in ROM.
+#	The relocation is done as a decompression.
+
+vxWorks_romCompress:	vxWorks $(BOOT_OBJS) \
+        $(patsubst -l%,lib%.a,$(COMP_LIBS)) \
+	$(patsubst -l%,lib%.a,$(LIBS)) $(CC_LIB) $(IMI) version.o
+	- @ $(RM) $@ $<.o tmp.Z $<.Z.s $<.Z.o
+	$(CP) $< $<.o
+	$(LDOUT_HOST) $<.o
+ifneq ($(LMM_ENABLED), 1)
+	$(EXTRACT_BIN) $<.o tmp.bin
+	$(COMPRESS) < tmp.bin > tmp.Z
+	$(BINTOASM) tmp.Z > $<.Z.s
+	$(CC) $(OPTION_OBJECT_ONLY) $(CFLAGS_AS) $<.Z.s -o $<.Z.o
+	$(LD) $(LDFLAGS) $(RES_LDFLAGS) $(LD_ENTRY_OPT) $(ROM_ENTRY) \
+		$(LD_ROM_CMP_FLAGS) $(BOOT_OBJS) version.o \
+		$(LD_START_GROUP) $(LD_LINK_PATH) \
+		$(COMP_LIBS) $(LIBS) $(LD_END_GROUP) $(CC_LIB) $<.Z.o \
+		$(LD_SCRIPT_ROM) -o $@
+	$(LDOUT_CONV) $@
+	- @ $(RM) $<.o tmp.bin tmp.Z $<.Z.s $<.Z.o
+else
+# vxWorks.o minus sections moving to tmp2
+	$(EXTRACT_BIN) $(SECTION_REMOVE_NAMES) $<.o tmp.bin
+	$(COMPRESS) < tmp.bin > tmp.Z
+	$(BINTOASM) tmp.Z > $<.Z.s
+	$(CC) $(OPTION_OBJECT_ONLY) $(CFLAGS_AS) $<.Z.s -o $<.Z.o
+# selected sections from vxWorks.o not in tmp.bin
+	$(EXTRACT_BIN) $(SECTION_SELECT_NAMES) $<.o tmp2.bin
+	$(COMPRESS) < tmp2.bin > tmp2.Z
+	$(BINTOASM) tmp2.Z > $<.tmp2.Z.s
+	$(CC) $(OPTION_OBJECT_ONLY) $(CFLAGS_AS) $<.tmp2.Z.s -o $<.tmp2.Z.o
+	$(OBJCPY) $(BINARY_RENAME_SYMBOLS) $<.tmp2.Z.o
+	$(LD) $(LDFLAGS) $(RES_LDFLAGS) $(LD_ENTRY_OPT) $(ROM_ENTRY) \
+		$(LD_ROM_CPY_FLAGS) $(BOOT_OBJS) version.o \
+		$(LD_START_GROUP) $(LD_LINK_PATH) $(CC_LIB) \
+		$(COMP_LIBS) $(LIBS) $(LD_END_GROUP) $<.Z.o $<.tmp2.Z.o \
+		$(LD_SCRIPT_ROM) -o $@
+	$(LDOUT_CONV) $@
+	- @ $(RM) $<.o tmp.bin tmp.Z $<.Z.s $<.Z.o tmp2.bin tmp2.Z $<.tmp2.Z.s $<.tmp2.Z.o
+endif
+	$(ROMSIZEPROG) -b $(ROM_SIZE) $@
+	$(POST_BUILD_RULE)
+
+###############################################################################
+#
+# .sym - generate .sym file for INCLUDE_NET_SYM_TBL
+# 
+
+%.sym:	%
+	$(BINXSYM) $< $@
+	$(LDOUT_SYMS) $@
+
+# do not attempt to regenerate .d dependency file.
+%.d:
+	- @ :
+
+# base rule chaining
+
+clean : src_clean
+
+
+# make dependencies
+
+D_ALL_OBJS = version.o usrEntry.o $(PRJ_OBJS) $(EXTRA_OBJS)
+
+version.force_d : $(VERSION_C)
+	$(CC) $(CFLAGS) $(OPTION_DEPEND) $(CFLAGS_$(<:.c=.o)) $(OPTION_OBJECT_ONLY) $< >$(@:.force_d=.d)
+
+usrEntry.force_d: $(USR_ENTRY_C)
+	$(CC) $(CFLAGS) $(OPTION_DEPEND) $(CFLAGS_$(<:.c=.o)) $(OPTION_OBJECT_ONLY) $< >$(@:.force_d=.d)
+
+%.force_d : %.c
+	$(CC) $(CFLAGS) $(OPTION_DEPEND) $(CFLAGS_$(<:.c=.o)) $(OPTION_OBJECT_ONLY) $< >$(@:.force_d=.d)
+
+%.force_d : %.s
+	$(CC) $(CFLAGS_AS) $(OPTION_DEPEND) $(CFLAGS_AS_$(<:.s=.o)) $(OPTION_OBJECT_ONLY) $< >$(@:.force_d=.d)
+
+%.force_d : %.CPP
+	$(CXX) $(C++FLAGS) $(OPTION_DEPEND) $(CFLAGS_$(<:.CPP=.o)) $(OPTION_OBJECT_ONLY) $< >$(@:.force_d=.d)
+
+%.force_d : %.cpp
+	 $(CXX) $(C++FLAGS) $(OPTION_DEPEND) $(CFLAGS_$(<:.cpp=.o)) $(OPTION_OBJECT_ONLY) $< >$(@:.force_d=.d)
+
+ifeq ($(SRC_BUILD),TRUE)
+depend: $(CFG_GEN_FILES) src_depend $(filter %.force_d, $(D_ALL_OBJS:.o=.force_d))
+else
+depend: $(CFG_GEN_FILES) $(filter %.force_d, $(D_ALL_OBJS:.o=.force_d))
+endif
+	- @ :
+
+	
+
+###############################################################################
+#
+# Loading dependency files.
+#
+
+EXISTING_OBJS = $(foreach obj, $(D_ALL_OBJS), $(wildcard $(obj)))
+
+DEP_FILES     = $(filter %.d , $(EXISTING_OBJS:.o=.d))
+
+EXISTING_DEP_FILES      = $(foreach obj, $(DEP_FILES), $(wildcard $(obj)))
+
+MISSING_DEP = $(filter-out $(EXISTING_DEP_FILES), $(DEP_FILES))
+
+ifneq ($(strip $(MISSING_DEP)),)
+$(warning warning: missing dependency files $(MISSING_DEP))
+$(warning run make depend to regenerate)
+endif
+
+ifneq ($(strip $(EXISTING_DEP_FILES)),)
+include $(EXISTING_DEP_FILES)
+endif
+
+TOOL_OPTIONS_FILES_DIR = .
+
+$(PRJ_OBJS) : $(PRJ_DIR)/prjParams.h
+
+# Include IPCOM make rules to support IPCOM build
+-include $(WRVX_COMPBASE)/$(COMP_IPNET2)/osconfig/vxworks/make/rules.ipcom
+
+vxWorks_romResident vxWorks $(ROMFS_IMAGE) ctdt.o : | $(TOOL_OPTIONS_FILES_ALL)
+
+$(PRJ_OBJS) version.o usrEntry.o : | $(TOOL_OPTIONS_FILES_ALL)
+

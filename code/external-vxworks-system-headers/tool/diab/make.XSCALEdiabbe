@@ -1,0 +1,25 @@
+# make.XSCALEdiabbe - Diab compilation tools definitions for XSCALE
+#
+# modification history
+# --------------------
+# 01d,24jun08,pee  VSB
+# 01c,30sep03,sn  changed :vxworks55 to :$(DIAB_T_ENVIRON)
+# 01b,14jan02,to   move 'include defs.arm' after TOOL and CPU definitions to be
+#                  consistent with gnu ones
+# 01a,10jan02,to   Copied from make.XSCALEdiab
+#
+# DESCRIPTION
+# This file contains XSCALE specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= XSCALE
+TOOL		= diabbe
+
+_WRS_CONFIG_ENDIAN ?= big
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+TGT_FLAG	= -tARMXES:$(DIAB_T_ENVIRON)
+
+# end of make.XSCALEdiabbe

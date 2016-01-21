@@ -1,0 +1,32 @@
+# make.MIPSI2diab -  Diab compilation tools definitions for MIPSI2
+#
+# modification history
+# --------------------
+# 01a,26jun08,pee  created for VSB
+#
+# DESCRIPTION
+# This file contains MIPSI2 (soft-float) specific definitions and flags
+# for the Diab tools (compiler, assembler, linker etc.)
+#
+
+# exclude this file from WB build spec generation.
+_BDGEN_EXCLUDE = TRUE
+
+CPU		= MIPSI2
+TOOL		= diab
+include $(TGT_DIR)/h/tool/diab/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSROM
+
+# Select MIPS-II, soft-float (S). Endiannes selected from VSB configuration
+
+TGT_FLAG_ENDIAN_big = F
+TGT_FLAG_ENDIAN_little = M
+
+TGT_FLAG        = -tMIPS2$(TGT_FLAG_ENDIAN)$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+
+ABI_SPEC        = MIPS32
+
+# end of make.MIPSI2diab
+

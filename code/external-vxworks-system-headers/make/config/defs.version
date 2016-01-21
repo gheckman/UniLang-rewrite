@@ -1,0 +1,15 @@
+# defs.version - makefile fragment for specifying key version numbers
+#
+# modification history
+# --------------------
+# 01e,24feb10,mdk  6.9 version update
+# 01d,06jul09,kkz  Updating version number for VxWorks 6.8
+# 01c,05jun08,kkz  Updating to include KERNEL_MINOR_VERSION
+# 01b,26oct04,tpw  Bump KERNEL_MAJOR_VERSION to 6 for VxWorks 6.0
+# 01a,26oct04,tpw  created
+#
+# DESCRIPTION
+# This file contains default definitions for key version numbers.
+
+KERNEL_MAJOR_VERSION	= 6
+KERNEL_MINOR_VERSION	= 9

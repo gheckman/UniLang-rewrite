@@ -1,0 +1,25 @@
+# make.XSCALEgnube - GNU compilation tools definitions for Intel XScale
+#
+# modification history
+# --------------------
+# 01d,24jun08,pee  VSB
+# 01c,17dec03,mcm  Workaround for SPR 92687
+# 01b,05dec03,sn   updated flags for gcc 3.3.2
+# 01a,10jan02,to   created from make.XSCALEgnu
+#
+# DESCRIPTION
+# This file contains Intel XScale big-endian-specific definitions
+# and flags for the GNU software generation tools (compiler, assembler,
+# linker etc.).
+#*/
+
+CPU		= XSCALE
+TOOL		= gnube
+
+_WRS_CONFIG_ENDIAN ?= big
+
+include $(TGT_DIR)/h/tool/gnu/defs.arm
+
+CC_ARCH_SPEC	= -txscalebe  -Wa,-EB
+
+# end of make.XSCALEgnube

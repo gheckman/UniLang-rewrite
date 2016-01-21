@@ -1,0 +1,371 @@
+# defs.default - default makefile definitions
+#
+# Copyright (c) 1996-2010, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 03v,02feb12,mze  add .CPP as a valid suffix
+# 03u,03nov10,mze  IA CPU tag work
+# 03t,19jul10,mze  add VENDOR_DEFAULT logic
+# 03s,24feb10,mze  adding icc
+# 03t,31jan10,fao  add be8 support.
+# 03r,02jul09,pee  adding VSB specific CFLAGS
+# 03r,03jun09,mdo  Add VFP default
+# 03q,06nov08,pee  WIND00139818
+# 03p,02oct08,mze  VSB changes
+# 03o,08sep08,pee  problem with bdgen output.
+# 03n,02sep08,pee  moving VSB definitions out to defs.vsbvars.mk
+# 03r,27aug08,pee  moving VSB definitions in here.
+# 03q,25aug08,pee  default value for new parameter _WRS_CONFIG_APP_TOOL.
+# 03p,27aug08,pee  moving VSB definitions in here.
+# 03o,20aug08,mze  fix typo
+# 03n,20aug08,mze  adding e500v2 case
+# 03m,13aug08,mze  strip the TOOL down to diab or gnu to match VSB builds
+# 03l,28jul08,pee  passing VSB config file in compile flags.
+# 03k,30jul08,kkz  Fixing DOC_CHAPTER definition
+# 03i,22jul08,kkz  Updating API book names
+# 03h,12jul08,pee  adding VSB support to CFLAGS_PIC
+# 03g,27jun08,pee  adding VSB CFLAG
+# 03f,18jun08,pee  more VSB.
+# 03e,04jun08,kkz  Use variables for doc version number
+# 03d,23apr08,pee  adding _VSB_DIR to the FLAGS.
+# 03c,22jun07,kkz  Updating apidoc version number
+# 03b,08mar07,pee  added generic option support
+# 03g,28dec06,kch  Removed rules.gpp include for IPNET integration.
+# 03f,07dec06,kkz  Updating apidoc version number to 6.5
+# 03e,09mar06,kkz  Updating version number for API docs
+# 03d,08mar07,pee  added generic option support
+# 03c,15sep05,kkz  Updating version number for API docs
+# 03b,29apr05,kkz  Changing doc directory path
+# 03a,19apr05,tpw  Adjust to new docs location as of WB18
+# 02z,19apr06,lei  added KERNEL_TYPE & DIR_EXT for SMP build
+# 02y,28mar05,spm  Added -include rules.gpp.
+# 02x,16feb05,pee  Added CFLAGS_$<
+# 02w,14oct04,dlk  Added OPT_DEFINE in CC_DEFINES
+# 02v,14oct04,job  Added DOC_KERNEL definition
+# 02u,17sep04,job  Changed C++_WARNINGS value to CC_WARNINGS_LOW (SPR#101877)
+# 02t,12jul04,fle  Moved ADRS_DEFINE definitions to defs.memory
+# 02s,01jun04,fle  Added CFLAGS_ADRS to CFLAGS
+# 02r,27may04,dgp  change DOCS_ROOT, DOC_DIR, and DOC_CHAPTER
+# 02q,25may04,tpw  Switch on -missingok to reduce doc build error output.
+# 02p,16feb04,c_c  Added the depend extention setting here
+#		   + fix for SPR 88968.
+# 02o,12jan04,bjl  changed default CPU for doc builds, changed doc flags.
+# 02n,11nov03,rlm  Added wrn/coreip to CC_INCLUDE definition
+# 02m,07nov03,c_c  Unified build rules with WIN32 hosts.
+# 02l,15oct03,dat  Diab error/warning update, step 1 generate warnings for
+#                  error conditions to be fixed by tech line people.
+# 02k,17sep03,job  Added _WRS_KERNEL to CC_DEFINES macro
+# 02j,08may02,wsl  change default libraries chapter name
+# 02i,19mar02,dat  Adding CFLAGS_PIC & CC_PIC for bootInit.o (72825)
+# 02h,12mar02,wsl  change DOC_CHAPTER from "Libraries" to "Standard Libraries"
+# 02g,31jan02,dgp  change VxWorks_Reference_Manual to VxWorks_API_Reference
+# 02f,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 02e,23oct01,jab  moved toolchain specifics out
+# 02d,11oct01,dat  SPR 20403, CC_OPTIM_DRIVER needs -fvolatile by default
+# 02c,19sep01,dat  Adding TOOL_FAMILY
+# 02b,17sep01,sn   moved definitions of MUNCH_FLAGS and related macros to defs.gnu
+# 02a,06sep01,dat  Gnu-Diab, adding h/tool/$TOOL to CC_INCLUDE
+# 01z,27aug01,wsl  add man pages
+# 01y,24jul01,r_s  Diab sections should not set GCC_ make variables
+# 01x,24jul01,r_s  changing the make 'ifeq' conditional to work with 'gnu',
+#                  'sfgnu', 'sfgnule' etc for TOOL
+# 01w,24jul01,r_s  diab specific rules added
+# 01v,28feb01,t_m  merge in XScale changes
+# 01u,23mar01,roz  Fix check for GNU compiler.
+# 01t,13mar01,sn   Use $(OPTION_LANG_ASM) instead of the explicit flag
+#                  Added $(OPTION_LANG_ASM) to $(CASFLAGS) to ensure
+#                  correct dependency gen in BSP builds
+# 01s,12mar01,sn   Spell -x assembler-with-cpp without the space to
+#                  ensure correct handling by the project facility
+# 01t,01feb01,mem  Added LD_PARTIAL_FLAGS and LDFLAGS
+# 01s,06dec00,sn  removed -xc
+# 01v,04jan01,mem  Remove -P from assembler invocation.
+# 01r,09oct00,sn   removed -nostdinc
+# 01q,04mar99,sn   added machinery to handle large projects
+# 01p,18feb99,sn   merge POST_MUNCH and MUNCH, add MUNCH_FLAGS
+# 01o,02feb99,sn   added defs of MUNCH and POST_MUNCH
+# 01n,05jan99,fle  added the DOC_OPTS_XXX flags
+# 01m,25nov98,fle  made doc book and chapter be variables and not hard coded
+#                  anymore
+# 01l,11nov98,sn   partially link using LD_PARTIAL
+# 01k,10nov98,fle  doc : changed the DOCS_TARGET value
+# 01j,21sep98,sn   added new macro, C++_TEMPLATE_INST
+# 01i,18aug98,fle  added DOCS_DIR and DOCS_TARGET variables
+# 01h,07may98,sn   Sorted this modification history correctly
+#                  (Re)added the flag -fno-implicit-templates to C++_COMPILER
+# 01g,02apr98,pcn  Removed Objcopy changes from Tempest view
+# 01f,15dec97,pcn  Added Objcopy in BSP build.
+# 01e,10oct97,cym  added OPTION_ macros to remove "GNU-centric" flags for VC++.
+# 01d,20jan97,yp   added -P to CFLAGS_AS to suppress "#line" directives
+# 01c,06jan97,yp   moved soft-float back to CFLAGS
+# 01b,17dec96,yp   moved soft-float to OPTIM macros so drvs get built without it
+# 01a,07may96,yp   derived from defs.bsp
+#
+# DESCRIPTION
+# This file is included in Makefiles to establish defaults. The Makefiles may
+# customize these definitions to suit the circumstance.
+#
+# Redefinitions of make variables earlier than the include of this file will
+# have no affect.
+#
+
+# use this variable to fing if this file was previously included.
+__DEFS_DEFAULT_INCLUDED = TRUE
+
+include $(WIND_BASE)/target/h/make/config/defs.version
+ifndef __DEFS_VSBVARS_MK_INCLUDED
+include $(WIND_BASE)/target/h/make/defs.vsbvars.mk
+endif
+
+.SUFFIXES:  .cpp .CPP .out .mib .cxx
+
+## default CPU and TOOL settings
+
+CPU?=PPC604
+TOOL?=gnu
+_WRS_CONFIG_APP_TOOL ?= $(TOOL)
+
+ifeq  ($(findstring sf,$(TOOL)),sf)
+override _WRS_CONFIG_FP    = soft
+export _WRS_CONFIG_FP
+endif
+
+ifeq  ($(findstring e500v2,$(TOOL)),e500v2)
+override _WRS_CONFIG_FP    = e500v2
+export _WRS_CONFIG_FP
+endif
+
+ifneq  ($(VFPVARIANT),)
+override _WRS_CONFIG_FP    = vector
+export _WRS_CONFIG_FP
+endif
+
+ifeq  ($(findstring be,$(TOOL)),be)
+override _WRS_CONFIG_ENDIAN    = big
+export _WRS_CONFIG_ENDIAN
+endif
+
+ifeq  ($(findstring be8,$(TOOL)),be8)
+override _WRS_CONFIG_ENDIAN    = be8
+export _WRS_CONFIG_ENDIAN
+endif
+
+ifeq  ($(findstring le,$(TOOL)),le)
+override _WRS_CONFIG_ENDIAN    = little
+export _WRS_CONFIG_ENDIAN
+endif
+
+
+## strip TOOL back to diab or gnu or icc to match VSB TOOL settings
+ifndef _BDGEN_
+ifeq  ($(findstring gnu,$(TOOL)),gnu)
+override TOOL    = gnu
+endif
+
+ifeq  ($(findstring diab,$(TOOL)),diab)
+override TOOL    = diab
+endif
+
+ifeq  ($(findstring icc,$(TOOL)),icc)
+override TOOL    = icc
+endif
+
+export TOOL
+endif
+
+# NOTE: we redefine MAKETAIL and CLEANTAIL: provbably unsupported from now on
+
+MAKETAIL =
+CLEANTAIL =
+
+## default flags
+
+CFLAGS		= $(CC_ARCH_SPEC) $(CC_COMPILER) $(CC_OPTIM) $(CC_WARNINGS) \
+		  $(CC_INCLUDE) $(CC_DEFINES) $(CC_SOFT_FLOAT) $(ADDED_CFLAGS) \
+		  $(CFLAGS_$<) $(CFLAGS_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS) \
+		  $(CFLAGS_VSB)
+
+C++FLAGS	= $(CC_ARCH_SPEC) $(C++_COMPILER) $(CC_OPTIM) $(C++_WARNINGS) \
+		  $(CC_INCLUDE) $(CC_DEFINES) $(CC_SOFT_FLOAT) $(ADDED_C++FLAGS) \
+                  $(C++FLAGS_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS)
+
+CASFLAGS	= $(CC_ARCH_SPEC) $(OPTION_PP) $(OPTION_LANG_ASM) $(CC_INCLUDE)\
+	          $(CC_DEFINES) $(CASFLAGS_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS)
+
+CFLAGS_AS	= $(CC_ARCH_SPEC) $(CC_COMPILER) $(CC_OPTIM) $(CC_INCLUDE) \
+		  $(CC_DEFINES) $(OPTION_PP_AS) $(OPTION_LANG_ASM) \
+		  $(ADDED_CFLAGS) $(CFLAGS_AS_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS)
+
+# For Position Independant Code (bootInit.o)
+CFLAGS_PIC	= $(CC_ARCH_SPEC) $(CC_COMPILER) $(CC_OPTIM) $(CC_WARNINGS) \
+		  $(CC_INCLUDE) $(CC_DEFINES) $(CC_PIC) $(CC_SOFT_FLOAT) \
+		  $(ADDED_CFLAGS) $(CFLAGS_PIC_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS)
+
+_VSB_CONFIG_ADDEDCFLAGS = $(_WRS_CONFIG_ADDEDCFLAGS)
+
+# new default is the low setting. Library code MUST be error/warning free at
+# this level.
+CC_WARNINGS	= $(CC_WARNINGS_LOW)
+
+C++_WARNINGS    = $(CC_WARNINGS_LOW)
+
+CC_OPTIM	= $(CC_OPTIM_NORMAL)
+
+CC_INCLUDE	= $(PRE_INCLUDE) $(OPTION_INCLUDE_DIR)$(TGT_DIR)/h \
+		  $(OPTION_INCLUDE_DIR)$(TGT_DIR)/h/wrn/coreip \
+		  $(INCLUDE_CC) $(EXTRA_INCLUDE)
+
+CC_DEFINES	= $(OPTION_DEFINE_MACRO)CPU=_VX_$(CPU) \
+		  $(OPTION_DEFINE_MACRO)TOOL_FAMILY=$(TOOL_FAMILY) \
+		  $(OPTION_DEFINE_MACRO)TOOL=$(TOOL) \
+		  $(OPTION_DEFINE_MACRO)_WRS_KERNEL \
+		  $(DEFINE_CC) $(EXTRA_DEFINE) $(OPT_DEFINE)
+
+COMPILE_SYMTBL	= $(CC) $(OPTION_OBJECT_ONLY) $(CFLAGS)
+
+C++_COMPILER		= $(OPTION_ANSI)
+
+# We have this only because win95 host does not allow -DCPU=$(CPU) to be
+# passed as one parameter
+
+CC_DEPFLAGS     = $(CC_OPTIM) $(CC_WARNINGS) $(CC_INCLUDE) $(CC_COMPILER) \
+		  $(DEFINE_CC) $(EXTRA_DEFINE) $(OPT_DEFINE)
+CXX_DEPFLAGS	= $(CC_OPTIM) $(CC_INCLUDE) $(C++_WARNINGS) $(C++_COMPILER) \
+		  $(DEFINE_CC) $(EXTRA_DEFINE) $(OPT_DEFINE) $(ADDED_C++FLAGS)
+
+TARGET=default
+
+## top of vxWorks tree
+
+BIN_DIR=$(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin
+
+## CPU/TOOL build extension name
+
+BUILD_EXT	= $(CPU)$(LIB_DIR_TAG)$(TOOL)-$(WIND_HOST_TYPE)
+
+## docs flags and variables
+
+DOCS_ROOT	= $(WIND_DOCS)/extensions/eclipse/plugins
+DOC_DIR		= $(DOCS_ROOT)/com.windriver.ide.doc.vxworks/vxworks_kernel_api_reference_$(KERNEL_MAJOR_VERSION).$(KERNEL_MINOR_VERSION)
+MAN_PAGE_DIR	= $(WIND_BASE)/man
+DOC_BOOK	= VxWorks_$(KERNEL_MAJOR_VERSION).$(KERNEL_MINOR_VERSION)
+DOC_CHAPTER     = VxWorks_Kernel_API_Reference
+DOC_KERNEL      = KERNEL
+DOC_OPTS	= $(DOC_OPTS_MAN)
+MAN_PAGE_OPTS	= $(DOC_OPTS_MAN) -config Auto2txt
+DOC_OPTS_C_TCL	= -config CTcl2html
+DOC_OPTS_CPP	= -cpp
+DOC_OPTS_FILE	= -config File2html
+DOC_OPTS_MAN	= -mg -nostrict -missingok
+
+## map TOOL to TOOL_FAMILY, if not already done elsewhere (it should)
+
+ifeq ($(TOOL_FAMILY),)
+ifeq  ($(findstring gnu,$(TOOL)),gnu)
+TOOL_FAMILY	= gnu
+endif
+
+ifeq  ($(findstring diab,$(TOOL)),diab)
+TOOL_FAMILY	= diab
+endif
+
+ifeq  ($(findstring icc,$(TOOL)),icc)
+TOOL_FAMILY	= icc
+endif
+
+
+include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+
+## Architectures default toolchain and dual build status
+
+#
+# ARM: DIAB & GNU (DIAB as default)
+#
+
+ifeq ($(VX_CPU_FAMILY),arm)
+    VENDOR_DEFAULT	= diab
+endif
+
+#
+# COLDFIRE: supports only DIAB
+#
+
+ifeq ($(VX_CPU_FAMILY),cf)
+    VENDOR_DEFAULT	= diab
+endif
+
+#
+# MC68K: supports only GNU
+#
+
+ifeq ($(VX_CPU_FAMILY),68k)
+    VENDOR_DEFAULT	= gnu
+endif
+
+#
+# MIPS: DIAB & GNU (DIAB as default)
+#
+
+ifeq ($(VX_CPU_FAMILY),mips)
+    VENDOR_DEFAULT	= diab
+endif
+
+#
+# PENTIUM: DIAB & GNU (GNU as default)
+#
+
+ifeq ($(VX_CPU_FAMILY),pentium)
+    VENDOR_DEFAULT	= gnu
+endif
+
+#
+# PPC: GNU & DIAB (DIAB as default)
+#
+
+ifeq ($(VX_CPU_FAMILY),ppc)
+    VENDOR_DEFAULT	= diab
+endif
+
+#
+# SH (Renesas): GNU & DIAB (DIAB as default)
+#
+
+ifeq ($(VX_CPU_FAMILY),sh)
+    VENDOR_DEFAULT	= diab
+endif
+
+#
+# SIMLINUX: supports GNU & DIAB (GNU as default)
+#
+
+ifeq ($(VX_CPU_FAMILY),simlinux)
+    VENDOR_DEFAULT	= gnu
+endif
+
+#
+# SIMNT: supports GNU & DIAB (GNU as default)
+#
+
+ifeq ($(VX_CPU_FAMILY),simpc)
+    VENDOR_DEFAULT	= gnu
+endif
+
+#
+# SIMSOLARIS: supports GNU & DIAB (DIAB as default)
+#
+
+ifeq ($(VX_CPU_FAMILY),simso)
+    VENDOR_DEFAULT	= diab
+endif
+
+ifeq ($(VENDOR_DEFAULT),)
+    VENDOR_DEFAULT	= gnu
+endif
+
+endif
+

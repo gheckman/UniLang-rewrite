@@ -1,0 +1,62 @@
+# make.PPC603gnu - GNU compilation tools definitions for PowerPC 603/604
+#
+# Copyright 1995-2004, 2006-2007, 2011, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 02e,12apr12,h_k  moved common env setting to defs.ppc.
+# 02d,13jun11,mze  add debug
+# 02c,02aug07,mcm  GCC 4.1.2 has now implemented the -fno-implicit-fp option;
+#                  the option had been removed while there was no support for
+#                  it. 
+# 02b,15may07,mcm  Remove -mno-implicit-fp
+# 02a,06jun06,dtr  Add upport 603 hw/sw fp.
+# 01z,06feb04,pch  add missing -mno-implicit-fp
+# 01y,07nov03,c_c  Removed Compiler definitions.
+# 01x,31jan03,pch  Add PPC32 support
+# 01w,12feb02,sn   removed obsolete refs to GCC_EXEC_PREFIX
+# 01v,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 01u,16nov01,mil  Changed VX_CPU_FAMILY from PPC to ppc.
+# 01t,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01s,11oct01,dat  SPR 20403, OPTIM_DRIVER must have -fvolatile
+# 01r,25sep01,dat  Location of defs.gnu changed to tool/gnu
+# 01q,18oct00,sn   removed -fno-for-scope 
+# 01p,16oct00,sn   added include gnu; removed LIBS defn
+# 01o,09oct00,sn   Added -mcpu=603
+# 01n,18jan99,sn   Defined C++_TEMPLATE_INST
+# 01m,27oct98,ms   undid 01m
+# 01l,02apr98,pcn  Removed Objcopy changes from Tempest view
+# 01k,15dec97,pcn  Added Objcopy in BSP build.
+# 01j,18sep97,ms   added ARCH_DIR
+# 01i,04oct96,yp   Added -B option so compiler driver doesn't need EXEC_PREFIX,
+#		   added CC_ARCH_SPEC for machine specific flags
+# 01h,06aug96,tam  added -mstrict-align flag.
+# 01g,16jul96,tpr  removed EXTRA_DEFINE
+# 01f,04feb96,tpr  removed -msdata flag.
+# 01e,23feb96,yp   added defs for ELF tools
+# 01d,14feb96,tpr  moved -msdata from EXTRA_DEFINE to CC_OPTIM_NORMAL.
+# 01c,13feb96,tpr  removed Cfront support for PowerPC.
+# 01b,27jan96,tpr  replaced gccppc by ccppc.
+# 01a,29nov95,tpr  written from make.PPC603diab 01d version.
+#
+# DESCRIPTION
+# This file contains PowerPC 603/604 specific definitions and flags for the
+# gnu tools (compiler, assembler, linker etc.)
+#*/
+
+CPU		= PPC603
+TOOL		= gnu
+
+_WRS_CONFIG_FP ?= hard
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+CC_ARCH_SPEC	= -mcpu=603
+
+include $(TGT_DIR)/h/tool/gnu/defs.ppc
+
+# end of make.PPC603gnu

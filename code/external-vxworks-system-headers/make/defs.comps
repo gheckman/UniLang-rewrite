@@ -1,0 +1,86 @@
+# defs.comps - makefile definitions related to component builds
+#
+# Copyright (c) 2007 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+#
+# modification history
+# --------------------
+# 01f,12nov08,mze  returning the LIBPATH and LINK_PATH macros to where they
+#                  belong.
+# 01e,29sep08,mze  remove WS_ROOT_DIR_LIBPATH
+# 01d,02aug07,pee  WIND00100300
+# 01c,19jul07,tkf  Fix WIND00098105: consider VXBUILD=SMP option for source
+#                  builds. Also correct code that assumed
+#                  WIND_COMPONENTS_LIBPATHS contains only one lib path. 
+# 01b,10may07,tkf  Fix link problem due to multiple inclusion when building BSPs from
+#                  target/config.
+# 01a,02may07,tkf  Written.
+#
+# DESCRIPTION
+#
+# This file is included in Makefiles to establish information related
+# to component builds,
+#
+
+# Protect against multiple inclusion.
+ifeq ($(DEFS_COMPS),)
+DEFS_COMPS = TRUE
+
+include $(TGT_DIR)/h/make/defs.options
+
+# Add component libpaths from the workspace directory WS_ROOT_DIR
+
+ifeq ($(WS_ROOT_DIR),UNKNOWN)
+    WS_ROOT_DIR_LIBPATH = $$(WS_ROOT_DIR)/obj/$(WIND_PLATFORM)/krnl/lib$(MAJOR_OPTION_SUFFIX)
+    COMP_LD_LINK_PATH += -L$(WS_ROOT_DIR_LIBPATH)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL)$(MINOR_OPTION_SUFFIX)
+    COMP_LD_LINK_PATH += -L$(WS_ROOT_DIR_LIBPATH)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_OPTION_SUFFIX)
+else
+    ifneq ($(WS_ROOT_DIR),)
+        WS_ROOT_DIR_LIBPATH = $(WS_ROOT_DIR)/obj/$(WIND_PLATFORM)/krnl/lib$(MAJOR_OPTION_SUFFIX)
+        COMP_LD_LINK_PATH += -L$(WS_ROOT_DIR_LIBPATH)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL)$(MINOR_OPTION_SUFFIX)
+        COMP_LD_LINK_PATH += -L$(WS_ROOT_DIR_LIBPATH)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_OPTION_SUFFIX)
+        COMP_LIBS_PRESENT += $(notdir $(wildcard $(WS_ROOT_DIR_LIBPATH)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL)$(MINOR_OPTION_SUFFIX)/lib*.a))
+        COMP_LIBS_PRESENT += $(notdir $(wildcard $(WS_ROOT_DIR_LIBPATH)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_OPTION_SUFFIX)/lib*.a))
+    endif
+endif
+
+# Add component libpaths and modules  defined in WIND_COMPONENTS_LIBPATHS and
+# WIND_COMPONENTS_MODULES
+
+WIND_COMPONENTS_MODULES := $(subst \,/,$(WIND_COMPONENTS_MODULES))
+
+ifeq ($(WIND_HOST_TYPE),x86-win32)
+	PATH_SEPARATOR = ;
+else
+	PATH_SEPARATOR = :
+endif
+
+WIND_COMPONENTS_LIBPATHS := $(subst \,/,$(WIND_COMPONENTS_LIBPATHS))
+
+WIND_COMPONENTS_LIBPATHS_LIST := $(subst $(PATH_SEPARATOR), ,$(WIND_COMPONENTS_LIBPATHS))
+
+COMP_LD_LINK_PATH += $(foreach dir,$(WIND_COMPONENTS_LIBPATHS_LIST), \
+                     -L$(dir)$(MAJOR_OPTION_SUFFIX)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL)$(MINOR_OPTION_SUFFIX))
+COMP_LD_LINK_PATH += $(foreach dir,$(WIND_COMPONENTS_LIBPATHS_LIST), \
+                     -L$(dir)$(MAJOR_OPTION_SUFFIX)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_OPTION_SUFFIX))
+
+COMP_LIBS_PRESENT += $(notdir $(foreach dir,$(WIND_COMPONENTS_LIBPATHS_LIST),\
+                     $(wildcard $(dir)$(MAJOR_OPTION_SUFFIX)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL)$(MINOR_OPTION_SUFFIX)/lib*.a)))
+COMP_LIBS_PRESENT += $(notdir $(foreach dir,$(WIND_COMPONENTS_LIBPATHS_LIST),\
+                     $(wildcard $(dir)$(MAJOR_OPTION_SUFFIX)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU_CLASS)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_OPTION_SUFFIX)/lib*.a)))
+
+COMP_LIBNAMES = $(foreach name,$(subst $(PATH_SEPARATOR), ,$(WIND_COMPONENTS_LIBNAMES)),lib$(name).a)
+COMP_MODULES = $(subst  $(PATH_SEPARATOR), ,$(WIND_COMPONENTS_MODULES))
+
+COMP_LD_LINK_LIBS = $(patsubst lib%.a,-l%,$(filter $(COMP_LIBNAMES),$(COMP_LIBS_PRESENT)))
+
+COMP_LIBS         = $(COMPONENT_MODULES) $(COMP_MODULES) $(COMPONENT_LIBRARIES) \
+                    $(COMP_LD_LINK_LIBS)
+
+LD_LINK_PATH	 += $(COMP_LD_LINK_PATH)
+
+endif # ifeq ($(DEFS_COMPS),)

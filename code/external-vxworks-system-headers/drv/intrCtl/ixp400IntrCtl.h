@@ -1,0 +1,320 @@
+/* ixp400IntrCtl.h - interrupt controller driver Ixp400 */
+
+/*
+Copyright (c) 2002-2004 Wind River Systems, Inc.  All rights reserved.
+Certain portions of these files may be copyright (c) 2002-2004 Intel
+Corporation.
+*/
+
+/*
+modification history
+--------------------
+01e,26sep07,jrp  APIGEN Cleanup
+01d,24aug05,m_h  interrupt controller for ixdp465 and related XSCALE BSPs
+01c,20dec04,pai  Updated copyright notice.
+01b,24jul03,m_h  PSM now named NPE
+01a,05jun02,jb  initial version...
+*/
+
+#ifndef __INCixp400IntrCtlh
+#define __INCixp400IntrCtlh
+
+#include "ixp400.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+				
+/* typedefs */
+
+#ifndef _ASMLANGUAGE
+#endif	/* _ASMLANGUAGE */
+
+
+/* macros to convert interrupt vectors <-> interrupt numbers */
+
+#ifdef IVEC_TO_INUM
+#undef IVEC_TO_INUM
+#endif 
+#define IVEC_TO_INUM(intVec)    ((int) (intVec))
+
+#ifdef INUM_TO_IVEC
+#undef INUM_TO_IVEC
+#endif 
+#define INUM_TO_IVEC(intNum)    ((VOIDFUNCPTR *) (intNum))
+
+/*
+ * Define Ixp400 Interrupt registers
+ */
+/*
+
+  Interrupt Controller Register Definitions.
+
+*/
+
+#define IXP400_ICPR	( IXP400_INTC_BASE + 0x0 )  /* Interrupt Status Reg. */
+#define IXP400_ICMR	( IXP400_INTC_BASE + 0x4 )  /* Interrupt Enable Reg. */
+#define IXP400_ICLR	( IXP400_INTC_BASE + 0x8 )  /* Interrupt Select Reg IRQ/FIQ */
+#define IXP400_ICIP	( IXP400_INTC_BASE + 0xC )  /* IRQ Status Reg. */
+#define IXP400_ICFP	( IXP400_INTC_BASE + 0x10 ) /* FIQ Status Reg. */
+#define IXP400_ICHR	( IXP400_INTC_BASE + 0x14 ) /* Interrupt Priority Reg. */
+#define IXP400_ICIH	( IXP400_INTC_BASE + 0x18 ) /* IRQ Highest Pri Int Reg. */
+#define IXP400_ICFH	( IXP400_INTC_BASE + 0x1C ) /* FIQ Highest Pri Int Reg. */
+
+
+/* the following register are for handling INTR 31-63 */
+#ifdef IX_DEVICE_IXP465		
+#define IXP400_ICPR_UPPER	( IXP400_INTC_BASE + 0x20 )  /* Interrupt Status Reg. #2 */
+#define IXP400_ICMR_UPPER	( IXP400_INTC_BASE + 0x24 )  /* Interrupt Enable Reg. #2 */
+#define IXP400_ICLR_UPPER	( IXP400_INTC_BASE + 0x28 )  /* Interrupt Select Reg IRQ/FIQ #2 */
+#define IXP400_ICIP_UPPER	( IXP400_INTC_BASE + 0x2C )  /* IRQ Status Reg. #2 */
+#define IXP400_ICFP_UPPER	( IXP400_INTC_BASE + 0x30 )  /* FIQ Status Reg. #2 */
+
+#define IXP400_ERROR_EN2	( IXP400_INTC_BASE + 0x34 )  /* for interrupts 31-63, error priority enable */
+														 /* used to raise priority above all others */	
+#endif 
+
+
+
+#define IXP400_INT_LVL_NPEA			(0)
+#define IXP400_INT_LVL_NPEB			(1)
+#define IXP400_INT_LVL_NPEC			(2)
+#define IXP400_INT_LVL_QM1			(3)
+#define IXP400_INT_LVL_QM2			(4)
+#define IXP400_INT_LVL_TIMER1		(5)
+#define IXP400_INT_LVL_GPIO0		(6)
+#define IXP400_INT_LVL_GPIO1		(7)
+#define IXP400_INT_LVL_PCI_INT		(8)
+#define IXP400_INT_LVL_PCI_DMA1		(9)
+#define IXP400_INT_LVL_PCI_DMA2		(10)
+#define IXP400_INT_LVL_TIMER2		(11)
+#define IXP400_INT_LVL_USB			(12)
+#define IXP400_INT_LVL_UART2		(13)
+#define IXP400_INT_LVL_TIMESTAMP	(14)
+#define IXP400_INT_LVL_UART1		(15)
+#define IXP400_INT_LVL_WDOG			(16)
+#define IXP400_INT_LVL_AHB_PMU		(17)
+#define IXP400_INT_LVL_XSCALE_PMU	(18)
+#define IXP400_INT_LVL_GPIO2		(19)
+#define IXP400_INT_LVL_GPIO3		(20)
+#define IXP400_INT_LVL_GPIO4		(21)
+#define IXP400_INT_LVL_GPIO5		(22)
+#define IXP400_INT_LVL_GPIO6		(23)
+#define IXP400_INT_LVL_GPIO7		(24)
+#define IXP400_INT_LVL_GPIO8		(25)
+#define IXP400_INT_LVL_GPIO9		(26)
+#define IXP400_INT_LVL_GPIO10		(27)
+#define IXP400_INT_LVL_GPIO11		(28)
+#define IXP400_INT_LVL_GPIO12		(29)
+#define IXP400_INT_LVL_INT1			(30)
+#define IXP400_INT_LVL_INT2			(31)
+									   
+									   
+#ifdef IX_DEVICE_IXP465	   
+#define IXP400_INT_LVL_USB_HOST				(32)
+#define IXP400_INT_LVL_I2C					(33)
+#define IXP400_INT_LVL_SSP			 		(34)
+#define IXP400_INT_LVL_TSYNC				(35)	
+#define IXP400_INT_LVL_EAU_DONE				(36)	
+#define IXP400_INT_LVL_SHA_HASHING_DONE		(37)	
+#define IXP400_INT_LVL_RSVD_38				(38)
+#define IXP400_INT_LVL_RSVD_39				(39)
+#define IXP400_INT_LVL_RSVD_40				(40)
+#define IXP400_INT_LVL_RSVD_41				(41)
+#define IXP400_INT_LVL_RSVD_42				(42)
+#define IXP400_INT_LVL_RSVD_43				(43)
+#define IXP400_INT_LVL_RSVD_44				(44)
+#define IXP400_INT_LVL_RSVD_45				(45)
+#define IXP400_INT_LVL_RSVD_46				(46)
+#define IXP400_INT_LVL_RSVD_47				(47)
+#define IXP400_INT_LVL_RSVD_48				(48)
+#define IXP400_INT_LVL_RSVD_49				(49)
+#define IXP400_INT_LVL_RSVD_50				(50)
+#define IXP400_INT_LVL_RSVD_51				(51)
+#define IXP400_INT_LVL_RSVD_52				(52)
+#define IXP400_INT_LVL_RSVD_53				(53)
+#define IXP400_INT_LVL_RSVD_54				(54)
+#define IXP400_INT_LVL_RSVD_55				(55)
+#define IXP400_INT_LVL_RSVD_56				(56)
+#define IXP400_INT_LVL_RSVD_57				(57)
+#define IXP400_INT_LVL_SWCP					(58)	
+#define IXP400_INT_LVL_RSVD_59				(59)	
+#define IXP400_INT_LVL_AQM				  	(60)
+#define IXP400_INT_LVL_MCU					(61)	
+#define IXP400_INT_LVL_EBC					(62)	
+#define IXP400_INT_LVL_RSVD_63				(63)	
+#endif 
+
+/* Bit definitions for Interrupt Pending/Mask/Status registers */
+
+#define IXP400_INTC_NPEA				(1 << IXP400_INT_LVL_NPEA)
+#define IXP400_INTC_NPEB				(1 << IXP400_INT_LVL_NPEB)
+#define IXP400_INTC_NPEC				(1 << IXP400_INT_LVL_NPEC)
+#define IXP400_INTC_QM1					(1 << IXP400_INT_LVL_QM1)
+#define IXP400_INTC_QM2					(1 << IXP400_INT_LVL_QM2)
+#define IXP400_INTC_TIMER1				(1 << IXP400_INT_LVL_TIMER1)
+#define IXP400_INTC_GPIO0				(1 << IXP400_INT_LVL_GPIO0)
+#define IXP400_INTC_GPIO1				(1 << IXP400_INT_LVL_GPIO1)
+#define IXP400_INTC_PCI_INT				(1 << IXP400_INT_LVL_PCI_INT)
+#define IXP400_INTC_PCI_DMA1  			(1 << IXP400_INT_LVL_PCI_DMA1)
+#define IXP400_INTC_PCI_DMA2  			(1 << IXP400_INT_LVL_PCI_DMA2)
+#define IXP400_INTC_TIMER2				(1 << IXP400_INT_LVL_TIMER2)
+#define IXP400_INTC_USB					(1 << IXP400_INT_LVL_USB)
+#define IXP400_INTC_UART2				(1 << IXP400_INT_LVL_UART2)
+#define IXP400_INTC_TIMESTAMP 			(1 << IXP400_INT_LVL_TIMESTAMP)
+#define IXP400_INTC_UART1				(1 << IXP400_INT_LVL_UART1)
+#define IXP400_INTC_WDOG				(1 << IXP400_INT_LVL_WDOG)
+#define IXP400_INTC_AHB_PMU				(1 << IXP400_INT_LVL_AHB_PMU)
+#define IXP400_INTC_XSCALE_PMU			(1 << IXP400_INT_LVL_XSCALE_PMU)
+#define IXP400_INTC_GPIO2				(1 << IXP400_INT_LVL_GPIO2)
+#define IXP400_INTC_GPIO3				(1 << IXP400_INT_LVL_GPIO3)
+#define IXP400_INTC_GPIO4				(1 << IXP400_INT_LVL_GPIO4)
+#define IXP400_INTC_GPIO5				(1 << IXP400_INT_LVL_GPIO5)
+#define IXP400_INTC_GPIO6				(1 << IXP400_INT_LVL_GPIO6)
+#define IXP400_INTC_GPIO7				(1 << IXP400_INT_LVL_GPIO7)
+#define IXP400_INTC_GPIO8				(1 << IXP400_INT_LVL_GPIO8)
+#define IXP400_INTC_GPIO9				(1 << IXP400_INT_LVL_GPIO9)
+#define IXP400_INTC_GPIO10				(1 << IXP400_INT_LVL_GPIO10)
+#define IXP400_INTC_GPIO11				(1 << IXP400_INT_LVL_GPIO11)
+#define IXP400_INTC_GPIO12				(1 << IXP400_INT_LVL_GPIO12)
+#define IXP400_INTC_SW_INT1				(1 << IXP400_INT_LVL_INT1)
+#define IXP400_INTC_SW_INT2				(1 << IXP400_INT_LVL_INT2)
+
+#ifdef IX_DEVICE_IXP465		
+#define IXP400_INTC_USB_HOST		  		(1 << (IXP400_INT_LVL_USB_HOST			   	- 32))	
+#define IXP400_INTC_I2C					   	(1 << (IXP400_INT_LVL_I2C				   	- 32))	
+#define IXP400_INTC_SSP						(1 << (IXP400_INT_LVL_SSP				   	- 32))	
+#define IXP400_INTC_TSYNC					(1 << (IXP400_INT_LVL_RSVD_TSYNC		  	- 32))				
+#define IXP400_INTC_EAU_DONE 				(1 << (IXP400_INT_LVL_RSVD_EAU_DONE	   		- 32))		
+#define IXP400_INTC_SHA_HASHING_DONE		(1 << (IXP400_INT_LVL_RSVD_SHA_HASHING_DONE	- 32))		
+#define IXP400_INTC_RSVD_38					(1 << (IXP400_INT_LVL_RSVD_38				- 32))			  	
+#define IXP400_INTC_RSVD_39					(1 << (IXP400_INT_LVL_RSVD_39				- 32))			  	
+#define IXP400_INTC_RSVD_40					(1 << (IXP400_INT_LVL_RSVD_40		  		- 32))			  	
+#define IXP400_INTC_RSVD_41					(1 << (IXP400_INT_LVL_RSVD_41				- 32))			  	
+#define IXP400_INTC_RSVD_42					(1 << (IXP400_INT_LVL_RSVD_42				- 32))			  	
+#define IXP400_INTC_RSVD_43					(1 << (IXP400_INT_LVL_RSVD_43				- 32))			  	
+#define IXP400_INTC_RSVD_44					(1 << (IXP400_INT_LVL_RSVD_44				- 32))			  	
+#define IXP400_INTC_RSVD_45					(1 << (IXP400_INT_LVL_RSVD_45				- 32))			  	
+#define IXP400_INTC_RSVD_46					(1 << (IXP400_INT_LVL_RSVD_46				- 32))			  	
+#define IXP400_INTC_RSVD_47					(1 << (IXP400_INT_LVL_RSVD_47				- 32))			  	
+#define IXP400_INTC_RSVD_48					(1 << (IXP400_INT_LVL_RSVD_48				- 32))			  	
+#define IXP400_INTC_RSVD_49					(1 << (IXP400_INT_LVL_RSVD_49				- 32))			  	
+#define IXP400_INTC_RSVD_50					(1 << (IXP400_INT_LVL_RSVD_50				- 32))			  	
+#define IXP400_INTC_RSVD_51					(1 << (IXP400_INT_LVL_RSVD_51				- 32))			  	
+#define IXP400_INTC_RSVD_52					(1 << (IXP400_INT_LVL_RSVD_52				- 32))			  	
+#define IXP400_INTC_RSVD_53					(1 << (IXP400_INT_LVL_RSVD_53				- 32))			  	
+#define IXP400_INTC_RSVD_54					(1 << (IXP400_INT_LVL_RSVD_54				- 32))			  	
+#define IXP400_INTC_RSVD_55					(1 << (IXP400_INT_LVL_RSVD_55				- 32))			  	
+#define IXP400_INTC_RSVD_56					(1 << (IXP400_INT_LVL_RSVD_56				- 32))			  	
+#define IXP400_INTC_RSVD_57			   		(1 << (IXP400_INT_LVL_RSVD_57				- 32))			  	
+#define IXP400_INTC_SWCP			  		(1 << (IXP400_INT_LVL_SWCP  				- 32))	
+#define IXP400_INTC_RSVD_59					(1 << (IXP400_INT_LVL_RSVD_59			   	- 32))	
+#define IXP400_INTC_AQM				   		(1 << (IXP400_INT_LVL_AQM					- 32))	
+#define IXP400_INTC_MCU						(1 << (IXP400_INT_LVL_MCU					- 32))	
+#define IXP400_INTC_EBC						(1 << (IXP400_INT_LVL_EBC				  	- 32))	
+#define IXP400_INTC_RSVD_63 				(1 << (IXP400_INT_LVL_RSVD_63 		   		- 32))	
+#endif 										
+
+
+
+
+/* Vector definitions */
+#define IXP400_INT_NUM_LEVELS_LOWER	(32)
+
+#if IX_DEVICE_IXP465		
+#define IXP400_INT_NUM_LEVELS		(64)
+#else 
+#define IXP400_INT_NUM_LEVELS		(IXP400_INT_NUM_LEVELS_LOWER)
+#endif 
+
+
+#define IXP400_INT_MODE			INT_NON_PREEMPT_MODEL
+
+
+#define INT_VEC_NPEA				IVEC_TO_INUM(IXP400_INT_LVL_NPEA)
+#define INT_VEC_NPEB				IVEC_TO_INUM(IXP400_INT_LVL_NPEB)
+#define INT_VEC_NPEC				IVEC_TO_INUM(IXP400_INT_LVL_NPEC)
+#define INT_VEC_QM1					IVEC_TO_INUM(IXP400_INT_LVL_QM1 )
+#define INT_VEC_QM2					IVEC_TO_INUM(IXP400_INT_LVL_QM2 )
+#define INT_VEC_TIMER1				IVEC_TO_INUM(IXP400_INT_LVL_TIMER1)
+#define INT_VEC_GPIO0				IVEC_TO_INUM(IXP400_INT_LVL_GPIO0)
+#define INT_VEC_GPIO1				IVEC_TO_INUM(IXP400_INT_LVL_GPIO1)
+#define INT_VEC_PCI					IVEC_TO_INUM(IXP400_INT_LVL_PCI)
+#define INT_VEC_PCI_DMA1			IVEC_TO_INUM(IXP400_INT_LVL_PCI_DMA1)
+#define INT_VEC_PCI_DMA2			IVEC_TO_INUM(IXP400_INT_LVL_PCI_DMA2)
+#define INT_VEC_TIMER2				IVEC_TO_INUM(IXP400_INT_LVL_TIMER2)
+#define INT_VEC_APB_DMA				IVEC_TO_INUM(IXP400_INT_LVL_APB_DMA)
+#define INT_VEC_USB					IVEC_TO_INUM(IXP400_INT_LVL_USB)
+#define INT_VEC_UART1				IVEC_TO_INUM(IXP400_INT_LVL_UART1)
+#define INT_VEC_TIMESTAMP			IVEC_TO_INUM(IXP400_INT_LVL_TIMESTAMP)
+#define INT_VEC_UART2				IVEC_TO_INUM(IXP400_INT_LVL_UART2)
+#define INT_VEC_WDOG				IVEC_TO_INUM(IXP400_INT_LVL_WDOG)
+#define INT_VEC_AHB_PMU				IVEC_TO_INUM(IXP400_INT_LVL_AHB_PMU)
+#define INT_VEC_XSCALE_PMU			IVEC_TO_INUM(IXP400_INT_LVL_XSCALE_PMU)
+#define INT_VEC_GPIO2				IVEC_TO_INUM(IXP400_INT_LVL_GPIO2)
+#define INT_VEC_GPIO3				IVEC_TO_INUM(IXP400_INT_LVL_GPIO3)
+#define INT_VEC_GPIO4				IVEC_TO_INUM(IXP400_INT_LVL_GPIO4)
+#define INT_VEC_GPIO5				IVEC_TO_INUM(IXP400_INT_LVL_GPIO5)
+#define INT_VEC_GPIO6				IVEC_TO_INUM(IXP400_INT_LVL_GPIO6)
+#define INT_VEC_GPIO7				IVEC_TO_INUM(IXP400_INT_LVL_GPIO7)
+#define INT_VEC_GPIO8				IVEC_TO_INUM(IXP400_INT_LVL_GPIO8)
+#define INT_VEC_GPIO9				IVEC_TO_INUM(IXP400_INT_LVL_GPIO9)
+#define INT_VEC_GPIO10				IVEC_TO_INUM(IXP400_INT_LVL_GPIO10)
+#define INT_VEC_GPIO11				IVEC_TO_INUM(IXP400_INT_LVL_GPIO11)
+#define INT_VEC_GPIO12				IVEC_TO_INUM(IXP400_INT_LVL_GPIO12)
+#define INT_VEC_INT1				IVEC_TO_INUM(IXP400_INT_LVL_INT1)
+#define INT_VEC_INT2				IVEC_TO_INUM(IXP400_INT_LVL_INT2)
+
+
+#if IX_DEVICE_IXP465		
+#define INT_VEC_USB_HOST		  		IVEC_TO_INUM(IXP400_INT_LVL_USB_HOST)
+#define INT_VEC_I2C						IVEC_TO_INUM(IXP400_INT_LVL_I2C)					
+#define INT_VEC_SSP						IVEC_TO_INUM(IXP400_INT_LVL_SSP)					
+#define INT_VEC_TSYNC					IVEC_TO_INUM(IXP400_INT_LVL_TSYNC)				
+#define INT_VEC_EAU_DONE				IVEC_TO_INUM(IXP400_INT_LVL_EAU_DONE)				
+#define INT_VEC_SHA_HASHING_DONE		IVEC_TO_INUM(IXP400_INT_LVL_SHA_HASHING_DONE)				
+#define INT_VEC_RSVD_38					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_38)				
+#define INT_VEC_RSVD_39					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_39)				
+#define INT_VEC_RSVD_40					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_40)				
+#define INT_VEC_RSVD_41					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_41)				
+#define INT_VEC_RSVD_42					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_42)				
+#define INT_VEC_RSVD_43					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_43)				
+#define INT_VEC_RSVD_44					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_44)				
+#define INT_VEC_RSVD_45					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_45)				
+#define INT_VEC_RSVD_46					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_46)				
+#define INT_VEC_RSVD_47					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_47)				
+#define INT_VEC_RSVD_48					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_48)				
+#define INT_VEC_RSVD_49					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_49)				
+#define INT_VEC_RSVD_50					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_50)				
+#define INT_VEC_RSVD_51					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_51)				
+#define INT_VEC_RSVD_52					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_52)				
+#define INT_VEC_RSVD_53					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_53)				
+#define INT_VEC_RSVD_54					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_54)				
+#define INT_VEC_RSVD_55					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_55)				
+#define INT_VEC_RSVD_56					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_56)				
+#define INT_VEC_RSVD_57			   		IVEC_TO_INUM(IXP400_INT_LVL_RSVD_57)				
+#define INT_VEC_SWCP			  		IVEC_TO_INUM(IXP400_INT_LVL_SWCP)	
+#define INT_VEC_RSVD_59					IVEC_TO_INUM(IXP400_INT_LVL_RSVD_59)	
+#define INT_VEC_AQM					   	IVEC_TO_INUM(IXP400_INT_LVL_AQM)	  	
+#define INT_VEC_MCU						IVEC_TO_INUM(IXP400_INT_LVL_MCU) 	
+#define INT_VEC_EBC						IVEC_TO_INUM(IXP400_INT_LVL_EBC) 	
+#define INT_VEC_RSVD_63				 	IVEC_TO_INUM(IXP400_INT_LVL_RSVD_63) 	
+#endif 										
+
+
+
+
+/*
+ * Set the default value of   ICHP - Interrupt highest priorty encoding register.
+ */
+#ifndef IXP400_ICHR_INIT_VALUE
+#define IXP400_ICHR_INIT_VALUE (0x00fac688)
+#endif
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif	/* __INCIxp400IntrCtrl */

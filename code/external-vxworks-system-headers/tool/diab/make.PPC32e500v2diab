@@ -1,0 +1,40 @@
+# make.PPC32e500v2diab -  diab compilation tools definitions for e500v2 hard float PowerPC
+#
+# Copyright (c) 2007 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01c,29aug08,pee  defining _WRS_CONFIG_FP.
+# 01b,19nov07,dtr  Change TOOL name.
+# 01a,04nov07,dtr  Written from make.PPC32sfdiab vn 01c
+#
+# DESCRIPTION
+# This file contains definitions and flags for the diab tools
+# (compiler, assembler, linker etc.) to build for a generic
+# PowerPC without e500v2 hardware floating point.
+# If building for a specific processor (as a variant),
+# defs.ppc will set its type number into PPC32VARIANT.
+#*/
+
+CPU		= PPC32
+TOOL		= e500v2diab
+
+_WRS_CONFIG_FP ?= e500v2
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+LD_SCRIPT_RAM   = -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+                  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTRAM
+LD_SCRIPT_ROM   = -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+                  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTROM
+
+TGT_FLAG	= -tPPCE500V2FH:$(DIAB_T_ENVIRON)
+
+CC_COMPILER     += -Xstsw-slow
+C++_COMPILER    += -Xstsw-slow
+
+TOOLENV		= ppc
+VX_CPU_FAMILY	= ppc
+ARCH_DIR        = ppc
+
+# end of make.PPC32e500v2diab

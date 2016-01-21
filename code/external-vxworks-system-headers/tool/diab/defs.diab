@@ -1,0 +1,467 @@
+# defs.diab - arch independent definitions specific to the Diab toolchain
+#
+# Copyright (c) 2000-2013 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use of this software
+# may be licensed only pursuant to the terms of an applicable Wind River
+# license agreement.
+#
+# modification history
+# --------------------
+# 05a,25jul14,mcm  Removing 4144 from the list of suppressed warnings to allow
+#                  the use of the 5.9.4.x compiler.
+# 04z,12nov13,elp  prevent warning when building symbol table (WIND00442321).
+# 04y,23oct13,dee  ignore additional warnings.  WIND00440418
+# 04x,29aug12,mze  change to system-headers warning
+# 04w,27jul12,mcm  Fix for WIND00347537 - putting back the required space
+#                  after "-o".
+# 04v,22jun12,mze  WIND00329947 "-W:c++:.CPP" added to commadline
+# 04u,18apr12,mze  disable Xlint
+# 04t,18oct11,dxp  remove no proxy define
+# 04s,18jul11,dxp  port 6.10 changes for ecloud build to disable lmproxy
+# 04r,15jun11,mze  changes for DEBUG
+# 04q,10jun11,mze  add support for DEBUG_FLAG
+# 04p,28jan11,mcm  Fix for WIND00252752 (updating compiler warning level)
+# 04o,19jan11,pee  WIND00250470
+# 04n,16nov10,pee  WIND00240589
+# 04m,15nov10,pee  WIND00240599
+# 04l,08nov10,zl   added CC_WARNINGS_IGNORE_DEPRECATED.
+# 04l,28oct10,pee  WIND00233594
+# 04k,06oct10,mcm  Added the EDG_IGNORE warnings to the medium level warning
+#                  option. Also added all currently seen 'info' messages to the
+#                  ignored list and removed 4009 from the ignored list.
+# 04j,29sep10,mcm  Ignoring some new warnings introduced by the new EDG
+#                  frontend.
+# 04i,21sep10,mcm  Switching to etoa for C89 kernel side compiles.
+# 04l,18aug10,gvm  moving to :vxworks69
+# 04k,23jul10,v_r  Added missing space at the end of the OPTION_OBJECT_NAME
+#                  macro.
+# 04j,13may10,pee  adding line info to CPP and PTION_LD_GENMAP
+# 04i,16dec09,mcm  Adding option to enable warnings for system headers
+# 04h,25aug09,pee  WIND00178176 remove redundant MUNCH defs.
+# 04g,04may09,mdo  Add "vector" variation of TGT_FLAG_FP
+# 04f,02jul09,mcm  Moving to :vxworks68
+# 04e,02jul09,pee  define section splittion option for CC
+# 04d,26jun09,pee  adding defs for section splitting.
+# 04c,11jul08,mcm  Changing the environment from :vxworks66 to :vxworks67
+# 04b,24jun08,pee  VSB.
+# 04a,18jun08,jpb  Added VSB support by removing redundant assembly file
+#                  define.
+# 03z,11jun08,pee  VSB adaptation.
+# 03y,07jun07,pee  reorganize SDA for VIPs
+# 03x,11may07,dcc  temporal disable of SDA builds.
+# 03w,05may07,dcc  added CC_SDA_FLAGS.
+# 03v,08mar07,pee  adding support for generic options
+# 03u,28feb07,mcm  Changing build environment to :vxworks66
+# 03t,15jan07,mcm  Changing the environment from :vxworks64 to :vxworks65
+# 03s,19jul06,mcm  Changing build environment to :vxworks64
+# 03r,20apr06,lei  added KERNEL_TYPE for SMP build
+# 03q,11apr06,pee  SPR 105777 - NULL file created in BSP under MS-Windows
+# 03p,06feb06,pee  adding support for linker symbol definition
+# 03o,01dec05,mcm  Changing build environment to :vxworks63
+# 03n,31aug05,mcm  Changing DIAB_T_ENVIRON to vxworks62
+# 03m,22aug05,pee  Added OPTION_DEPEND_TARGET
+# 03l,18jul05,pee  Added CC_LIBINTRINSICS
+# 03k,08jul05,pee  Added OPTION_CC_GENMAP
+# 03j,29apr05,md   Added OPTION_DEPEND_GEN_D
+# 03i,31mar05,gvm  Changing DIAB_T_ENVIRON to vxworks61
+# 03h,16feb05,pee  Added OPTION_POINTERS_VOLATILE
+# 03j,24jan05,aeg  added -Xforce-declarations to CC_WARNINGS_LOW (SPR #106381).
+# 03g,03jul04,f_b  Improved support for data alignment
+# 03f,11jun04,mcm  Removed -Wa,-Xsemi-is-newline (will come from .conf file).
+#                  Also removed -Xstrings-in-text=0 from CC_WARNINGS_MED.
+# 03f,15jun04,fle  SPR#98164 : substitute backslashes with slashes in CC_BASE
+# 03e,29apr04,c_c  Get compiler version from the resource file.
+# 03d,04may04,mcm  Updating compiler version to 5.2.0.2
+# 03c,26apr04,f_b  Removed absolute path to objcopy to prepare for new
+#                  directory structure and align with how nm & size are found
+# 03b,26mar04,mcm  Using -Xpointers-volatile instead of the
+#                  -Xmemory-is-volatile, which is too restrictive.
+# 03a,25mar04,c_c  Update the Path variable when exists (SPR #95324).
+# 02z,05apr04,mcm  Fix for SPR 95829 - using the new macro LD_LINK_TOOL_DIR
+#		   to set the path for Diab C++ libraries.
+# 02y,12mar04,c_c  Updated version to 5.2.0.1
+# 02x,18feb04,mcm  Using vxworks60 instead of base6
+# 02w,09feb04,fle  Updated to new host utilities location
+# 02v,28jan04,dat  Diab compiler level warnings
+# 02u,22jan04,zmm  Moved definitions of  ROM_ENTRY, SYS_ENTRY and USR_ENTRY
+#                  into defs.common
+# 02t,09jan04,c_c  Don't hardcode compiler path in macro (SPR #92774).
+# 02s,07nov03,c_c  Check compiler version.
+# 02r,27oct03,dat  adding -ei1499 to ignore empty file warning (broken)
+# 02q,08oct03,dat  New warning flags and settings, created
+#		   CC_WARNINGS_OLD to be the old settings.
+# 02p,13may03,sn   removed autosetting of -Xc++-abr (does not work with project
+#                  facility, causes confusion if tcInfo regenerated with
+#                  CXX_STL_VARIANT=abridged).
+# 02o,08apr03,sn   use -r5 instead of -r for partial links
+# 02n,19mar03,sn   use Diab ddump for NM and SIZE
+# 02m,18feb03,sn   added support for Diab 5.1 standard vs abridged library
+# 02o,17sep03,yvp  Added -Xcpp-no-space to OPTION_PP_AS.
+# 02n,05sep03,pch  parameterize Diab "environment" setting
+# 02m,19aug03,fle  SPR#88802, set TCL to tclsh and added WTXTCL macro
+# 02l,08may02,jab  removed -Xexception as it is default
+# 02k,01may02,sn   Define TOOL_FAMILY, deprecate TOOL_VENDOR
+# 02j,18apr02,jab  workaround CPP_PRINT_MACROS problem of writing .o (SPR75718
+#                  + SPR75486)
+# 02i,03apr02,jab  made -Xmismatch-warning only visible to C
+# 02h,21mar02,rbl  adding macro so that project facility can add
+#				   -Xmemory-is-volatile to bsp files
+# 02g,22mar02,dat  Adding PIC flags for bootInit.o (72825)
+# 02f,13mar02,sn   SPR 74080 - added large project support for Diab
+# 02e,07mar02,jab  added -Xlocal-data-area-static-only option
+# 02d,14feb02,jab  added -r4 to LD_PARTIAL_LAST_FLAGS
+# 02c,06feb02,t_m  change ranlib to ranlib$(TOOLENV)
+# 02b,21jan02,sn   removed obsolete WFC flags; removed unused C++_TEMPLATE_INST
+# 02a,02jan02,jab  use -Xclib-optim-off instead of -Xintrinsic-mask
+# 01z,20dec01,jab  use -r instead of -r4
+# 01y,13dec01,jab  added make variable BOOTCONFIG_FLAGS
+# 01x,07dec01,dat  Adding -w to all dependency generation macros
+# 01x,05dec01,tpw  Rename Diab linker scripts to facilitate regeneration from
+#                  a common template.
+# 01w,28nov01,jab  modified ldscript path
+# 01v,13nov01,tam  changed definition of CC_LIB (repackaging)
+# 01u,13nov01,dat  adding project link flags
+# 01t,05nov01,rbl  let project facility know about optimization flags
+# 01s,12nov01,tam  remove -Xrescan-restart; changed TOOL_CONFIG to
+#		   TOOL_COMMON_DIR
+# 01r,12nov01,jab  really fixed CPP_PRINT_MACROS
+# 01q,12nov01,jab  fixed CPP_PRINT_MACROS
+# 01p,07nov01,jab  added -Xgenerate-paddr to LD_FLAGS
+# 01o,06nov01,sn   pass the architecture name to munch
+# 01n,06nov01,jab  various flag changes and documentation
+# 01m,03nov01,tam  updated for repackaging
+# 01l,01nov01,jab  flag changes
+# 01k,30oct01,tpw  Take generic defaults from new fragment defs.common
+# 01j,30oct01,sn   Use GNU nm and objcopy
+# 01i,30oct01,jab  sync diab CPP definition with gnu
+# 01h,29oct01,jab  added new ld script variables
+# 01g,24oct01,dat  Relocating tool specific macros
+# 01f,24oct01,jab  added new dependency generation variables
+# 01e,22oct01,jab  cleaned up
+# 01d,23oct01,dee  remove nm$(TOOLENV)
+# 01c,19oct01,jab  added make variables for dependency generation option
+#                  added missing OPTION_* make variables
+# 01b,18oct01,dat  Moving tool specifics out of h/make
+# 01a,17feb00,jab  created.
+#
+# DESCRIPTION
+# This file contains architecture independent  definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+#
+# The following switches are used to compile C/C++ source. Most of these
+# are being used to make the compiler lax regarding coding conventions
+# used in many source files; however, some are being used to work around
+# problems in specific source files.
+#
+#
+# -Xintrinsic-mask=0x0     turn off generation of abs/fabs intrinsic; is
+#                          this still needed?
+#
+
+## generic defaults from defs.common come first, so they can be overridden
+
+include $(TGT_DIR)/h/tool/common/defs.common
+
+# diab oes not yet support 64 bit.
+# disable build spec generation for 64 bot configurations
+ifdef _WRS_CONFIG_LP64
+_BDGEN_EXCLUDE = TRUE
+endif
+
+## system name, used in -t settings
+DIAB_T_ENVIRON	= vxworks69
+
+## get TOOL_COMMON_DIR, TOOL_DIAB and TOOL_GNU from TOOL
+
+TOOL_FAMILY     = diab
+# TOOL_COMMON_DIR	= $(subst diab,common,$(TOOL))
+TOOL_COMMON_DIR	= $(BUILD_FP_PREFIX)common$(BUILD_ENDIAN_SUFFIX)
+TOOL_SPECIFIC_DIR	= $(BUILD_FP_PREFIX)$(TOOL_FAMILY)$(BUILD_ENDIAN_SUFFIX)
+TOOL_DIAB	= $(TOOL)
+TOOL_GNU	= $(subst diab,gnu,$(TOOL))
+
+# Deprecated, use TOOL_FAMILY instead
+TOOL_VENDOR	= diab
+
+# Set path to diab utilities:
+# if WIND_DIAB_PATH is set, then use it as the compiler base directory.
+# else, if WIND_DIAB_VERSION is set, use it.
+# else, get the version from tools.version file.
+
+ifneq ($(WIND_DIAB_PATH),)
+CC_BASE		= $(subst \,/,$(WIND_DIAB_PATH))
+else
+# set default version to WIND_DIAB_VERSION set in
+# $(WIND_BASE)/host/resource/hutils/tools.version, but allow environment,
+# ARCH or CPU specific make fragment to override the value.
+
+ifeq ($(WIND_DIAB_VERSION),)
+include $(WIND_BASE)/host/resource/hutils/tools.version
+endif
+CC_VERSION	= $(WIND_DIAB_VERSION)
+endif
+
+## set path to diab utilities
+
+ifeq ($(WIND_HOST_TYPE),x86-win32)
+CC_HOST	= WIN32
+else
+ifeq ($(WIND_HOST_TYPE),sun4-solaris2)
+CC_HOST	= SUNS
+else
+CC_HOST	= LINUX386
+endif
+endif
+
+ifeq ($(WIND_HOST_TYPE),x86-win32)
+
+ifneq ($(Path),)
+export Path		:= $(CC_BIN_DIR);$(Path)
+endif
+
+ifneq ($(PATH),)
+export PATH		:= $(CC_BIN_DIR);$(PATH)
+endif
+
+else
+
+ifneq ($(PATH),)
+export PATH		:= $(CC_BIN_DIR):$(PATH)
+endif
+
+endif
+
+## diab toolchain binaries
+
+AR			= dar
+AS			= $(CC)
+CC			= dcc
+CXX			= $(CC)
+CPLUS			= dplus
+# CPP			= $(CC) -E -Xpreprocessor-lineno-off
+CPP			= $(CC) -E
+LD			= dld
+NM			= ddump -Ng
+
+## utility binaries
+
+RANLIB			= ranlib$(TOOLENV)
+TCL			= tclsh
+WTXTCL			= wtxtcl
+OBJCPY			= objcopy$(TOOLENV)
+SIZE			= ddump -Z
+
+CF			=
+
+CPP_PRINT_MACROS        = $(CC) $(TGT_FLAG) $(COMMON_COMPILER) -w -E \
+			  -Xcpp-dump-symbols $(CC_INCLUDE) $(CC_DEFINES)
+
+## project facility variables
+
+LARGE_PROJECT   	= true
+OPTION_INDIRECT_FILE    = -@
+OPTION_NM_INDIRECT_FILE = @
+
+CC_PROJECT_OPTIMIZE_FLAGS = -O -XO
+PROJECT_BSP_FLAGS_EXTRA = $(filter -Xpointers-volatile,$(CC_OPTIM_TARGET)) $(CC_SDA_FLAGS)
+
+## C flags
+OPTION_SYS_HEADERS =  -Xsystem-headers-warn
+COMMON_COMPILER	= -W:c:,-Xclib-optim-off -Xansi \
+		  -Xlocal-data-area-static-only \
+		  $(CC_WARN_SYSTEM_HEADERS) -W:c++:.CPP
+
+C_COMPILER_FLAGS = -Xc-new -Xdialect-c89 
+
+ifeq ($(VX_CPU_FAMILY), ppc)
+ifeq ($(SDA_DISABLE),)
+CC_SDA_FLAGS = -Xsmall-const=8 -Xsmall-data=8
+endif
+endif
+
+CC_ARCH_SPEC	= $(TGT_FLAG)
+CC_COMPILER     = $(COMMON_COMPILER) $(C_COMPILER_FLAGS)
+
+# floating point options
+TGT_FLAG_FP_vector = V
+TGT_FLAG_FP_hard = H
+TGT_FLAG_FP_soft = S
+
+TGT_FLAG_FP = $(TGT_FLAG_FP_$(_WRS_CONFIG_FP))
+TGT_FLAG_ENDIAN = $(TGT_FLAG_ENDIAN_$(_WRS_CONFIG_ENDIAN))
+
+CC_OPTIM_XO =  -XO -Xsize-opt
+CC_OPTIM_DEBUG = 
+CC_OPTIM_DISABLE = -Xoptimized-debug-off
+CC_OPTIM_NORMAL	= $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) 
+CC_OPTIM_TARGET	= $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -Xpointers-volatile
+CC_OPTIM_DRIVER	= $(CC_OPTIM_DEBUG) -Xpointers-volatile
+
+# Compiler warning levels
+
+# old T2.2 warning level (formerly part of CC_COMMON)
+
+CC_WARNINGS_OLD_1 = -W:c:,-Xmismatch-warning=2 \
+			-ew1554,1551,1552,1086,1047,1547 \
+			-ei1516,1643,1604
+CC_WARNINGS_OLD = $(CC_WARNINGS_OLD_1) -Xstrings-in-text=0
+
+# old standard warning levels
+
+CC_WARNINGS_ALL= $(CC_WARNINGS_OLD)
+CC_WARNINGS_NONE= $(CC_WARNINGS_OLD)
+
+# These are warnings issued by the EDG C89 frontend that can safely be ignored
+
+CC_WARNINGS_EDG_IGNORE = -ei1518,4177,4223,4301,4550,5409,1606
+CC_WARNINGS_INFO_IGNORE = -ei4193,4826,4381,4237,1573,4007,4082,4177,4223,4260,4550,5361,5828,2273,5387,5388
+
+# These warnings are supressed in the product build
+
+CC_WARNINGS_PDT_SUPRESS = -ei1522,4092,4111,4152,4167,4171,4174,4186,4188,4191,4192,4223,4231,4236,4284,4375,4494,4513,5152,5457
+
+# option to override warnings for symbols declared with _WRS_DEPRECATED 
+
+CC_WARNINGS_IGNORE_DEPRECATED = -ei5457
+
+# New warning levels, low, med, high
+
+# Highest warning level, all warnings should be investigated, but do not fix
+# by adding copious casts.  Every cast is a potential code error in the
+# future.
+
+CC_WARNINGS_HIGH = $(CC_WARNINGS_INFO_IGNORE)
+
+# medium warnings, Code SHOULD be warning free at this level.  Avoid
+# excessive casts just to eliminate warnings.
+
+CC_WARNINGS_MED = $(CC_WARNINGS_OLD_1) $(CC_WARNINGS_EDG_IGNORE) $(CC_WARNINGS_INFO_IGNORE) $(CC_WARNINGS_PDT_SUPRESS)
+
+# minimum warnings. Code MUST be warning free at this level. Apply all fixes
+# necessary to eliminate every warning and error.
+
+CC_WARNINGS_LOW = $(CC_WARNINGS_EDG_IGNORE) $(CC_WARNINGS_INFO_IGNORE) $(CC_WARNINGS_PDT_SUPRESS) -Xforce-declarations
+
+# For T2.2, we only use this flag for GNU/MIPS combination.
+# We will activate this for all arch's after T2.2 release (SPR 72825)
+# CC_PIC		= -Xcode-relative-far
+
+## C++ flags
+
+C++_COMPILER	= $(COMMON_COMPILER)
+
+## linker flags
+
+define link_symdef
+-D$(word 1, $(1))=$(word 2, $(1))
+endef
+
+LDFLAGS			= $(TGT_FLAG) -X -N -Xgenerate-paddr $(LDFLAGS_VSB) $(_USER_LDFLAGS)
+# -r5 is exactly the same as -r except that COMDAT sections
+# (used for C++ templates) are collapsed. We collapse the
+# sections at this point to avoid running into the ELF
+# 65535 section limitation.
+LD_PARTIAL_FLAGS	= $(TGT_FLAG) -X -r5
+LD_PARTIAL              = $(LD) $(LD_PARTIAL_FLAGS)
+LD_ENTRY_OPT		= -e
+
+# These are flags to pass to the linker the last time we do a
+# relocatable link. They never get used by a bootable project
+# and they only get used once by a downloadable project.
+
+LD_PARTIAL_LAST_FLAGS   = -r4
+
+LD_SCRIPT_RAM	= $(TGT_DIR)/h/tool/diab/ldscripts/link.RAM
+LD_SCRIPT_ROM	= $(TGT_DIR)/h/tool/diab/ldscripts/link.ROM
+
+# for cyclic link support
+
+LD_START_GROUP		=
+LD_END_GROUP		=
+LD_PARTIAL_START_GROUP	=
+LD_PARTIAL_END_GROUP	=
+
+LD_DATA_SEG_ALIGN_FLAG	= $(OPTION_DEFINE_MACRO)_VX_DATA_ALIGN
+
+LD_LOW_FLAGS	= -D_VX_START_TEXT=0x$(RAM_LOW_ADRS)
+LD_HIGH_FLAGS	= -D_VX_START_TEXT=0x$(RAM_HIGH_ADRS)
+RES_LOW_FLAGS	= -D_VX_START_TEXT=0x$(ROM_LINK_ADRS) -D_VX_START_DATA=0x$(RAM_LOW_ADRS)
+RES_HIGH_FLAGS	= -D_VX_START_TEXT=0x$(ROM_LINK_ADRS) -D_VX_START_DATA=0x$(RAM_HIGH_ADRS)
+
+# Flags for VxWorks Project builds
+
+LD_RAM_FLAGS     = $(LD_LOW_FLAGS)
+LD_ROM_CPY_FLAGS = $(RES_HIGH_FLAGS)
+LD_ROM_CMP_FLAGS = $(RES_HIGH_FLAGS)
+LD_ROM_RES_FLAGS = $(RES_LOW_FLAGS)
+
+# For 960 IMI
+LD_IMI_ADRS	= -D_VX_TEXT_START=0x$(IMI_TEXT_ADRS) -D_VX_DATA_START=0x$(IMI_DATA_ADRS)
+
+## utility flags
+
+NM_GLOB_FLAGS	= -g
+
+## bsp flags
+
+# compressedEntry() must be first routine in .text section
+BOOTCONFIG_FLAGS=-Xkill-opt=0x400000
+
+## options
+
+OPTION_PP		= -E
+OPTION_PP_AS		= -Xpreprocess-assembly -Xcpp-no-space
+OPTION_PP_NOLINENO	= -Xpreprocessor-lineno-off
+OPTION_PP_COMMENT	= -C
+
+OPTION_DEPEND		= -Xmake-dependency -w
+OPTION_DEPEND_GEN	= -Xmake-dependency -Xincfile-missing-ignore -w
+OPTION_DEPEND_GEN_D	= -Xmake-dependency=0x04
+OPTION_DEPEND_C		= $(OPTION_DEPEND_GEN)
+OPTION_DEPEND_AS	= $(OPTION_DEPEND)
+OPTION_DEPEND_TARGET	= -Xmake-dependency-target=
+
+OPTION_CC_GENMAP	= -m6 > $@.map
+OPTION_LD_GENMAP	= -m6 > $@.map
+
+OPTION_CC_SPLIT_SECTIONS = -Xsection-split=3
+
+OPTION_DOLLAR_SYMBOLS	= -Xdollar-in-ident
+OPTION_ANSI		= -Xansi
+OPTION_PASS_TO_LD       =
+
+OPTION_NO_WARNINGS	= -ei4147
+
+OPTION_OBJECT_ONLY	= -c
+OPTION_INCLUDE_DIR	= -I
+OPTION_DEFINE_MACRO	= -D
+# this line has a space at the end ("-o ")
+OPTION_OBJECT_NAME	= -o 
+OPTION_EXE_NAME		= $(OPTION_OBJECT_NAME)
+
+OPTION_POINTERS_VOLATILE = -Xpointers-volatile
+
+LD_LINK_PATH_EXTRA      += -L$(LD_LINK_TOOL_DIR)_$(CXX_STL_VARIANT)$(MINOR_OPTION_SUFFIX)
+
+ifeq ($(CXX_STL_VARIANT),)
+CXX_STL_VARIANT         = standard
+# If you would like to create projects using the abridged standard library,
+# replace the above line with:
+# CXX_STL_VARIANT       = abridged
+endif
+
+# Library containing compiler support routines
+CC_LIB                  =
+CC_LIBINTRINSICS	= -ldcc
+
+# linker flag for section splitting and removal of unused sections.
+LD_REMOVE_UNUSED_SECTIONS = -Xremove-unused-sections
+
+# define data models supported for VIPs
+ifdef TC_INFO
+DATA_MODELS = ILP32
+endif
+
+_LD_VXWORKS_LOADER_FLAGS = -r0x40000

@@ -1,0 +1,19 @@
+# defs.singleCpuVariant - support for building a single CPU_VARIANT
+#
+# Copyright 2005, Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01a,20sep05,pch written
+#
+# This fragment is to be included into the Makefile in only those directories
+# whose contents must be built differently for each CPU_VARIANT.  It translates
+# the ONLY_CPU_VARIANT setting from vxprj into a LIB_DIR_TAG setting which
+# will cause the appropriate variant-dependent build flags to be used.
+# ONLY_CPU_VARIANT is examined nowhere else, and is not intended to be set
+# by the "normal" build mechanism (which builds all applicable variants for
+# the current CPU and TOOL).
+
+ifneq ($(ONLY_CPU_VARIANT),)
+    LIB_DIR_TAG=$(ONLY_CPU_VARIANT)
+endif

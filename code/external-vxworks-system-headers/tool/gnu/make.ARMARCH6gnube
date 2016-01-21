@@ -1,0 +1,35 @@
+# make.ARMARCH6gnube - GNU compilation tools definitions for ARM architecture 6
+#
+# Copyright (c) 2004, 2006, 2009, 2011 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01d,29dec11,mze  fix for defect WIND00325465
+# 01c,24sep09,j_b  fix VFP compiler options
+# 01b,26sep06,jb   Fix for Defect WIND00063709
+# 01a,06dec04,jb   Copied from make.ARMARCH5gnube
+#
+# DESCRIPTION
+# This file contains ARM Architecture 6 big-endian-specific definitions
+# and flags for the GNU software generation tools (compiler, assembler,
+# linker etc.).
+#*/
+
+CPU		= ARMARCH6
+TOOL		= gnube
+
+include $(TGT_DIR)/h/tool/gnu/defs.arm
+
+ifeq ($(VFPVARIANT),ARM1136)
+# Enable VFP code generation
+CC_ARCH_SPEC	= -t5be  -Wa,-EB -mfpu=vfp -mfloat-abi=softfp
+else
+CC_ARCH_SPEC	= -t5be  -Wa,-EB
+endif
+
+# this next section will need to be removed if the build specs need to support SMP
+ifdef _BDGEN_
+MP_OPTION_ARMARCH6_SMP = 
+endif
+
+# end of make.ARMARCH6gnube

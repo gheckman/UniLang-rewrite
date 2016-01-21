@@ -1,0 +1,238 @@
+# defs.library - Host independent definitions for making libraries
+#
+# Copyright (c) 2003-2009, 2011, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 02a,29aug12,mze  change to system-headers warning
+# 01z,21aug12,mze  add CC_WARN_SYSTEM_HEADERS
+# 01y,15jun11,mze  changes to DEBUG for diab
+# 01x,13jun11,mze  add VSB capibility to set DEBUG flags
+# 01w,15oct08,pad  Moved the VSB-related make fragment up before the inclusion
+#                  of the CPU/TOOL make fragment.
+# 01v,25jun09,pee  changing include order to get VSB config earlier.
+# 01u,02sep08,pee  moving VSB definitions out.
+# 01t,26may08,pee  removing rules to build and clean files outside
+#                  libraries such as scgen and vxbus files.
+# 01s,08may08,pee  removing confusing warning.
+# 01r,23apr08,pee  vsb
+# 01q,09oct07,pee WIND00105890
+# 01p,19sep07,pee WIND00105231
+# 01o,03apr07,pee fixing default libname for legacy Makefiles.
+# 01n,08mar07,pee Adding generic option support
+# 01m,22may06,pee Adding support for multiple libraries
+# 01l,15may06,lei Added DIR_EXT for SMP build
+# 01k,21jul05,yvp Added _WRS_LIB_BUILD
+# 01j,17may04,yvp Split SCGEN_DERIVED_FILES into SCGEN_DERIVED_GENERIC etc.
+# 01i,21apr04,dlk Refine below change: do not skip CPU variant submake
+#                 for this directory if DEFS_PAL is defined; but if
+#                 this isn't an option library, don't build the common
+#                 (non-variant) library.
+# 01h,15mar04,dlk Do not skip directory if DEFS_PAL is defined.
+# 01g,13mar04,dlk Support option builds. Fix mod history.
+# 01f,yvp Changed SCGEN_DERIVED_FILES to match ver 02a of scgen.tcl script.
+# 01e,.......,yvp Added more files to SCGEN_DERIVED_FILES.
+# 01d,.......,yvp Removed genc.* from SCGEN_DERIVED_FILES; added syscallTbl.h
+# 01c,.......,kk  removed syscall.c from SCGEN_DERIVED_FILES
+# 01b,.......,yvp Added SCGEN_DERIVED_FILES.
+# 01a,.......,c_c written from  rules.library v 02b
+#
+# DESCRIPTION
+# This file is included by every Makefile in the run-time (not BSPs).
+# This file contains makefile definitions that are host independent for creating
+# vxWorks libraries. 
+#
+#
+# INCLUDES
+#       $(TGT_DIR)/h/make/defs.option
+#	$(TGT_DIR)/h/make/defs.default
+#	$(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+#	$(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
+
+# avoid multiple inclusion
+
+ifeq ($(DEFS_LIBRARY),)
+DEFS_LIBRARY = TRUE
+
+define libbase2libname
+lib$(1)$$(OPT).a
+endef
+
+# By default object files are installed in the toolchain independent object 
+# directory if LIB_BASE_NAME is set, that is when LIB_COMMON is not set.
+
+ifeq ($(LIB_COMMON),)
+LIB_COMMON	= true
+endif
+
+ifneq ($(LIB_BASE_NAMES),)
+
+else
+ifneq ($(LIB_BASE_NAME),)
+
+# LIB_BASE_NAMES not defined. Taking definitions from LIB_BASE_NAME
+
+LIB_BASE_NAMES = $(LIB_BASE_NAME)
+OBJS_PRECOMP_$(LIB_BASE_NAME) = $(OBJS_PRECOMP)
+OBJS_$(LIB_BASE_NAME) = $(OBJS_TO_BUILD)
+ifeq ($(LIBNAME),)
+LIBNAME		= $(LIBDIRBASE)/lib$(LIB_BASE_NAME)$(OPT).a
+endif
+
+else
+ifneq ($(LIBNAME),)
+
+LIBNAMES = $(LIBNAME)
+LIB_BASE_NAME = $(patsubst lib%,%,$(basename $(LIBNAME)))
+LIB_BASE_NAMES = $(patsubst lib%,%,$(basename $(LIBNAME)))
+LIBDIR_$(LIBNAME) = $(LIBDIR)
+
+else
+
+LIBNAME		= $(LIBDIRBASE)/lib$(LIB_BASE_NAME)$(OPT).a
+LIB_BASE_NAMES = $(LIB_BASE_NAME)$(OPT)
+
+endif	# else if LIBNAME
+endif	# else if LIB_BASE_NAME
+endif	# if LIB_BASE_NAMES
+
+
+ifeq ($(LIBDIRBASE),)
+ifeq ($(findstring false,$(LIB_COMMON)),false)
+LIBDIRBASE	= $(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_SPECIFIC_DIR)$(LIB_DIR_TAG)$(MINOR_OPTION_SUFFIX)
+else
+LIBDIRBASE	= $(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(LIB_DIR_TAG)$(MINOR_OPTION_SUFFIX)
+endif
+endif
+
+ifeq ($(LIBNAMES),)
+LIBNAMES = $(foreach base, $(LIB_BASE_NAMES), $(LIBDIRBASE)/lib$(base)$(OPT).a)
+endif
+
+ifeq ($(LIBNAME),)
+LIBNAME = lib$(CPU)$(TOOL)vx.a
+endif
+
+#ifneq ($(LIB_BASE_NAME),)
+#ifeq ($(LIBDIRNAME),)
+#LIBDIRNAME	= $(LIBDIRBASE)/obj$(LIB_BASE_NAME)$(OPT)
+#endif
+#endif
+
+
+
+## Build of specific target archive(s) via VX_ARCHIVE_LIST:
+# If VX_ARCHIVE_LIST is set only the specified target archive(s) are built. 
+# This means that source directories not contributing to these archive(s) 
+# are skipped. VX_ARCHIVE_LIST is used with CPU variant builds.
+
+ifneq ($(VX_ARCHIVE_LIST),)
+
+VX_ARCHIVE_BASE_NAMES := $(foreach libname, $(VX_ARCHIVE_LIST), $(patsubst lib%,%,$(basename $(libname))))
+LIB_BASE_NAMES := $(filter $(VX_ARCHIVE_BASE_NAMES), $(LIB_BASE_NAMES))
+ifeq ($(LIB_BASE_NAMES),)
+SKIP_DIR 	= true
+endif
+endif
+
+include $(TGT_DIR)/h/make/defs.option
+
+## If we are doing an option build, skip directories which
+#  don't build libraries specified in LIB_BASE_NAMES$(OPT).
+#  However, src/arch needs to be built to get the variant
+#  builds of its subdirectories, even though its own Makefile
+#  doesn't specify LIB_BASE_NAME. More generally, we don't
+#  skip directories where defs.pal has been included.
+#  Note, this assumes defs.pal is included before this file.
+
+ifneq ($(OPT),)
+
+ifneq ($(LIB_BASE_NAMES),)
+LIB_BASE_NAMES := $(filter $(LIB_BASE_NAMES),$(LIB_BASE_NAMES$(OPT)))
+endif
+
+ifeq ($(LIB_BASE_NAMES),)
+SKIP_DIR	= true
+SKIP_CLEAN	= true
+endif
+
+# Don't skip if this is the top level of a PAL/cpu-variant build
+ifneq ($(DEFS_PAL),)
+ifneq ($(NO_RECURSE), TRUE)
+# nevertheless, don't build the common library
+ifeq ($(SKIP_DIR), true)
+SKIP_LIB	= true
+endif
+SKIP_DIR	=
+SKIP_CLEAN	=
+endif
+endif # ifneq ($(DEFS_PAL),)
+
+endif # ifneq ($(OPT),)
+
+ifeq ($(WIND_HOST_TYPE),x86-win32)
+WIND_BASE	:= $(subst \,/,$(WIND_BASE))
+endif
+
+TGT_DIR=$(WIND_BASE)/target
+
+include $(TGT_DIR)/h/make/defs.default
+
+# Include the file defining the VSB-related variables before the inclusion of
+# the CPU/TOOL make fragment so that VSB configuration options can be used in
+# the make fragments.
+
+ifneq ($(wildcard $(VSB_MAKE_CONFIG_FILE)),)
+include $(VSB_MAKE_CONFIG_FILE)
+endif
+
+include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
+
+# the DEBUG settings must be done after inclusion of the TOOL specific make fragment
+ifdef _WRS_CONFIG_DEBUG_FLAG
+CC_OPTIM_DEBUG = -g
+ifndef DEBUG_FLAG_ALLOW_OPTIMIZATION
+# CC_OPTIM_DISABLE is defined only for diab in defs.diab
+CC_OPTIM_XO = $(CC_OPTIM_DISABLE)
+endif
+endif
+
+# Only set the following flag if enabled in the VSB
+ifdef _WRS_CONFIG_WARN_SYSTEM_HEADERS
+CC_WARN_SYSTEM_HEADERS = $(OPTION_SYS_HEADERS) 
+endif
+
+include $(TGT_DIR)/h/make/defs.$(WIND_HOST_TYPE)
+
+CC_DEFINES += $(OPTION_DEFINE_MACRO)_WRS_LIB_BUILD
+# This should come after including make.$(CPU)$(TOOL) 
+
+# SCGEN_DERIVED_GENERIC = $(TGT_DIR)/h/syscall.h $(TGT_DIR)/h/syscallTbl.h 
+# SCGEN_DERIVED_ARCH = $(TGT_DIR)/h/arch/$(ARCH_DIR)/syscallArgs$(ABI_SPEC).h
+
+# SCGEN_DERIVED_FILES = $(SCGEN_DERIVED_GENERIC) $(SCGEN_DERIVED_ARCH)
+
+endif # ifeq ($DEFS_LIBRARY),)
+
+$(foreach base, $(LIB_BASE_NAMES), $(eval LIBDIRNAME_$(base)=$$(LIBDIRBASE)/obj$(base)$$(OPT)))
+$(foreach base, $(LIB_BASE_NAMES), $(eval LIBDIR_$(base)=$$(subst //,/,$$(LIB_ROOT)/$$(LIBDIRNAME_$(base)))))
+$(foreach base, $(LIB_BASE_NAMES), $(eval PRECOMPDIR_$(base)=$$(TGT_DIR)/precomp/default$$(MAJOR_OPTION_SUFFIX)/$$(LIBDIRNAME_$(base))))
+
+$(foreach base, $(LIB_BASE_NAMES), $(if $(findstring undefined,$(origin OBJS_$(base))),$(eval OBJS_$(base)=$$(OBJS)),))
+
+# this command conditionally override the definition above.
+# This construct is required because of a limitation of the current make that does not like eval inside conditions
+ifneq ($(LIBDIRNAME),)
+LIBDIRNAME_$(LIB_BASE_NAME) = $(LIBDIRNAME)
+LIBDIRBASE = 
+
+else
+LIBDIRNAME	= $(LIBDIRBASE)/obj$(LIB_BASE_NAME)$(OPT)
+endif
+
+TOOL_OPTIONS_FILES_DIR = $(LIB_ROOT)/$(LIBDIRNAME)
+

@@ -1,0 +1,43 @@
+/* coprocMips.h - coprocessor management library header */
+
+/*
+ * Copyright (C) 2003, 2005, 2010, 2012 Wind River Systems, Inc.
+ *
+ * The right to copy, distribute, modify or otherwise make use
+ * of this software may be licensed only pursuant to the terms
+ * of an applicable Wind River license agreement.
+ */
+
+/*
+modification history
+--------------------
+01d,15may12,jmp  CQID: Fix WIND00309977 : Added VX_COPROCS_ALL_TASK
+                 definition.
+01c,28apr10,pad  Moved extern C statement after include statements.
+01b,27jul05,pes  Add define for VX_DSP_TASK
+01a,11apr03,pes  Created
+*/
+
+#ifndef __INCcoprocMipsh
+#define __INCcoprocMipsh
+
+/* inlcudes */
+
+#include "taskLib.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* defines */
+
+#define VX_FP_TASK	VX_COPROC1_TASK
+#define VX_DSP_TASK	VX_COPROC2_TASK
+
+#define VX_COPROCS_ALL_TASK	VX_FP_TASK | VX_DSP_TASK
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __INCcoprocMipsh */

@@ -1,0 +1,141 @@
+# defs.options - build option framework
+#
+# Copyright (c) 2007 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+#
+# modification history
+# --------------------
+# 01g,13may09,mze  change reference to TGT_DIR to be WIND_BASE/target
+# 01f,08oct08,pee  WIND00137789
+# 01e,04sep08,pee  adding variable to allow protection from multiple
+#                  inclusion.
+# 01d,04feb08,pee  adding make variables to define selected options.
+# 01c,18sep07,pee  separating SMP & AMP definitions in a separate optional file.
+# 01b,13jul07,ebh  Added AMP flag support
+# 01a,08mar07,pee  created
+
+# DESCRIPTION
+# This file implements a build oprtion framework for vxWorks kernel
+# libraries and applications.
+#
+# This framework accepts build options and expands associated make
+# variables to be used in building and using vxWorks kernel libraries.
+# 
+# This file contains the make code to perform the variable expansion,
+# as well as alll the architecture independent definitions. 
+
+# use this variable to find if this file was already included
+__DEFS_OPTIONS_INCLUDED = TRUE
+
+# this variable defines the name of the variable to use to pass options
+# to make
+
+_OPTION_COMMAND = VXBUILD
+
+# define the classes of options
+_OPTION_CLASSES = MAJOR ARCH CPU MINOR
+
+# define option variables
+_OPTION_VARS = CFLAGS CFLAGS_AS C++FLAGS AS_FLAGS CFLAGS_PIC
+
+# major options.
+# may define default lib directory
+
+# this is the list of accepted options
+_OPTIONS_MAJOR =  
+_OPTIONS_ARCH =
+_OPTIONS_CPU =
+_OPTIONS_MINOR =
+
+###################################################################
+#
+# beginning of option specific definition section
+#
+# in this section, you may define, for a given option,
+#	- any of the variable defined in _OPTION_VARS
+#		<var>_OPTION_<option> = <value>
+#	- a specific subroutine to be evaluated for the option
+#		define _option_sub_<option>
+#		<>
+#		endef
+#	- a class suffix for the option
+#		_SUFFIX_OPTION_<option> = <value>
+#	  suffix should normally include a leading underscore
+#
+###################################################################
+
+
+# load optional feature installation files
+
+__OPTION_INSTALL_FILES__ =  $(wildcard $(WIND_BASE)/target/h/make/defs.install.*.mk)
+ifneq ($(__OPTION_INSTALL_FILES__),)
+include $(__OPTION_INSTALL_FILES__)
+endif
+
+############################################
+#
+# end of option specific definition section
+#
+############################################
+#
+# variable expansion section
+#
+############################################
+
+_ALL_OPTIONS = $(foreach class,$(_OPTION_CLASSES),$(_OPTIONS_$(class)))
+
+# processing user selected options
+
+$(foreach class,$(_OPTION_CLASSES),\
+	$(eval _USER_$(class)_OPTIONS =\
+		 $(filter $(_OPTIONS_$(class)),$($(_OPTION_COMMAND)))))
+
+# verify that all options used are defined
+_USER_INVALID_OPTIONS = $(filter-out $(_ALL_OPTIONS),$($(_OPTION_COMMAND)))
+ifneq ($(strip $(_USER_INVALID_OPTIONS)),)
+$(error *** invalid options $(_USER_INVALID_OPTIONS) selected)
+endif
+
+# list concatenation function
+_concat = $(if $(word 2,$(1)),$(firstword $1)$(call _concat,$(wordlist 2,$(words $1),$1)),$1)
+
+###############################################
+# generate the option variables
+# <var>_OPTIONS_ALL
+###############################################
+
+$(foreach class,$(_OPTION_CLASSES),\
+    $(foreach var,$(_OPTION_VARS),\
+	$(eval $(var)_$(class)_OPTIONS =\
+	    $(foreach option,$(_USER_$(class)_OPTIONS),$($(var)_OPTION_$(option))))))
+
+$(foreach var,$(_OPTION_VARS),\
+    $(eval $(var)_OPTIONS_ALL =\
+	 $(foreach class,$(_OPTION_CLASSES),$($(var)_$(class)_OPTIONS))))
+
+###############################################
+# generate the class suffixes
+# <class>_OPTION_SUFFIX
+###############################################
+
+# specify suffixes defiend from command line
+$(foreach class,$(_OPTION_CLASSES),\
+    $(eval $(class)_CLI_OPTION_SUFFIX = \
+	$(call _concat,$(sort \
+	    $(foreach option,$(_USER_$(class)_OPTIONS), $(_SUFFIX_OPTION_$(option)))))))
+
+# main suffixes defined from VSB configuration
+$(foreach class,$(_OPTION_CLASSES),\
+    $(eval $(class)_OPTION_SUFFIX =\
+        $$(call _concat,$$(sort \
+            $$(foreach option,$(_OPTIONS_$(class)),$$(if $$(_WRS_CONFIG_$$(option)),$$(_SUFFIX_OPTION_$$(option)))))))\
+)
+
+###############################################
+# call option specific subroutines
+###############################################
+$(foreach option,$($(_OPTION_COMMAND)),$(eval $(call _option_sub_$(option))))

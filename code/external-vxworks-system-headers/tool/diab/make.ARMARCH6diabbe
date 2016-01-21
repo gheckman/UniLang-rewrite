@@ -1,0 +1,34 @@
+# make.ARMARCH6diabbe - Diab compilation tools definitions for ARMARCH6
+#
+# Copyright (c) 2004, 2006, 2007, 2011 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01d,29dec11,mze  fix for defect WIND00325465
+# 01c,27sep07,jb   Fix for DEFECT WIND00093069
+# 01b,26sep06,jb   Fix for Defect WIND00063709
+# 01a,06dec04,jb   created from make.ARMARCH5diabbe
+#
+# DESCRIPTION
+# This file contains ARMARCH6 specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= ARMARCH6
+TOOL		= diabbe
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+ifeq ($(VFPVARIANT),ARM1136)
+#Enable VFP Code generation
+TGT_FLAG	= -tARMV6EV:$(DIAB_T_ENVIRON)
+else
+TGT_FLAG	= -tARMV6ES:$(DIAB_T_ENVIRON)
+endif
+
+# this next section will need to be removed if the build specs need to support SMP
+ifdef _BDGEN_
+MP_OPTION_ARMARCH6_SMP = 
+endif
+
+# end of make.ARMARCH6diabbe

@@ -1,0 +1,58 @@
+# make.SIMLINUXgnu - GNU compilation tools definitions for Linux VxSim
+#
+# Copyright (c) 2003,2005-2006,2010-2011 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01h,13jun11,mze  add debug
+# 01g,27oct10,elp  added -fno-omit-frame-pointer.
+# 01f,28jun10,elp  adding required -mno-red-zone, -fno-implicit-fp
+# 01e,12jan10,elp  64bits support
+# 01d,30nov05,mcm  Updates for GCC 3.4.4
+# 01c,10dec03,yvp  Added ABI_SPEC.
+# 01b,07nov03,c_c  Removed Compiler definitions.
+# 01a,17apr03,dbt  written from make.SIMNTgnu
+#
+# DESCRIPTION
+# This file contains Linux VxSim specific definitions and flags for the GNU
+# software generation tools (compiler, assembler, linker etc.).
+#*/
+
+CPU		= SIMLINUX
+TOOL		= gnu
+CM		= large
+
+include $(TGT_DIR)/h/tool/gnu/defs.gnu
+
+CC_OPTIM_XO = -O2
+CC_OPTIM_DEBUG =
+CC_OPTIM_DRIVER = $(CC_OPTIM_DEBUG) -fvolatile -nostdlib -fno-builtin -fno-defer-pop
+CC_OPTIM_NORMAL = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)  -nostdlib -fno-builtin -fno-defer-pop
+CC_OPTIM_TARGET = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fvolatile -nostdlib -fno-builtin -fno-defer-pop
+
+# Generate code for (-march=) and schedule for (-mtune=) pentium
+
+ifdef _WRS_CONFIG_LP64
+CC_ARCH_SPEC	= -m64 -mcmodel=$(CM) -mno-red-zone -fno-implicit-fp \
+		  -fno-omit-frame-pointer
+LINK_FLAG_EXTRA = -m elf_x86_64_vxworks
+else
+CC_ARCH_SPEC	= -mtune=i486 -march=i486
+endif 
+
+TOOLENV		= pentium
+VX_CPU_FAMILY	= simlinux
+ARCH_DIR	= simlinux
+ifdef _WRS_CONFIG_LP64
+ABI_SPEC        = x86-64
+else
+ABI_SPEC        = x86
+endif 
+
+CF		=
+
+# end of make.SIMNTgnu

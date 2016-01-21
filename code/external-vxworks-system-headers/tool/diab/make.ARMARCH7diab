@@ -1,0 +1,47 @@
+# make.ARMARCH7diab - Diab compilation tools definitions for ARMARCH7
+#
+# Copyright (c) 2009-2012 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01g,25sep12,jdw  Add ARM_USE_VFP flag
+# 01f,20dec11,jdw  Fix COMMON_COMPILER var to use defs.diab (WIND00238985)
+# 01e,12nov10,jdw  Fix HW/SW floating point support (WIND00241091)
+# 01d,18oct10,rab  Set _WRS_CONFIG_FP to soft for guest os
+# 01c,04jun09,mdo  Make _WRS_CONFIG_FP vector if VFPVARIANT is not null.
+# 01b,20apr09,m_h  ARMv7 Support
+# 01a,27feb09,m_h  created from make.ARMARCH6diab
+#
+# DESCRIPTION
+# This file contains ARMARCH7 specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU	= ARMARCH7
+TOOL	= diab
+
+# default before defs.arm
+_WRS_CONFIG_FP   ?= vector
+ifeq ($(TC_INFO),TRUE)
+    FP ?= vector
+endif
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+# override definitions from defs.arm
+BUILD_FP_PREFIX_soft = sf
+
+# ARMARCH7 uses VFP instruction by default when compiling the
+# kernel. Enable the compiler to generate VFP instructions and set
+# the ARM_USE_VFP flag to select optimizations in code for vector 
+# floating point.
+
+ifeq ($(_WRS_CONFIG_FP),vector)
+#Enable VFP Code generation
+COMMON_COMPILER	 += -Xfp-fast 
+EXTRA_DEFINE += -DARM_USE_VFP
+endif
+
+TGT_FLAG        = -tARMV7$(TGT_FLAG_ENDIAN)$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+
+# end of make.ARMARCH7diab

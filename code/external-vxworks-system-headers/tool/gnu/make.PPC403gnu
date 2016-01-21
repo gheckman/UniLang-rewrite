@@ -1,0 +1,59 @@
+# make.PPC403gnu -  GNU compilation tools definitions for PowerPC 403
+#
+# Copyright 1995-2003, 2011, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01z,12apr12,h_k  moved common env setting to defs.ppc.
+# 01y,13jun11,mze  add debug
+# 01x,08sep08,pee  defining WRS_CONFIG_FP
+# 01w,10dec03,sn  added -msoft-float to allow the compiler to correctly find
+#                  its own libraries (needed when we build target/src/tool)
+# 01x,26nov03,c_c  Use += instead of := for AS assignment.
+# 01w,07nov03,c_c  Removed Compiler definitions.
+# 01v,31jan03,pch  Add PPC32 support
+# 01u,12feb02,sn   removed obsolete refs to GCC_EXEC_PREFIX
+# 01t,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 01s,10dec01,tpw  Ensure ROM_SIZE defaults to 0x0 if the macro is not set.
+# 01r,05dec01,tpw  Utilize DOTBOOT{RAM,ROM} linker scripts on all PPC4xx BSPs.
+# 01q,16nov01,mil  Changed VX_CPU_FAMILY from PPC to ppc.
+# 01p,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01o,11oct01,dat  SPR 20403, OPTIM_DRIVER must have -fvolatile
+# 01n,25sep01,dat  Location of defs.gnu changed to tool/gnu
+# 01m,18oct00,sn   removed -fno-for-scope 
+# 01l,16oct00,sn   added include gnu; removed LIBS defn
+# 01k,18jan99,sn   Defined C++_TEMPLATE_INST
+# 01j,27oct98,ms   undid 01j
+# 01i,02apr98,pcn  Removed Objcopy changes from Tempest view
+# 01h,15dec97,pcn  Added Objcopy in BSP build.
+# 01g,18sep97,ms   added ARCH_DIR
+# 01f,09dec96,tpr  Removed GNU path in LIBS.
+# 01e,04oct96,yp   Added -B option so compiler driver doesn't need EXEC_PREFIX,
+#		   added CC_ARCH_SPEC for machine specific flags
+# 01d,16jul96,tpr  removed EXTRA_DEFINE = -D_GNU_TOOL
+# 01c,01apr96,tam  added "-mstrict-align" flag, and definition for LIBS.
+# 01b,06mar96,tam  removed "-msdata" flag.
+# 01a,31jan96,tam  written from  make.PPC603gnu 01b version.
+#
+# DESCRIPTION
+# This file contains PowerPC 403 specific definitions and flags for the
+# gnu tools (compiler, assembler, linker etc.)
+#*/
+
+CPU		= PPC403
+TOOL		= gnu
+
+_WRS_CONFIG_FP = soft
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+CC_ARCH_SPEC	= -mcpu=403
+AS		+= -m403
+
+include $(TGT_DIR)/h/tool/gnu/defs.ppc
+
+# end of make.PPC403gnu

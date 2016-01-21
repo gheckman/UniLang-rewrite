@@ -1,0 +1,32 @@
+# make.MIPSI64diab -  Diab compilation tools definitions for MIPSI64
+#
+# modification history
+# --------------------
+# 01c,25jun08,pee  VSB
+# 01b,22may07,pes  switch to n32 builds.
+# 01a,20feb07,pes  created from make.MIPS64diab.
+#
+# DESCRIPTION
+# This file contains MIPSI3 (hard-float) specific definitions and flags
+# for the Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= MIPSI64
+TOOL		= diab
+include $(TGT_DIR)/h/tool/diab/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSROM
+
+# Select MIPS64, big-endian (X), hard-float (H)
+# Select MIPS64, n32, big-endian (T), hard-float (H)
+#TGT_FLAG        = -tMIPS64TH:$(DIAB_T_ENVIRON)
+
+TGT_FLAG_ENDIAN_big = T
+TGT_FLAG_ENDIAN_little = V
+
+TGT_FLAG        = -tMIPS64$(TGT_FLAG_ENDIAN)$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+
+ABI_SPEC        = MIPS64$(ABI_ENDIAN_SUFFIX)
+
+# end of make.MIPSI64diab

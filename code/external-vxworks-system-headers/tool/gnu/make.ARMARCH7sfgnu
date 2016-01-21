@@ -1,0 +1,41 @@
+# make.ARMARCH7sfgnu - GNU compilation tools definitions for ARMv7
+#
+# Copyright (c) 2010 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01a,17nov10,jdw   created from make.ARMARCH7gnu
+#
+# DESCRIPTION
+# This file contains ARM Architecture 7 little-endian-specific definitions
+# and flags for the GNU software generation tools (compiler, assembler,
+# linker etc.) for software floating point builds. 
+#
+
+CPU		= ARMARCH7
+TOOL	= sfgnu
+
+# default before defs.arm
+_WRS_CONFIG_FP   ?= soft
+ifeq ($(TC_INFO),TRUE)
+    FP ?= soft
+endif
+
+include $(TGT_DIR)/h/tool/gnu/defs.arm
+
+# override definitions from defs.arm
+BUILD_FP_PREFIX_soft = sf
+
+# As shown by ccarm -dumpspecs,
+# -t7 = -mlittle-endian -march=armv7-a
+# -t5be = -mbig-endian -march=armv5 (t7be is not yet available)
+
+CC_ARCH_ENDIAN_SPEC_little = -t7 -msoft-float
+CC_ARCH_ENDIAN_SPEC_be8 = -t5be  -Wa,-EB -msoft-float
+CC_ARCH_SPEC    = $(CC_ARCH_ENDIAN_SPEC_$(_WRS_CONFIG_ENDIAN))
+
+# end of make.ARMARCH7gnu

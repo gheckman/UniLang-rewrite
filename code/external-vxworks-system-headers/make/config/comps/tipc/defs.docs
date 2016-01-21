@@ -1,0 +1,32 @@
+# defs.docs - makefile fragment for specifying documentation parameters
+#
+# modification history
+# --------------------
+# 01g,18nov11,jph  replace the versioned mapping file name with
+#                  mappingfile.txt
+# 01f,28jul11,jam  update mapping file for docs
+# 01e,12may11,jam  change mapping file version
+# 01d,06jan11,jph  check if mapping file exists
+# 01c,08nov10,jph  add mapping file
+# 01b,22oct10,jph  remove version
+# 01a,06oct09,kkz  Version number is 1.7.6
+# 01f,06jul09,???  Updating version number for VxWorks 6.8
+# 01e,24jun08,kkz  Use variable for version number
+# 01d,22jun07,kkz  Updating version  to 1.7 for docs
+# 01c,04apr06,ebh  update for WR TIPC 1.5
+# 01b,20sep05,mze  mods for TIPC1.2
+# 01a,24may05,mze  created
+#
+# DESCRIPTION
+# This file contains settings to configure the documentation build for the
+# TIPC component
+
+# Check if mapping file exists
+ifneq ($(wildcard $(DOCS_ROOT)/mappingfile.txt),)
+-include $(wildcard $(DOCS_ROOT)/mappingfile.txt)
+endif
+
+DOC_DIR         = $(DOCS_ROOT)/$(DOC_TIPC_KERNEL_API)
+DOC_BOOK	= Wind_River_TIPC
+DOC_CHAPTER	= Wind_River_TIPC_Kernel_API_Reference
+

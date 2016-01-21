@@ -1,0 +1,1577 @@
+/* msc01.h - MIPS System Controller bridge device header */
+
+/* Copyright 2005 Wind River Systems, Inc. */
+
+/* 
+ * Copyright (c) 2004 MIPS Technologies, Inc. All rights reserved.
+ *
+ *
+ * Unpublished rights (if any) reserved under the copyright laws of the
+ * United States of America and other countries.
+ *
+ * This code is proprietary to MIPS Technologies, Inc. ("MIPS
+ * Technologies"). Any copying, reproducing, modifying or use of this code
+ * (in whole or in part) that is not expressly permitted in writing by MIPS
+ * Technologies or an authorized third party is strictly prohibited. At a
+ * minimum, this code is protected under unfair competition and copyright
+ * laws. Violations thereof may result in criminal penalties and fines.
+ *
+ * MIPS Technologies reserves the right to change this code to improve
+ * function, design or otherwise. MIPS Technologies does not assume any
+ * liability arising out of the application or use of this code, or of any
+ * error or omission in such code. Any warranties, whether express,
+ * statutory, implied or otherwise, including but not limited to the implied
+ * warranties of merchantability or fitness for a particular purpose, are
+ * excluded. Except as expressly provided in any written license agreement
+ * from MIPS Technologies or an authorized third party, the furnishing of
+ * this code does not give recipient any license to any intellectual
+ * property rights, including any patent rights, that cover this code.
+ *
+ * This code shall not be exported, reexported, transferred, or released,
+ * directly or indirectly, in violation of the law of any country or
+ * international law, regulation, treaty, Executive Order, statute,
+ * amendments or supplements thereto. Should a conflict arise regarding the
+ * export, reexport, transfer, or release of this code, the laws of the
+ * United States of America shall be the governing law.
+ *
+ * This code constitutes one or more of the following: commercial computer
+ * software, commercial computer software documentation or other commercial
+ * items. If the user of this code, or any related documentation of any
+ * kind, including related technical data or manuals, is an agency,
+ * department, or other entity of the United States government
+ * ("Government"), the use, duplication, reproduction, release,
+ * modification, disclosure, or transfer of this code, or any related
+ * documentation of any kind, is restricted in accordance with Federal
+ * Acquisition Regulation 12.212 for civilian agencies and Defense Federal
+ * Acquisition Regulation Supplement 227.7202 for military agencies. The use
+ * of this code by the Government is further restricted in accordance with
+ * the terms of the license agreement(s) and/or applicable contract terms
+ * and conditions covering this code from MIPS Technologies or an authorized
+ * third party.
+ */
+   
+/*
+modification history
+--------------------
+01b,10mar05,kkz  Removing double-slash comments, for Linux compiler
+01c,10mar05,pes  Removed C++-style comment lines
+01b,04mar05,pes  Apigen fixes.
+01a,09feb05,pes	 Information compiled from multiple Yamon header files.
+*/
+
+/*
+ * this file contains register offsets and programming values for the
+ * MIPS Technologies SOC-it(tm) bridge chip (system controller).
+ */
+
+#ifndef __INCmsc01h
+#define __INCmsc01h
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* System Controller ID in MSC01_SC_ID */
+#define MSC01_ID_SC_EC32                0x01
+#define MSC01_ID_SC_EC64                0x02
+#define MSC01_ID_SC_MGB                 0x03
+#define MSC01_ID_SC_MGBIIA36D64C0IO     0x06
+#define MSC01_ID_SC_OCP			0x08
+
+/*
+ ****************************************************************************
+ * Register offset addresses
+ ***************************************************************************
+ */
+
+#define MSC01_SC_ID_OFS		        0x0000
+#define MSC01_SC_SYSID_OFS		0x0008
+#define MSC01_SC_ERR_OFS		0x0108
+#define MSC01_SC_CFG_OFS		0x0110
+#define MSC01_BIU_IP1BAS1H_OFS		0x0200
+#define MSC01_BIU_IP1BAS1L_OFS		0x0208
+#define MSC01_BIU_IP1MSK1H_OFS		0x0210
+#define MSC01_BIU_IP1MSK1L_OFS		0x0218
+#define MSC01_BIU_IP1BAS2H_OFS		0x0240
+#define MSC01_BIU_IP1BAS2L_OFS		0x0248
+#define MSC01_BIU_IP1MSK2H_OFS		0x0250
+#define MSC01_BIU_IP1MSK2L_OFS		0x0258
+#define MSC01_BIU_IP2BAS1H_OFS		0x0280
+#define MSC01_BIU_IP2BAS1L_OFS		0x0288
+#define MSC01_BIU_IP2MSK1H_OFS		0x0290
+#define MSC01_BIU_IP2MSK1L_OFS		0x0298
+#define MSC01_BIU_IP2BAS2H_OFS		0x02c0
+#define MSC01_BIU_IP2BAS2L_OFS		0x02c8
+#define MSC01_BIU_IP2MSK2H_OFS		0x02d0
+#define MSC01_BIU_IP2MSK2L_OFS		0x02d8
+#define MSC01_BIU_IP3BAS1H_OFS		0x0300
+#define MSC01_BIU_IP3BAS1L_OFS		0x0308
+#define MSC01_BIU_IP3MSK1H_OFS		0x0310
+#define MSC01_BIU_IP3MSK1L_OFS		0x0318
+#define MSC01_BIU_IP3BAS2H_OFS		0x0340
+#define MSC01_BIU_IP3BAS2L_OFS		0x0348
+#define MSC01_BIU_IP3MSK2H_OFS		0x0350
+#define MSC01_BIU_IP3MSK2L_OFS		0x0358
+#define MSC01_BIU_MCBAS1H_OFS		0x0380
+#define MSC01_BIU_MCBAS1L_OFS		0x0388
+#define MSC01_BIU_MCMSK1H_OFS		0x0390
+#define MSC01_BIU_MCMSK1L_OFS		0x0398
+#define MSC01_BIU_MCBAS2H_OFS		0x03c0
+#define MSC01_BIU_MCBAS2L_OFS		0x03c8
+#define MSC01_BIU_MCMSK2H_OFS		0x03d0
+#define MSC01_BIU_MCMSK2L_OFS		0x03d8
+#define MSC01_BIU_RBBASH_OFS		0x07f0
+#define MSC01_BIU_RBBASL_OFS		0x07f8
+#define MSC01_BIU_IP1CTRL_OFS		0x0800
+#define MSC01_BIU_IP2CTRL_OFS		0x0808
+#define MSC01_BIU_IP3CTRL_OFS		0x0810
+#define MSC01_BIU_MCCTRL_OFS		0x0818
+
+/*
+ ****************************************************************************
+ * Register encodings
+ ***************************************************************************
+ */
+
+#define MSC01_SC_ID_ID_SHF		16
+#define MSC01_SC_ID_ID_MSK		0x00ff0000
+#define MSC01_SC_ID_MAR_SHF		8
+#define MSC01_SC_ID_MAR_MSK		0x0000ff00
+#define MSC01_SC_ID_MIR_SHF		0
+#define MSC01_SC_ID_MIR_MSK		0x000000ff
+
+#define MSC01_SC_SYSID_ID_SHF		0
+#define MSC01_SC_SYSID_ID_MSK		0xffffffff
+
+#define MSC01_SC_ERR_RSPERR_SHF		31
+#define MSC01_SC_ERR_RSPERR_MSK		0x80000000
+#define MSC01_SC_ERR_RSPERR_BIT		0x80000000
+#define MSC01_SC_ERR_RSPID_SHF		8
+#define MSC01_SC_ERR_RSPID_MSK		0x0000ff00
+#define MSC01_SC_ERR_RSPTYP_SHF	        0
+#define MSC01_SC_ERR_RSPTYP_MSK	        0x00000001
+#define MSC01_SC_ERR_RSPTYP_BIT	        0x00000001
+
+#define MSC01_SC_CFG_WC_SHF		16
+#define MSC01_SC_CFG_WC_MSK		0x00010000
+#define MSC01_SC_CFG_WC_BIT		MSC01_SC_CFG_WC_MSK
+#define MSC01_SC_CFG_EBIG_SHF		8
+#define MSC01_SC_CFG_EBIG_MSK		0x00000100
+#define MSC01_SC_CFG_EBIG_BIT		MSC01_SC_CFG_EBIG_MSK
+#define MSC01_SC_CFG_BSEL_SHF		0
+#define MSC01_SC_CFG_BSEL_MSK		0x00000003
+
+#define MSC01_BIU_IP1BAS1H_BASH_SHF	0
+#define MSC01_BIU_IP1BAS1H_BASH_MSK	0x0000000f
+#define MSC01_BIU_IP1BAS1L_BASL_SHF	22
+#define MSC01_BIU_IP1BAS1L_BASL_MSK	0xffc00000
+#define MSC01_BIU_IP1MSK1H_MSKH_SHF	0
+#define MSC01_BIU_IP1MSK1H_MSKH_MSK	0x0000000f
+#define MSC01_BIU_IP1MSK1L_MSKL_SHF	22
+#define MSC01_BIU_IP1MSK1L_MSKL_MSK	0xffc00000
+#define MSC01_BIU_IP1BAS2H_BASH_SHF	0
+#define MSC01_BIU_IP1BAS2H_BASH_MSK	0x0000000f
+#define MSC01_BIU_IP1BAS2L_BASL_SHF	22
+#define MSC01_BIU_IP1BAS2L_BASL_MSK	0xffc00000
+#define MSC01_BIU_IP1MSK2H_MSKH_SHF	0
+#define MSC01_BIU_IP1MSK2H_MSKH_MSK	0x0000000f
+#define MSC01_BIU_IP1MSK2L_MSKL_SHF	22
+#define MSC01_BIU_IP1MSK2L_MSKL_MSK	0xffc00000
+
+#define MSC01_BIU_IP2BAS1H_BASH_SHF	0
+#define MSC01_BIU_IP2BAS1H_BASH_MSK	0x0000000f
+#define MSC01_BIU_IP2BAS1L_BASL_SHF	22
+#define MSC01_BIU_IP2BAS1L_BASL_MSK	0xffc00000
+#define MSC01_BIU_IP2MSK1H_MSKH_SHF	0
+#define MSC01_BIU_IP2MSK1H_MSKH_MSK	0x0000000f
+#define MSC01_BIU_IP2MSK1L_MSKL_SHF	22
+#define MSC01_BIU_IP2MSK1L_MSKL_MSK	0xffc00000
+#define MSC01_BIU_IP2BAS2H_BASH_SHF	0
+#define MSC01_BIU_IP2BAS2H_BASH_MSK	0x0000000f
+#define MSC01_BIU_IP2BAS2L_BASL_SHF	22
+#define MSC01_BIU_IP2BAS2L_BASL_MSK	0xffc00000
+#define MSC01_BIU_IP2MSK2H_MSKH_SHF	0
+#define MSC01_BIU_IP2MSK2H_MSKH_MSK	0x0000000f
+#define MSC01_BIU_IP2MSK2L_MSKL_SHF	22
+#define MSC01_BIU_IP2MSK2L_MSKL_MSK	0xffc00000
+
+#define MSC01_BIU_IP3BAS1H_BASH_SHF	0
+#define MSC01_BIU_IP3BAS1H_BASH_MSK	0x0000000f
+#define MSC01_BIU_IP3BAS1L_BASL_SHF	22
+#define MSC01_BIU_IP3BAS1L_BASL_MSK	0xffc00000
+#define MSC01_BIU_IP3MSK1H_MSKH_SHF	0
+#define MSC01_BIU_IP3MSK1H_MSKH_MSK	0x0000000f
+#define MSC01_BIU_IP3MSK1L_MSKL_SHF	22
+#define MSC01_BIU_IP3MSK1L_MSKL_MSK	0xffc00000
+#define MSC01_BIU_IP3BAS2H_BASH_SHF	0
+#define MSC01_BIU_IP3BAS2H_BASH_MSK	0x0000000f
+#define MSC01_BIU_IP3BAS2L_BASL_SHF	22
+#define MSC01_BIU_IP3BAS2L_BASL_MSK	0xffc00000
+#define MSC01_BIU_IP3MSK2H_MSKH_SHF	0
+#define MSC01_BIU_IP3MSK2H_MSKH_MSK	0x0000000f
+#define MSC01_BIU_IP3MSK2L_MSKL_SHF	22
+#define MSC01_BIU_IP3MSK2L_MSKL_MSK	0xffc00000
+
+#define MSC01_BIU_MCBAS1H_BASH_SHF	0
+#define MSC01_BIU_MCBAS1H_BASH_MSK	0x0000000f
+#define MSC01_BIU_MCBAS1L_BASL_SHF	22
+#define MSC01_BIU_MCBAS1L_BASL_MSK	0xffc00000
+#define MSC01_BIU_MCMSK1H_MSKH_SHF	0
+#define MSC01_BIU_MCMSK1H_MSKH_MSK	0x0000000f
+#define MSC01_BIU_MCMSK1L_MSKL_SHF	22
+#define MSC01_BIU_MCMSK1L_MSKL_MSK	0xffc00000
+#define MSC01_BIU_MCBAS2H_BASH_SHF	0
+#define MSC01_BIU_MCBAS2H_BASH_MSK	0x0000000f
+#define MSC01_BIU_MCBAS2L_BASL_SHF	22
+#define MSC01_BIU_MCBAS2L_BASL_MSK	0xffc00000
+#define MSC01_BIU_MCMSK2H_MSKH_SHF	0
+#define MSC01_BIU_MCMSK2H_MSKH_MSK	0x0000000f
+#define MSC01_BIU_MCMSK2L_MSKL_SHF	22
+#define MSC01_BIU_MCMSK2L_MSKL_MSK	0xffc00000
+
+#define MSC01_BIU_RBBAS_BASH_SHF	0
+#define MSC01_BIU_RBBAS_BASH_MSK	0x0000000f
+#define MSC01_BIU_RBMSK_BASL_SHF	22
+#define MSC01_BIU_RBMSK_BASL_MSK	0xffc00000
+
+#define MSC01_BIU_IP1CTRL_L_SHF	        0
+#define MSC01_BIU_IP1CTRL_L_MSK	        0x00000001
+#define MSC01_BIU_IP1CTRL_L_BIT	        MSC01_BIU_IP1CTRL_L_MSK
+
+#define MSC01_BIU_IP2CTRL_L_SHF	        0
+#define MSC01_BIU_IP2CTRL_L_MSK	        0x00000001
+#define MSC01_BIU_IP2CTRL_L_BIT	        MSC01_BIU_IP2CTRL_L_MSK
+
+#define MSC01_BIU_IP3CTRL_L_SHF	        0
+#define MSC01_BIU_IP3CTRL_L_MSK	        0x00000001
+#define MSC01_BIU_IP3CTRL_L_BIT	        MSC01_BIU_IP3CTRL_L_MSK
+
+#define MSC01_BIU_MCCTRL_L_SHF	        0
+#define MSC01_BIU_MCCTRL_L_MSK	        0x00000001
+#define MSC01_BIU_MCCTRL_L_BIT	        MSC01_BIU_MCCTRL_L_MSK
+
+
+/* BIU
+   Registers absolute addresses: */
+
+#define MSC01_SC_ID             (MSC01_BIU_REG_BASE + MSC01_SC_ID_OFS)
+#define MSC01_SC_ERR            (MSC01_BIU_REG_BASE + MSC01_SC_ERR_OFS)
+#define MSC01_SC_CFG            (MSC01_BIU_REG_BASE + MSC01_SC_CFG_OFS)
+
+#define MSC01_BIU_IP1BAS1H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP1BAS1H_OFS)
+#define MSC01_BIU_IP1BAS1L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP1BAS1L_OFS)
+#define MSC01_BIU_IP1MSK1H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP1MSK1H_OFS)
+#define MSC01_BIU_IP1MSK1L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP1MSK1L_OFS)
+#define MSC01_BIU_IP1BAS2H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP1BAS2H_OFS)
+#define MSC01_BIU_IP1BAS2L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP1BAS2L_OFS)
+#define MSC01_BIU_IP1MSK2H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP1MSK2H_OFS)
+#define MSC01_BIU_IP1MSK2L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP1MSK2L_OFS)
+#define MSC01_BIU_IP2BAS1H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP2BAS1H_OFS)
+#define MSC01_BIU_IP2BAS1L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP2BAS1L_OFS)
+#define MSC01_BIU_IP2MSK1H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP2MSK1H_OFS)
+#define MSC01_BIU_IP2MSK1L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP2MSK1L_OFS)
+#define MSC01_BIU_IP2BAS2H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP2BAS2H_OFS)
+#define MSC01_BIU_IP2BAS2L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP2BAS2L_OFS)
+#define MSC01_BIU_IP2MSK2H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP2MSK2H_OFS)
+#define MSC01_BIU_IP2MSK2L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP2MSK2L_OFS)
+#define MSC01_BIU_IP3BAS1H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP3BAS1H_OFS)
+#define MSC01_BIU_IP3BAS1L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP3BAS1L_OFS)
+#define MSC01_BIU_IP3MSK1H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP3MSK1H_OFS)
+#define MSC01_BIU_IP3MSK1L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP3MSK1L_OFS)
+#define MSC01_BIU_IP3BAS2H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP3BAS2H_OFS)
+#define MSC01_BIU_IP3BAS2L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP3BAS2L_OFS)
+#define MSC01_BIU_IP3MSK2H      (MSC01_BIU_REG_BASE + MSC01_BIU_IP3MSK2H_OFS)
+#define MSC01_BIU_IP3MSK2L      (MSC01_BIU_REG_BASE + MSC01_BIU_IP3MSK2L_OFS)
+#define MSC01_BIU_MCBAS1H       (MSC01_BIU_REG_BASE + MSC01_BIU_MCBAS1H_OFS)
+#define MSC01_BIU_MCBAS1L       (MSC01_BIU_REG_BASE + MSC01_BIU_MCBAS1L_OFS)
+#define MSC01_BIU_MCMSK1H       (MSC01_BIU_REG_BASE + MSC01_BIU_MCMSK1H_OFS)
+#define MSC01_BIU_MCMSK1L       (MSC01_BIU_REG_BASE + MSC01_BIU_MCMSK1L_OFS)
+#define MSC01_BIU_MCBAS2H       (MSC01_BIU_REG_BASE + MSC01_BIU_MCBAS2H_OFS)
+#define MSC01_BIU_MCBAS2L       (MSC01_BIU_REG_BASE + MSC01_BIU_MCBAS2L_OFS)
+#define MSC01_BIU_MCMSK2H       (MSC01_BIU_REG_BASE + MSC01_BIU_MCMSK2H_OFS)
+#define MSC01_BIU_MCMSK2L       (MSC01_BIU_REG_BASE + MSC01_BIU_MCMSK2L_OFS)
+#define MSC01_BIU_RBBASH        (MSC01_BIU_REG_BASE + MSC01_BIU_RBBASH_OFS)
+#define MSC01_BIU_RBBASL        (MSC01_BIU_REG_BASE + MSC01_BIU_RBBASL_OFS)
+#define MSC01_BIU_IP1CTRL       (MSC01_BIU_REG_BASE + MSC01_BIU_IP1CTRL_OFS)
+#define MSC01_BIU_IP2CTRL       (MSC01_BIU_REG_BASE + MSC01_BIU_IP2CTRL_OFS)
+#define MSC01_BIU_IP3CTRL       (MSC01_BIU_REG_BASE + MSC01_BIU_IP3CTRL_OFS)
+#define MSC01_BIU_MCCTRL        (MSC01_BIU_REG_BASE + MSC01_BIU_MCCTRL_OFS)
+
+/*
+ ****************************************************************************
+ * Register offset addresses
+ ***************************************************************************
+ */
+
+#define MSC01_MC_CFGPB0_OFS	0x0110	/* SDRAM config, phbank0 (1) */
+#define MSC01_MC_CFGPB1_OFS	0x0118	/* SDRAM config, phbank1 (1) */
+#define MSC01_MC_CFGPB2_OFS	0x0120	/* SDRAM config, phbank2 (1) */
+#define MSC01_MC_CFGPB3_OFS	0x0128	/* SDRAM config, phbank3 (1) */
+#define MSC01_MC_LATENCY_OFS	0x0130	/* SDRAM latency params  (1) */
+#define MSC01_MC_IOCTRL_OFS	0x0140	/* I/O region ctrl reg   (1) */
+#define MSC01_MC_TIMPAR_OFS	0x0150	/* SDRAM command timing  (2) */
+#define MSC01_MC_TREFRESH_OFS	0x0160	/* SDRAM refresh time    (3) */
+#define MSC01_MC_INITCMD_OFS	0x0200	/* SDRAM init cmd reg    (4) */
+#define MSC01_MC_CTRLENA_OFS	0x0300	/* Memory controller enabl   */
+#define MSC01_MC_CMD_PD_OFS	0x0400	/* SDRAM power down ctrl     */
+#define MSC01_MC_ARB_CFG_OFS	0x0600	/* 16 GP bits to arbiter     */
+#define MSC01_MC_ARB_STAT_OFS	0x0608	/* arbitration unit status   */
+#define MSC01_MC_HC_DDR_OFS	0x0710	/* DDR SDRAM type config (5) */
+#define MSC01_MC_HC_FMDW_OFS	0x0718	/* Full memory data width(5) */
+#define MSC01_MC_HC_PARITY_OFS	0x0720	/* Parity check enable   (5) */
+#define MSC01_MC_HC_CLKRAT_OFS	0x0728	/* Clk ratio sysctl/SDRAM(5) */
+#define MSC01_MC_HC_RDDEL_OFS	0x0730	/* Read Data delay       (5) */
+#define MSC01_MC_SPD_CFG_OFS	0x0800	/* Presence Detect Config    */
+#define MSC01_MC_SPD_ADR_OFS	0x0808	/* Presence Detect Read Addr */
+#define MSC01_MC_SPD_DAT_OFS	0x0810	/* Presence Detect Read Data */
+
+/* Note 1: must be set and frozen before initialization of SDRAM */
+/* Note 2: must be set and frozen before MC_CTRLENA is set       */
+/* Note 3: must be set before MC_CTRLENA is set                  */
+/* Note 4: must NOT be accesses when MC_CTRLENA is set.          */
+/* Note 5: Hidden Control,  note 1 applies if used anyway.       */
+
+/*
+ ****************************************************************************
+ * Register encodings
+ ***************************************************************************
+ */
+
+/* Row Width Fields of MC_CFGPX */
+#define MSC01_MC_CFGPBx_ROWW_SHF	4
+#define MSC01_MC_CFGPBx_ROWW_MSK	0x000000f0
+#define MSC01_MC_CFGPB0_ROWW_SHF	MSC01_MC_CFGPBx_ROWW_SHF
+#define MSC01_MC_CFGPB0_ROWW_MSK	MSC01_MC_CFGPBx_ROWW_MSK
+#define MSC01_MC_CFGPB1_ROWW_SHF	MSC01_MC_CFGPBx_ROWW_SHF
+#define MSC01_MC_CFGPB1_ROWW_MSK	MSC01_MC_CFGPBx_ROWW_MSK
+#define MSC01_MC_CFGPB2_ROWW_SHF	MSC01_MC_CFGPBx_ROWW_SHF
+#define MSC01_MC_CFGPB2_ROWW_MSK	MSC01_MC_CFGPBx_ROWW_MSK
+#define MSC01_MC_CFGPB3_ROWW_SHF	MSC01_MC_CFGPBx_ROWW_SHF
+#define MSC01_MC_CFGPB3_ROWW_MSK	MSC01_MC_CFGPBx_ROWW_MSK
+
+/* Column Width Fields of MC_CFGPX */
+#define MSC01_MC_CFGPBx_COLW_SHF	0
+#define MSC01_MC_CFGPBx_COLW_MSK	0x0000000f
+#define MSC01_MC_CFGPB0_COLW_SHF	MSC01_MC_CFGPBx_COLW_SHF
+#define MSC01_MC_CFGPB0_COLW_MSK	MSC01_MC_CFGPBx_COLW_MSK
+#define MSC01_MC_CFGPB1_COLW_SHF	MSC01_MC_CFGPBx_COLW_SHF
+#define MSC01_MC_CFGPB1_COLW_MSK	MSC01_MC_CFGPBx_COLW_MSK
+#define MSC01_MC_CFGPB2_COLW_SHF	MSC01_MC_CFGPBx_COLW_SHF
+#define MSC01_MC_CFGPB2_COLW_MSK	MSC01_MC_CFGPBx_COLW_MSK
+#define MSC01_MC_CFGPB3_COLW_SHF	MSC01_MC_CFGPBx_COLW_SHF
+#define MSC01_MC_CFGPB3_COLW_MSK	MSC01_MC_CFGPBx_COLW_MSK
+
+/* Fields of MC_LATENCY */
+#define MSC01_MC_LATENCY_CSL_SHF	8
+#define MSC01_MC_LATENCY_CSL_MSK	0x00000f00
+#define MSC01_MC_LATENCY_WL_SHF		4
+#define MSC01_MC_LATENCY_WL_MSK		0x000000f0
+#define MSC01_MC_LATENCY_CL_SHF		0
+#define MSC01_MC_LATENCY_CL_MSK		0x0000000f
+
+/* Field of MC_IOCTRL */
+#define MSC01_MC_IOCTRL_IOGP_SHF	0
+#define MSC01_MC_IOCTRL_IOGP_MSK	0xffffffff
+
+/* Fields of MC_TIMPAR */
+#define MSC01_MC_TIMPAR_TMRAS_SHF	16
+#define MSC01_MC_TIMPAR_TMRAS_MIN	1
+#define MSC01_MC_TIMPAR_TMRAS_MAX	255
+#define MSC01_MC_TIMPAR_TMRAS_MSK	0x00ff0000
+#define MSC01_MC_TIMPAR_TRP_SHF		12
+#define MSC01_MC_TIMPAR_TRP_MIN		2
+#define MSC01_MC_TIMPAR_TRP_MAX		4
+#define MSC01_MC_TIMPAR_TRP_MSK		0x0000f000
+#define MSC01_MC_TIMPAR_TRAS_SHF	8
+#define MSC01_MC_TIMPAR_TRAS_MIN	2
+#define MSC01_MC_TIMPAR_TRAS_MAX	8
+#define MSC01_MC_TIMPAR_TRAS_MSK	0x00000f00
+#define MSC01_MC_TIMPAR_TRCD_SHF	4
+#define MSC01_MC_TIMPAR_TRCD_MIN	2
+#define MSC01_MC_TIMPAR_TRCD_MAX	3
+#define MSC01_MC_TIMPAR_TRCD_MSK	0x000000f0
+#define MSC01_MC_TIMPAR_TDPL_SHF	0
+#define MSC01_MC_TIMPAR_TDPL_MIN	1
+#define MSC01_MC_TIMPAR_TDPL_MAX	3
+#define MSC01_MC_TIMPAR_TDPL_MSK	0x0000000f
+
+/* Fields of MC_TREFRESH */
+#define MSC01_MC_TREFRESH_TREF_SHF	0
+#define MSC01_MC_TREFRESH_TREF_MSK	0x00001fff
+
+/* Fields of MC_INITCMD */
+#define MSC01_MC_INITCMD_WAIT_SHF	20
+#define MSC01_MC_INITCMD_WAIT_MSK	0x00f00000	
+#define MSC01_MC_INITCMD_ICMD_SHF	16
+#define MSC01_MC_INITCMD_ICMD_MSK	0x00070000	
+#define MSC01_MC_INITCMD_BA_SHF		12
+#define MSC01_MC_INITCMD_BA_MSK		0x00003000
+#define MSC01_MC_INITCMD_A_SHF		0
+#define MSC01_MC_INITCMD_A_MSK		0x00000fff
+/* init command field-codes */
+#define MSC01_MC_INITCMD_ICMD_NOP	0x7
+#define MSC01_MC_INITCMD_ICMD_PALL	0x2
+#define MSC01_MC_INITCMD_ICMD_CBR	0x1
+#define MSC01_MC_INITCMD_ICMD_MRS	0x0
+#define MSC01_MC_INITCMD_BA_MRS		0x0
+#define MSC01_MC_INITCMD_BA_EMRS	0x1
+#define MSC01_MC_INITCMD_BA_PALL	0x0
+#define MSC01_MC_INITCMD_BA_CBR		0x0
+#define MSC01_MC_INITCMD_A_PALL		0x400
+#define MSC01_MC_INITCMD_A_CBR		0x0
+
+/* Fields of MC_CTRLENA */
+#define MSC01_MC_CTRLENA_ENA_SHF	0	
+#define MSC01_MC_CTRLENA_ENA_MSK	0x00000001
+#define MSC01_MC_CTRLENA_ENA_BIT	MSC01_MC_CTRLENA_ENA_MSK
+
+/* Fields of MC_CMD_PD */
+#define MSC01_MC_CMD_PD_PWDS_SHF	1
+#define MSC01_MC_CMD_PD_PWDS_MSK	0x00000002
+#define MSC01_MC_CMD_PD_PWDS_BIT	MSC01_MC_CMD_PD_PWDS_MSK
+#define MSC01_MC_CMD_PD_PWD_SHF		0
+#define MSC01_MC_CMD_PD_PWD_MSK		0x00000001
+#define MSC01_MC_CMD_PD_PWD_BIT		MSC01_MC_CMD_PD_PWD_MSK
+
+/* Fields of MC_ARB_CFG */
+#define MSC01_MC_ARB_CFG_ARB_CFG_SHF	0	
+#define MSC01_MC_ARB_CFG_ARB_CFG_MSK	0x0000ffff
+
+/* Fields of MC_ARB_STAT */
+#define MSC01_MC_ARB_STAT_ARB_STAT_SHF	0	
+#define MSC01_MC_ARB_STAT_ARB_STAT_MSK	0x0000ffff
+
+/* Hidden register MC_HC_DDR */
+#define MSC01_MC_HC_DDR_DDR_SHF		0
+#define MSC01_MC_HC_DDR_DDR_MSK		0x00000001
+#define MSC01_MC_HC_DDR_DDR_BIT		MSC01_MC_HC_DDR_DDR_MSK
+
+/* Hidden register MC_HC_FMDW */
+#define MSC01_MC_HC_FMDW_FMDW_SHF	0	
+#define MSC01_MC_HC_FMDW_FMDW_MSK	0x00000001
+#define MSC01_MC_HC_FMDW_FMDW_BIT	MSC01_MC_HC_FMDW_FMDW_MSK
+
+/* Hidden register MC_HC_PARITY */
+#define MSC01_MC_HC_PARITY_PARITY_SHF	0	
+#define MSC01_MC_HC_PARITY_PARITY_MSK	0x00000001
+#define MSC01_MC_HC_PARITY_PARITY_BIT	MSC01_MC_HC_PARITY_PARITY_MSK
+
+/* Hidden register MC_HC_CLKRAT */
+#define MSC01_MC_HC_CLKRAT_CLKRAT_SHF	0	
+#define MSC01_MC_HC_CLKRAT_CLKRAT_MSK	0x00000007
+#define MSC01_MC_HC_CLKRAT_CLKRAT_1_1	1
+#define MSC01_MC_HC_CLKRAT_CLKRAT_3_2	2
+#define MSC01_MC_HC_CLKRAT_CLKRAT_2_1	3
+#define MSC01_MC_HC_CLKRAT_CLKRAT_3_1	4
+#define MSC01_MC_HC_CLKRAT_CLKRAT_4_1	5
+
+/* Hidden register MC_HC_RDDEL */
+#define MSC01_MC_HC_RDDEL_RDDEL_SHF	0	
+#define MSC01_MC_HC_RDDEL_RDDEL_MSK	0x0000000f
+
+/* Fields of MC_SPD_CFG */
+#define MSC01_MC_SPD_CFG_CPDIV_SHF	0
+#define MSC01_MC_SPD_CFG_CPDIV_MSK	0x000001ff
+
+/* Fields of MC_SPD_ADR */
+#define MSC01_MC_SPD_ADR_DADR_SHF	8
+#define MSC01_MC_SPD_ADR_DADR_MSK	0x00000700
+#define MSC01_MC_SPD_ADR_BADR_SHF	0
+#define MSC01_MC_SPD_ADR_BADR_MSK	0x000000ff
+
+/* Fields of MC_SPD_DAT */
+#define MSC01_MC_SPD_DAT_RDERR_SHF	9	
+#define MSC01_MC_SPD_DAT_RDERR_MSK	0x00000200
+#define MSC01_MC_SPD_DAT_RDERR_BIT	MSC01_MC_SPD_DAT_RDERR_MSK
+#define MSC01_MC_SPD_DAT_BUSY_SHF	8	
+#define MSC01_MC_SPD_DAT_BUSY_MSK	0x00000100
+#define MSC01_MC_SPD_DAT_BUSY_BIT	MSC01_MC_SPD_DAT_BUSY_MSK
+#define MSC01_MC_SPD_DAT_RDATA_SHF	0
+#define MSC01_MC_SPD_DAT_RDATA_MSK	0x000000ff
+
+
+/*
+ ****************************************************************************
+ * Registers absolute addresses
+ ***************************************************************************
+ */
+
+#define MSC01_MC_CFGPB0		(MSC01_MC_REG_BASE + MSC01_MC_CFGPB0_OFS)
+#define MSC01_MC_CFGPB1		(MSC01_MC_REG_BASE + MSC01_MC_CFGPB1_OFS)
+#define MSC01_MC_CFGPB2		(MSC01_MC_REG_BASE + MSC01_MC_CFGPB2_OFS)
+#define MSC01_MC_CFGPB3		(MSC01_MC_REG_BASE + MSC01_MC_CFGPB3_OFS)
+#define MSC01_MC_LATENCY	(MSC01_MC_REG_BASE + MSC01_MC_LATENCY_OFS)
+#define MSC01_MC_IOCTRL		(MSC01_MC_REG_BASE + MSC01_MC_IOCTRL_OFS)
+#define MSC01_MC_TIMPAR		(MSC01_MC_REG_BASE + MSC01_MC_TIMPAR_OFS)
+#define MSC01_MC_TREFRESH	(MSC01_MC_REG_BASE + MSC01_MC_TREFRESH_OFS)
+#define MSC01_MC_INITCMD	(MSC01_MC_REG_BASE + MSC01_MC_INITCMD_OFS)
+#define MSC01_MC_CTRLENA	(MSC01_MC_REG_BASE + MSC01_MC_CTRLENA_OFS)
+#define MSC01_MC_CMD_PD		(MSC01_MC_REG_BASE + MSC01_MC_CMD_PD_OFS)
+#define MSC01_MC_ARB_CFG	(MSC01_MC_REG_BASE + MSC01_MC_ARB_CFG_OFS)
+#define MSC01_MC_ARB_STAT	(MSC01_MC_REG_BASE + MSC01_MC_ARB_STAT_OFS)
+#define MSC01_MC_HC_DDR		(MSC01_MC_REG_BASE + MSC01_MC_HC_DDR_OFS)
+#define MSC01_MC_HC_FMDW	(MSC01_MC_REG_BASE + MSC01_MC_HC_FMDW_OFS)
+#define MSC01_MC_HC_PARITY	(MSC01_MC_REG_BASE + MSC01_MC_HC_PARITY_OFS)
+#define MSC01_MC_HC_CLKRAT	(MSC01_MC_REG_BASE + MSC01_MC_HC_CLKRAT_OFS)
+#define MSC01_MC_HC_RDDEL	(MSC01_MC_REG_BASE + MSC01_MC_HC_RDDEL_OFS)
+#define MSC01_MC_SPD_CFG	(MSC01_MC_REG_BASE + MSC01_MC_SPD_CFG_OFS)
+#define MSC01_MC_SPD_ADR	(MSC01_MC_REG_BASE + MSC01_MC_SPD_ADR_OFS)
+#define MSC01_MC_SPD_DAT	(MSC01_MC_REG_BASE + MSC01_MC_SPD_DAT_OFS)
+
+#ifndef KSEG1_BASE
+# define KSEG0_BASE      	0x80000000	/* unmapped, cachable	*/
+# define KSEG1_BASE      	0xa0000000	/* unmapped, uncached	*/
+#endif
+
+/*
+ ****************************************************************************
+ * IPIF generic register space addresses, unmapped & uncached access via kseg1
+ ***************************************************************************
+ */
+
+#define	MSC01_REGSPACE_MC	0
+#define	MSC01_REGSPACE_IC	1
+#define	MSC01_REGSPACE_BIU	2
+#define	MSC01_REGSPACE_IP1	3
+#define	MSC01_REGSPACE_IP2	4
+#define	MSC01_REGSPACE_IP3	5
+
+#define	MSC01_REGADDR_RESET	(KSEG1_BASE + 0x1f800000) /* power-up value */
+#define	MSC01_REGADDR_SIZE	0x00040000		  /* 256 KByte	    */
+#define	MSC01_REGADDR(regspace)	(MSC01_REGADDR_BASE	\
+				 +(regspace)*MSC01_REGADDR_SIZE)
+
+
+
+/*
+ ****************************************************************************
+ * Default register base addresses (can be modified at run-time by software)
+ ***************************************************************************
+ */
+
+#define	MSC01_REGADDR_BASE	(KSEG1_BASE + 0x1bc00000) /* programmed val */
+
+#define MSC01_MC_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_MC)
+#define MSC01_IC_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_IC)
+#define MSC01_BIU_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_BIU)
+#define MSC01_SC_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_BIU)
+#define MSC01_IP1_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_IP1)
+#define MSC01_IP2_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_IP2)
+#define MSC01_IP3_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_IP3)
+
+
+/*
+ ****************************************************************************
+ * Power-up memory space (can be modified at run-time by software)
+ ***************************************************************************
+ */
+
+#define	MSC01_PHYSBASE_MC	0x00000000
+#define	MSC01_PHYSBASE_IP1	0x10000000
+#define	MSC01_PHYSBASE_IP2	0x14000000
+#define	MSC01_PHYSBASE_IP3	0x18000000
+
+#define	MSC01_KSEG0BASE_MC	(KSEG0_BASE + MSC01_PHYSBASE_MC)
+#define	MSC01_KSEG0BASE_IP1	(KSEG0_BASE + MSC01_PHYSBASE_IP1)
+#define	MSC01_KSEG0BASE_IP2	(KSEG0_BASE + MSC01_PHYSBASE_IP2)
+#define	MSC01_KSEG0BASE_IP3	(KSEG0_BASE + MSC01_PHYSBASE_IP3)
+
+/* PBC ID in MSC01_PBC_ID */
+#define MSC01_ID_PBC	                0x80
+
+/*
+ ****************************************************************************
+ * Register offset addresses and access types
+ ***************************************************************************
+ */
+
+#define MSC01_PBC_ID_OFS		0x0000
+#define MSC01_PBC_CLKCFG_OFS		0x0100
+#define MSC01_PBC_CS0BASL_OFS		0x0200
+#define MSC01_PBC_CS1BASL_OFS		0x0210
+#define MSC01_PBC_CS2BASL_OFS		0x0220
+#define MSC01_PBC_CS3BASL_OFS		0x0230
+#define MSC01_PBC_CS0MSKL_OFS		0x0300
+#define MSC01_PBC_CS1MSKL_OFS		0x0310
+#define MSC01_PBC_CS2MSKL_OFS		0x0320
+#define MSC01_PBC_CS3MSKL_OFS		0x0330
+#define MSC01_PBC_CS0CFG_OFS		0x0400
+#define MSC01_PBC_CS1CFG_OFS		0x0410
+#define MSC01_PBC_CS2CFG_OFS		0x0420
+#define MSC01_PBC_CS3CFG_OFS		0x0430
+#define MSC01_PBC_CS0TIM_OFS		0x0500
+#define MSC01_PBC_CS1TIM_OFS		0x0510
+#define MSC01_PBC_CS2TIM_OFS		0x0520
+#define MSC01_PBC_CS3TIM_OFS		0x0530
+#define MSC01_PBC_CS0RW_OFS		0x0600
+#define MSC01_PBC_CS1RW_OFS		0x0610
+#define MSC01_PBC_CS2RW_OFS		0x0620
+#define MSC01_PBC_CS3RW_OFS		0x0630
+
+/*
+ ****************************************************************************
+ * Register encodings
+ ***************************************************************************
+ */
+
+#define MSC01_PBC_ID_ID_SHF		16
+#define MSC01_PBC_ID_ID_MSK		0x00ff0000
+#define MSC01_PBC_ID_MAR_SHF		8
+#define MSC01_PBC_ID_MAR_MSK		0x0000ff00
+#define MSC01_PBC_ID_MIR_SHF		0
+#define MSC01_PBC_ID_MIR_MSK		0x000000ff
+
+#define MSC01_PBC_CLKCFG_SHF		0
+#define MSC01_PBC_CLKCFG_MSK		0x0000001f
+
+#define MSC01_PBC_CSxBASL_BASL_SHF		22
+#define MSC01_PBC_CSxBASL_BASL_MSK		0x3fc00000
+#define MSC01_PBC_CS0BASL_BASL_SHF		MSC01_PBC_CSxBASL_BASL_SHF
+#define MSC01_PBC_CS0BASL_BASL_MSK		MSC01_PBC_CSxBASL_BASL_MSK
+#define MSC01_PBC_CS1BASL_BASL_SHF		MSC01_PBC_CSxBASL_BASL_SHF
+#define MSC01_PBC_CS1BASL_BASL_MSK		MSC01_PBC_CSxBASL_BASL_MSK
+#define MSC01_PBC_CS2BASL_BASL_SHF		MSC01_PBC_CSxBASL_BASL_SHF
+#define MSC01_PBC_CS2BASL_BASL_MSK		MSC01_PBC_CSxBASL_BASL_MSK
+#define MSC01_PBC_CS3BASL_BASL_SHF		MSC01_PBC_CSxBASL_BASL_SHF
+#define MSC01_PBC_CS3BASL_BASL_MSK		MSC01_PBC_CSxBASL_BASL_MSK
+
+#define MSC01_PBC_CSxMSKL_MSKL_SHF		22
+#define MSC01_PBC_CSxMSKL_MSKL_MSK		0x0fc00000
+#define MSC01_PBC_CS0MSKL_MSKL_SHF		MSC01_PBC_CSxMSKL_MSKL_SHF
+#define MSC01_PBC_CS0MSKL_MSKL_MSK		MSC01_PBC_CSxMSKL_MSKL_MSK
+#define MSC01_PBC_CS1MSKL_MSKL_SHF		MSC01_PBC_CSxMSKL_MSKL_SHF
+#define MSC01_PBC_CS1MSKL_MSKL_MSK		MSC01_PBC_CSxMSKL_MSKL_MSK
+#define MSC01_PBC_CS2MSKL_MSKL_SHF		MSC01_PBC_CSxMSKL_MSKL_SHF
+#define MSC01_PBC_CS2MSKL_MSKL_MSK		MSC01_PBC_CSxMSKL_MSKL_MSK
+#define MSC01_PBC_CS3MSKL_MSKL_SHF		MSC01_PBC_CSxMSKL_MSKL_SHF
+#define MSC01_PBC_CS3MSKL_MSKL_MSK		MSC01_PBC_CSxMSKL_MSKL_MSK
+
+#define MSC01_PBC_CSxCFG_ADM_SHF		20
+#define MSC01_PBC_CSxCFG_ADM_MSK		0x00100000
+#define MSC01_PBC_CSxCFG_ADM_BIT		0x00100000
+#define MSC01_PBC_CSxCFG_DTYP_SHF		16
+#define MSC01_PBC_CSxCFG_DTYP_MSK		0x00030000
+#define MSC01_PBC_CSxCFG_WSIDLE_SHF		8
+#define MSC01_PBC_CSxCFG_WSIDLE_MSK		0x00001f00
+#define MSC01_PBC_CSxCFG_WS_SHF			0
+#define MSC01_PBC_CSxCFG_WS_MSK			0x0000001f
+#define MSC01_PBC_CS0CFG_ADM_SHF		MSC01_PBC_CSxCFG_ADM_SHF
+#define MSC01_PBC_CS0CFG_ADM_MSK		MSC01_PBC_CSxCFG_ADM_MSK
+#define MSC01_PBC_CS0CFG_ADM_BIT		MSC01_PBC_CSxCFG_ADM_BIT
+#define MSC01_PBC_CS0CFG_DTYP_SHF		MSC01_PBC_CSxCFG_DTYP_SHF
+#define MSC01_PBC_CS0CFG_DTYP_MSK		MSC01_PBC_CSxCFG_DTYP_MSK
+#define MSC01_PBC_CS0CFG_WSIDLE_SHF		MSC01_PBC_CSxCFG_WSIDLE_SHF
+#define MSC01_PBC_CS0CFG_WSIDLE_MSK		MSC01_PBC_CSxCFG_WSIDLE_MSK
+#define MSC01_PBC_CS0CFG_WS_SHF			MSC01_PBC_CSxCFG_WS_SHF
+#define MSC01_PBC_CS0CFG_WS_MSK			MSC01_PBC_CSxCFG_WS_MSK
+#define MSC01_PBC_CS1CFG_ADM_SHF		MSC01_PBC_CSxCFG_ADM_SHF
+#define MSC01_PBC_CS1CFG_ADM_MSK		MSC01_PBC_CSxCFG_ADM_MSK
+#define MSC01_PBC_CS1CFG_ADM_BIT		MSC01_PBC_CSxCFG_ADM_BIT
+#define MSC01_PBC_CS1CFG_DTYP_SHF		MSC01_PBC_CSxCFG_DTYP_SHF
+#define MSC01_PBC_CS1CFG_DTYP_MSK		MSC01_PBC_CSxCFG_DTYP_MSK
+#define MSC01_PBC_CS1CFG_WSIDLE_SHF		MSC01_PBC_CSxCFG_WSIDLE_SHF
+#define MSC01_PBC_CS1CFG_WSIDLE_MSK		MSC01_PBC_CSxCFG_WSIDLE_MSK
+#define MSC01_PBC_CS1CFG_WS_SHF			MSC01_PBC_CSxCFG_WS_SHF
+#define MSC01_PBC_CS1CFG_WS_MSK			MSC01_PBC_CSxCFG_WS_MSK
+#define MSC01_PBC_CS2CFG_ADM_SHF		MSC01_PBC_CSxCFG_ADM_SHF
+#define MSC01_PBC_CS2CFG_ADM_MSK		MSC01_PBC_CSxCFG_ADM_MSK
+#define MSC01_PBC_CS2CFG_ADM_BIT		MSC01_PBC_CSxCFG_ADM_BIT
+#define MSC01_PBC_CS2CFG_DTYP_SHF		MSC01_PBC_CSxCFG_DTYP_SHF
+#define MSC01_PBC_CS2CFG_DTYP_MSK		MSC01_PBC_CSxCFG_DTYP_MSK
+#define MSC01_PBC_CS2CFG_WSIDLE_SHF		MSC01_PBC_CSxCFG_WSIDLE_SHF
+#define MSC01_PBC_CS2CFG_WSIDLE_MSK		MSC01_PBC_CSxCFG_WSIDLE_MSK
+#define MSC01_PBC_CS2CFG_WS_SHF			MSC01_PBC_CSxCFG_WS_SHF
+#define MSC01_PBC_CS2CFG_WS_MSK			MSC01_PBC_CSxCFG_WS_MSK
+#define MSC01_PBC_CS3CFG_ADM_SHF		MSC01_PBC_CSxCFG_ADM_SHF
+#define MSC01_PBC_CS3CFG_ADM_MSK		MSC01_PBC_CSxCFG_ADM_MSK
+#define MSC01_PBC_CS3CFG_ADM_BIT		MSC01_PBC_CSxCFG_ADM_BIT
+#define MSC01_PBC_CS3CFG_DTYP_SHF		MSC01_PBC_CSxCFG_DTYP_SHF
+#define MSC01_PBC_CS3CFG_DTYP_MSK		MSC01_PBC_CSxCFG_DTYP_MSK
+#define MSC01_PBC_CS3CFG_WSIDLE_SHF		MSC01_PBC_CSxCFG_WSIDLE_SHF
+#define MSC01_PBC_CS3CFG_WSIDLE_MSK		MSC01_PBC_CSxCFG_WSIDLE_MSK
+#define MSC01_PBC_CS3CFG_WS_SHF			MSC01_PBC_CSxCFG_WS_SHF
+#define MSC01_PBC_CS3CFG_WS_MSK			MSC01_PBC_CSxCFG_WS_MSK
+
+#define MSC01_PBC_CSxTIM_CDT_SHF		8
+#define MSC01_PBC_CSxTIM_CDT_MSK		0x00001f00
+#define MSC01_PBC_CSxTIM_CAT_SHF		0
+#define MSC01_PBC_CSxTIM_CAT_MSK		0x0000001f
+#define MSC01_PBC_CS0TIM_CDT_SHF		MSC01_PBC_CSxTIM_CDT_SHF
+#define MSC01_PBC_CS0TIM_CDT_MSK		MSC01_PBC_CSxTIM_CDT_MSK
+#define MSC01_PBC_CS0TIM_CAT_SHF		MSC01_PBC_CSxTIM_CAT_SHF
+#define MSC01_PBC_CS0TIM_CAT_MSK		MSC01_PBC_CSxTIM_CAT_MSK
+#define MSC01_PBC_CS1TIM_CDT_SHF		MSC01_PBC_CSxTIM_CDT_SHF
+#define MSC01_PBC_CS1TIM_CDT_MSK		MSC01_PBC_CSxTIM_CDT_MSK
+#define MSC01_PBC_CS1TIM_CAT_SHF		MSC01_PBC_CSxTIM_CAT_SHF
+#define MSC01_PBC_CS1TIM_CAT_MSK		MSC01_PBC_CSxTIM_CAT_MSK
+#define MSC01_PBC_CS2TIM_CDT_SHF		MSC01_PBC_CSxTIM_CDT_SHF
+#define MSC01_PBC_CS2TIM_CDT_MSK		MSC01_PBC_CSxTIM_CDT_MSK
+#define MSC01_PBC_CS2TIM_CAT_SHF		MSC01_PBC_CSxTIM_CAT_SHF
+#define MSC01_PBC_CS2TIM_CAT_MSK		MSC01_PBC_CSxTIM_CAT_MSK
+#define MSC01_PBC_CS3TIM_CDT_SHF		MSC01_PBC_CSxTIM_CDT_SHF
+#define MSC01_PBC_CS3TIM_CDT_MSK		MSC01_PBC_CSxTIM_CDT_MSK
+#define MSC01_PBC_CS3TIM_CAT_SHF		MSC01_PBC_CSxTIM_CAT_SHF
+#define MSC01_PBC_CS3TIM_CAT_MSK		MSC01_PBC_CSxTIM_CAT_MSK
+
+#define MSC01_PBC_CSxRW_RDT_SHF		24
+#define MSC01_PBC_CSxRW_RDT_MSK		0x1f000000
+#define MSC01_PBC_CSxRW_RAT_SHF		16
+#define MSC01_PBC_CSxRW_RAT_MSK		0x001f0000
+#define MSC01_PBC_CSxRW_WDT_SHF		8
+#define MSC01_PBC_CSxRW_WDT_MSK		0x00001f00
+#define MSC01_PBC_CSxRW_WAT_SHF		0
+#define MSC01_PBC_CSxRW_WAT_MSK		0x0000001f
+#define MSC01_PBC_CS0RW_RDT_SHF		MSC01_PBC_CSxRW_RDT_SHF
+#define MSC01_PBC_CS0RW_RDT_MSK		MSC01_PBC_CSxRW_RDT_MSK
+#define MSC01_PBC_CS0RW_RAT_SHF		MSC01_PBC_CSxRW_RAT_SHF
+#define MSC01_PBC_CS0RW_RAT_MSK		MSC01_PBC_CSxRW_RAT_MSK
+#define MSC01_PBC_CS0RW_WDT_SHF		MSC01_PBC_CSxRW_WDT_SHF
+#define MSC01_PBC_CS0RW_WDT_MSK		MSC01_PBC_CSxRW_WDT_MSK
+#define MSC01_PBC_CS0RW_WAT_SHF		MSC01_PBC_CSxRW_WAT_SHF
+#define MSC01_PBC_CS0RW_WAT_MSK		MSC01_PBC_CSxRW_WAT_MSK
+#define MSC01_PBC_CS1RW_RDT_SHF		MSC01_PBC_CSxRW_RDT_SHF
+#define MSC01_PBC_CS1RW_RDT_MSK		MSC01_PBC_CSxRW_RDT_MSK
+#define MSC01_PBC_CS1RW_RAT_SHF		MSC01_PBC_CSxRW_RAT_SHF
+#define MSC01_PBC_CS1RW_RAT_MSK		MSC01_PBC_CSxRW_RAT_MSK
+#define MSC01_PBC_CS1RW_WDT_SHF		MSC01_PBC_CSxRW_WDT_SHF
+#define MSC01_PBC_CS1RW_WDT_MSK		MSC01_PBC_CSxRW_WDT_MSK
+#define MSC01_PBC_CS1RW_WAT_SHF		MSC01_PBC_CSxRW_WAT_SHF
+#define MSC01_PBC_CS1RW_WAT_MSK		MSC01_PBC_CSxRW_WAT_MSK
+#define MSC01_PBC_CS2RW_RDT_SHF		MSC01_PBC_CSxRW_RDT_SHF
+#define MSC01_PBC_CS2RW_RDT_MSK		MSC01_PBC_CSxRW_RDT_MSK
+#define MSC01_PBC_CS2RW_RAT_SHF		MSC01_PBC_CSxRW_RAT_SHF
+#define MSC01_PBC_CS2RW_RAT_MSK		MSC01_PBC_CSxRW_RAT_MSK
+#define MSC01_PBC_CS2RW_WDT_SHF		MSC01_PBC_CSxRW_WDT_SHF
+#define MSC01_PBC_CS2RW_WDT_MSK		MSC01_PBC_CSxRW_WDT_MSK
+#define MSC01_PBC_CS2RW_WAT_SHF		MSC01_PBC_CSxRW_WAT_SHF
+#define MSC01_PBC_CS2RW_WAT_MSK		MSC01_PBC_CSxRW_WAT_MSK
+#define MSC01_PBC_CS3RW_RDT_SHF		MSC01_PBC_CSxRW_RDT_SHF
+#define MSC01_PBC_CS3RW_RDT_MSK		MSC01_PBC_CSxRW_RDT_MSK
+#define MSC01_PBC_CS3RW_RAT_SHF		MSC01_PBC_CSxRW_RAT_SHF
+#define MSC01_PBC_CS3RW_RAT_MSK		MSC01_PBC_CSxRW_RAT_MSK
+#define MSC01_PBC_CS3RW_WDT_SHF		MSC01_PBC_CSxRW_WDT_SHF
+#define MSC01_PBC_CS3RW_WDT_MSK		MSC01_PBC_CSxRW_WDT_MSK
+#define MSC01_PBC_CS3RW_WAT_SHF		MSC01_PBC_CSxRW_WAT_SHF
+#define MSC01_PBC_CS3RW_WAT_MSK		MSC01_PBC_CSxRW_WAT_MSK
+
+/* PERIPHERAL BUS CONTROLLER
+   Registers absolute addresses:
+   MSC01_PBC_REG_BASE is defined in <msc01_memmap.h>*/
+
+#define MSC01_PBC_ID            (MSC01_PBC_REG_BASE + MSC01_PBC_ID_OFS)
+#define MSC01_PBC_CLKCFG        (MSC01_PBC_REG_BASE + MSC01_PBC_CLKCFG_OFS)
+
+#define MSC01_PBC_CS0BASL       (MSC01_PBC_REG_BASE + MSC01_PBC_CS0BASL_OFS)
+#define MSC01_PBC_CS0MSKL       (MSC01_PBC_REG_BASE + MSC01_PBC_CS0MSKL_OFS)
+#define MSC01_PBC_CS1BASL       (MSC01_PBC_REG_BASE + MSC01_PBC_CS1BASL_OFS)
+#define MSC01_PBC_CS1MSKL       (MSC01_PBC_REG_BASE + MSC01_PBC_CS1MSKL_OFS)
+#define MSC01_PBC_CS2BASL       (MSC01_PBC_REG_BASE + MSC01_PBC_CS2BASL_OFS)
+#define MSC01_PBC_CS2MSKL       (MSC01_PBC_REG_BASE + MSC01_PBC_CS2MSKL_OFS)
+#define MSC01_PBC_CS3BASL       (MSC01_PBC_REG_BASE + MSC01_PBC_CS3BASL_OFS)
+#define MSC01_PBC_CS3MSKL       (MSC01_PBC_REG_BASE + MSC01_PBC_CS3MSKL_OFS)
+
+#define MSC01_PBC_CS0CFG        (MSC01_PBC_REG_BASE + MSC01_PBC_CS0CFG_OFS)
+#define MSC01_PBC_CS0TIM        (MSC01_PBC_REG_BASE + MSC01_PBC_CS0TIM_OFS)
+#define MSC01_PBC_CS0RW         (MSC01_PBC_REG_BASE + MSC01_PBC_CS0RW_OFS)
+#define MSC01_PBC_CS1CFG        (MSC01_PBC_REG_BASE + MSC01_PBC_CS1CFG_OFS)
+#define MSC01_PBC_CS1TIM        (MSC01_PBC_REG_BASE + MSC01_PBC_CS1TIM_OFS)
+#define MSC01_PBC_CS1RW         (MSC01_PBC_REG_BASE + MSC01_PBC_CS1RW_OFS)
+#define MSC01_PBC_CS2CFG        (MSC01_PBC_REG_BASE + MSC01_PBC_CS2CFG_OFS)
+#define MSC01_PBC_CS2TIM        (MSC01_PBC_REG_BASE + MSC01_PBC_CS2TIM_OFS)
+#define MSC01_PBC_CS2RW         (MSC01_PBC_REG_BASE + MSC01_PBC_CS2RW_OFS)
+#define MSC01_PBC_CS3CFG        (MSC01_PBC_REG_BASE + MSC01_PBC_CS3CFG_OFS)
+#define MSC01_PBC_CS3TIM        (MSC01_PBC_REG_BASE + MSC01_PBC_CS3TIM_OFS)
+#define MSC01_PBC_CS3RW         (MSC01_PBC_REG_BASE + MSC01_PBC_CS3RW_OFS)
+
+#define MSC01_PBC_CSxCFG_DTYP_8BIT	0
+#define MSC01_PBC_CSxCFG_DTYP_16BIT	1
+#define MSC01_PBC_CSxCFG_DTYP_32BIT	2
+#define MSC01_PBC_CS0CFG_DTYP_8BIT	MSC01_PBC_CSxCFG_DTYP_8BIT
+#define MSC01_PBC_CS0CFG_DTYP_16BIT	MSC01_PBC_CSxCFG_DTYP_16BIT
+#define MSC01_PBC_CS0CFG_DTYP_32BIT	MSC01_PBC_CSxCFG_DTYP_32BIT
+#define MSC01_PBC_CS1CFG_DTYP_8BIT	MSC01_PBC_CSxCFG_DTYP_8BIT
+#define MSC01_PBC_CS1CFG_DTYP_16BIT	MSC01_PBC_CSxCFG_DTYP_16BIT
+#define MSC01_PBC_CS1CFG_DTYP_32BIT	MSC01_PBC_CSxCFG_DTYP_32BIT
+#define MSC01_PBC_CS2CFG_DTYP_8BIT	MSC01_PBC_CSxCFG_DTYP_8BIT
+#define MSC01_PBC_CS2CFG_DTYP_16BIT	MSC01_PBC_CSxCFG_DTYP_16BIT
+#define MSC01_PBC_CS2CFG_DTYP_32BIT	MSC01_PBC_CSxCFG_DTYP_32BIT
+#define MSC01_PBC_CS3CFG_DTYP_8BIT	MSC01_PBC_CSxCFG_DTYP_8BIT
+#define MSC01_PBC_CS3CFG_DTYP_16BIT	MSC01_PBC_CSxCFG_DTYP_16BIT
+#define MSC01_PBC_CS3CFG_DTYP_32BIT	MSC01_PBC_CSxCFG_DTYP_32BIT
+
+
+/*
+ ****************************************************************************
+ * Register offset addresses
+ ***************************************************************************
+ */
+
+/* PCI bridge ID in MSC01_PCI_ID */
+#define MSC01_ID_PCI                    0x82
+
+#define MSC01_PCI_ID_OFS		0x0000
+#define MSC01_PCI_SC2PMBASL_OFS		0x0208
+#define MSC01_PCI_SC2PMMSKL_OFS		0x0218
+#define MSC01_PCI_SC2PMMAPL_OFS		0x0228
+#define MSC01_PCI_SC2PIOBASL_OFS	0x0248
+#define MSC01_PCI_SC2PIOMSKL_OFS	0x0258
+#define MSC01_PCI_SC2PIOMAPL_OFS	0x0268
+#define MSC01_PCI_P2SCMSKL_OFS		0x0308
+#define MSC01_PCI_P2SCMAPL_OFS		0x0318
+#define MSC01_PCI_INTCFG_OFS		0x0600
+#define MSC01_PCI_INTSTAT_OFS		0x0608
+#define MSC01_PCI_CFGADDR_OFS		0x0610
+#define MSC01_PCI_CFGDATA_OFS		0x0618
+#define MSC01_PCI_IACK_OFS		0x0620
+#define MSC01_PCI_HEAD0_OFS		0x2000  /* DevID, VendorID */
+#define MSC01_PCI_HEAD1_OFS		0x2008  /* Status, Command */
+#define MSC01_PCI_HEAD2_OFS		0x2010  /* Class code, RevID */
+#define MSC01_PCI_HEAD3_OFS		0x2018  /* bist, header, latency */
+#define MSC01_PCI_HEAD4_OFS		0x2020  /* BAR 0 */
+#define MSC01_PCI_HEAD5_OFS		0x2028  /* BAR 1 */
+#define MSC01_PCI_HEAD6_OFS		0x2030  /* BAR 2 */
+#define MSC01_PCI_HEAD7_OFS		0x2038  /* BAR 3 */
+#define MSC01_PCI_HEAD8_OFS		0x2040  /* BAR 4 */
+#define MSC01_PCI_HEAD9_OFS		0x2048  /* BAR 5 */
+#define MSC01_PCI_HEAD10_OFS		0x2050  /* CardBus CIS Ptr */
+#define MSC01_PCI_HEAD11_OFS		0x2058  /* SubSystem ID, -VendorID */
+#define MSC01_PCI_HEAD12_OFS		0x2060  /* ROM BAR */
+#define MSC01_PCI_HEAD13_OFS		0x2068  /* Capabilities ptr */
+#define MSC01_PCI_HEAD14_OFS		0x2070  /* reserved */
+#define MSC01_PCI_HEAD15_OFS		0x2078  /* Maxl, ming, intpin, int */
+#define MSC01_PCI_BAR0_OFS		0x2220
+#define MSC01_PCI_CFG_OFS		0x2380
+#define MSC01_PCI_SWAP_OFS		0x2388
+
+
+/*
+ ****************************************************************************
+ * Register encodings
+ ***************************************************************************
+ */
+
+#define MSC01_PCI_ID_ID_SHF		16
+#define MSC01_PCI_ID_ID_MSK		0x00ff0000
+#define MSC01_PCI_ID_MAR_SHF		8
+#define MSC01_PCI_ID_MAR_MSK		0x0000ff00
+#define MSC01_PCI_ID_MIR_SHF		0
+#define MSC01_PCI_ID_MIR_MSK		0x000000ff
+
+#define MSC01_PCI_SC2PMBASL_BAS_SHF	24
+#define MSC01_PCI_SC2PMBASL_BAS_MSK	0xff000000
+
+#define MSC01_PCI_SC2PMMSKL_MSK_SHF	24
+#define MSC01_PCI_SC2PMMSKL_MSK_MSK	0xff000000
+
+#define MSC01_PCI_SC2PMMAPL_MAP_SHF	24
+#define MSC01_PCI_SC2PMMAPL_MAP_MSK	0xff000000
+
+#define MSC01_PCI_SC2PIOBASL_BAS_SHF	24
+#define MSC01_PCI_SC2PIOBASL_BAS_MSK	0xff000000
+
+#define MSC01_PCI_SC2PIOMSKL_MSK_SHF	24
+#define MSC01_PCI_SC2PIOMSKL_MSK_MSK	0xff000000
+
+#define MSC01_PCI_SC2PIOMAPL_MAP_SHF	24
+#define MSC01_PCI_SC2PIOMAPL_MAP_MSK	0xff000000
+
+#define MSC01_PCI_P2SCMSKL_MSK_SHF	20
+#define MSC01_PCI_P2SCMSKL_MSK_MSK	0xfff00000
+
+#define MSC01_PCI_P2SCMAPL_MAP_SHF	20
+#define MSC01_PCI_P2SCMAPL_MAP_MSK	0xfff00000
+
+#define MSC01_PCI_INTCFG_RST_SHF        10
+#define MSC01_PCI_INTCFG_RST_MSK        0x00000400
+#define MSC01_PCI_INTCFG_RST_BIT        0x00000400
+#define MSC01_PCI_INTCFG_MWE_SHF        9
+#define MSC01_PCI_INTCFG_MWE_MSK        0x00000200
+#define MSC01_PCI_INTCFG_MWE_BIT        0x00000200
+#define MSC01_PCI_INTCFG_DTO_SHF        8
+#define MSC01_PCI_INTCFG_DTO_MSK        0x00000100
+#define MSC01_PCI_INTCFG_DTO_BIT        0x00000100
+#define MSC01_PCI_INTCFG_MA_SHF         7
+#define MSC01_PCI_INTCFG_MA_MSK         0x00000080
+#define MSC01_PCI_INTCFG_MA_BIT         0x00000080
+#define MSC01_PCI_INTCFG_TA_SHF         6
+#define MSC01_PCI_INTCFG_TA_MSK         0x00000040
+#define MSC01_PCI_INTCFG_TA_BIT         0x00000040
+#define MSC01_PCI_INTCFG_RTY_SHF        5
+#define MSC01_PCI_INTCFG_RTY_MSK        0x00000020
+#define MSC01_PCI_INTCFG_RTY_BIT        0x00000020
+#define MSC01_PCI_INTCFG_MWP_SHF        4
+#define MSC01_PCI_INTCFG_MWP_MSK        0x00000010
+#define MSC01_PCI_INTCFG_MWP_BIT        0x00000010
+#define MSC01_PCI_INTCFG_MRP_SHF        3
+#define MSC01_PCI_INTCFG_MRP_MSK        0x00000008
+#define MSC01_PCI_INTCFG_MRP_BIT        0x00000008
+#define MSC01_PCI_INTCFG_SWP_SHF        2
+#define MSC01_PCI_INTCFG_SWP_MSK        0x00000004
+#define MSC01_PCI_INTCFG_SWP_BIT        0x00000004
+#define MSC01_PCI_INTCFG_SRP_SHF        1
+#define MSC01_PCI_INTCFG_SRP_MSK        0x00000002
+#define MSC01_PCI_INTCFG_SRP_BIT        0x00000002
+#define MSC01_PCI_INTCFG_SE_SHF         0
+#define MSC01_PCI_INTCFG_SE_MSK         0x00000001
+#define MSC01_PCI_INTCFG_SE_BIT         0x00000001
+
+#define MSC01_PCI_INTSTAT_RST_SHF       10
+#define MSC01_PCI_INTSTAT_RST_MSK       0x00000400
+#define MSC01_PCI_INTSTAT_RST_BIT       0x00000400
+#define MSC01_PCI_INTSTAT_MWE_SHF       9
+#define MSC01_PCI_INTSTAT_MWE_MSK       0x00000200
+#define MSC01_PCI_INTSTAT_MWE_BIT       0x00000200
+#define MSC01_PCI_INTSTAT_DTO_SHF       8
+#define MSC01_PCI_INTSTAT_DTO_MSK       0x00000100
+#define MSC01_PCI_INTSTAT_DTO_BIT       0x00000100
+#define MSC01_PCI_INTSTAT_MA_SHF        7
+#define MSC01_PCI_INTSTAT_MA_MSK        0x00000080
+#define MSC01_PCI_INTSTAT_MA_BIT        0x00000080
+#define MSC01_PCI_INTSTAT_TA_SHF        6
+#define MSC01_PCI_INTSTAT_TA_MSK        0x00000040
+#define MSC01_PCI_INTSTAT_TA_BIT        0x00000040
+#define MSC01_PCI_INTSTAT_RTY_SHF       5
+#define MSC01_PCI_INTSTAT_RTY_MSK       0x00000020
+#define MSC01_PCI_INTSTAT_RTY_BIT       0x00000020
+#define MSC01_PCI_INTSTAT_MWP_SHF       4
+#define MSC01_PCI_INTSTAT_MWP_MSK       0x00000010
+#define MSC01_PCI_INTSTAT_MWP_BIT       0x00000010
+#define MSC01_PCI_INTSTAT_MRP_SHF       3
+#define MSC01_PCI_INTSTAT_MRP_MSK       0x00000008
+#define MSC01_PCI_INTSTAT_MRP_BIT       0x00000008
+#define MSC01_PCI_INTSTAT_SWP_SHF       2
+#define MSC01_PCI_INTSTAT_SWP_MSK       0x00000004
+#define MSC01_PCI_INTSTAT_SWP_BIT       0x00000004
+#define MSC01_PCI_INTSTAT_SRP_SHF       1
+#define MSC01_PCI_INTSTAT_SRP_MSK       0x00000002
+#define MSC01_PCI_INTSTAT_SRP_BIT       0x00000002
+#define MSC01_PCI_INTSTAT_SE_SHF        0
+#define MSC01_PCI_INTSTAT_SE_MSK        0x00000001
+#define MSC01_PCI_INTSTAT_SE_BIT        0x00000001
+
+#define MSC01_PCI_CFGADDR_BNUM_SHF	16
+#define MSC01_PCI_CFGADDR_BNUM_MSK	0x00ff0000
+#define MSC01_PCI_CFGADDR_DNUM_SHF	11
+#define MSC01_PCI_CFGADDR_DNUM_MSK	0x0000f800
+#define MSC01_PCI_CFGADDR_FNUM_SHF	8
+#define MSC01_PCI_CFGADDR_FNUM_MSK	0x00000700
+#define MSC01_PCI_CFGADDR_RNUM_SHF	2
+#define MSC01_PCI_CFGADDR_RNUM_MSK	0x000000fc
+
+#define MSC01_PCI_CFGDATA_DATA_SHF	0
+#define MSC01_PCI_CFGDATA_DATA_MSK	0xffffffff
+
+
+#define MSC01_PCI_HEAD0_DID_SHF		16
+#define MSC01_PCI_HEAD0_DID_MSK		0xffff0000
+#define MSC01_PCI_HEAD0_VID_SHF         0
+#define MSC01_PCI_HEAD0_VID_MSK         0x0000ffff
+#define MSC01_PCI_HEAD1_PED_SHF         31
+#define MSC01_PCI_HEAD1_PED_MSK         0x80000000
+#define MSC01_PCI_HEAD1_PED_BIT         0x80000000
+#define MSC01_PCI_HEAD1_SSE_SHF         30
+#define MSC01_PCI_HEAD1_SSE_MSK         0x40000000
+#define MSC01_PCI_HEAD1_SSE_BIT         0x40000000
+#define MSC01_PCI_HEAD1_MAR_SHF         29
+#define MSC01_PCI_HEAD1_MAR_MSK         0x20000000
+#define MSC01_PCI_HEAD1_MAR_BIT         0x20000000
+#define MSC01_PCI_HEAD1_TAR_SHF         28
+#define MSC01_PCI_HEAD1_TAR_MSK         0x10000000
+#define MSC01_PCI_HEAD1_TAR_BIT         0x10000000
+#define MSC01_PCI_HEAD1_TAS_SHF         27
+#define MSC01_PCI_HEAD1_TAS_MSK         0x08000000
+#define MSC01_PCI_HEAD1_TAS_BIT         0x08000000
+#define MSC01_PCI_HEAD1_DST_SHF         25
+#define MSC01_PCI_HEAD1_DST_MSK         0x06000000
+#define MSC01_PCI_HEAD1_DST_BIT         0x06000000
+#define MSC01_PCI_HEAD1_MPE_SHF         24
+#define MSC01_PCI_HEAD1_MPE_BIT         0x01000000
+#define MSC01_PCI_HEAD1_MPE_MSK         0x01000000
+#define MSC01_PCI_HEAD1_BB_SHF          23
+#define MSC01_PCI_HEAD1_BB_BIT          0x00800000
+#define MSC01_PCI_HEAD1_BB_MSK          0x00800000
+#define MSC01_PCI_HEAD1_UDF_SHF         22
+#define MSC01_PCI_HEAD1_UDF_BIT         0x00400000
+#define MSC01_PCI_HEAD1_UDF_MSK         0x00400000
+#define MSC01_PCI_HEAD1_66M_SHF         21
+#define MSC01_PCI_HEAD1_66M_BIT         0x00200000
+#define MSC01_PCI_HEAD1_66M_MSK         0x00200000
+#define MSC01_PCI_HEAD1_CAP_SHF         20
+#define MSC01_PCI_HEAD1_CAP_BIT         0x00100000
+#define MSC01_PCI_HEAD1_CAP_MSK         0x00100000
+#define MSC01_PCI_HEAD1_EBB_SHF         9
+#define MSC01_PCI_HEAD1_EBB_BIT         0x00000200
+#define MSC01_PCI_HEAD1_EBB_MSK         0x00000200
+#define MSC01_PCI_HEAD1_SE_SHF          8
+#define MSC01_PCI_HEAD1_SE_BIT          0x00000100
+#define MSC01_PCI_HEAD1_SE_MSK          0x00000100
+#define MSC01_PCI_HEAD1_SC_SHF          7
+#define MSC01_PCI_HEAD1_SC_BIT          0x00000080
+#define MSC01_PCI_HEAD1_SC_MSK          0x00000080
+#define MSC01_PCI_HEAD1_PER_SHF         6
+#define MSC01_PCI_HEAD1_PER_BIT         0x00000040
+#define MSC01_PCI_HEAD1_PER_MSK         0x00000040
+#define MSC01_PCI_HEAD1_VGA_SHF         5
+#define MSC01_PCI_HEAD1_VGA_BIT         0x00000020
+#define MSC01_PCI_HEAD1_VGA_MSK         0x00000020
+#define MSC01_PCI_HEAD1_MWI_SHF         4
+#define MSC01_PCI_HEAD1_MWI_BIT         0x00000010
+#define MSC01_PCI_HEAD1_MWI_MSK         0x00000010
+#define MSC01_PCI_HEAD1_MSC_SHF         3
+#define MSC01_PCI_HEAD1_MSC_BIT         0x00000008
+#define MSC01_PCI_HEAD1_MSC_MSK         0x00000008
+#define MSC01_PCI_HEAD1_EMA_SHF         2
+#define MSC01_PCI_HEAD1_EMA_BIT         0x00000004
+#define MSC01_PCI_HEAD1_EMA_MSK         0x00000004
+#define MSC01_PCI_HEAD1_EMS_SHF         1
+#define MSC01_PCI_HEAD1_EMS_MSK         0x00000002
+#define MSC01_PCI_HEAD1_EMS_BIT         0x00000002
+#define MSC01_PCI_HEAD1_EIO_SHF         0
+#define MSC01_PCI_HEAD1_EIO_MSK         0x00000001
+#define MSC01_PCI_HEAD1_EIO_BIT         0x00000001
+#define MSC01_PCI_HEAD2_CLASS_SHF       8
+#define MSC01_PCI_HEAD2_CLASS_MSK       0xffffff00
+#define MSC01_PCI_HEAD2_RID_SHF         0
+#define MSC01_PCI_HEAD2_RID_MSK         0x000000ff
+#define MSC01_PCI_HEAD3_BIST_SHF        24
+#define MSC01_PCI_HEAD3_BIST_MSK        0xff000000
+#define MSC01_PCI_HEAD3_HTYPE_SHF       16
+#define MSC01_PCI_HEAD3_HTYPE_MSK       0x00ff0000
+#define MSC01_PCI_HEAD3_LAT_SHF         8
+#define MSC01_PCI_HEAD3_LAT_MSK         0x0000ff00
+#define MSC01_PCI_HEAD3_CLS_SHF         0
+#define MSC01_PCI_HEAD3_CLS_MSK         0x000000ff
+#define MSC01_PCI_HEAD4_BAR_SHF         0
+#define MSC01_PCI_HEAD4_BAR_MSK         0xffffffff
+#define MSC01_PCI_HEAD10_CIS_SHF        0
+#define MSC01_PCI_HEAD10_CIS_MSK        0xffffffff
+#define MSC01_PCI_HEAD11_SID_SHF        16
+#define MSC01_PCI_HEAD11_SID_MSK        0xffff0000
+#define MSC01_PCI_HEAD11_SVID_SHF       0
+#define MSC01_PCI_HEAD11_SVID_MSK       0x0000ffff
+#define MSC01_PCI_HEAD12_EROM_SHF       0
+#define MSC01_PCI_HEAD12_EROM_MSK       0xffffffff
+#define MSC01_PCI_HEAD13_CAPP_SHF       0
+#define MSC01_PCI_HEAD13_CAPP_MSK       0x000000ff
+#define MSC01_PCI_HEAD15_MAXL_SHF       24
+#define MSC01_PCI_HEAD15_MAXL_MSK       0xff000000
+#define MSC01_PCI_HEAD15_MING_SHF       16
+#define MSC01_PCI_HEAD15_MING_MSK       0x00ff0000
+#define MSC01_PCI_HEAD15_IPIN_SHF       8
+#define MSC01_PCI_HEAD15_IPIN_MSK       0x0000ff00
+#define MSC01_PCI_HEAD15_ILINE_SHF      0
+#define MSC01_PCI_HEAD15_ILINE_MSK      0x000000ff
+
+/* The defines below are ONLY valid for a MEM bar! */
+#define MSC01_PCI_BAR0_SIZE_SHF	        4
+#define MSC01_PCI_BAR0_SIZE_MSK	        0xfffffff0
+#define MSC01_PCI_BAR0_P_SHF	        3
+#define MSC01_PCI_BAR0_P_MSK	        0x00000008
+#define MSC01_PCI_BAR0_P_BIT	        MSC01_PCI_BAR0_P_MSK
+#define MSC01_PCI_BAR0_D_SHF	        1
+#define MSC01_PCI_BAR0_D_MSK	        0x00000006
+#define MSC01_PCI_BAR0_T_SHF	        0
+#define MSC01_PCI_BAR0_T_MSK	        0x00000001
+#define MSC01_PCI_BAR0_T_BIT	        MSC01_PCI_BAR0_T_MSK
+
+
+#define MSC01_PCI_CFG_RA_SHF	        17
+#define MSC01_PCI_CFG_RA_MSK	        0x00020000
+#define MSC01_PCI_CFG_RA_BIT	        MSC01_PCI_CFG_RA_MSK
+#define MSC01_PCI_CFG_G_SHF	        16
+#define MSC01_PCI_CFG_G_MSK	        0x00010000
+#define MSC01_PCI_CFG_G_BIT	        MSC01_PCI_CFG_G_MSK
+#define MSC01_PCI_CFG_EN_SHF	        15
+#define MSC01_PCI_CFG_EN_MSK	        0x00008000
+#define MSC01_PCI_CFG_EN_BIT	        MSC01_PCI_CFG_EN_MSK
+#define MSC01_PCI_CFG_MRTRY_SHF         0
+#define MSC01_PCI_CFG_MRTRY_MSK         0x00000fff
+
+#define MSC01_PCI_SWAP_IO_SHF		18
+#define MSC01_PCI_SWAP_IO_MSK		0x000c0000
+#define MSC01_PCI_SWAP_IO_NOSWAP	0
+#define MSC01_PCI_SWAP_IO_BYTESWAP	1
+#define MSC01_PCI_SWAP_MEM_SHF		16
+#define MSC01_PCI_SWAP_MEM_MSK		0x00030000
+#define MSC01_PCI_SWAP_MEM_NOSWAP	0
+#define MSC01_PCI_SWAP_MEM_BYTESWAP	1
+#define MSC01_PCI_SWAP_BAR0_SHF		0
+#define MSC01_PCI_SWAP_BAR0_MSK		0x00000003
+#define MSC01_PCI_SWAP_BAR0_NOSWAP	0
+#define MSC01_PCI_SWAP_BAR0_BYTESWAP	1
+
+/*
+ ***************************************************************************
+ * Registers absolute addresses
+ ***************************************************************************
+ */
+
+#define MSC01_PCI_ID            (MSC01_PCI_REG_BASE + MSC01_PCI_ID_OFS)
+#define MSC01_PCI_SC2PMBASL     (MSC01_PCI_REG_BASE + MSC01_PCI_SC2PMBASL_OFS)
+#define MSC01_PCI_SC2PMMSKL     (MSC01_PCI_REG_BASE + MSC01_PCI_SC2PMMSKL_OFS)
+#define MSC01_PCI_SC2PMMAPL     (MSC01_PCI_REG_BASE + MSC01_PCI_SC2PMMAPL_OFS)
+#define MSC01_PCI_SC2PIOBASL    (MSC01_PCI_REG_BASE + MSC01_PCI_SC2PIOBASL_OFS)
+#define MSC01_PCI_SC2PIOMSKL    (MSC01_PCI_REG_BASE + MSC01_PCI_SC2PIOMSKL_OFS)
+#define MSC01_PCI_SC2PIOMAPL    (MSC01_PCI_REG_BASE + MSC01_PCI_SC2PIOMAPL_OFS)
+#define MSC01_PCI_P2SCMSKL      (MSC01_PCI_REG_BASE + MSC01_PCI_P2SCMSKL_OFS)
+#define MSC01_PCI_P2SCMAPL      (MSC01_PCI_REG_BASE + MSC01_PCI_P2SCMAPL_OFS)
+#define MSC01_PCI_INTCFG        (MSC01_PCI_REG_BASE + MSC01_PCI_INTCFG_OFS)
+#define MSC01_PCI_INTSTAT       (MSC01_PCI_REG_BASE + MSC01_PCI_INTSTAT_OFS)
+#define MSC01_PCI_CFGADDR       (MSC01_PCI_REG_BASE + MSC01_PCI_CFGADDR_OFS)
+#define MSC01_PCI_CFGDATA       (MSC01_PCI_REG_BASE + MSC01_PCI_CFGDATA_OFS)
+#define MSC01_PCI_IACK		(MSC01_PCI_REG_BASE + MSC01_PCI_IACK_OFS)
+#define MSC01_PCI_HEAD0		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD0_OFS)
+#define MSC01_PCI_HEAD1		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD1_OFS)
+#define MSC01_PCI_HEAD2		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD2_OFS)
+#define MSC01_PCI_HEAD3		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD3_OFS)
+#define MSC01_PCI_HEAD4		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD4_OFS)
+#define MSC01_PCI_HEAD5		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD5_OFS)
+#define MSC01_PCI_HEAD6		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD6_OFS)
+#define MSC01_PCI_HEAD7		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD7_OFS)
+#define MSC01_PCI_HEAD8		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD8_OFS)
+#define MSC01_PCI_HEAD9		(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD9_OFS)
+#define MSC01_PCI_HEAD10	(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD10_OFS)
+#define MSC01_PCI_HEAD11	(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD11_OFS)
+#define MSC01_PCI_HEAD12	(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD12_OFS)
+#define MSC01_PCI_HEAD13	(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD13_OFS)
+#define MSC01_PCI_HEAD14	(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD14_OFS)
+#define MSC01_PCI_HEAD15        (MSC01_PCI_REG_BASE + MSC01_PCI_HEAD15_OFS)
+#define MSC01_PCI_BAR0		(MSC01_PCI_REG_BASE + MSC01_PCI_BAR0_OFS)
+#define MSC01_PCI_CFG		(MSC01_PCI_REG_BASE + MSC01_PCI_CFG_OFS)
+#define MSC01_PCI_SWAP          (MSC01_PCI_REG_BASE + MSC01_PCI_SWAP_OFS)
+
+
+/*
+ ***********************************************************************
+ *  Register offset addresses and access types
+ ************************************************************************
+ */
+
+#define SPD_FUNDAMENTAL_TYPE		2
+#define SPD_ROWS			3
+#define SPD_COL				4
+#define SPD_MODULE_BANKS	       	5
+#define SPD_MODULE_WIDTH_LO		6
+#define SPD_MODULE_WIDTH_HI		7
+#define SPD_CONFIG_TYPE			11
+#define SPD_RFSH_RT			12
+#define SPD_SDRAM_WIDTH			13
+#define SPD_EC_SDRAM			14
+#define SPD_BURSTLEN			16
+#define SPD_DEVICE_BANKS		17
+#define SPD_CASLAT			18
+#define SPD_CSLAT			19
+#define SPD_WRLAT			20
+#define SPD_MRPT			27
+#define SPD_TRP				27
+#define SPD_RCDM			29
+#define SPD_TRCD			29
+#define SPD_MRPW			30
+#define SPD_TRAS			30
+#define SPD_ROW_DENSITY			31
+
+
+/*
+ ***********************************************************************
+ *  Register encodings
+ ************************************************************************
+ */
+
+#define SPD_FUNDAMENTAL_TYPE_SDR	4
+#define SPD_FUNDAMENTAL_TYPE_DDR	7
+
+#define SPD_ROWS_A_SHF			0
+#define SPD_ROWS_A_MSK			(MSK(4) << SPD_ROWS_A_SHF)
+
+#define SPD_ROWS_B_SHF			4
+#define SPD_ROWS_B_MSK			(MSK(4) << SPD_ROWS_B_SHF)
+
+#define SPD_COL_A_SHF			0
+#define SPD_COL_A_MSK			(MSK(4) << SPD_COL_A_SHF)
+
+#define SPD_COL_B_SHF			4
+#define SPD_COL_B_MSK			(MSK(4) << SPD_COL_B_SHF)
+
+#define SPD_CASLAT_1_SHF		0
+#define SPD_CASLAT_1_MSK		(MSK(1) << SPD_CASLAT_1_SHF)
+#define SPD_CASLAT_1_BIT		SPD_CASLAT_1_MSK
+
+#define SPD_CASLAT_2_SHF		1
+#define SPD_CASLAT_2_MSK		(MSK(1) << SPD_CASLAT_2_SHF)
+#define SPD_CASLAT_2_BIT		SPD_CASLAT_2_MSK
+
+#define SPD_CASLAT_3_SHF		2
+#define SPD_CASLAT_3_MSK		(MSK(1) << SPD_CASLAT_3_SHF)
+#define SPD_CASLAT_3_BIT		SPD_CASLAT_3_MSK
+
+#define SPD_DDRCASLAT_1_0_SHF		0
+#define SPD_DDRCASLAT_1_0_MSK		(MSK(1) << SPD_DDRCASLAT_1_0_SHF)
+#define SPD_DDRCASLAT_1_0_BIT		SPD_DDRCASLAT_4_MSK
+
+#define SPD_DDRCASLAT_1_5_SHF		1
+#define SPD_DDRCASLAT_1_5_MSK		(MSK(1) << SPD_DDRCASLAT_1_5_SHF)
+#define SPD_DDRCASLAT_1_5_BIT		SPD_DDRCASLAT_1_5_MSK
+
+#define SPD_DDRCASLAT_2_0_SHF		2
+#define SPD_DDRCASLAT_2_0_MSK		(MSK(1) << SPD_DDRCASLAT_2_0_SHF)
+#define SPD_DDRCASLAT_2_0_BIT		SPD_DDRCASLAT_2_0_MSK
+
+#define SPD_DDRCASLAT_2_5_SHF		3
+#define SPD_DDRCASLAT_2_5_MSK		(MSK(1) << SPD_DDRCASLAT_2_5_SHF)
+#define SPD_DDRCASLAT_2_5_BIT		SPD_DDRCASLAT_2_5_MSK
+
+#define SPD_DDRCASLAT_3_0_SHF		4
+#define SPD_DDRCASLAT_3_0_MSK		(MSK(1) << SPD_DDRCASLAT_3_0_SHF)
+#define SPD_DDRCASLAT_3_0_BIT		SPD_DDRCASLAT_3_0_MSK
+
+#define SPD_CSLAT_0_SHF			0
+#define SPD_CSLAT_0_MSK			(MSK(1) << SPD_CASLAT_1_SHF)
+#define SPD_CSLAT_0_BIT			SPD_CSLAT_0_MSK
+
+#define SPD_CSLAT_1_SHF			1
+#define SPD_CSLAT_1_MSK			(MSK(1) << SPD_CASLAT_2_SHF)
+#define SPD_CSLAT_1_BIT			SPD_CSLAT_1_MSK
+
+#define SPD_WRLAT_0_SHF			0
+#define SPD_WRLAT_0_MSK			(MSK(1) << SPD_CASLAT_1_SHF)
+#define SPD_WRLAT_0_BIT			SPD_WRLAT_0_MSK
+
+#define SPD_WRLAT_1_SHF			1
+#define SPD_WRLAT_1_MSK			(MSK(1) << SPD_CASLAT_2_SHF)
+#define SPD_WRLAT_1_BIT			SPD_WRLAT_1_MSK
+
+#define SPD_BURSTLEN_8_SHF		3
+#define SPD_BURSTLEN_8_MSK		(MSK(1) << SPD_BURSTLEN_8_SHF)
+#define SPD_BURSTLEN_8_BIT		SPD_BURSTLEN_8_MSK
+
+#define SPD_BURSTLEN_4_SHF		2
+#define SPD_BURSTLEN_4_MSK		(MSK(1) << SPD_BURSTLEN_4_SHF)
+#define SPD_BURSTLEN_4_BIT		SPD_BURSTLEN_4_MSK
+
+#define SPD_BURSTLEN_2_SHF		1
+#define SPD_BURSTLEN_2_MSK		(MSK(1) << SPD_BURSTLEN_2_SHF)
+#define SPD_BURSTLEN_2_BIT		SPD_BURSTLEN_2_MSK
+
+#define SPD_BURSTLEN_1_SHF		0
+#define SPD_BURSTLEN_1_MSK		(MSK(1) << SPD_BURSTLEN_1_SHF)
+#define SPD_BURSTLEN_1_BIT		SPD_BURSTLEN_1_MSK
+
+#define SPD_CONFIG_TYPE_NONE		0x0
+#define SPD_CONFIG_TYPE_PARITY		0x1
+#define SPD_CONFIG_TYPE_ECC		0x2
+
+#define SPD_RFSH_RT_RATE_SHF		0
+#define SPD_RFSH_RT_RATE_MSK		(MSK(7) << SPD_RFSH_RT_RATE_SHF)
+#define SPD_RFSH_RT_RATE_125		5
+#define SPD_RFSH_RT_RATE_62_5		4
+#define SPD_RFSH_RT_RATE_31_3		3
+#define SPD_RFSH_RT_RATE_15_625		0
+#define SPD_RFSH_RT_RATE_7_8		2
+#define SPD_RFSH_RT_RATE_3_9		1
+
+#define SPD_SDRAM_WIDTH_W_SHF		0
+#define SPD_SDRAM_WIDTH_W_MSK		(MSK(7) << SPD_SDRAM_WIDTH_W_SHF)
+#define SPD_SDRAM_WIDTH_B2_SHF		7
+#define SPD_SDRAM_WIDTH_B2_MSK		(MSK(1) << SPD_SDRAM_WIDTH_B2_SHF)
+#define SPD_SDRAM_WIDTH_B2_BIT		SPD_SDRAM_WIDTH_B2_MSK
+
+#define SPD_EC_SDRAM_WIDTH_SHF		0
+#define SPD_EC_SDRAM_WIDTH_MSK		(MSK(7) << SPD_EC_SDRAM_WIDTH_SHF)
+
+
+/*
+ ***********************************************************************
+ *  Definitions
+ ***********************************************************************
+ */
+
+/* The following mapping matches the msc01_system1 testbench used in
+ * the SOC-it deliverables.  In this testbench, the IP blocks are attached
+ * to the kernel as follows:
+ *
+ *   IP1:  "Testbench Monitor", not used in a real system
+ *   IP2:  AHB bridge, PCI bridge, or nothing, depending on testbench build
+ *   IP3:  Peripheral bus bridge.
+ *
+ * This configuration is reflected by the defines below:
+ */
+#define MSC01_AHB_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_IP2)
+#define MSC01_PCI_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_IP2)
+#define MSC01_PBC_REG_BASE	MSC01_REGADDR(MSC01_REGSPACE_IP3)
+
+/* Definitions used for configuration of misc. timing parameters  */
+#ifndef MSC01_MC_TIMPAR_TDPL_PC133
+#define MSC01_MC_TIMPAR_TDPL_PC133	2
+#endif
+
+#ifndef MSC01_MC_TREFRESH_TREF_MIN
+#define MSC01_MC_TREFRESH_TREF_MIN	100
+#endif
+
+/* Physical address setup for core-sys */
+
+#define CORE_SYS_MEMORY_BASE	MALTA_SYSTEMRAM_BASE  /* MEM */
+#define CORE_SYS_MEMORY_SIZE	MALTA_SYSTEMRAM_SIZE
+
+#define CORE_SYS_PCIMEM_BASE	CORE_SYS_IP2MEM_BASE1  /* == IP2 */
+#define CORE_SYS_PCIMEM_SIZE10	0x08000000  /* effective size, msc01 v1.0 */
+#define CORE_SYS_PCIMEM_SIZE2N	0x10000000  /* "aligned" size */
+#define CORE_SYS_PCIIO_BASE	0x1b000000  /* 16Mbyte natural alignment (IP2) */
+#define CORE_SYS_PCIIO_SIZE	0x00800000
+#define CORE_SYS_IP2MEM_BASE1	0x10000000
+#define CORE_SYS_IP2MEM_SIZE1	0x08000000
+#define CORE_SYS_IP2MEM_BASE2	0x18000000
+#define CORE_SYS_IP2MEM_SIZE2	0x04000000
+
+#define CORE_SYS_IP1MEM_BASE	0x1bc00000 /* IP1 (unused - put behind regbase) */
+#define CORE_SYS_IP1MEM_BASE10	0x1b800000 /* IP1 (msc01 v1.0) */
+#define CORE_SYS_IP1MEM_SIZE	0x00400000
+ 
+#define CORE_SYS_REG_BASE	0x1bc00000
+#define CORE_SYS_REG_SIZE	0x00400000
+
+#define CORE_SYS_PBCMEM_BASE	0x1c000000  /* IP3 */
+#define CORE_SYS_PBCMEM_SIZE	0x04000000
+#define CORE_SYS_IP3MEM_SIZE	0x00400000  /* temporary size during start up */
+
+
+/* PCI Configuration  Registers */
+
+#define CORE_SYS_PCI_REG(x)	(MSC01_PCI_REG_BASE + MSC01_PCI_HEAD0_OFS + (x) + (x))
+#define CORE_SYS_PCIDID		CORE_SYS_PCI_REG(0x00)
+#define CORE_SYS_PCICMD		CORE_SYS_PCI_REG(0x04)
+#define CORE_SYS_PCICLASS	CORE_SYS_PCI_REG(0x08)
+#define CORE_SYS_PCILTIMER	CORE_SYS_PCI_REG(0x0c)
+#define CORE_SYS_PCIBASE0	CORE_SYS_PCI_REG(0x10)
+#define CORE_SYS_PCIINT		CORE_SYS_PCI_REG(0x3c)
+
+
+/*
+ ************************************************************************
+ *                  P R I D   R E G I S T E R   ( 1 5 )                 *
+ ************************************************************************
+ * 	
+ *  3 3 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1
+ *  1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * |  Company Opts |   Company ID  |  Procesor ID  |   Revision    | PRId
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ */
+
+#define S_PRIdCoOpt		24			/* Company options (R) */
+#define M_PRIdCoOpt		(0xff << S_PRIdCoOpt)
+#define S_PRIdCoID		16			/* Company ID (R) */
+#define M_PRIdCoID		(0xff << S_PRIdCoID)
+#define S_PRIdImp		8			/* Implementation ID (R) */
+#define M_PRIdImp		(0xff << S_PRIdImp)
+#define S_PRIdRev		0			/* Revision (R) */
+#define M_PRIdRev		(0xff << S_PRIdRev)
+
+#define M_PRId0Fields		0x00000000
+#define M_PRIdRFields		0xffffffff
+
+/* Values in the Company ID field  */
+#define K_PRIdCoID_MIPS	1
+#define K_PRIdCoID_Broadcom 2
+#define K_PRIdCoID_Alchemy 3
+#define K_PRIdCoID_SiByte 4
+#define K_PRIdCoID_SandCraft 5
+#define K_PRIdCoID_Philips 6
+#define K_PRIdCoID_Toshiba 7
+#define K_PRIdCoID_LSI 8
+#define K_PRIdCoID_UNANNOUNCED9 9
+#define K_PRIdCoID_UNANNOUNCED10 10
+#define K_PRIdCoID_Lexra 11
+#define K_PRIdCoID_NextAvailable 12 /* Next available encoding */
+
+
+/* Values in the implementation number field */
+#define K_PRIdImp_4KC		0x80	/* MIPS32 4Kc with TLB MMU and Release 1 Architecture*/
+#define K_PRIdImp_Jade		0x80	/*   Alternate (obsolete) name */
+#define K_PRIdImp_5KC		0x81	/* MIPS64 5Kc/5Kf with TLB MMU and Release 1 Architecture */
+#define K_PRIdImp_Opal		0x81	/*   Alternate (obsolete) name */
+#define K_PRIdImp_20KC		0x82	/* MIPS64 20Kc with TLB MMU and Release 1 Architecture */
+#define K_PRIdImp_Ruby		0x82	/*   Alternate (obsolete) name */
+#define K_PRIdImp_4KMP		0x83	/* MIPS32 4Kp/4Km with FM MMU and Release 1 Architectur */
+#define K_PRIdImp_JadeLite	0x83	/*   Alternate (obsolete) name */
+#define K_PRIdImp_4KEc		0x84	/* MIPS32 4KEc with TLB MMU and Release 1 Architecture */
+#define K_PRIdImp_4KEmp		0x85	/* MIPS32 4KEm/4KEp with FM MMU and Release 1 Architecture */
+#define K_PRIdImp_4KSc		0x86	/* MIPS32 4KSc with TLB MMU and Release 1 Architecture */
+#define K_PRIdImp_M4K		0x87	/* MIPS32 M4K with FM MMU and Release 2 Architecture */
+#define K_PRIdImp_25Kf		0x88	/* MIPS64 25Kf with TLB MMU and Release 1 Architecture */
+#define K_PRIdImp_Amethyst	0x88	/*   Alternate (obsolete) name */
+#define K_PRIdImp_5KE		0x89	/* MIPS64 5KE with TLB MMU and Release 2 Architecture */
+#define K_PRIdImp_4KEc_R2	0x90	/* MIPS32 4KEc with TLB MMU and Release 2 Architecture */
+#define K_PRIdImp_4KEmp_R2	0x91	/* MIPS32 4KEm/4KEp with FM MMU and Release 2 Architecture */
+#define K_PRIdImp_4KSd		0x92	/* MIPS32 4KSd with TLB MMU and Release 2 Architecture */
+
+#define K_PRIdImp_24K		0x93	/* MIPS32 24K (Topaz) with Release 2 Architecture */
+#define K_PRIdImp_Topaz		0x93	/*   Alternate (obsolete) name */
+#define K_PRIdImp_TopazTLB	0x93	/*   Alternate (obsolete) name */
+
+#define K_PRIdImp_R3000		0x01
+#define K_PRIdImp_R4000		0x04
+#define K_PRIdImp_R10000	0x09
+#define K_PRIdImp_R4300		0x0b
+#define K_PRIdImp_R5000		0x23
+#define K_PRIdImp_R5200		0x28
+#define K_PRIdImp_R5400		0x54
+
+/*
+ ************************************************************************
+ *               C O N F I G   R E G I S T E R   ( 1 6 )                *
+ ************************************************************************
+ * 	
+ *  3 3 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1
+ *  1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * |M|                             |B| A |  A  |  M  |RSVD |V|  K  | Config
+ * | | Reserved for Implementations|E| T |  R  |  T  |     |I|  0  |
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ */
+
+#define S_ConfigMore		31			/* Additional config registers present (R) */
+#define M_ConfigMore		(0x1 << S_ConfigMore)
+#define S_ConfigImpl		16			/* Implementation-specific fields */
+#define M_ConfigImpl		(0x7fff << S_ConfigImpl)
+#define S_ConfigBE		15			/* Denotes big-endian operation (R) */
+#define M_ConfigBE		(0x1 << S_ConfigBE)
+#define S_ConfigAT		13			/* Architecture type (R) */
+#define M_ConfigAT		(0x3 << S_ConfigAT)
+#define S_ConfigAR		10			/* Architecture revision (R) */
+#define M_ConfigAR		(0x7 << S_ConfigAR)
+#define S_ConfigMT		7			/* MMU Type (R) */
+#define M_ConfigMT		(0x7 << S_ConfigMT)
+#define S_ConfigVI		3			/* Icache is virtual (R) */
+#define M_ConfigVI		(0x1 << S_ConfigVI)
+#define S_ConfigK0		0			/* Kseg0 coherency algorithm (R/W) */
+#define M_ConfigK0		(0x7 << S_ConfigK0)
+
+/*
+ * The following definitions are technically part of the "reserved for
+ * implementations" field, but are the semi-standard definition used in
+ * fixed-mapping MMUs to control the cacheability of kuseg and kseg2/3
+ * references.  For that reason, they are included here, but may be
+ * overridden by true implementation-specific definitions
+ */
+#define S_ConfigK23		28			/* Kseg2/3 coherency algorithm (FM MMU only) (R/W) */
+#define M_ConfigK23		(0x7 << S_ConfigK23)
+#define S_ConfigKU		25			/* Kuseg coherency algorithm (FM MMU only) (R/W) */
+#define M_ConfigKU		(0x7 << S_ConfigKU)
+
+#define M_Config0Fields		0x00000070
+#define M_ConfigRFields		0x8000ff88
+
+/*
+ * Values in the AT field
+ */
+#define K_ConfigAT_MIPS32	0			/* MIPS32 */
+#define K_ConfigAT_MIPS64S	1			/* MIPS64 with 32-bit addresses */
+#define K_ConfigAT_MIPS64	2			/* MIPS64 with 32/64-bit addresses */
+#define K_ConfigAT_MAX		2			/* Max value */
+
+/*
+ * Values in the AR field
+ */
+
+#define K_ConfigAR_Rel1		0			/* Release 1 of the architecture */
+#define K_ConfigAR_Rel2		1			/* Release 2 of the architecture */
+
+/*
+ * Values in the MT field
+ */
+#define K_ConfigMT_NoMMU	0			/* No MMU */
+#define K_ConfigMT_TLBMMU	1			/* Standard TLB MMU */
+#define K_ConfigMT_BATMMU	2			/* Standard BAT MMU */
+#define K_ConfigMT_FMTMMU	3			/* Standard FMT MMU */
+#define K_ConfigMT_FMMMU	K_ConfigMT_FMTMMU       /* alias for compatibility */
+
+
+/*
+ ***********************************************************************
+ *  Definitions
+ ***********************************************************************
+ */
+
+
+/* Known vendors and device IDs */
+#define PCI_VENDID_GALILEO		0x11ab
+#define PCI_DEVID_64120			0x4620
+
+#define PCI_VENDID_PHILIPS		0x1131
+#define PCI_DEVID_9730			0x9730
+
+#define PCI_VENDID_INTEL_A		0x1011
+#define PCI_DEVID_PPB			0x0022
+
+#define PCI_VENDID_INTEL		0x8086
+#define PCI_DEVID_PIIX4_BRIDGE		0x7110
+#define PCI_DEVID_PIIX4_IDE		0x7111
+#define PCI_DEVID_PIIX4_USB		0x7112
+#define PCI_DEVID_PIIX4_POWER		0x7113
+
+#define PCI_VENDID_SYMBIOS		0x1000
+#define PCI_DEVID_SCSI			0x0001
+
+#define PCI_VENDID_AMD                  0x1022
+#define PCI_DEVID_79C973                0x2000
+
+#define PCI_VENDID_CRYSTAL		0x1013
+#define PCI_DEVID_4281			0x6005
+
+#define PCI_VENDID_ALGORITHMICS		0xdf53	/* TBD : Likely to change */
+#define PCI_DEVID_BONITO64		0x0001	/* TBD : May change	  */
+
+#define PCI_VENDID_MIPS			0x153f
+#define PCI_DEVID_MSC01			0x0001	/* TBD : May change	  */
+
+/* Local bus number */
+#define PCI_BUS_LOCAL			0
+
+
+/* from pci.h */
+
+/*
+ ***********************************************************************
+ *  Register encodings
+ ***********************************************************************
+ */
+
+/* SC */
+#define PCI_SC_CMD_IOS_SHF		0
+#define PCI_SC_CMD_IOS_MSK		(MSK(1) << PCI_SC_CMD_IOS_SHF)
+#define PCI_SC_CMD_IOS_BIT		PCI_SC_CMD_IOS_MSK
+
+#define PCI_SC_CMD_MS_SHF		1
+#define PCI_SC_CMD_MS_MSK		(MSK(1) << PCI_SC_CMD_MS_SHF)
+#define PCI_SC_CMD_MS_BIT		PCI_SC_CMD_MS_MSK
+
+#define PCI_SC_CMD_BM_SHF		2
+#define PCI_SC_CMD_BM_MSK		(MSK(1) << PCI_SC_CMD_BM_SHF)
+#define PCI_SC_CMD_BM_BIT		PCI_SC_CMD_BM_MSK
+
+#define PCI_SC_CMD_PERR_SHF		6
+#define PCI_SC_CMD_PERR_MSK		(MSK(1) << PCI_SC_CMD_PERR_SHF)
+#define PCI_SC_CMD_PERR_BIT		PCI_SC_CMD_PERR_MSK
+
+#define PCI_SC_CMD_SERR_SHF		8
+#define PCI_SC_CMD_SERR_MSK		(MSK(1) << PCI_SC_CMD_SERR_SHF)
+#define PCI_SC_CMD_SERR_BIT		PCI_SC_CMD_SERR_MSK
+
+#define PCI_SC_CMD_FBB_SHF		9
+#define PCI_SC_CMD_FBB_MSK		(MSK(1) << PCI_SC_CMD_FBB_SHF)
+#define PCI_SC_CMD_FBB_BIT		PCI_SC_CMD_FBB_MSK
+
+/* ID */
+#define PCI_ID_DEVID_SHF		16
+#define PCI_ID_DEVID_MSK		(MSK(16) << PCI_ID_DEVID_SHF)
+
+#define PCI_ID_VENDORID_SHF		0
+#define PCI_ID_VENDORID_MSK		(MSK(16) << PCI_ID_VENDORID_SHF)
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif	/* __INCmsc01h */

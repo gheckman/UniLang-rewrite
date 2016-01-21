@@ -1,0 +1,146 @@
+# defs.mips - MIPS specific definitions for the GNU toolchain
+#
+# modification history
+# --------------------
+# 01r,17oct11,mze  fix for WIND00312198
+# 01q,16jul10,mze  add -fno-zero-initialized-in-bss to CC_COMPILER
+# 01p,11feb10,pch  support for VSB link options, e.g. small footprint:  Specify
+#		   endianness with LDFLAGS_ENDIAN and LD_PARTIAL_FLAGS_ENDIAN
+#		   instead of setting LDFLAGS and LD_PARTIAL_FLAGS directly.
+# 01o,25jun08,pee  VSB.
+# 01n,11jun07,pes  Remove workarounds
+# 01m,18may07,pes  Switch to n32 builds.
+# 01l,24apr07,pes  Temporarily force all 32-bit builds to be soft float and
+#		   64-bit builds to be hard float.
+# 01k,24apr07,pes  Add temporary workaround for -mips32r2 library path
+#		   problem.
+# 01j,19apr07,pes  Temporary workaround for incorrect operation on -mips64 and
+#		   -mips64r2 library searches.
+# 01i,20feb07,pes  Add options to support new lib structure.
+# 01h,04mar05,pes  Remove options for r3k
+# 01g,05may04,pes  Fixing compile flag used for gnu for MIPS64.
+# 01f,07nov03,c_c  Removed GNULIBROOT define.
+# 01e,26mar02,pes  Revert to MIPS ISA III. Clean up -mno-branch-likely
+#		   selection.
+# 01d,19mar02,dat  Adding PIC flags for bootInit.o (72825)
+# 01c,12feb02,sn   removed obsolete refs to GCC_EXEC_PREFIX
+#		   removed -fno-for-scope
+# 01b,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 01a,09jan02,pes   written
+#
+# DESCRIPTION
+# This file contains MIPS specific definitions and flags for the
+# GNU tools (compiler, assembler, linker etc.)
+#
+# NOTE
+# The file name comes from defs.$(VX_CPU_FAMILY)
+#
+
+include $(TGT_DIR)/h/tool/gnu/defs.gnu
+include $(TGT_DIR)/h/tool/common/defs.mips
+
+CC_OPTIM_XO = -O2 
+CC_OPTIM_DEBUG =
+
+CC_OPTIM_DRIVER	= $(CC_OPTIM_DEBUG) -O -fvolatile
+CC_OPTIM_NORMAL	= $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)
+CC_OPTIM_TARGET	= $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)
+
+# Compiler flags for PIC code
+# For T2.2, used only for MIPS gnu compiler.
+CC_PIC		= $(OPTION_PIC)
+
+CC_COMPILER	= -ansi -fno-builtin -fno-zero-initialized-in-bss
+C++_COMPILER	+= -fno-builtin -fno-zero-initialized-in-bss
+
+LONGCALL	= -mlong-calls
+
+# override/modify standard command definitions
+AS		+= -G 0
+RANLIB		= ranlibmips
+
+# Build up architecture specification
+#  Set initial value
+CC_ARCH_SPEC	= -G 0 -mno-branch-likely
+
+#
+# Modify CC_ARCH_SPEC for processor ISA level and endianness
+#
+# select processor ISA
+#
+
+# Libraries supported
+#  MIPS32 (deprecated, use MIPSI2)
+#  MIPS64 (deprecated, use MIPSI3)
+#  MIPSI2
+#  MIPSI32
+#  MIPSI32R2
+#  MIPSI3
+#  MIPSI64
+#  MIPSI64R2
+#
+
+# Deprecated, use MIPSI2/MIPSI3
+#
+ifeq ($(findstring MIPS32,$(CPU)),MIPS32)
+CC_ARCH_SPEC	+= -mips2
+AS		+= -mips2
+else
+ ifeq ($(findstring MIPS64,$(CPU)),MIPS64)
+ CC_ARCH_SPEC	+= -mips3 -mabi=n32 -mgp64
+ AS		+= -mips3 -mabi=n32 -mgp64
+ endif
+endif
+
+# Defined carefully, since MIPSI64 is a substring of
+# MIPSI64R2, etc.
+
+ifeq ($(findstring MIPSI2,$(CPU)),MIPSI2)
+ CC_ARCH_SPEC		+= -mips2 -mgp32
+ AS			+= -mips2 -mgp32
+else
+ ifeq ($(findstring MIPSI32R2,$(CPU)),MIPSI32R2)
+  CC_ARCH_SPEC		+= -mips32r2 -mgp32
+  AS			+= -mips32r2 -mgp32
+ else
+  ifeq ($(findstring MIPSI32,$(CPU)),MIPSI32)
+   CC_ARCH_SPEC		+= -mips32 -mgp32
+   AS			+= -mips32 -mgp32
+  else
+   ifeq  ($(findstring MIPSI3,$(CPU)),MIPSI3)
+    CC_ARCH_SPEC	+= -mips3 -mabi=n32 -mgp64
+    AS			+= -mips3 -mabi=n32 -mgp64
+   else
+    ifeq  ($(findstring MIPSI64R2,$(CPU)),MIPSI64R2)
+     CC_ARCH_SPEC	+= -mips64 -Wa,-mips64r2 -mabi=n32 -mgp64
+     AS			+= -mips64 -Wa,-mips64r2 -mabi=n32 -mgp64
+    else
+     ifeq ($(findstring MIPSI64,$(CPU)),MIPSI64)
+      CC_ARCH_SPEC	+= -mips64 -mabi=n32 -mgp64
+      AS		+= -mips64 -mabi=n32 -mgp64
+     endif #MIPSI64
+    endif #MIPSI64R2
+   endif #MIPSI32
+  endif #MIPSI32R2
+ endif #MIPSI3
+endif #MIPSI2
+
+# select endianness
+ifeq ($(_WRS_CONFIG_ENDIAN),little)
+CC_ARCH_SPEC		+= -EL
+AS			+= -EL
+LDFLAGS_ENDIAN		 = -EL
+LD_PARTIAL_FLAGS_ENDIAN  = -EL
+else
+CC_ARCH_SPEC		+= -EB
+AS			+= -EB
+LDFLAGS_ENDIAN		 = -EB
+LD_PARTIAL_FLAGS_ENDIAN  = -EB
+endif
+
+# check for software floating point request
+ifeq ($(_WRS_CONFIG_FP),soft)
+CC_SOFT_FLOAT	= -msoft-float
+endif
+
+# end of defs.mips

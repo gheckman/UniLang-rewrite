@@ -1,0 +1,22 @@
+# make.ARMARCH5diabbe - Diab compilation tools definitions for ARMARCH5
+#
+# modification history
+# --------------------
+# 01c,30sep03,sn  changed :vxworks55 to :$(DIAB_T_ENVIRON)
+# 01b,14jan02,to   move 'include defs.arm' after TOOL and CPU definitions to be
+#                  consistent with gnu ones
+# 01a,18dec01,to   created from make.ARMARCH5diab
+#
+# DESCRIPTION
+# This file contains ARMARCH5 specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= ARMARCH5
+TOOL		= diabbe
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+TGT_FLAG	= -tARMV5ES:$(DIAB_T_ENVIRON)
+
+# end of make.ARMARCH5diabbe

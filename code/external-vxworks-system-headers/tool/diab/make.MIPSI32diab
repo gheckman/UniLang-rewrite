@@ -1,0 +1,35 @@
+# make.MIPSI32diab -  Diab compilation tools definitions for MIPSI32
+#
+# modification history
+# --------------------
+# 01c,21jul08,pee  disabling bdgen.
+# 01b,25jun08,pee  VSB
+# 01a,20feb07,pes  created based on make.MIPS32sfdiab
+#
+# DESCRIPTION
+# This file contains MIPSI32 (hard-float) specific definitions and flags
+# for the Diab tools (compiler, assembler, linker etc.)
+#
+
+# exclude this file from WB build spec generation.
+_BDGEN_EXCLUDE = TRUE
+
+
+CPU		= MIPSI32
+TOOL		= diab
+include $(TGT_DIR)/h/tool/diab/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSROM
+
+# Select MIPS32, big-endian (F), hard-float (H)
+# TGT_FLAG        = -tMIPS32FH:$(DIAB_T_ENVIRON)
+
+TGT_FLAG_ENDIAN_big = F
+TGT_FLAG_ENDIAN_little = M
+
+TGT_FLAG        = -tMIPS32$(TGT_FLAG_ENDIAN)$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+
+ABI_SPEC        = MIPS32
+
+# end of make.MIPSI32diab

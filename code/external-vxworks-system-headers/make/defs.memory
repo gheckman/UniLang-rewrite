@@ -1,0 +1,95 @@
+# defs.memory - memory oriented build definitions
+#
+# Copyright 2004, 2010 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01c,18aug10,slk  add LOCAL_MEM_PHYS_ADRS and LOCAL_UNMAPPED_BASE_ADRS to
+#                  ADRS_MACROS
+# 01b,01jun10,slk  add LMM_ENABLED
+# 01a,02jul04,fle  written
+
+# DESCRIPTION
+# This build definition file sets the ADRS_MACROS and ADRS_DEFINE build macros.
+#
+# The ADRS_MACROS build macro list the build macros the kernel configuration
+# tool will have to get from cdf files, and write in the kernel configuration
+# Makefile.
+#
+# The ADRS_DEFINE build macros is part of the CC_DEFINES, and is passed to the
+# compilers as a definition macro
+#
+# TREE
+# This file is included by :
+#
+#     $(TGT_DIR)/h/make/rules.memory
+#
+# SEE ALSO: vxprj
+
+# default values for some later comparisons
+
+DEFAULT_ADJUST_VMA	= 0
+DEFAULT_VMA_START	= 0
+DEFAULT_DATA_SEG_ALIGN	= 1
+
+ADRS_MACROS	+= RAM_LOW_ADRS RAM_HIGH_ADRS LOCAL_MEM_LOCAL_ADRS \
+		   ADJUST_VMA DATA_SEG_ALIGN LMM_ENABLED \
+		   LOCAL_UNMAPPED_BASE_ADRS LOCAL_MEM_PHYS_ADRS
+
+
+ADRS_DEFINE	=
+
+# the addresses may be defined with 0x values, or just hex value without
+# the leading 0x, we should make sure ADRS_DEFINE does not add extra 0x when it
+# is not required
+
+# LOCAL_MEM_LOCAL_ADRS should be given to the compilers
+
+ifdef LOCAL_MEM_LOCAL_ADRS
+    ifneq ($(findstring 0x, $(LOCAL_MEM_LOCAL_ADRS)),)
+ADRS_DEFINE	+= $(OPTION_DEFINE_MACRO)LOCAL_MEM_LOCAL_ADRS=$(LOCAL_MEM_LOCAL_ADRS)
+    else
+ADRS_DEFINE	+= $(OPTION_DEFINE_MACRO)LOCAL_MEM_LOCAL_ADRS=0x$(LOCAL_MEM_LOCAL_ADRS)
+    endif
+endif
+
+# RAM_LOW_ADRS should be given to the compilers
+
+ifdef RAM_LOW_ADRS
+    ifneq ($(findstring 0x, $(RAM_LOW_ADRS)),)
+ADRS_DEFINE	+= $(OPTION_DEFINE_MACRO)RAM_LOW_ADRS=$(RAM_LOW_ADRS)
+    else
+ADRS_DEFINE	+= $(OPTION_DEFINE_MACRO)RAM_LOW_ADRS=0x$(RAM_LOW_ADRS)
+    endif
+endif
+
+# RAM_HIGH_ADRS should be given to the compilers
+
+ifdef RAM_HIGH_ADRS
+    ifneq ($(findstring 0x, $(RAM_HIGH_ADRS)),)
+ADRS_DEFINE	+= $(OPTION_DEFINE_MACRO)RAM_HIGH_ADRS=$(RAM_HIGH_ADRS)
+    else
+ADRS_DEFINE	+= $(OPTION_DEFINE_MACRO)RAM_HIGH_ADRS=0x$(RAM_HIGH_ADRS)
+    endif
+endif
+
+# DATA_SEG_ALIGN is not meant to be given to the compiler, just the linker
+# scripts
+
+ifdef DATA_SEG_ALIGN
+    ifneq ($(findstring 0x, $(DATA_SEG_ALIGN)),)
+LD_DATA_SEG_ALIGN	= $(strip $(LD_DATA_SEG_ALIGN_FLAG))=$(DATA_SEG_ALIGN)
+    else
+LD_DATA_SEG_ALIGN	= $(strip $(LD_DATA_SEG_ALIGN_FLAG))=0x$(DATA_SEG_ALIGN)
+    endif
+else
+DATA_SEG_ALIGN		= $(DEFAULT_DATA_SEG_ALIGN)
+LD_DATA_SEG_ALIGN	= $(strip $(LD_DATA_SEG_ALIGN_FLAG))=$(DATA_SEG_ALIGN)
+endif
+
+# ADJUST_VMA is used only if it is different from the DEFAULT_ADJUST_VMA.
+# If it is not set yet, just set it to DEFAULT_ADJUST_VMA
+
+ifndef ADJUST_VMA
+ADJUST_VMA	= $(DEFAULT_ADJUST_VMA)
+endif

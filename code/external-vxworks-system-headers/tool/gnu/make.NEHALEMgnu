@@ -1,0 +1,78 @@
+# make.NEHALEMgnu - GNU compilation tools definitions for NEHALEM
+#
+# Copyright (c) 2010-2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01f,21aug12,mze  add -Wsystem-headers flag
+# 01e,05jul12,pee  WIND00356899
+# 01d,13jun11,mze  add debug
+# 01c,02feb11,jb   Fix for WIND00253482 - Incorrect architecture flag
+# 01b,31jan11,pee  WIND00252661
+# 01a,23sep10,sem  written
+#
+# DESCRIPTION
+# This file contains NEHALEM specific definitions and flags for the GNU
+# software generation tools (compiler, assembler, linker etc.).
+#*/
+
+CPU             = NEHALEM
+TOOL            = gnu
+
+ifdef _WRS_CONFIG_LP64
+ifeq ($(LP64_MCMODEL),LARGE)
+CM      = large
+else
+CM      = kernel
+endif
+endif
+
+include $(TGT_DIR)/h/tool/gnu/defs.gnu
+
+CC_OPTIM_XO = -O2
+CC_OPTIM_DEBUG =
+CC_OPTIM_DRIVER = $(CC_OPTIM_DEBUG) -fvolatile
+CC_OPTIM_NORMAL = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)
+CC_OPTIM_TARGET = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fvolatile
+CC_WARN_SYSTEM_HEADERS =
+
+ifdef _WRS_CONFIG_LP64
+# Add warning options to help with the code adaptation to LP64
+CC_WARNINGS_LOW = -Wall -Wreturn-type -Wconversion -Wformat $(CC_WARN_SYSTEM_HEADERS) \
+		  -Wno-sign-conversion
+
+# Generate LP64 code (-march=) for core. The schedule (-mtune=) is
+# intentionally not specified so as to get it aligned to the -march option.
+
+CC_ARCH_SPEC    = -march=core2 -nostdlib -fno-builtin \
+		  -fno-defer-pop -m64 -fno-omit-frame-pointer \
+		  -mcmodel=$(CM) -mno-red-zone -fno-implicit-fp
+
+LINK_FLAGS_EXTRA= -m elf_x86_64_vxworks
+else
+# Generate code for (-march=) and schedule for (-mtune=) core
+CC_ARCH_SPEC	= -march=core2 \
+                 -nostdlib -fno-builtin -fno-defer-pop -fno-implicit-fp
+endif
+
+TOOLENV         = pentium
+VX_CPU_FAMILY   = pentium
+ARCH_DIR        = i86
+
+ifdef _WRS_CONFIG_LP64
+ABI_SPEC        = x86-64
+else
+ABI_SPEC        = x86
+endif
+
+CF              = 
+
+HLL_PREFIX      =
+
+OBJCOPY_OLD_OMF	= -O a.out-i386 --gap-fill=0
+
+# end of make.NEHALEMgnu

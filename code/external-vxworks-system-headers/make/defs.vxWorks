@@ -1,0 +1,179 @@
+# defs.vxWorks - vxworks default makefile definitions
+#
+# Copyright 1984-2012, Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 02a,28may12,pee  WIND00343181
+# 01z,15jun11,mze  add debug
+# 01y,19jan11,pee  WIND00250470
+# 01x,04nov10,mze  fix typo
+# 01w,03nov10,mze  IA CPU tag work
+# 01v,28oct10,pee  WIND00233594
+# 01u,09apr10,pee  adding specific flag for cmpScripLib
+# 01t,08apr10,pee  tuning FLAGS
+# 01r,19mar10,pee  tuning FLAGS
+# 01q,02feb10,pee  adding CFLAGS, no longer hardcoded in project.
+# 01p,19may09,pee  include defs.vsbvars.mk to avoid replication.
+# 01o,24jul09,pee  modification to tag file path.
+# 01n,30jun09,pee  include VSB configuration
+# 01m,16jun09,pee  adding kernel tag support
+# 01l,22aug08,pee  adding VSB information.
+# 01k,10aug04,fle  SPR#100638 : wrong values used for ROM Flags
+# 01j,04mar04,fle  Added CC_ROM_FLAGS
+# 01i,25sep03,dat  adding _WRS_KERNEL to compile flags (TEMPORARY)
+# 01h,23jul03,jmp  always define MAKE_SYM if INCLUDE_STANDALONE_SYM_TBL is not
+#		   defined.
+# 01g,28jan02,sn   always build ctdt.o
+# 01f,24apr00,dat  SPR 30819, fix project link of ROM images
+# 01e,11apr00,dra  Added RES_LDFLAGS where needed.
+# 01d,05may99,bc   fix BINXSYM command for objcopy version.
+# 01c,07jul98,ms   fixed MAKE_SYM definition.
+# 01b,29jun98,ms   renamed vxWorks_downLoadable to just vxWorks.
+# 01a,10oct97,ms   written based on defs.bsp.
+#
+# DESCRIPTION
+# This file is included into project makefiles for vxWorks based projects.
+# It overrides some of the defintions from defs.project
+#
+
+## link addresses
+
+ifeq ($(ROM_LINK_ADRS),)
+ROM_LINK_ADRS = $(ROM_TEXT_ADRS)
+endif
+
+# HELP: Temporary fix to get -D_WRS_KERNEL into the project build of a
+# VxWorks image.
+
+CC_ROM_FLAGS		= -DRAM_DATA_ADRS=0x$(RAM_LOW_ADRS) \
+			  -DRAM_DST_ADRS=0x$(RAM_LOW_ADRS)
+CC_ROM_HIGHLOW_FLAGS	= -DRAM_DATA_ADRS=0x$(RAM_HIGH_ADRS) \
+			  -DRAM_DST_ADRS=0x$(RAM_LOW_ADRS)
+
+CC_ROM_RES_FLAGS= -DROM_RESIDENT $(CC_ROM_FLAGS)
+
+CC_ROM_CPY_FLAGS= -DROM_COPY $(CC_ROM_HIGHLOW_FLAGS)
+
+CC_ROM_CMP_FLAGS= -DROM_COMPRESS $(CC_ROM_HIGHLOW_FLAGS)
+
+# default build images
+
+ifeq ($(DEFAULT_RULE),)
+DEFAULT_RULE	= vxWorks
+endif
+RELEASE		= vxWorks
+
+# For simplicity always build ctdt.o (an array of compiler generated 
+# static initializers).
+
+POSTLINK_MODULES        += ctdt.o
+
+# If INCLUDE_STANDALONE_SYM_TBL component is included, then add the symbol
+# table module to POSTLINK_MODULES. Otherwise MAKE_SYM is always defined,
+# so that vxWorks symbol table is always built (to match behavior with bsp
+# build), and can be used by components like INCLUDE_NET_SYM_TBL or
+# INCLUDE_PASS_FS_TBL.
+
+
+ifneq ($(filter INCLUDE_LOADER INCLUDE_WDB, $(COMPONENTS)),)
+_COMPONENT_LDFLAGS = $(_LD_VXWORKS_LOADER_FLAGS)
+endif
+
+ifneq   ($(findstring INCLUDE_STANDALONE_SYM_TBL, $(COMPONENTS)),)
+POSTLINK_MODULES        += symTbl.o
+else
+define MAKE_SYM
+	$(BINXSYM) $@ $@.sym
+endef
+define MAKE_SYM_CVT
+	$(LDOUT_SYMS) $@.sym
+endef
+endif
+
+# compile flags
+
+CC_WARNINGS = $(CC_WARNINGS_MED)
+
+# CC_DEBUG = -g
+# The debug fals are now part of the CC_OPTIM FLAGS as debug really requires some 
+# of the optimizations to be turned off, to function properly. For a VIP debug is toggled on and off
+# with -debug and -debug_opt see >vxprj help for details. 
+
+_PROJECT_INCLUDE = -I$(PRJ_DIR) -I$(BSP_DIR) 
+
+_PROJECT_CFLAGS =  -DPRJ_BUILD
+
+EXTRA_CFLAGS = $(EXTRA_DEFINE) $(OPT_DEFINE) $(ADDED_CFLAGS)
+
+# this flag is defaulted the same way that defs.bsp defaults it
+CC_OPTIM       = $(CC_OPTIM_TARGET)
+
+CFLAGS          = $(CMPSCRIPTLIB_CFLAGS) $(CC_ARCH_SPEC) $(CC_COMPILER) $(CC_OPTIM) $(CC_WARNINGS) \
+                  $(_PROJECT_INCLUDE) $(CC_INCLUDE) $(CC_DEFINES) $(ADDED_CFLAGS)  \
+                  $(CC_SOFT_FLOAT) $(CFLAGS_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS) \
+		  $(_PROJECT_CFLAGS) $(EXTRA_CFLAGS) $(_USER_CFLAGS)
+
+C++FLAGS        = $(CC_ARCH_SPEC) $(C++_COMPILER) $(CC_OPTIM) $(C++_WARNINGS) \
+                  $(_PROJECT_INCLUDE) $(CC_INCLUDE) $(CC_DEFINES) $(ADDED_C++FLAGS) \
+                  $(CC_SOFT_FLOAT) $(C++FLAGS_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS) \
+		  $(_PROJECT_CFLAGS) $(EXTRA_CFLAGS) $(_USER_CFLAGS)
+
+CASFLAGS        = $(CC_ARCH_SPEC) $(OPTION_PP) $(OPTION_LANG_ASM) $(CC_INCLUDE)\
+                  $(CC_DEFINES) $(CASFLAGS_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS) \
+		  $(_PROJECT_CFLAGS) $(EXTRA_CFLAGS) $(_USER_CAS_FLAGS)
+
+CFLAGS_AS       = $(CMPSCRIPTLIB_CFLAGS_AS) $(CC_ARCH_SPEC) $(CC_COMPILER) $(CC_OPTIM) \
+                  $(_PROJECT_INCLUDE) $(CC_INCLUDE) \
+                  $(CC_DEFINES) $(ADDED_CFLAGS) $(OPTION_PP_AS) \
+                  $(OPTION_LANG_ASM) $(CFLAGS_AS_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS) \
+		  $(_PROJECT_CFLAGS) $(EXTRA_CFLAGS) $(_USER_CFLAGS_AS)
+
+# Special flags for Position Independent Code (bootInit.o)
+
+CFLAGS_PIC      = $(CC_ARCH_SPEC) $(CC_COMPILER) $(CC_OPTIM) $(CC_WARNINGS) \
+                  $(CC_INCLUDE) $(CC_DEFINES) $(ADDED_CFLAGS) $(CC_PIC) \
+                  $(CC_SOFT_FLOAT) $(CFLAGS_PIC_OPTIONS_ALL) $(ALLFLAGS_VSBDEFS)
+
+CC_INCLUDE      = $(OPTION_INCLUDE_DIR)$(TGT_DIR)/h \
+                  $(INCLUDE_CC) $(EXTRA_INCLUDE) $(OPTION_INCLUDE_DIR). \
+                  $(OPTION_INCLUDE_DIR)$(TGT_DIR)/h/wrn/coreip \
+                  $(OPTION_INCLUDE_DIR)$(TGT_DIR)/src/config \
+                  $(OPTION_INCLUDE_DIR)$(TGT_DIR)/config/comps/src \
+                  $(OPTION_INCLUDE_DIR)$(TGT_DIR)/src/drv \
+                  $(OPTION_INCLUDE_DIR)$(TGT_DIR)/src/hwif/h
+
+CC_DEFINES      = $(OPTION_DEFINE_MACRO)CPU=_VX_$(CPU) \
+                  $(OPTION_DEFINE_MACRO)TOOL_FAMILY=$(TOOL_FAMILY) \
+                  $(OPTION_DEFINE_MACRO)TOOL=$(TOOL) \
+                  $(OPTION_DEFINE_MACRO)_WRS_KERNEL \
+                  $(DEFINE_CC) $(EXTRA_DEFINE) $(OPT_DEFINE)
+
+WIND_VXCONFIG := $(subst \,/,$(WIND_VXCONFIG))
+WIND_COMPONENTS_INCLUDES := $(subst \,/,$(WIND_COMPONENTS_INCLUDES))
+
+ifeq ($(WIND_HOST_TYPE),x86-win32)
+        EXTRA_INCLUDE += $(foreach dir,$(subst ;, ,$(WIND_COMPONENTS_INCLUDES)), $(OPTION_INCLUDE_DIR)$(dir))
+        EXTRA_INCLUDE += $(foreach dir,$(subst ;, ,$(WIND_VXCONFIG)), $(OPTION_INCLUDE_DIR)$(dir)/src)
+        EXTRA_INCLUDE += $(foreach dir,$(subst ;, ,$(WIND_VXCONFIG)), $(OPTION_INCLUDE_DIR)$(dir)/h)
+else
+        EXTRA_INCLUDE += $(foreach dir,$(subst :, ,$(WIND_COMPONENTS_INCLUDES)), $(OPTION_INCLUDE_DIR)$(dir))
+        EXTRA_INCLUDE += $(foreach dir,$(subst :, ,$(WIND_VXCONFIG)), $(OPTION_INCLUDE_DIR)$(dir)/src)
+        EXTRA_INCLUDE += $(foreach dir,$(subst :, ,$(WIND_VXCONFIG)), $(OPTION_INCLUDE_DIR)$(dir)/h)
+endif
+
+EXTRA_INCLUDE += $(COMPONENT_INCLUDES)
+
+
+
+include $(TGT_DIR)/h/make/defs.vsbvars.mk
+VSB_MAKE_CONFIG_FILE = $(VSB_CONFIG_DIR)/$(VSB_MAKE_CONFIG_FILE_NAME)
+
+
+-include $(VSB_MAKE_CONFIG_FILE)
+
+# tag data
+VSB_TAG_DIR = $(VSB_DIR)/tags/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(LIB_DIR_TAG)$(MINOR_OPTION_SUFFIX)
+TAG_FILENAME_KERNEL = kernel.tags
+VSB_TAG_FILE_KERNEL = $(VSB_TAG_DIR)/$(TAG_FILENAME_KERNEL)
+

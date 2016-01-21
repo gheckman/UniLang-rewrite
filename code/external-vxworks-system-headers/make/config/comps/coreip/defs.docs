@@ -1,0 +1,33 @@
+# defs.docs - makefile fragment for specifying documentation parameters
+#
+# modification history
+# --------------------
+# 01h,18oct10,???  change version
+# 01g,04jun08,kkz  Use variables for doc version number
+# 01f,22jun07,kkz  Updating version number for docs
+# 01e,07dec06,kkz  Updating version number for Spring 07 release
+# 01d,12sep05,vvv  updated version number
+# 01c,29apr05,kkz  Updating for new directory paths
+# 01b,27oct04,tpw  Force apigen for Medusa doc builds.
+# 01a,26oct04,tpw  created
+#
+# DESCRIPTION
+# This file contains settings to configure the documentation build for the
+# networking stack component kernel side. A companion file exists for user
+# mode: $(WIND_BASE)/target/usr/make/config/comps/coreip/defs.docs
+
+include $(WIND_BASE)/target/h/make/config/defs.version
+
+ifeq ($(KERNEL_MAJOR_VERSION),6)
+
+DOC_DIR		= $(DOCS_ROOT)/com.windriver.ide.doc.wr_net_stack_*/wr_net_stack_kernel_api_reference
+DOC_BOOK	= Wind_River_Network_Stack_$(KERNEL_MAJOR_VERSION).$(KERNEL_MINOR_VERSION)
+DOC_CHAPTER	= Wind_River_Network_Stack_Kernel_API
+
+else
+
+# Force apigen for Medusa doc build. Only needed on kernel side.
+#
+REFGEN_SH	= $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/apigen -nostrict -missingok
+
+endif

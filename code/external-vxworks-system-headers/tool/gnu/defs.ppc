@@ -1,0 +1,159 @@
+# defs.ppc -  PPC specific definitions for the GNU toolchain
+#
+# Copyright (c) 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01a,12apr12,h_k   written
+#                   added -mstrict-align to all the PPC build specs.
+#                   added -fno-implicit-fp to all the PPC build specs.
+#                   (WIND00345703)
+#
+# DESCRIPTION
+# This file contains PPC specific definitions and flags for the
+# GNU tools (compiler, assembler, linker etc.)
+#
+# NOTE
+# The file name comes from defs.$(VX_CPU_FAMILY)
+#
+
+# Common default GCC optimization flags across all the PPC CPU variants.
+#
+# -fvolatile
+# Consider all memory references through pointers to be volatile.
+# This option is implemented only for C.
+#
+# -fno-builtin
+# Do not recognize built-in functions that do not begin with `__builtin_' as
+# prefix.
+#
+# -fstrength-reduce
+# Perform the optimizations of loop strength reduction and elimination of
+# iteration variables.
+# Enabled at levels `-O2', `-O3', `-Os'.
+
+CC_OPTIM_XO	= -O2
+CC_OPTIM_DEBUG	=
+CC_OPTIM_DRIVER	= $(CC_OPTIM_DEBUG) -fvolatile -fno-builtin
+CC_OPTIM_NORMAL	= $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fstrength-reduce \
+		  -fno-builtin
+CC_OPTIM_TARGET	= $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fvolatile -fno-builtin
+
+# GCC flags per _WRS_CONFIG_FP
+
+ifeq ($(_WRS_CONFIG_FP),hard)
+
+ # -mhard-float
+ # Generate code using floating point instructions.
+ # (This is the default on GCC when targeting processors that have floating
+ # point instructions. We explicitly add the flag here in case GCC changes its
+ # specification in the future.)
+ #
+ # -fno-implicit-fp
+ # By default, the compiler is free to use floating-point registers for
+ # temporary values and integer computations, even when a function does not
+ # explicitly use floating-point types. -fno-implicit-fp prevents this, only
+ # allowing floating-point registers to be used in functions that explicitly
+ # use floating-point types.
+ # This option also prevents inlining of functions that use floating-point
+ # types into functions that do not use floating-point types.
+ #
+ # Note:
+ # The -fimplicit-fp option is turned on by default since GCC 4.1.2.
+ # We explicitly disable the option here to prevent from unexpected
+ # co-preocessor instructions, that may cause co-preocessor unavailable
+ # exception or co-preocessor register corruption in the code that do not use
+ # floating-point types.
+ #
+ # -D_WRS_HARDWARE_FP
+ # Inform PPC arch specific header files that we are building for hardware FP
+ # with FP co-processor registers.
+
+ CC_ARCH_SPEC	+= -mhard-float -fno-implicit-fp -D_WRS_HARDWARE_FP
+endif
+
+ifeq ($(_WRS_CONFIG_FP),soft)
+ # -msoft-float
+ # Generate output containing library calls for floating point.
+
+ CC_ARCH_SPEC	+= -msoft-float
+
+ # Note:
+ # If PPC85XX non-e500mc, -mabi=no-spe flag disables generating SPE
+ # instructions and -fno-implicit-fp option is not necessary.
+ # Since the -fimplicit-fp option prevents inlining of the functions described
+ # above, we add the option to only the CPU variants that have floating-point
+ # co-processor register capability in their ABIs.
+
+ ifneq ($(PPC32VARIANT),)
+  ifneq ($(PPC32VARIANT),403)
+   ifneq ($(PPC32VARIANT),405)
+    ifneq ($(PPC32VARIANT),440)
+     ifneq ($(PPC32VARIANT),PPC85XX)
+      CC_ARCH_SPEC	+= -fno-implicit-fp
+     else
+      ifeq ($(LIB_DIR_TAG),_ppc85XX_e500mc)
+       CC_ARCH_SPEC	+= -fno-implicit-fp
+      endif
+      ifeq ($(CPU_VARIANT),_ppc85XX_e500mc)
+       CC_ARCH_SPEC	+= -fno-implicit-fp
+      endif
+     endif
+    endif
+   endif
+  endif
+ else
+  ifneq ($(CPU),PPC32)
+   ifneq ($(CPU),PPC403)
+    ifneq ($(CPU),PPC405)
+     ifneq ($(CPU),PPC440)
+      ifneq ($(CPU),PPC85XX)
+       CC_ARCH_SPEC	+= -fno-implicit-fp
+      else
+       ifeq ($(LIB_DIR_TAG),_e500mc)
+        CC_ARCH_SPEC	+= -fno-implicit-fp
+       endif
+       ifeq ($(CPU_VARIANT),_e500mc)
+        CC_ARCH_SPEC	+= -fno-implicit-fp
+       endif
+      endif
+     endif
+    endif
+   endif
+  endif
+ endif
+endif
+
+ifeq ($(_WRS_CONFIG_FP),e500v2)
+ # If e500v2, override the CC_ARCH_SPEC with -te500v2.
+ #
+ # -te500v2
+ # Target selection, e500v2.
+
+ CC_ARCH_SPEC	= -te500v2 -mhard-float -fno-implicit-fp
+endif
+
+# Common default GCC flags across all the PPC CPU variants.
+#
+# -mstrict-align
+# Unaligned memory references must be handled by the compiler itself.
+# (The default on GCC is -mno-strict-align.)
+
+CC_ARCH_SPEC	+= -mstrict-align
+
+LD_SCRIPT_RAM	= -defsym wrs_kernel_rom_size=0x0$(ROM_SIZE) \
+		  -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.DOTBOOTRAM
+LD_SCRIPT_ROM	= -defsym wrs_kernel_rom_size=0x0$(ROM_SIZE) \
+		  -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.DOTBOOTROM
+
+CF		=
+
+# No Cfront support for PowerPC
+MAKETAIL	=
+CLEANTAIL	=
+
+# end of defs.ppc

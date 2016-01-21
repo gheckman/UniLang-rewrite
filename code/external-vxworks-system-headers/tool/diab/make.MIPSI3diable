@@ -1,0 +1,26 @@
+# make.MIPSI3diable -  Diab compilation tools definitions for MIPSI3le
+#
+# modification history
+# --------------------
+# 01b,22may07,pes  switch to n32 builds.
+# 01a,20feb07,pes  created based on make.MIPS64diable
+#
+# DESCRIPTION
+# This file contains MIPSI3 (hard-float) specific definitions and flags
+# for the Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= MIPSI3
+TOOL		= diable
+include $(TGT_DIR)/h/tool/diab/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSROM
+
+# Select MIPS III, little-endian (Z), hard-float (H)
+# Select MIPS III, n32, little-endian (V), hard-float (H)
+TGT_FLAG        = -tMIPS3VH:$(DIAB_T_ENVIRON)
+
+ABI_SPEC        = MIPS64LE
+
+# end of make.MIPSI3diable

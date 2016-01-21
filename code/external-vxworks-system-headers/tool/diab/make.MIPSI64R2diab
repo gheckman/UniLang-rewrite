@@ -1,0 +1,36 @@
+# make.MIPSI64R2diab -  Diab compilation tools definitions for MIPSI64R2
+#
+# modification history
+# --------------------
+# 01f,25aug11,mze  fix  WIND00295798
+# 01e,21jul08,pee  disabling WB build spec generation for this file.
+# 01d,08jul08,pee  fix endian flag options.
+# 01c,25jun08,pee  VSB
+# 01b,22may07,pes  switch to n32 builds.
+# 01a,20feb07,pes  created from make.MIPS64diab.
+#
+# DESCRIPTION
+# This file contains MIPSI64R2 (hard-float) specific definitions and flags
+# for the Diab tools (compiler, assembler, linker etc.)
+#
+
+
+CPU		= MIPSI64R2
+TOOL		= diab
+include $(TGT_DIR)/h/tool/diab/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSROM
+
+# Select MIPS64R2, big-endian (X), hard-float (H)
+# Select MIPS64R2, n32, big-endian (T), hard-float (H)
+# TGT_FLAG        = -tMIPS64R2TH:$(DIAB_T_ENVIRON)
+
+TGT_FLAG_ENDIAN_big = T
+TGT_FLAG_ENDIAN_little = V
+
+TGT_FLAG        = -tMIPS64R2$(TGT_FLAG_ENDIAN)$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+
+ABI_SPEC        = MIPS64$(ABI_ENDIAN_SUFFIX)
+
+# end of make.MIPSI64R2diab

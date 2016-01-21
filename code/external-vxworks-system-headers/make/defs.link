@@ -1,0 +1,118 @@
+# defs.link - libraries and libraries search path definitions
+#
+# Copyright (c) 2001, 2003-2007, Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+#
+# modification history
+# --------------------
+# 04u,12may08,pee  deprecating legacy top level libraries.
+# 04t,16oct07,dlk  Fix interaction between option build and MANAGED_LIBS/
+#                  COMPONENT_LIBS.
+# 04s,02may07,tkf  moved component info to defs.comps
+# 04r,08mar07,pee  added support for generic option framework
+# 04q,03jan07,pee  WIND00087260 resolved the issue of a install-path with "-L" 
+# 04p,26dec06,tkf  Set OPT=-basic for bootrom* targets (as workaround for
+#                  CQ84418).
+# 04o,21sep06,pee  WIND00066289
+# 04n,15may06,lei  added DIR_EXT for SMP build
+# 04m,16jan06,pee  exclude libraries that are managed in the CDF with MANAGED_LIBS
+# 		   add selected component libraries with COMPONENT_LIBS
+# 04l,15sep05,jlb  Use CPU_CLASS to access middleware component archives
+# 04k,28apr05,edc  Fixed component libpaths from WS_ROOT_DIR such that it
+#                  propagates the macro when WS_ROOT_DIR is defined as UNKNOWN
+#                  during VIP create time.
+# 04j,22apr05,edc  Did not (could not) break up lines 82-89.
+# 04i,22apr05,edc  Added component libpaths from the workspace directory,
+#                  broke long lines, and added comments.
+# 04h,19may04,dlk  Include defs.option from this file.
+# 04g,03feb04,dlk  support option builds.
+# 04f,30jan03,pch  add LD_LINK_PATH_ATEND
+# 04e,12nov01,j_s  written
+#
+# DESCRIPTION
+# This file defines OS libraries VX_OS_LIBS and the library search paths 
+# LD_LINK_PATH. LIBS is also defined here which includes LIB_EXTRA and 
+# VX_OS_LIBS by default. It can be overwitten by project. This file is
+# included by both defs.bsp and defs.project
+
+include $(TGT_DIR)/h/make/defs.option
+
+## libraries
+#
+# LD_LINK_PATH: list of paths that ld search for archive libraries.
+#               It includes the tool independant and dependant directories, as
+#               well as any additional directory specified via 
+#               LD_LINK_PATH_EXTRA.
+# LD_LINK_LIBS: list of libraries searched by ld in the paths defined by
+#               LD_LINK_PATH. This list is automatically generated and 
+#               corresponds to all of the libraries located in the directories
+#               specified in LD_LINK_PATH whose name is of the form libXXX.a.
+#
+
+LD_LINK_PATH	= $(LD_LINK_PATH_EXTRA) \
+		  -L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL)$(MINOR_OPTION_SUFFIX)
+
+LD_LINK_PATH	+= -L$(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_COMMON_DIR)$(MINOR_OPTION_SUFFIX)
+
+# ifneq ($(LD_LINK_PATH_ATEND),)
+LD_LINK_PATH	+= $(LD_LINK_PATH_ATEND)
+# endif
+
+LIBS_PRESENT = $(notdir $(foreach dir, $(patsubst -L%,%, $(LD_LINK_PATH)), \
+				 $(wildcard $(dir)/lib*.a)))
+
+# The option libraries are those containing a dash '-' in their name.
+# No non-option library may contain a dash.
+
+OPT_LIBS_PRESENT = $(notdir $(foreach dir, $(patsubst -L%,%, $(LD_LINK_PATH)), \
+				 $(wildcard $(dir)/lib*-*.a)))
+
+ifneq ($(OPT),)
+OPT_LIBS = $(filter %$(OPT).a, $(LIBS_PRESENT))
+THIS_OPT_LIBS = $(patsubst %,lib%.a,$(LIB_BASE_NAMES$(OPT)))
+else
+OPT_LIBS =
+THIS_OPT_LIBS =
+endif
+
+# Override OPT, OPT_LIBS, and THIS_OPT_LIBS for the 'bootrom*' targets
+
+bootrom bootrom_uncmp bootrom_res bootrom_res_high : OPT=-basic
+bootrom bootrom_uncmp bootrom_res bootrom_res_high : OPT_LIBS = $(filter %$(OPT).a, $(LIBS_PRESENT))
+bootrom bootrom_uncmp bootrom_res bootrom_res_high : THIS_OPT_LIBS = $(patsubst %,lib%.a,$(LIB_BASE_NAMES$(OPT)))
+
+OPT_MANAGED_LIBS = $(patsubst %.a,%$(OPT).a,$(filter $(THIS_OPT_LIBS), $(MANAGED_LIBS)))
+OPT_NONMANAGED_LIBS = $(filter-out $(OPT_MANAGED_LIBS), $(OPT_LIBS))
+OPT_COMPONENT_LIBS = $(patsubst %.a,%$(OPT).a,$(filter $(THIS_OPT_LIBS), $(COMPONENT_LIBS)))
+
+# Remove any option libraries, and also any libraries replaced
+# by option libraries for the present $(OPT) value.
+#
+# COMPONENT_LIBS and MANAGED_LIBS are assumed not to contain any
+# library names with OPT extensions, only the base-named libriaries.
+# This keeps the OPT build orthogonal to the ARCHIVE/managed build.
+
+NONOPT_COMPONENT_LIBS = $(filter-out $(THIS_OPT_LIBS), $(COMPONENT_LIBS))
+NONOPT_LIBS = $(filter-out $(OPT_LIBS_PRESENT) $(THIS_OPT_LIBS) $(MANAGED_LIBS), \
+		 $(LIBS_PRESENT)) $(NONOPT_COMPONENT_LIBS)
+
+LD_LINK_LIBS = $(patsubst lib%.a,-l%, $(OPT_COMPONENT_LIBS) $(OPT_NONMANAGED_LIBS) $(NONOPT_LIBS))
+
+ifeq ($(CPU_CLASS),)
+CPU_CLASS = $(CPU)
+endif
+
+#
+# VX_OS_LIBS: libraries present in LD_LINK_PATH
+# LIBS:       customer's libraries and VX_OS_LIBS
+#
+
+VX_OS_LIBS	= $(LD_LINK_LIBS)
+LIBS		= $(LIB_EXTRA) $(VX_OS_LIBS)
+
+-include $(TGT_DIR)/h/make/defs.comps
+

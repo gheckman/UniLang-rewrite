@@ -1,0 +1,45 @@
+# make.PPC440gnu -  GNU compilation tools definitions for PowerPC 440
+#
+# Copyright 1995-2004, 2008, 2011, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01m,12apr12,h_k  moved common env setting to defs.ppc.
+# 01l,13jun11,mze  add debug
+# 01k,08sep08,pee  adding WRS_CONFIG_FP definition.
+# 01j,09aug04,kab  SPR#100219: support for TOOL=sfdiab, sfgnu.
+# 01h,10dec03,sn  added -msoft-float to allow the compiler to correctly find
+#                  its own libraries (needed when we build target/src/tool)
+# 01i,26nov03,c_c  Use += instead of := for AS assignment.
+# 01h,07nov03,c_c  Removed Compiler definitions.
+# 01g,12dec02,pch  Add PPC32 support
+# 01f,12feb02,sn   removed obsolete refs to GCC_EXEC_PREFIX
+#                  remove -fno-for-scope
+# 01e,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 01d,10dec01,tpw  Ensure ROM_SIZE defaults to 0x0 if the macro is not set.
+# 01c,05dec01,tpw  Utilize DOTBOOT{RAM,ROM} linker scripts on all PPC4xx BSPs.
+# 01b,27nov01,pch  merged in make.PPC405gnu vns 01e-01h
+# 01a,13aug01,pch  Created (from make.PPC405gnu vn 01d).
+#
+# DESCRIPTION
+# This file contains PowerPC 440 specific definitions and flags for the
+# gnu tools (compiler, assembler, linker etc.)
+#*/
+
+CPU		= PPC440
+TOOL		= gnu
+
+_WRS_CONFIG_FP = soft
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+CC_ARCH_SPEC	= -mcpu=440
+AS		+= -m440
+
+include $(TGT_DIR)/h/tool/gnu/defs.ppc
+
+# end of make.PPC440gnu

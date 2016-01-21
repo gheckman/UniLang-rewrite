@@ -1,0 +1,31 @@
+# make.SIMLINUXdiab - Diab compilation tools definitions for SIMLINUX
+#
+# modification history
+# --------------------
+# 01e,02dec05,dbt  Use nop as the byte filling pattern to help disassembler
+#                  (SPR #112043).
+# 01d,31mar05,dbt  moved assembly flags to OPTION_LANG_ASM. (SPR #106199).
+# 01c,10dec03,yvp  Added ABI_SPEC.
+# 01b,30sep03,sn  changed :vxworks55 to :$(DIAB_T_ENVIRON)
+# 01a,26mar03,dbt  written
+#
+# DESCRIPTION
+# This file contains Linux VSim specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+include $(TGT_DIR)/h/tool/diab/defs.diab
+CPU		= SIMLINUX
+TOOL		= diab
+
+TGT_FLAG	= -tX86LH:$(DIAB_T_ENVIRON)
+
+TOOLENV		= pentium
+VX_CPU_FAMILY	= simlinux
+ARCH_DIR	= simlinux
+ABI_SPEC	= x86
+
+OPTION_LANG_ASM		+= -Wa,-Xmnem-mit
+LD_PARTIAL_FLAGS	+= -f 0x90,1,1
+
+# end of make.SIMLINUXdiab

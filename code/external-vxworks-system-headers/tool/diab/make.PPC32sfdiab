@@ -1,0 +1,77 @@
+# make.PPC32sfdiab -  diab compilation tools definitions for generic PowerPC
+#
+# Copyright 1995-2004, 2011, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01g,30aug12,kk   updated E6500 support
+# 01f,25jul12,h_k  added e6500 CPU variant support. (WIND00333229)
+# 01e,17apr12,h_k  corrected target type for e500mc. (WIND00345701)
+# 01d,23may11,syt  Added support for PPC465.
+# 01c,16dec04,dr   Adding definitions for LD_SCRIPT_RAM and LD_SCRIPT_ROM
+# 01b,03mar04,mil  Added support for PPC85XX.
+# 01a,04feb04,pch  Written from make.PPC32diab vn 01b
+#
+# DESCRIPTION
+# This file contains definitions and flags for the diab tools
+# (compiler, assembler, linker etc.) to build for a generic
+# PowerPC without PPC60x hardware floating point.
+# If building for a specific processor (as a variant),
+# defs.ppc will set its type number into PPC32VARIANT.
+#*/
+
+CPU		= PPC32
+TOOL		= sfdiab
+
+_WRS_CONFIG_FP ?= soft
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+LD_SCRIPT_RAM   = -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+                  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTRAM
+LD_SCRIPT_ROM   = -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+                  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTROM
+
+
+ifeq ($(PPC32VARIANT),85XX)
+ ifeq ($(_WRS_CONFIG_FP),e500v2)
+  TGT_FLAG	= -tPPCE500V2F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+ else
+  ifeq ($(LIB_DIR_TAG),_ppc85XX_e500mc)
+   TGT_FLAG	= -tPPCE500MCF$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+  else
+   ifeq ($(LIB_DIR_TAG),_ppc85XX_e6500)
+    TGT_FLAG	= -tPPCE6500F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+   else
+    ifeq ($(CPU_VARIANT),_ppc85XX_e500mc)
+     TGT_FLAG    = -tPPCE500MCF$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+    else
+     ifeq ($(CPU_VARIANT),_ppc85XX_e6500)
+      TGT_FLAG    = -tPPCE6500F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+     else
+      TGT_FLAG    = -tPPCE500F$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+     endif
+    endif
+   endif
+  endif
+ endif
+else
+ ifeq ($(PPC32VARIANT), 465)
+  TGT_FLAG	= -tPPC464FS:$(DIAB_T_ENVIRON)
+ else
+  TGT_FLAG	= -tPPC$(PPC32VARIANT)FS:$(DIAB_T_ENVIRON)
+ endif
+endif
+
+CC_COMPILER     += -Xstsw-slow
+C++_COMPILER    += -Xstsw-slow
+
+TOOLENV		= ppc
+VX_CPU_FAMILY	= ppc
+ARCH_DIR        = ppc
+
+# end of make.PPC32diab

@@ -1,0 +1,67 @@
+# defs.arm - ARM specific definitions for the Diab toolchain
+#
+# Copyright (c) 2001-2002, 2006, 2008, 2010, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01i,05apr12,jdw  Modify for ARMARCH7M
+# 01h,06oct10,mcm  Workaround for WIND00235515.
+# 01g,31jul10,fao  Add be8 support.
+# 01f,25may10,m_h  Thumb-2 Support
+# 01e,24jun08,pee  VSB.
+# 01d,07feb06,jb  Adding VFP switch
+# 01c,24jun02,m_h  define LONGCALL to allow far away ld relocations
+# 01b,15jan02,to   disable auto literal pool inserting
+# 01a,18dec01,to   written
+#
+# DESCRIPTION
+# This file contains ARM specific definitions and flags for the
+# Diab tools (compiler, assembler, linker etc.)
+#
+# compile flags:
+# -Wa,-Xgnu-thumb	generate STT_ARM_TFUNC for the compatibility
+#			with GNU
+# -Wa,-Xlit-auto-off	disable auto literal pool inserting
+#
+# NOTE
+# The file name comes from defs.$(VX_CPU_FAMILY)
+#
+
+include $(TGT_DIR)/h/tool/diab/defs.diab
+include $(TGT_DIR)/h/tool/common/defs.arm
+
+LONGCALL = -Xcode-absolute-far
+
+TGT_FLAG_ENDIAN_big = E
+TGT_FLAG_ENDIAN_be8 = E
+TGT_FLAG_ENDIAN_little = L
+
+ifeq  ($(CPU),ARMARCH7M)
+## Options for ARMv7-M
+
+# definitions for Thumb-2
+CC_ARCH_SPEC	+= -Wa,-Xgnu-thumb -ei5388
+
+OPTION_LANG_ASM	+= -Wa,-Xlit-auto-off 
+else
+## Options for traditional ARM
+ifeq  ($(findstring _T,$(CPU)),_T)
+ifeq  ($(findstring _T2,$(CPU)),_T2)
+# definitions for Thumb-2
+CC_ARCH_SPEC	+= -Wa,-Xgnu-thumb -X42
+else
+# definitions for Thumb mode
+CC_ARCH_SPEC	+= -Xinterwork -Wa,-Xgnu-thumb -X42
+endif
+else
+# definitions for ARM mode
+endif
+
+OPTION_LANG_ASM	+= -Wa,-Xlit-auto-off -Wa,-Xenable-coprocessor-vfp 
+endif
+
+# end of defs.arm

@@ -1,0 +1,42 @@
+# make.ARMARCH7_T2diab - Diab compilation tools definitions for ARMARCH7_T2
+#
+# Copyright (c) 2010-2012 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01f,09oct12,jdw  Add support for VFP flags
+# 01e,20dec11,jdw  Fix COMMON_COMPILER to use defs.diab (WIND00238985)
+# 01d,20oct10,m_h  Workaround WIND00232992 with -Xkill-reorder=0x2000000
+# 01c,30jun10,m_h  Vector Floating Point Support
+# 01b,28jun10,m_h  Thumb-2 reorder workaround
+# 01a,14jun10,m_h  created from make.ARMARCH7diab
+#
+# DESCRIPTION
+# This file contains ARMARCH7_T2 (Thumb-2) specific definitions and flags
+# for the Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= ARMARCH7_T2
+TOOL		= diab
+
+include $(TGT_DIR)/h/tool/diab/defs.arm
+
+# Note: Technically this should be inside "ifneq ($(VFPVARIANT),)"
+#       But CFLAGS do not get generated properly during a project
+#       build after it parses the BSP Makefile
+#       So for now, we support only processors that have a VFP
+
+_WRS_CONFIG_FP   = vector
+
+# ARMARCH7_T2 uses VFP instruction by default when compiling the
+# kernel. Enable the compiler to generate VFP instructions and set
+# the ARM_USE_VFP flag to select optimizations in code for vector 
+# floating point.
+
+#Enable VFP Code generation
+COMMON_COMPILER	 += -Xfp-fast
+EXTRA_DEFINE += -DARM_USE_VFP
+
+TGT_FLAG        = -tARMT2$(TGT_FLAG_ENDIAN)$(TGT_FLAG_FP):$(DIAB_T_ENVIRON)
+
+# end of make.ARMARCH7_T2diab

@@ -1,0 +1,26 @@
+# make.MIPSI64R2sfgnu - GNU compilation tools definitions for MIPSI64R2 (soft float)
+#
+# Copyright 2007, 2011 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01c,22aug11,jam  undo workaround
+# 01b,22jun11,mze  special workaround for WIND00283765
+# 01a,20feb07,pes  created based on make.MIPS64gnu
+#
+# DESCRIPTION
+# This file contains MIPS64 specific definitions and flags for the GNU
+# software generation tools (compiler, assembler, linker etc) when used
+# to generate a 64 bit compatible vxWorks.
+#*/
+
+CPU		= MIPSI64R2
+TOOL		= sfgnu
+ABI_SPEC	= MIPS64BE
+
+include $(TGT_DIR)/h/tool/gnu/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   = -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   = -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.MIPSROM
+
+# end of make.MIPSI64R2sfgnu

@@ -1,0 +1,57 @@
+# make.SIMLINUXicc - ICC compilation tools definitions for Linux VxSim
+#
+# Copyright (c) 2010-2011,2013 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+# modification history
+# --------------------
+# 01h,29oct13,elp  replaced unknown -march with -mia32
+# 01g,26aug13,elp  replaced -march=i486 with -march=ia32 (WIND00424331)
+# 01f,13jun11,mze  add debug
+# 01e,08feb11,gvm  Fix for WIND00254225
+# 01d,27oct10,elp  added -fno-omit-frame-pointer.
+# 01c,27oct10,rlp  Added LP64 support.
+# 01b,31aug10,gvm  Fix WIND0231093 for defect WIND00231066
+# 01a,10mar10,gvm  adpated from make.SIMLINUXgnu; no -fno-defer-pop yet
+#
+# DESCRIPTION
+# This file contains Linux VxSim specific definitions and flags for the ICC
+# software generation tools (compiler, assembler, linker etc.).
+#*/
+
+CPU		= SIMLINUX
+TOOL		= icc
+CM		= large
+
+include $(TGT_DIR)/h/tool/icc/defs.icc
+
+CC_OPTIM_XO = -O2
+CC_OPTIM_DEBUG =
+CC_OPTIM_DRIVER = $(CC_OPTIM_DEBUG) -fvolatile -nostdlib -fno-builtin
+CC_OPTIM_NORMAL = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -nostdlib -fno-builtin
+CC_OPTIM_TARGET = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fvolatile -nostdlib -fno-builtin
+
+# Generate code for (-march=) and schedule for (-mtune=) pentium
+
+ifdef _WRS_CONFIG_LP64
+CC_ARCH_SPEC	= -m64 -mcmodel=$(CM) -mno-red-zone -fno-implicit-fp-sse \
+		  -fno-omit-frame-pointer
+LINK_FLAG_EXTRA	= -m elf_x86_64_vxworks
+else
+CC_ARCH_SPEC	= -mia32 -fno-implicit-fp-sse
+endif
+
+TOOLENV		= pentium
+VX_CPU_FAMILY	= simlinux
+ARCH_DIR	= simlinux
+ifdef _WRS_CONFIG_LP64
+ABI_SPEC	= x86-64
+else
+ABI_SPEC        = x86
+endif
+
+CF		=
+
+# end of make.SIMLINUXicc

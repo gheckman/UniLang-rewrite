@@ -1,0 +1,12 @@
+# rules.x86-win32 - Host specific default definitions
+#
+# Copyright 1984-2003, Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 02a,24sep03,c_c  now use unix defaults
+#
+# DESCRIPTION
+# This file contains rules that are host specific to x86-in32 platform.
+
+include $(TGT_DIR)/h/make/rules.unix

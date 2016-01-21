@@ -1,0 +1,58 @@
+# make.PPC85XXe500v2diab - diab compilation tools definitions for PowerPC e500v2 Core
+#
+# Copyright (c) 2007, 2008, 2010, 2012 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01e,25apr12,h_k  disabled _e500mc support. (WIND00346346)
+# 01d,13apr10,pee  locally enabling SMP build specs for bdgen
+# 01c,29aug08,pee  adding _WRS_CONFIG_FP definition.
+# 01b,19nov07,dtr  Change TOOL name.
+# 01a,06nov07,dtr  Written from  make.PPC85XXsfdiab 01o version.
+#
+# DESCRIPTION
+# This file contains PowerPC e500v2 specific definitions and flags for the
+# diab tools (compiler, assembler, linker etc.)
+#*/
+
+CPU		= PPC85XX
+TOOL		= e500v2diab
+
+ifeq ($(LIB_DIR_TAG),_e500mc)
+ $(error LIB_DIR_TAG=_e500mc is not supported in this build spec!)
+else
+ ifeq ($(CPU_VARIANT),_e500mc)
+  $(error CPU_VARIANT=_e500mc is not supported in this build spec!)
+ endif
+endif
+
+_WRS_CONFIG_FP ?= e500v2
+
+include $(TGT_DIR)/h/tool/common/defs.ppc
+
+ifeq ($(_WRS_CONFIG_FP),e500v2)
+ TGT_FLAG	= -tPPCE500V2FH:$(DIAB_T_ENVIRON)
+ CC_COMPILER	+= -Xstsw-slow
+ C++_COMPILER	+= -Xstsw-slow
+else
+ TGT_FLAG	= -tPPCE500FS:$(DIAB_T_ENVIRON)
+endif
+
+LD_SCRIPT_RAM	= -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+		  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTRAM
+LD_SCRIPT_ROM	= -Dwrs_kernel_rom_size=0x0$(ROM_SIZE) \
+		  $(TGT_DIR)/h/tool/diab/ldscripts/link.DOTBOOTROM
+
+TOOLENV		= ppc
+VX_CPU_FAMILY	= ppc
+ARCH_DIR	= ppc
+
+ifdef _BDGEN_
+ MP_OPTION_PPC85XX_SMP = TRUE
+endif
+
+# end of make.PPC85XXe500v2diab

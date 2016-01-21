@@ -1,0 +1,131 @@
+# defs.common  -  arch independent definitions shared by all toolchains
+#
+# Copyright (c) 2001, 2003-2004, 2007-2010 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01m,31jan10,fao  add be8 support.
+# 01n,08jul09,pee  adding LP64 linker support
+# 01m,02jul09,pee  adding section splitting option for C sources
+# 01l,30jun09,pee  adding VSB configuration for LD
+# 01k,17jun09,pee  adding munch definitions and support for tags
+# 01j,25aug08,mze  set defaults for FP and ENDIAN based on TOOL if not set
+# 01i,19aug08,mze  TOOL changes
+# 01h,11jun08,pee  VSB adaptation.
+# 01g,14mar07,pee  adding generic option support and LIB_ROOT support
+# 01f,05jul04,fle  Remove VMA_START value, it is defined in defs.memory
+# 01e,05apr04,mcm  Fix for SPR 95829 - defining a new macro LD_LINK_TOOL_DIR
+#		   to help set the path for Diab C++ libraries.
+# 01d,22jan04,zmm  Move definitions of  ROM_ENTRY, SYS_ENTRY and USR_ENTRY
+#                  from defs.diab and defs.gnu here. Use HLL_PREFIX so that
+#                  prepended underscores could be redefined in
+#                  architecture/toolchain fragments.
+# 01c,09jan04,c_c  Removed automatic version search (SPR #92774).
+# 01b,08dec03,tpw  Eliminate use of --ignore-vma from .hex builds.
+# 01b,14nov03,c_c  Added compiler root path definition.
+# 01a,29oct01,tpw  created.
+#
+# DESCRIPTION
+# This file contains architecture independent definitions and flags to be
+# shared by all toolchains.
+#
+
+# compute the path for compiler. This path is dependent of the toolchain
+# version, which is located under WIND_BASE/host/TOOL_FAMILY/version.
+
+CC_ROOT = $(WIND_BASE)/host/$(TOOL_FAMILY)
+
+# Determine CC_BASE (can be overriden from the command line or later)
+CC_BASE = $(CC_ROOT)/$(CC_VERSION)
+
+# Determine CC_BIN_DIR
+CC_BIN_DIR = $(CC_BASE)/$(CC_HOST)/bin
+
+# Build spec
+ifeq ($(findstring sf,$(TOOL)),sf)
+_WRS_CONFIG_FP ?= soft
+else
+_WRS_CONFIG_FP ?= hard
+endif
+
+ifeq (($findstring le,$(TOOL)), le)
+_WRS_CONFIG_ENDIAN ?= little
+endif
+
+ifeq (($findstring be,$(TOOL)), be)
+_WRS_CONFIG_ENDIAN ?= big
+endif
+
+ifeq (($findstring be,$(TOOL)), be8)
+    _WRS_CONFIG_ENDIAN ?= be8
+endif
+
+BUILD_FP_PREFIX_hard =
+BUILD_FP_PREFIX_soft = sf
+
+BUILD_FP_PREFIX = $(BUILD_FP_PREFIX_$(_WRS_CONFIG_FP))
+
+BUILD_ENDIAN_SUFFIX = $(BUILD_ENDIAN_SUFFIX_$(_WRS_CONFIG_ENDIAN))
+
+ABI_ENDIAN_SUFFIX = $(ABI_ENDIAN_SUFFIX_$(_WRS_CONFIG_ENDIAN))
+
+
+# Toolchain specific CPU variant independent library directory
+LD_LINK_TOOL_DIR = $(LIB_ROOT)/$(VX_CPU_FAMILY)$(ARCH_OPTION_SUFFIX)/$(CPU)$(CPU_OPTION_SUFFIX)/$(TOOL_SPECIFIC_DIR)$(MINOR_OPTION_SUFFIX)
+
+## macros for file conversion and rom image builds
+
+EXTRACT_BIN_FLAG= -O binary --binary-without-bss
+EXTRACT_HEX_FLAG= -O srec --gap-fill=0
+EXTRACT_SYM_FLAG= --extract-symbol
+
+START_FLAGS     =
+HEX_FLAGS	=
+
+NO_VMA_FLAGS	= -I srec -O binary
+VMA_FLAGS	= -I binary -O srec --adjust-vma=$(VMA_START)
+
+## bsp flags
+
+HLL_PREFIX              = _
+
+ROM_ENTRY               = $(HLL_PREFIX)romInit
+SYS_ENTRY               = $(HLL_PREFIX)sysInit
+USR_ENTRY               = $(HLL_PREFIX)usrInit
+
+# linker scripts data alignment
+
+LD_DATA_SEG_NOALIGN	= $(strip $(LD_DATA_SEG_ALIGN_FLAG))=1
+
+# VMA adjust macros
+
+KERNEL_VMA_ADJUST	= @ $(NOP)
+
+## obsolete macros
+
+EXTRACT_BIN_NAME= false Used obsolete EXTRACT_BIN_NAME macro
+BINXSYM_NAME	= false Used obsolete BINXSYM_NAME macro
+BINHEX_NAME	= false Used obsolete BINHEX_NAME macro
+
+ifdef _WRS_CONFIG_LP64
+LDFLAGS_VSB += $(LDFLAG_64BIT)
+LD_PARTIAL_FLAGS_VSB += $(LD_PARTIAL_FLAG_64BIT)
+endif
+
+# munch definitions
+MUNCH_SCRIPT            = $(WIND_BASE)/host/resource/hutils/tcl/munch.tcl
+MUNCH                   = $(TCL) $(MUNCH_SCRIPT) $(MUNCH_FLAGS) $(MUNCH_FLAGS_$(TARGET_DOMAIN))
+MUNCH_DKM               = $(TCL) $(MUNCH_SCRIPT) $(MUNCH_FLAGS) $(MUNCH_FLAGS_DKM)
+MUNCH_KERNEL            = $(TCL) $(MUNCH_SCRIPT) $(MUNCH_FLAGS) $(MUNCH_FLAGS_KERNEL)
+MUNCH_FLAGS             = -c $(TOOLENV)
+
+MUNCH_FLAGS_DKM		= $(if $(VSB_TAG_FILE_DKM),-tags $(VSB_TAG_FILE_DKM))
+
+ifdef _WRS_CONFIG_REMOVE_UNUSED_FUNCTIONS
+LDFLAGS_VSB += $(LD_REMOVE_UNUSED_SECTIONS)
+CFLAGS_VSB += $(OPTION_CC_SPLIT_SECTIONS)
+endif

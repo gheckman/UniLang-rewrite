@@ -1,0 +1,38 @@
+# make.ARMARCH4gnube - GNU compilation tools definitions for ARM architecture 4
+#
+# modification history
+# --------------------
+# 01r,17dec03,mcm  Workaround for SPR 92687
+# 01q,05dec03,sn   updated flags for gcc 3.3.2
+# 01p,10jan02,to   move 'include defs.arm' after CPU and TOOL defines for
+#                  libgcc build
+# 01o,18dec01,to   move common definitions to defs.arm
+# 01n,10dec01,tpw  Fix %.old configuration for Big Endian ARM.
+# 01m,16nov01,t_m  Change sysInit entry
+# 01l,06nov01,tpw  Add %.old rule to facilitate conversions to old OMFs
+# 01k,30oct01,tpw  Standardize kernel links and bootrom conversions.
+# 01j,19oct01,jb   include of defs.gnu is out of sequence - fixed
+# 01i,25sep01,dat  Location of defs.gnu changed to tool/gnu
+# 01h,10aug01,rec  add gnu 2.96 architecture definitions
+# 01g,05jun01,mem  Remove HEX_FLAGS
+# 01f,04apr01,t_m  add fno-for-scope
+# 01e,14mar01,t_m  fix CCC_ARCH type
+# 01d,14mar01,rec  gnu 2.9 tool chain changes
+# 01c,18dec00,rec  define CPP for big endian builds
+# 01b,04dec00,rec  renamed element
+# 01a,26nov98,cdp  created from 01g of make.ARMSA110gnu.
+#
+# DESCRIPTION
+# This file contains ARM Architecture 4 big-endian-specific definitions
+# and flags for the GNU software generation tools (compiler, assembler,
+# linker etc.).
+#*/
+
+CPU		= ARMARCH4
+TOOL		= gnube
+
+include $(TGT_DIR)/h/tool/gnu/defs.arm
+
+CC_ARCH_SPEC	= -t4be -Wa,-EB
+
+# end of make.ARMARCH4gnube

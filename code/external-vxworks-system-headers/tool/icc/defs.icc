@@ -1,0 +1,275 @@
+# defs.icc - definitions for INTEL toolchain builds
+#
+# Copyright 2010-2015 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01m,07apr15,rtm  fix for VXW6-80633 fvolatile warnings
+# 01l,20feb13,gvm  Fix for WIND00397980
+# 01k,14aug12,gvm  remove unknown option from LP64 builds (WIND00271833)
+# 01j,13jun11,mze  add DEBUG FLAGS
+# 01i,28jan11,pee  WIND00252877
+# 01h,27jan11,gvm  fix for ICC internal error on Windows host while building
+#                  c_demo (WIND00251598)
+# 01g,25jan11,gvm  Fix WIND00252564 for defect WIND00251195
+# 01f,05jan11,rlp  Added ICC_INLINE_DISABLE macro to disable inlining
+#                  optimization.
+# 01e,16nov10,pee  WIND00240589
+# 01d,10aug10,mze  move fno-zero-ininiallized-in-bss from CFLAGS to
+#                  CC_COMPILER and C++_COMPILER
+# 01c,08apr10,pee  adding missing vxWorks link flags
+# 01b,01mar10,gvm  refinements; assume only IA32 builds for now
+# 01a,23feb10,mze  created from defs.gnu
+#
+# DESCRIPTION
+# This file contains default definitions and flags for builds that use the 
+# INTEL toolchain.
+
+## generic defaults from defs.common come first, so they can be overridden
+
+include $(TGT_DIR)/h/tool/common/defs.common
+
+# get TOOL_COMMON_DIR, TOOL_DIAB and TOOL_GNU from TOOL
+
+TOOL_FAMILY	= icc
+# TOOL_COMMON_DIR	= $(subst icc,common,$(TOOL))
+TOOL_COMMON_DIR = $(BUILD_FP_PREFIX)common$(BUILD_ENDIAN_SUFFIX)
+TOOL_SPECIFIC_DIR       = $(BUILD_FP_PREFIX)$(TOOL_FAMILY)$(BUILD_ENDIAN_SUFFIX)
+TOOL_DIAB	= $(subst icc,diab,$(TOOL))
+TOOL_GNU	= $(subst icc,gnu,$(TOOL))
+TOOL_ICC	= $(TOOL)
+
+# Deprecated, use TOOL_FAMILY instead
+TOOL_VENDOR     = icc
+
+# Preprocessor option forcing every input file to be treated as a "C" file
+OPTION_LANG_C=-xc
+
+## set path to gnu utilities 
+
+CC_HOST = $(WIND_HOST_TYPE)
+
+# Set path to icc utilities:
+# if WIND_ICC_PATH is set, then use it as the compiler base directory.
+# else, if WIND_ICC_VERSION is set, use it.
+# else, get the version from tools.version file.
+
+ifneq ($(WIND_ICC_PATH),)
+CC_BASE		= $(subst \,/,$(WIND_ICC_PATH))
+else
+# set default version to WIND_ICC_VERSION set in 
+# $(WIND_BASE)/host/resource/hutils/tools.version, but allow environment, 
+# ARCH or CPU specific make fragment to override the value.
+
+ifeq ($(WIND_ICC_VERSION),)
+include $(WIND_BASE)/host/resource/hutils/tools.version
+endif
+CC_VERSION	= $(WIND_ICC_VERSION)
+endif
+
+ifeq ($(WIND_HOST_TYPE),x86-win32)
+ifneq ($(Path),)
+export Path		:= $(CC_BIN_DIR);$(Path)
+endif
+ifneq ($(PATH),)
+export PATH		:= $(CC_BIN_DIR);$(PATH)
+endif
+else
+ifneq ($(PATH),)
+export PATH		:= $(CC_BIN_DIR):$(PATH)
+endif
+endif
+
+# Preprocessor option forcing every input file to be treated as a assembly
+# file requiring C preprocessing
+OPTION_LANG_ASM=-xassembler-with-cpp
+
+# Library containing compiler support routines
+CC_LIB=
+CC_LIBINTRINSICS	= -licc
+
+
+OPTION_PP		= -E
+OPTION_PP_AS		=
+OPTION_PP_NOLINENO	= -P
+OPTION_PP_COMMENT	= -C
+OPTION_DOLLAR_SYMBOLS	= 
+OPTION_DEPEND		= -M -w
+OPTION_DEPEND_GEN	= -M -MG -w
+OPTION_DEPEND_GEN_D	= -MD
+OPTION_DEPEND_C		= $(OPTION_DEPEND_GEN)
+OPTION_DEPEND_AS	= $(OPTION_DEPEND)
+OPTION_DEPEND_TARGET	= -MT
+OPTION_NO_WARNINGS	= -w
+OPTION_ANSI		= -ansi
+OPTION_OBJECT_ONLY	= -c
+OPTION_INCLUDE_DIR	= -I
+OPTION_CC_GENMAP	= -Wl,-Map,$@.map,-cref
+OPTION_LD_GENMAP	= -Map $@.map -cref
+
+OPTION_CC_SPLIT_SECTIONS = -ffunction-sections -fdata-sections
+
+# this line has a space at the end ("-o ")
+OPTION_OBJECT_NAME	= -o 
+OPTION_EXE_NAME		= $(OPTION_OBJECT_NAME)
+OPTION_DEFINE_MACRO	= -D
+OPTION_PIC		=
+OPTION_POINTERS_VOLATILE =
+
+CC_OPTIM_XO =  -O
+CC_OPTIM_DEBUG =
+CC_OPTIM_DRIVER		= $(CC_OPTIM_DEBUG)
+CC_OPTIM_NORMAL		= $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fstrength-reduce -fcombine-regs
+CC_OPTIM_TARGET		= $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO)
+
+LD_LINK_PATH_EXTRA      += -L$(LD_LINK_TOOL_DIR)_$(CXX_STL_VARIANT)$(MINOR_OPTION_SUFFIX) 
+
+ifeq ($(CXX_STL_VARIANT),)
+CXX_STL_VARIANT         = standard 
+# If you would like to create projects using the abridged standard library,
+# replace the above line with:
+# CXX_STL_VARIANT       = abridged
+endif
+
+# Old warning macros
+CC_WARNINGS_ALL		= -Wall
+CC_WARNINGS_NONE	=
+
+# New warning macros.  The new default is CC_WARNINGS_LOW, but for ICC
+# we are leaving the setting the same as before (-Wall).  As we switch
+# to Diab, we are also requiring that the base library build be error
+# AND warning free.  The higher settings are for code inspection and lint
+# purposes.
+
+CC_WARNINGS_HIGH	= $(CC_WARNINGS_ALL)
+CC_WARNINGS_MED		= $(CC_WARNINGS_ALL)
+CC_WARNINGS_LOW		= $(CC_WARNINGS_ALL)
+
+CC_COMPILER		= -ansi -fno-zero-initialized-in-bss
+C++_COMPILER		= -ansi -fno-zero-initialized-in-bss
+
+ifeq ($(ICC_INLINE_DISABLE),TRUE)
+CC_COMPILER += -inline-level=0
+ifndef _WRS_CONFIG_LP64
+CC_COMPILER += -opt-args-in-regs=none
+endif
+endif
+
+# used by project facility
+
+CC_PROJECT_OPTIMIZE_FLAGS = -O -O1 -O2 -O3 -O4
+PROJECT_BSP_FLAGS_EXTRA = $(filter -fvolatile,$(CC_OPTIM_TARGET)) $(CC_SDA_FLAGS)
+
+# For generating PIC code
+# For T2.2, CC_PIC is only defined for MIPS architecture see defs.mips.
+# CC_PIC		= $(OPTION_PIC)
+
+## C flags
+
+#CFLAGS += -fno-zero-initialized-in-bss
+
+## toolchain binaries
+
+AS              	= aspentium
+CC              	= icc
+CF			= CC
+CXX			= $(CC)
+LD              	= ldpentium
+RANLIB          	= ranlibpentium
+CPP			= $(CC) -E
+CPP_PRINT_MACROS	= $(CPP) -dM -E -pipe -ansi $(CC_INCLUDE) $(CC_DEFINES)
+TCL			= tclsh
+WTXTCL			= wtxtcl
+OBJCPY	         	= objcopypentium
+SIZE            	= sizepentium
+NM              	= nmpentium
+AR              	= arpentium
+
+LARGE_PROJECT   	= true
+OPTION_INDIRECT_FILE    = @
+OPTION_NM_INDIRECT_FILE = @
+
+NM_GLOB_FLAGS		= -g
+
+
+BOOTCONFIG_FLAGS	=
+
+define link_symdef
+--defsym (word 1, $(1))=$(word 2, $(1))
+endef
+
+
+LDFLAGS         	= -X -N $(LDFLAGS_ENDIAN) $(LDFLAGS_VSB) $(LINK_FLAGS_EXTRA) $(_USER_LDFLAGS)
+
+LD_ENTRY_OPT		= -e
+LD_PARTIAL_FLAGS	= -X -r $(LD_PARTIAL_FLAGS_ENDIAN) $(LD_PARTIAL_FLAGS_VSB) $(LINK_FLAGS_EXTRA)
+
+# Wherever possible we use the compiler driver as a frontend to
+# the linker. In particular this facilitates the GNU -frepo
+# template repository system. Configurations using GNU Tools
+# but non-GNU linkers (such as SIMHPPA)  should define
+# GNU_USE_LD_TO_LINK = yes
+
+ifdef _WRS_CONFIG_LP64
+ICC_EXTRA_LINK_FLAGS = -m64
+else
+ICC_EXTRA_LINK_FLAGS = 
+endif
+
+
+ifeq ($(GNU_USE_LD_TO_LINK),)
+BASE_LD_PARTIAL_FLAGS   = $(filter-out -r -nostdlib,$(LD_PARTIAL_FLAGS))
+LD_PARTIAL              = $(CC) $(ICC_EXTRA_LINK_FLAGS) -r -nostdlib $(patsubst %,$(OPTION_PASS_TO_LD)%,$(BASE_LD_PARTIAL_FLAGS))
+OPTION_PASS_TO_LD       = -Wl,
+else
+LD_PARTIAL            = $(LD) $(LD_PARTIAL_FLAGS)
+OPTION_PASS_TO_LD     =
+endif
+
+# These are flags to pass to the linker the last time we do a
+# relocatable link. They never get used by a bootable project
+# and they only get used once by a downloadable project.
+
+LD_SCRIPT_DOWNLOAD      = -T $(TGT_DIR)/h/tool/icc/ldscripts/link.OUT
+LD_COLLAPSE_SECTIONS    = $(LD_SCRIPT_DOWNLOAD)
+LD_PARTIAL_LAST_FLAGS   = $(LD_COLLAPSE_SECTIONS)
+
+LD_SCRIPT_RAM	= -T $(TGT_DIR)/h/tool/icc/ldscripts/link.RAM
+LD_SCRIPT_ROM	= -T $(TGT_DIR)/h/tool/icc/ldscripts/link.ROM
+
+# for cyclic link support
+
+LD_START_GROUP  	= --start-group
+LD_END_GROUP		= --end-group
+LD_PARTIAL_START_GROUP	= $(OPTION_PASS_TO_LD)$(LD_START_GROUP)
+LD_PARTIAL_END_GROUP	= $(OPTION_PASS_TO_LD)$(LD_END_GROUP)
+
+LD_DATA_SEG_ALIGN_FLAG	= -defsym _VX_DATA_ALIGN
+
+LD_LOW_FLAGS    	= -Ttext $(RAM_LOW_ADRS)
+LD_HIGH_FLAGS   	= -Ttext $(RAM_HIGH_ADRS)
+RES_LOW_FLAGS   	= -Ttext $(ROM_LINK_ADRS) -Tdata $(RAM_LOW_ADRS)
+RES_HIGH_FLAGS  	= -Ttext $(ROM_LINK_ADRS) -Tdata $(RAM_HIGH_ADRS)
+
+# Flags for VxWorks Project builds
+
+LD_RAM_FLAGS     = $(LD_LOW_FLAGS)
+LD_ROM_CPY_FLAGS = $(ROM_LDFLAGS) $(RES_LDFLAGS) $(RES_HIGH_FLAGS)
+LD_ROM_CMP_FLAGS = $(ROM_LDFLAGS) $(RES_LDFLAGS) $(RES_HIGH_FLAGS)
+LD_ROM_RES_FLAGS= $(ROM_LDFLAGS) $(RES_LDFLAGS) $(RES_LOW_FLAGS)
+
+# For 960 IMI
+LD_IMI_ADRS		= -Ttext $(IMI_TEXT_ADRS) -Tdata $(IMI_DATA_ADRS)
+
+# linker flag for section splitting and removal of unused sections.
+LD_REMOVE_UNUSED_SECTIONS = --gc-sections
+
+# 64 bit mode linker options
+LDFLAG_64BIT = -m elf_x86_64_vxworks
+LD_PARTIAL_FLAG_64BIT = -m elf_x86_64_vxworks
+
+# define data models supported for VIPs
+ifdef TC_INFO
+DATA_MODELS = ILP32 LP64
+endif
+

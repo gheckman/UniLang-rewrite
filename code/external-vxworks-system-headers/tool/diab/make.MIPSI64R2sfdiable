@@ -1,0 +1,27 @@
+# make.MIPSI64R2sfdiable -  Diab compilation tools definitions for MIPSI64R2sfle
+#
+# modification history
+# --------------------
+# 01c,11jun07,pes  Switch to n32 builds.
+# 01b,22may07,pes  Correct ABI_SPEC.
+# 01a,20feb07,pes  created from make.MIPS64diab.
+#
+# DESCRIPTION
+# This file contains MIPSI64R2 (soft-float) specific definitions and flags
+# for the Diab tools (compiler, assembler, linker etc.)
+#
+
+CPU		= MIPSI64R2
+TOOL		= sfdiable
+include $(TGT_DIR)/h/tool/diab/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   =  $(TGT_DIR)/h/tool/diab/ldscripts/link.MIPSROM
+
+# Select MIPS64R2, little-endian (Z), soft-float (S)
+# Select MIPS64R2, n32, little-endian (V), soft-float (S)
+TGT_FLAG        = -tMIPS64R2VS:$(DIAB_T_ENVIRON)
+
+ABI_SPEC        = MIPS64LE
+
+# end of make.MIPSI64R2sfdiable

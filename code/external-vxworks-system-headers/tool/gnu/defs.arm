@@ -1,0 +1,61 @@
+# defs.arm - ARM specific definitions for the GNU toolchain
+#
+# Copyright (c) 2001-2002, 2008-2011 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+#
+# modification history
+# --------------------
+# 01h,17oct11,mze  fix for WIND00312198
+# 01g,20jun11,j_b  Restore LDFLAGS_ENDIAN use instead of LDFLAGS
+#                  (WIND00282677); similarly done for LD_PARTIAL_FLAGS
+# 01f,31jan10,fao  add be8 support.
+# 01e,30jun09,pee  modification to LDFLAGS definition.
+# 01d,24jun08,pee  VSB.
+# 01c,24jun02,m_h  define LONGCALL to allow far away ld relocations
+# 01b,21jan02,sn   removed unused C++_TEMPLATE_INST
+# 01a,18dec01,to   written
+#
+# DESCRIPTION
+# This file contains ARM specific definitions and flags for the
+# GNU tools (compiler, assembler, linker etc.)
+#
+# NOTE
+# The file name comes from defs.$(VX_CPU_FAMILY)
+#
+
+include $(TGT_DIR)/h/tool/gnu/defs.gnu
+include $(TGT_DIR)/h/tool/common/defs.arm
+
+CC_OPTIM_XO = -O2 
+CC_OPTIM_DEBUG =
+
+CC_OPTIM_DRIVER = $(CC_OPTIM_DEBUG) -fno-builtin -fvolatile
+CC_OPTIM_NORMAL = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fno-builtin
+CC_OPTIM_TARGET = $(CC_OPTIM_DEBUG) $(CC_OPTIM_XO) -fno-builtin -fvolatile
+
+LONGCALL = -mlong-calls
+
+ifeq  ($(findstring _T,$(CPU)),_T)
+# definitions for Thumb mode
+CC_ARCH_SPEC	= -mthumb -mthumb-interwork
+else
+# definitions for ARM mode
+CC_ARCH_SPEC	= -mapcs-32
+endif
+
+ifeq  ($(_WRS_CONFIG_ENDIAN),little)
+    # definitions for little endian
+    CC_ARCH_SPEC	+= -mlittle-endian
+    LDFLAGS_ENDIAN= -EL
+    LD_PARTIAL_FLAGS_ENDIAN= -EL
+else
+    # definitions for big endian: be or be8
+    CC_ARCH_SPEC	+= -mbig-endian
+    LDFLAGS_ENDIAN= -EB
+    LD_PARTIAL_FLAGS_ENDIAN= -EB
+endif
+
+# end of defs.arm

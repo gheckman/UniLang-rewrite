@@ -1,0 +1,27 @@
+# make.MIPSI2gnu - GNU tools definitions for MIPSI2.
+#
+# Copyright 2008 Wind River Systems, Inc.
+#
+# modification history
+# --------------------
+# 01b,24jun08,pee  created for VSB
+#
+# DESCRIPTION
+# This file contains MIPSI2 specific definitions and flags for the GNU
+# software generation tools (compiler, assembler, linker etc) when used
+# to generate a 32 bit compatible vxWorks.
+#*/
+
+# exclude this file from WB build spec generation.
+_BDGEN_EXCLUDE = TRUE
+
+CPU		= MIPSI2
+TOOL		= gnu
+ABI_SPEC	= MIPS32
+
+include $(TGT_DIR)/h/tool/gnu/defs.mips
+#add the next two line for MIPS specific devices
+LD_SCRIPT_RAM   = -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.MIPSRAM
+LD_SCRIPT_ROM   = -T $(TGT_DIR)/h/tool/gnu/ldscripts/link.MIPSROM
+
+# end of make.MIPSI2gnu
