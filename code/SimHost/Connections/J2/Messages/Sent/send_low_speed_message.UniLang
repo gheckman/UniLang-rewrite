@@ -27,7 +27,7 @@
 􏶘+􏶙􏶮float􏶭􏶬sea level pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬sea level temperature􏶫􏵚degrees fahrenheit􏵛􏶪􏶩
+􏶘+􏶙􏶮float􏶭􏶬sea level temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
 
 􏶨􏶧􏶦0.0 = Smooth, 10.0 = extremely rough􏶥
 􏶘+􏶙􏶮float􏶭􏶬runway roughness􏶫􏵚􏵛􏶪􏶩
@@ -58,64 +58,84 @@
 
 􏶨􏶧􏶦up to 8􏶥
 􏶘+􏶙􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
-    
-    
-    int m_pnEngineStarterRunning[MAX_NUMBER_OF_ENGINES];  // Engine starter running (1 = true) where x is from 0 to NumberOfEngines-1
-    int m_pnBleedAir[MAX_NUMBER_OF_ENGINES];              // Engine Bleed Air On (1 = true) where x is from 0 to NumberOfEngines-1
-                                                          //      0 = Off
-                                                          //      1 = Pneumatic
-                                                          //      2 = Pneumatic & Environmental
-    int m_pnIgnitionOn[MAX_NUMBER_OF_ENGINES];            // Engine ignition on (1 = true) where x is from 0 to NumberOfEngines-1
-    int m_pnEngineFlags1[MAX_NUMBER_OF_ENGINES];          // Engine Flags #1  where x is from 0 to NumberOfEngines-1
-                                                          //      Bit 00 Set = Fuel available
-                                                          //      Bit 01 Set = Boost pump on
-                                                          //      Bit 02 Set = Fuel jet pump on
-                                                          //      Bit 03 Set = Engine driven jet pump on
-                                                          //      Bit 04 Set = Oil pump on
-    int m_pnEngineInletState[MAX_NUMBER_OF_ENGINES];      // Engine Inlet State  where x is from 0 to NumberOfEngines-1
-                                                          //      0 = Normal
-                                                          //      1 = Anti-Ice doors in use
-                                                          //      2 = Sand filters in use
-                                                          //      3 = Sand filters pre-clogged
-                                                          //      4 = Sand filters clogged
-                                                          //      5 = Sand filters bypass door not fully open
-    float m_fIceStatesEngine_in[MAX_NUMBER_OF_ENGINES];   // Ice build up on engine in inches of ice where x is from 0 to NumberOfEngines-1
-    int m_nEngineFailureFlags[MAX_NUMBER_OF_ENGINES];     // Engine Failure Flags  where x is from 0 to NumberOfEngines-1
-                                                          //      Bit 00 Set = Engine hot start
-                                                          //      Bit 01 Set = Engine hung start
-                                                          //      Bit 02 Set = Engine overspeed governor fail
-                                                          //      Bit 03 Set = Engine compressor stall
-                                                          //      Bit 04 Set = Engine overspeed driveshaft fail
-                                                          //      Bit 05 Set = Engine underspeed governor fail
-                                                          //      Bit 06 Set = Engine failure
-                                                          //      Bit 07 Set = Engine droop compensation fail
-                                                          //      Bit 08 Set = Engine fire
-                                                          //      Bit 09 Set = Fuel filter 1/2 clogged
-                                                          //      Bit 10 Set = Engine chip detected
-                                                          //      Bit 11 Set = Engine oil filter clogged
-    int m_nNumberOfPropellers;                            // up to 8
-    float m_pfIceStatesProp_in[MAX_NUMBER_OF_PROPELLERS]; // Ice build up on propeller in inches of ice where y is from 0 to NumberOfEngines-1
-    float m_fIceStateRightWing_in;                        // Ice build up on right wing in inches of ice
-    float m_fIceStateLeftWing_in;                         // Ice build up on left wing in inches of ice
-    float m_fIceStateFuselage_in;                         // Ice build up on fuselage in inches of ice
-    float m_fIceStateTail_in;                             // Ice build up on tail in inches of ice
-    int m_nTimeMultiplier;                                // Time multiplier to allow for x2 (or more) passage of time.
 
-    int m_nFailureFlags1;
-    //              Bit 00 = Blow Tire #1 (1 = failed)
-    //              Bit 01 = Blow Tire #2
-    //              Bit 02 = Blow Tire #3
-    //              Bit 03 = Blow Tire #4
-    //              Bit 04 = Blow Tire #5
-    //              Bit 05 = Blow Tire #6
-    //              Bit 06 = Blow Tire #7
-    //              Bit 07 = Blow Tire #8
-    //              Bit 08 = Left door open
-    //              Bit 09 = Right door open
-    //              Bit 10 = EPU door open
-    //              Bit 11 = Flight control's tail rotor pedals disconnected
-    //              Bit 12 = Tail rotor drive failure
-    //              Bit 13 = Loss of tail rotor effectiveness
-    
-    
-    
+􏶨􏶧􏶦Engine starter running (1 = true)􏶥
+􏶘+􏶙􏶮int􏶭􏶬engine starter running[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦Engine Bleed Air On (1 = true)
+0 = Off
+1 = Pneumatic
+2 = Pneumatic & Environmental􏶥
+􏶘+􏶙􏶮int􏶭􏶬bleed air[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦Engine ignition on (1 = true)􏶥
+􏶘+􏶙􏶮int􏶭􏶬ignition on[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦Bit 00 Set = Fuel available
+Bit 01 Set = Boost pump on
+Bit 02 Set = Fuel jet pump on
+Bit 03 Set = Engine driven jet pump on
+Bit 04 Set = Oil pump on􏶥
+􏶘+􏶙􏶮int􏶭􏶬engine flags 1[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦0 = Normal
+1 = Anti-Ice doors in use
+2 = Sand filters in use
+3 = Sand filters pre-clogged
+4 = Sand filters clogged
+5 = Sand filters bypass door not fully open􏶥
+􏶘+􏶙􏶮int􏶭􏶬engine inlet state[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦Ice build up on engine􏶥
+􏶘+􏶙􏶮float􏶭􏶬ice state engine􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦Bit 00 Set = Engine hot start
+Bit 01 Set = Engine hung start
+Bit 02 Set = Engine overspeed governor fail
+Bit 03 Set = Engine compressor stall
+Bit 04 Set = Engine overspeed driveshaft fail
+Bit 05 Set = Engine underspeed governor fail
+Bit 06 Set = Engine failure
+Bit 07 Set = Engine droop compensation fail
+Bit 08 Set = Engine fire
+Bit 09 Set = Fuel filter 1/2 clogged
+Bit 10 Set = Engine chip detected
+Bit 11 Set = Engine oil filter clogged􏶥
+􏶘+􏶙􏶮int􏶭􏶬engine failure flags[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦up to 8􏶥
+􏶘+􏶙􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦Ice build up on propeller􏶥
+􏶘+􏶙􏶮float􏶭􏶬ice states prop􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦Ice build up on right wing􏶥
+􏶘+􏶙􏶮float􏶭􏶬ice state right wing􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦Ice build up on left wing􏶥
+􏶘+􏶙􏶮float􏶭􏶬ice state left wing􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦Ice build up on fuselage􏶥
+􏶘+􏶙􏶮float􏶭􏶬ice state fuselage􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦Ice build up on tail􏶥
+􏶘+􏶙􏶮float􏶭􏶬ice state tail􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦Time multiplier to allow for x2 (or more) passage of time􏶥
+􏶘+􏶙􏶮float􏶭􏶬time multiplier􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦Bit 00 = Blow Tire #1 (1 = failed)
+Bit 01 = Blow Tire #2
+Bit 02 = Blow Tire #3
+Bit 03 = Blow Tire #4
+Bit 04 = Blow Tire #5
+Bit 05 = Blow Tire #6
+Bit 06 = Blow Tire #7
+Bit 07 = Blow Tire #8
+Bit 08 = Left door open
+Bit 09 = Right door open
+Bit 10 = EPU door open
+Bit 11 = Flight control's tail rotor pedals disconnected
+Bit 12 = Tail rotor drive failure
+Bit 13 = Loss of tail rotor effectiveness􏶥
+􏶘+􏶙􏶮int􏶭􏶬failure flags 1􏶫􏵚􏵛􏶪􏶩
