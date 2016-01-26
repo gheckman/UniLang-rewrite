@@ -1,0 +1,54 @@
+􏶞o􏶟
+􏷲Structure for sending by the sim host of the reposition message to the flight model􏷱
+􏷰sent over control socket􏷯
+􏷮J2􏷭 􏷮Network_Message􏷭 􏷮Communication􏷭
+􏷬Trevor Hickey􏷫
+
+
+􏶨􏶧􏶦0 = Normal reposition | 1 = Special reposition􏶥
+􏶘+􏶙􏶮int􏶭􏶬reposition type􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮double􏶭􏶬latitude􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮double􏶭􏶬longitude􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮double􏶭􏶬MSL altitude􏶫􏵚feet􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬magnetic heading􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬indicated airspeed􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬aircraft pitch􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬aircraft roll􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬vertical speed􏶫􏵚feet / minute􏵛􏶪􏶩
+
+􏶨􏶧􏶦up to 8􏶥
+􏶘+􏶙􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦Engine running (1 = true)􏶥
+􏶘+􏶙􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine􏶫􏵚revolutions / minute􏵛􏶪􏶩
+
+􏶨􏶧􏶦turbine􏶥
+􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬n1􏶫􏵚percentage􏵛􏶪􏶩
+
+􏶨􏶧􏶦turbine􏶥
+􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬n2􏶫􏵚percentage􏵛􏶪􏶩
+
+􏶨􏶧􏶦up to 8􏶥
+􏶘+􏶙􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬propeller􏶫􏵚revolutions / minute􏵛􏶪􏶩

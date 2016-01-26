@@ -1,0 +1,121 @@
+􏶞o􏶟
+􏷲Structure for sending by the sim host of the low speed message to the flight model􏷱
+􏷰sent over data socket􏷯
+􏷮J2􏷭 􏷮Network_Message􏷭 􏷮Communication􏷭
+􏷬Trevor Hickey􏷫
+
+
+􏶨􏶧􏶦up to 8􏶥 
+􏶘+􏶙􏶮int􏶭􏶬number of gears􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦(0 = up, 100 = full down)􏶥 
+􏶘+􏶙􏶮int􏶭􏶬gear requested position[MAX_NUMBER_OF_LANDING_GEARS]􏶫􏵚percentage􏵛􏶪􏶩
+
+􏶨􏶧􏶦up to 4􏶥 
+􏶘+􏶙􏶮int􏶭􏶬number of flaps􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦(0 = retracted, 100 = extended)􏶥 
+􏶘+􏶙􏶮int􏶭􏶬flap requested position[MAX_NUMBER_OF_FLAPS]􏶫􏵚percentage􏵛􏶪􏶩
+
+􏶨􏶧􏶦up to 8􏶥 
+􏶘+􏶙􏶮int􏶭􏶬number of speed brakes􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦(0 = retracted, 100 = extended)􏶥 
+􏶘+􏶙􏶮int􏶭􏶬speed brake requested position[MAX_NUMBER_OF_SPEED_BRAKES]􏶫􏵚percentage􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬sea level pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬sea level temperature􏶫􏵚degrees fahrenheit􏵛􏶪􏶩
+
+􏶨􏶧􏶦0.0 = Smooth, 10.0 = extremely rough􏶥
+􏶘+􏶙􏶮float􏶭􏶬runway roughness􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬wind magnitude􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬wind heading􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬wind inclination􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦0.0 = Smooth, 10.0 = extremely rough􏶥
+􏶘+􏶙􏶮float􏶭􏶬turbulence􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬payload weight􏶫􏵚pounds􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬CG offset x􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬CG offset y􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+􏶙􏶮float􏶭􏶬CG offset z􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦up to 8􏶥
+􏶘+􏶙􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
+    
+    
+    int m_pnEngineStarterRunning[MAX_NUMBER_OF_ENGINES];  // Engine starter running (1 = true) where x is from 0 to NumberOfEngines-1
+    int m_pnBleedAir[MAX_NUMBER_OF_ENGINES];              // Engine Bleed Air On (1 = true) where x is from 0 to NumberOfEngines-1
+                                                          //      0 = Off
+                                                          //      1 = Pneumatic
+                                                          //      2 = Pneumatic & Environmental
+    int m_pnIgnitionOn[MAX_NUMBER_OF_ENGINES];            // Engine ignition on (1 = true) where x is from 0 to NumberOfEngines-1
+    int m_pnEngineFlags1[MAX_NUMBER_OF_ENGINES];          // Engine Flags #1  where x is from 0 to NumberOfEngines-1
+                                                          //      Bit 00 Set = Fuel available
+                                                          //      Bit 01 Set = Boost pump on
+                                                          //      Bit 02 Set = Fuel jet pump on
+                                                          //      Bit 03 Set = Engine driven jet pump on
+                                                          //      Bit 04 Set = Oil pump on
+    int m_pnEngineInletState[MAX_NUMBER_OF_ENGINES];      // Engine Inlet State  where x is from 0 to NumberOfEngines-1
+                                                          //      0 = Normal
+                                                          //      1 = Anti-Ice doors in use
+                                                          //      2 = Sand filters in use
+                                                          //      3 = Sand filters pre-clogged
+                                                          //      4 = Sand filters clogged
+                                                          //      5 = Sand filters bypass door not fully open
+    float m_fIceStatesEngine_in[MAX_NUMBER_OF_ENGINES];   // Ice build up on engine in inches of ice where x is from 0 to NumberOfEngines-1
+    int m_nEngineFailureFlags[MAX_NUMBER_OF_ENGINES];     // Engine Failure Flags  where x is from 0 to NumberOfEngines-1
+                                                          //      Bit 00 Set = Engine hot start
+                                                          //      Bit 01 Set = Engine hung start
+                                                          //      Bit 02 Set = Engine overspeed governor fail
+                                                          //      Bit 03 Set = Engine compressor stall
+                                                          //      Bit 04 Set = Engine overspeed driveshaft fail
+                                                          //      Bit 05 Set = Engine underspeed governor fail
+                                                          //      Bit 06 Set = Engine failure
+                                                          //      Bit 07 Set = Engine droop compensation fail
+                                                          //      Bit 08 Set = Engine fire
+                                                          //      Bit 09 Set = Fuel filter 1/2 clogged
+                                                          //      Bit 10 Set = Engine chip detected
+                                                          //      Bit 11 Set = Engine oil filter clogged
+    int m_nNumberOfPropellers;                            // up to 8
+    float m_pfIceStatesProp_in[MAX_NUMBER_OF_PROPELLERS]; // Ice build up on propeller in inches of ice where y is from 0 to NumberOfEngines-1
+    float m_fIceStateRightWing_in;                        // Ice build up on right wing in inches of ice
+    float m_fIceStateLeftWing_in;                         // Ice build up on left wing in inches of ice
+    float m_fIceStateFuselage_in;                         // Ice build up on fuselage in inches of ice
+    float m_fIceStateTail_in;                             // Ice build up on tail in inches of ice
+    int m_nTimeMultiplier;                                // Time multiplier to allow for x2 (or more) passage of time.
+
+    int m_nFailureFlags1;
+    //              Bit 00 = Blow Tire #1 (1 = failed)
+    //              Bit 01 = Blow Tire #2
+    //              Bit 02 = Blow Tire #3
+    //              Bit 03 = Blow Tire #4
+    //              Bit 04 = Blow Tire #5
+    //              Bit 05 = Blow Tire #6
+    //              Bit 06 = Blow Tire #7
+    //              Bit 07 = Blow Tire #8
+    //              Bit 08 = Left door open
+    //              Bit 09 = Right door open
+    //              Bit 10 = EPU door open
+    //              Bit 11 = Flight control's tail rotor pedals disconnected
+    //              Bit 12 = Tail rotor drive failure
+    //              Bit 13 = Loss of tail rotor effectiveness
+    
+    
+    
