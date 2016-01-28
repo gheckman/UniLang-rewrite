@@ -1,0 +1,208 @@
+􏶞o􏶟
+􏷲Structure for sending by the sim host of the high speed message to the flight model􏷱
+􏷰sent over data socket􏷯
+􏷮J2􏷭 􏷮Network_Message􏷭 􏷮Communication􏷭
+􏷬Trevor Hickey􏷫
+
+ 􏶨􏶧􏶦1.0 = Full deflection up, -1.0 = full deflection down􏶥 
+􏶘+􏶙􏶮float􏶭􏶬pitch flight control􏶫
+
+ 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
+􏶘+􏶙􏶮float􏶭􏶬roll flight control􏶫
+
+ 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
+􏶘+􏶙􏶮float􏶭􏶬yaw flight control􏶫
+
+ 􏶨􏶧􏶦1.0 = Full deflection up, 0.0 = full deflection down􏶥 
+􏶘+􏶙􏶮float􏶭􏶬collective flight control􏶫
+
+ 􏶨􏶧􏶦1.0 = Full deflection up, -1.0 = full deflection down􏶥 
+􏶘+􏶙􏶮float􏶭􏶬pitch trim position􏶫
+
+ 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
+􏶘+􏶙􏶮float􏶭􏶬roll trim position􏶫
+
+ 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
+􏶘+􏶙􏶮float􏶭􏶬yaw trim position􏶫
+
+    
+ 􏶨􏶧􏶦AutoPilot Trim Control.  
+1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
+􏶘+􏶙􏶮float[2]􏶭􏶬yaw serial actuators􏶫
+
+ 􏶨􏶧􏶦AutoPilot Trim Control.  
+1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
+􏶘+􏶙􏶮float􏶭􏶬yaw trim actuators􏶫
+
+ 􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
+􏶘+􏶙􏶮float[2]􏶭􏶬roll serial actuators􏶫
+
+ 􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
+􏶘+􏶙􏶮float􏶭􏶬roll trim actuators􏶫
+
+ 􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection up, -1.0 = Full deflection down Both􏶥 
+􏶘+􏶙􏶮float[2]􏶭􏶬pitch serial actuators􏶫
+
+ 􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection up, -1.0 = Full deflection down Both􏶥 
+􏶘+􏶙􏶮float􏶭􏶬pitch trim actuators􏶫
+
+ 􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection up, -1.0 = Full deflection down􏶥 
+􏶘+􏶙􏶮float[2]􏶭􏶬collective serial actuators􏶫
+
+ 􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection up, -1.0 = Full deflection down Helicopter􏶥 
+􏶘+􏶙􏶮float􏶭􏶬collective trim actuators􏶫
+
+
+ 􏶨􏶧􏶦0 = Normal(Actuator 1)
+ 1 = Normal(Actuator 2)
+ 2 = Trim Actuator Normal􏶥 
+􏶘+􏶙􏶮int􏶭􏶬yaw control override flag􏶫
+
+ 􏶨􏶧􏶦0 = Normal(Actuator 1)
+ 1 = Normal(Actuator 2)
+ 2 = Trim Actuator Normal􏶥 
+􏶘+􏶙􏶮int􏶭􏶬pitch control override flag􏶫
+
+ 􏶨􏶧􏶦0 = Normal(Actuator 1)
+ 1 = Normal(Actuator 2)
+ 2 = Trim Actuator Normal􏶥 
+􏶘+􏶙􏶮int􏶭􏶬roll control override flag􏶫
+
+ 􏶨􏶧􏶦0 = Normal(Actuator 1)
+ 1 = Normal(Actuator 2)
+ 2 = Trim Actuator Normal􏶥 
+􏶘+􏶙􏶮int􏶭􏶬collective control override flag􏶫
+
+
+
+
+
+ 􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
+􏶘+􏶙􏶮float􏶭􏶬fRightBrakes􏶫
+
+ 􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
+􏶘+􏶙􏶮float􏶭􏶬fLeftBrakes􏶫
+
+
+
+
+
+ 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left.
+This only controls the nose wheel when it is not a caster or linked to the rudder.􏶥 
+􏶘+􏶙􏶮float􏶭􏶬nose wheel control􏶫
+
+ 􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
+􏶘+􏶙􏶮float􏶭􏶬rotor brake􏶫
+
+ 􏶨􏶧􏶦0 = Not attached | 1 = Attached | 2 = Fire Bucket | 3 = Cargo Pallet | 4 = Other􏶥 
+􏶘+􏶙􏶮int􏶭􏶬winch flag􏶫
+
+ 􏶨􏶧􏶦􏶥 
+􏶘+􏶙􏶮float􏶭􏶬winch length􏶫􏵚meters􏵛􏶪􏶩
+
+ 􏶨􏶧􏶦􏶥 
+􏶘+􏶙􏶮float􏶭􏶬winch payload mass􏶫􏵚kilograms􏵛􏶪􏶩
+
+ 􏶨􏶧􏶦􏶥 
+􏶘+􏶙􏶮float􏶭􏶬winch payload x􏶫􏵚meters􏵛􏶪􏶩
+
+ 􏶨􏶧􏶦􏶥 
+􏶘+􏶙􏶮float􏶭􏶬winch payload y􏶫􏵚meters􏵛􏶪􏶩
+
+ 􏶨􏶧􏶦􏶥 
+􏶘+􏶙􏶮float􏶭􏶬winch payload z􏶫􏵚meters􏵛􏶪􏶩
+
+ 􏶨􏶧􏶦0 = not attached
+1 = attached
+2 = fire bucket
+3 = cargo pallet
+4 = other􏶥
+􏶘+􏶙􏶮int􏶭􏶬hook flag􏶫
+
+ 􏶨􏶧􏶦helicopter􏶥 
+􏶘+􏶙􏶮float􏶭􏶬hook length􏶫􏵚meters􏵛􏶪􏶩
+
+ 􏶨􏶧􏶦helicopter􏶥 
+􏶘+􏶙􏶮float􏶭􏶬hook payload mass􏶫􏵚kilograms􏵛􏶪􏶩
+
+ 􏶨􏶧􏶦helicopter􏶥 
+􏶘+􏶙􏶮float􏶭􏶬hook playload x􏶫􏵚meters􏵛􏶪􏶩
+
+ 􏶨􏶧􏶦helicopter􏶥 
+􏶘+􏶙􏶮float􏶭􏶬hook playload y􏶫􏵚meters􏵛􏶪􏶩
+
+ 􏶨helicopter􏶧􏶦􏶥 
+􏶘+􏶙􏶮float􏶭􏶬hook playload z􏶫􏵚meters􏵛􏶪􏶩
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+􏶘+􏶙􏶮int􏶭􏶬m_nSASMode􏶫                                             // SAS Mode
+                                                                // Bit 0 = Pitch SAS On
+                                                                // Bit 1 = Roll SAS On
+                                                                // Bit 2 = Yaw SAS
+􏶘+􏶙􏶮float􏶭􏶬m_fHeightAboveTerrain_feet􏶫                                       // HAT for GC reference (Feet)
+􏶘+􏶙􏶮int􏶭􏶬m_nNumberOfContactPoints􏶫                                           //up to 8
+􏶘+􏶙􏶮float􏶭􏶬m_pfGroundContactLocation_feet[MAX_NUMBER_OF_CONTACT_LOCATIONS]􏶫  //enumerated
+
+􏶘+􏶙􏶮int􏶭􏶬m_nNumberOfEngines􏶫                                // up to 8
+􏶘+􏶙􏶮float􏶭􏶬m_pfThrottle[MAX_NUMBER_OF_ENGINES]􏶫             // Throttle where x is from 0 to NumberOfEngines-1  (1.0 = maximum throttle, 0.0 = idle throttle)
+􏶘+􏶙􏶮float􏶭􏶬m_pfMixture[MAX_NUMBER_OF_ENGINES]􏶫              // Mixture where x is from 0 to NumberOfEngines-1  (1.0 = maximum mixture, 0.0 = fuel cutoff)
+􏶘+􏶙􏶮int􏶭􏶬m_nNumberOfPropellers􏶫                             // up to 8
+􏶘+􏶙􏶮float􏶭􏶬m_pfPropPitch_degrees[MAX_NUMBER_OF_PROPELLERS]􏶫 // Propeller blade pitch where y is from 0 to NumberOfPropellers-1
+􏶘+􏶙􏶮int􏶭􏶬m_nNumberOfTanks􏶫                                  // up to 8
+􏶘+􏶙􏶮float􏶭􏶬m_pfFuelWeight_lbs[MAX_NUMBER_OF_FUEL_TANKS]􏶫    // Fuel weight by tank in pounds where z is from 0 to NumberOfTanks-1
+
+􏶘+􏶙􏶮int􏶭􏶬m_nFlag1􏶫
+    //              Bit 0 = Pause
+    //              Bit 1 = Freeze (vertical)
+    //              Bit 1 = Freeze (horizontal)

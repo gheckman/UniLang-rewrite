@@ -6,7 +6,7 @@
 
 
 􏶨􏶧􏶦up to 8􏶥 
-􏶘+􏶙􏶮int􏶭􏶬number of gears􏶫􏵚􏵛􏶪􏶩
+􏶘+􏶙􏶮int􏶭􏶬number of gears􏶫􏵚􏵛􏶪􏶩 
 
 􏶨􏶧􏶦(0 = up, 100 = full down)􏶥 
 􏶘+􏶙􏶮int􏶭􏶬gear requested position[MAX_NUMBER_OF_LANDING_GEARS]􏶫􏵚percentage􏵛􏶪􏶩
