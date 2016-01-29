@@ -25,7 +25,6 @@
  􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
 􏶘+􏶙􏶮float􏶭􏶬yaw trim position􏶫
 
-    
  􏶨􏶧􏶦AutoPilot Trim Control.  
 1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
 􏶘+􏶙􏶮float[2]􏶭􏶬yaw serial actuators􏶫
@@ -58,40 +57,31 @@
 1.0 = Full deflection up, -1.0 = Full deflection down Helicopter􏶥 
 􏶘+􏶙􏶮float􏶭􏶬collective trim actuators􏶫
 
-
- 􏶨􏶧􏶦0 = Normal(Actuator 1)
+􏶨􏶧􏶦0 = Normal(Actuator 1)
  1 = Normal(Actuator 2)
  2 = Trim Actuator Normal􏶥 
 􏶘+􏶙􏶮int􏶭􏶬yaw control override flag􏶫
 
- 􏶨􏶧􏶦0 = Normal(Actuator 1)
+􏶨􏶧􏶦0 = Normal(Actuator 1)
  1 = Normal(Actuator 2)
  2 = Trim Actuator Normal􏶥 
 􏶘+􏶙􏶮int􏶭􏶬pitch control override flag􏶫
 
- 􏶨􏶧􏶦0 = Normal(Actuator 1)
+􏶨􏶧􏶦0 = Normal(Actuator 1)
  1 = Normal(Actuator 2)
  2 = Trim Actuator Normal􏶥 
 􏶘+􏶙􏶮int􏶭􏶬roll control override flag􏶫
 
- 􏶨􏶧􏶦0 = Normal(Actuator 1)
+􏶨􏶧􏶦0 = Normal(Actuator 1)
  1 = Normal(Actuator 2)
  2 = Trim Actuator Normal􏶥 
 􏶘+􏶙􏶮int􏶭􏶬collective control override flag􏶫
-
-
-
-
 
  􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
 􏶘+􏶙􏶮float􏶭􏶬fRightBrakes􏶫
 
  􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
 􏶘+􏶙􏶮float􏶭􏶬fLeftBrakes􏶫
-
-
-
-
 
  􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left.
 This only controls the nose wheel when it is not a caster or linked to the rudder.􏶥 
@@ -137,72 +127,44 @@ This only controls the nose wheel when it is not a caster or linked to the rudde
  􏶨􏶧􏶦helicopter􏶥 
 􏶘+􏶙􏶮float􏶭􏶬hook playload y􏶫􏵚meters􏵛􏶪􏶩
 
- 􏶨helicopter􏶧􏶦􏶥 
+ 􏶨􏶧􏶦helicopter􏶥 
 􏶘+􏶙􏶮float􏶭􏶬hook playload z􏶫􏵚meters􏵛􏶪􏶩
 
+􏶨􏶧􏶦SAS Mode
+Bit 0 = Pitch SAS On
+Bit 1 = Roll SAS On
+Bit 2 = Yaw SAS􏶥
+􏶘+􏶙􏶮int􏶭􏶬SAS Mode􏶫
 
+􏶨􏶧􏶦HAT for GC reference􏶥
+􏶘+􏶙􏶮float􏶭􏶬height above terrain􏶫􏵚feet􏵛􏶪􏶩
 
+􏶨􏶧􏶦up to 8􏶥
+􏶘+􏶙􏶮int􏶭􏶬number of contact points􏶫
 
+􏶨􏶧􏶦enumerated􏶥
+􏶘+􏶙􏶮float[MAX_NUMBER_OF_CONTACT_LOCATIONS]􏶭􏶬ground contact location􏶫􏵚feet􏵛􏶪􏶩
 
+􏶨􏶧􏶦up to 8􏶥
+􏶘+􏶙􏶮int􏶭􏶬number of engines􏶫
 
+􏶨􏶧􏶦1.0 = maximum throttle, 0.0 = idle throttle􏶥
+􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫
 
+􏶨􏶧􏶦1.0 = maximum mixture, 0.0 = fuel cutoff􏶥
+􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬mixture􏶫
 
+􏶨􏶧􏶦up to 8􏶥
+􏶘+􏶙􏶮int􏶭􏶬number of propellers􏶫
 
+ 􏶨􏶧􏶦􏶥 
+􏶘+􏶙􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬prop pitch􏶫􏵚degrees􏵛􏶪􏶩
 
+ 􏶨􏶧􏶦up to 8􏶥 
+􏶘+􏶙􏶮int􏶭􏶬number of tanks􏶫
+􏶘+􏶙􏶮float􏶭􏶬fuel weight[MAX_NUMBER_OF_FUEL_TANKS]􏶫􏵚pounds􏵛􏶪􏶩
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-􏶘+􏶙􏶮int􏶭􏶬m_nSASMode􏶫                                             // SAS Mode
-                                                                // Bit 0 = Pitch SAS On
-                                                                // Bit 1 = Roll SAS On
-                                                                // Bit 2 = Yaw SAS
-􏶘+􏶙􏶮float􏶭􏶬m_fHeightAboveTerrain_feet􏶫                                       // HAT for GC reference (Feet)
-􏶘+􏶙􏶮int􏶭􏶬m_nNumberOfContactPoints􏶫                                           //up to 8
-􏶘+􏶙􏶮float􏶭􏶬m_pfGroundContactLocation_feet[MAX_NUMBER_OF_CONTACT_LOCATIONS]􏶫  //enumerated
-
-􏶘+􏶙􏶮int􏶭􏶬m_nNumberOfEngines􏶫                                // up to 8
-􏶘+􏶙􏶮float􏶭􏶬m_pfThrottle[MAX_NUMBER_OF_ENGINES]􏶫             // Throttle where x is from 0 to NumberOfEngines-1  (1.0 = maximum throttle, 0.0 = idle throttle)
-􏶘+􏶙􏶮float􏶭􏶬m_pfMixture[MAX_NUMBER_OF_ENGINES]􏶫              // Mixture where x is from 0 to NumberOfEngines-1  (1.0 = maximum mixture, 0.0 = fuel cutoff)
-􏶘+􏶙􏶮int􏶭􏶬m_nNumberOfPropellers􏶫                             // up to 8
-􏶘+􏶙􏶮float􏶭􏶬m_pfPropPitch_degrees[MAX_NUMBER_OF_PROPELLERS]􏶫 // Propeller blade pitch where y is from 0 to NumberOfPropellers-1
-􏶘+􏶙􏶮int􏶭􏶬m_nNumberOfTanks􏶫                                  // up to 8
-􏶘+􏶙􏶮float􏶭􏶬m_pfFuelWeight_lbs[MAX_NUMBER_OF_FUEL_TANKS]􏶫    // Fuel weight by tank in pounds where z is from 0 to NumberOfTanks-1
-
-􏶘+􏶙􏶮int􏶭􏶬m_nFlag1􏶫
-    //              Bit 0 = Pause
-    //              Bit 1 = Freeze (vertical)
-    //              Bit 1 = Freeze (horizontal)
+ 􏶨􏶧􏶦Bit 0 = Pause
+Bit 1 = Freeze (vertical)
+Bit 1 = Freeze (horizontal)􏶥
+􏶘+􏶙􏶮int􏶭􏶬flag1􏶫
