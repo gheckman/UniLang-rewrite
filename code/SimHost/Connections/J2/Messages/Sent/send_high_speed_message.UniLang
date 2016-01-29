@@ -58,23 +58,23 @@
 􏶘+􏶙􏶮float􏶭􏶬collective trim actuators􏶫
 
 􏶨􏶧􏶦0 = Normal(Actuator 1)
- 1 = Normal(Actuator 2)
- 2 = Trim Actuator Normal􏶥 
+1 = Normal(Actuator 2)
+2 = Trim Actuator Normal􏶥 
 􏶘+􏶙􏶮int􏶭􏶬yaw control override flag􏶫
 
 􏶨􏶧􏶦0 = Normal(Actuator 1)
- 1 = Normal(Actuator 2)
- 2 = Trim Actuator Normal􏶥 
+1 = Normal(Actuator 2)
+2 = Trim Actuator Normal􏶥 
 􏶘+􏶙􏶮int􏶭􏶬pitch control override flag􏶫
 
 􏶨􏶧􏶦0 = Normal(Actuator 1)
- 1 = Normal(Actuator 2)
- 2 = Trim Actuator Normal􏶥 
+1 = Normal(Actuator 2)
+2 = Trim Actuator Normal􏶥 
 􏶘+􏶙􏶮int􏶭􏶬roll control override flag􏶫
 
 􏶨􏶧􏶦0 = Normal(Actuator 1)
- 1 = Normal(Actuator 2)
- 2 = Trim Actuator Normal􏶥 
+1 = Normal(Actuator 2)
+2 = Trim Actuator Normal􏶥 
 􏶘+􏶙􏶮int􏶭􏶬collective control override flag􏶫
 
  􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
@@ -162,6 +162,8 @@ Bit 2 = Yaw SAS􏶥
 
  􏶨􏶧􏶦up to 8􏶥 
 􏶘+􏶙􏶮int􏶭􏶬number of tanks􏶫
+
+ 􏶨􏶧􏶦􏶥 
 􏶘+􏶙􏶮float􏶭􏶬fuel weight[MAX_NUMBER_OF_FUEL_TANKS]􏶫􏵚pounds􏵛􏶪􏶩
 
  􏶨􏶧􏶦Bit 0 = Pause

@@ -237,7 +237,7 @@ float m_fIceStateTail_in;
 /**
  * @details Time multiplier to allow for x2 (or more) passage of time
  */
-float m_fTime;
+float m_fTimeMultiplier;
 
 /**
  * @details Bit 00 = Blow Tire #1 (1 = failed)
