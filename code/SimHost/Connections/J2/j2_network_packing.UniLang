@@ -26,6 +26,31 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏶔􏶕􏶒PackUtilities.h􏶓􏶖USES: PackBigEndian4ByteInvariance(), UnpackBigEndian4ByteInvariance􏶗
 􏶔􏶕􏶒J2MessageHeader.h􏶓􏶖USES: J2MessageHeaderT􏶗
 􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
+􏶔􏶕􏶒stdio.h􏶓􏶖USES: fprintf()􏶗
+
+􏵺method for packing regular variables according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_PACK_VAR(X)􏵿􏵖􏵗􏵼PackBigEndian4ByteInvariance(pucBuffer, puBufferIterator, &X, sizeof(X))􏵽
+
+􏵺method for unpacking regular variables according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_UNPACK_VAR(X)􏵿􏵖􏵗􏵼UnpackBigEndian4ByteInvariance(pucBuffer, puBufferIterator, &X, sizeof(X))􏵽
+
+􏵺method for fully packing arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_Pack_Full_Array(X)􏵿􏵖􏵗􏵼PackBigEndian4ByteInvariance(pucBuffer, puBufferIterator, X, sizeof(X))􏵽
+
+􏵺method for fully unpacking arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_UnPack_Full_Array(X)􏵿􏵖􏵗􏵼UnpackBigEndian4ByteInvariance(pucBuffer, puBufferIterator, X, sizeof(X))􏵽
+
+􏵺method for partially packing arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_Pack_Partial_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PackFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, MAX)􏵽
+
+􏵺method for partially packing arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_UnPack_Partial_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼UnpackFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, MAX)􏵽
 
 􏷘+􏷗􏷒pack j2 high speed send message􏷑
 􏷐Used to fill buffer for sending outgoing J2 high speed message.􏷏
@@ -79,12 +104,6 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     return uByteIterator;
 􏶳
 
-
-
-
-
-
-
 􏷘+􏷗􏷒unpack j2 high speed send message􏷑
 􏷐Used to fill structure from packed incoming J2 high speed message.􏷏
 􏶠Implemented in order to test the pack version􏶡
@@ -95,6 +114,7 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
     􏵲unpack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+    􏵲verify message size􏵳tHeader,uByteIterator);
     return uByteIterator;
 􏶳
 
@@ -108,6 +128,7 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
     􏵲unpack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+    􏵲verify message size􏵳tHeader,uByteIterator);
     return uByteIterator;
 􏶳
 
@@ -121,6 +142,7 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
     􏵲unpack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+    􏵲verify message size􏵳tHeader,uByteIterator);
     return uByteIterator;
 􏶳
 
@@ -134,6 +156,7 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
     􏵲unpack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+    􏵲verify message size􏵳tHeader,uByteIterator);
     return uByteIterator;
 􏶳
 
@@ -147,6 +170,7 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
     􏵲unpack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+    􏵲verify message size􏵳tHeader,uByteIterator);
     return uByteIterator;
 􏶳
 
@@ -160,11 +184,21 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
     􏵲unpack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+    􏵲verify message size􏵳tHeader,uByteIterator);
     return uByteIterator;
 􏶳
 
-
-
+􏷘-􏷗􏷒verify message size􏷑
+􏷐verify the message size􏷏
+􏶠check that the message size in the header matches the amount of data unpacked􏶡
+􏶜c􏶝􏷆J2MessageHeaderT􏷅􏷄header􏷃􏷀The unpacked header􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄byte iterator􏷃􏷀The state of the iterator after an unpack􏶿
+􏶴
+  􏶲sanity check that their header indicates the correct size of the entire message􏶱
+  if (􏵶header􏵷.m_uByteCount != 􏵶byte iterator􏵷){
+    fprintf(stderr, "message size does not match what was indicated in the header");
+  }
+􏶳
 
 
 
@@ -183,62 +217,62 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶴
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchFlightControl,sizeof(􏵶message􏵷->m_fPitchFlightControl));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollFlightControl,sizeof(􏵶message􏵷->m_fRollFlightControl));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawFlightControl,sizeof(􏵶message􏵷->m_fYawFlightControl));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCollectiveFlightControl,sizeof(􏵶message􏵷->m_fCollectiveFlightControl));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchTrimPosition,sizeof(􏵶message􏵷->m_fPitchTrimPosition));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollTrimPosition,sizeof(􏵶message􏵷->m_fRollTrimPosition));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawTrimPosition,sizeof(􏵶message􏵷->m_fYawTrimPosition));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfYawSerialActuators,sizeof(􏵶message􏵷->m_pfYawSerialActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawTrimActuators,sizeof(􏵶message􏵷->m_fYawTrimActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfRollSerialActuators,sizeof(􏵶message􏵷->m_pfRollSerialActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollTrimActuators,sizeof(􏵶message􏵷->m_fRollTrimActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPitchSerialActuators,sizeof(􏵶message􏵷->m_pfPitchSerialActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchTrimActuators,sizeof(􏵶message􏵷->m_fPitchTrimActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfCollectiveSerialActuators,sizeof(􏵶message􏵷->m_pfCollectiveSerialActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCollectiveTrimActuators,sizeof(􏵶message􏵷->m_fCollectiveTrimActuators));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nYawControlOverrideFlag,sizeof(􏵶message􏵷->m_nYawControlOverrideFlag));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nPitchControlOverrideFlag,sizeof(􏵶message􏵷->m_nPitchControlOverrideFlag));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nRollControlOverrideFlag,sizeof(􏵶message􏵷->m_nRollControlOverrideFlag));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nCollectiveControlOverrideFlag,sizeof(􏵶message􏵷->m_nCollectiveControlOverrideFlag));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRightBrakes,sizeof(􏵶message􏵷->m_fRightBrakes));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fLeftBrakes,sizeof(􏵶message􏵷->m_fLeftBrakes));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fNoseWheelControl,sizeof(􏵶message􏵷->m_fNoseWheelControl));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRotorBrake,sizeof(􏵶message􏵷->m_fRotorBrake));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nWinchFlag,sizeof(􏵶message􏵷->m_nWinchFlag));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchLength_m,sizeof(􏵶message􏵷->m_fWinchLength_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadMass_kg,sizeof(􏵶message􏵷->m_fWinchPayloadMass_kg));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadX_m,sizeof(􏵶message􏵷->m_fWinchPayloadX_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadY_m,sizeof(􏵶message􏵷->m_fWinchPayloadY_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadZ_m,sizeof(􏵶message􏵷->m_fWinchPayloadZ_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nHookFlag,sizeof(􏵶message􏵷->m_nHookFlag));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookLength_m,sizeof(􏵶message􏵷->m_fHookLength_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookPayloadMass_Kg,sizeof(􏵶message􏵷->m_fHookPayloadMass_Kg));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookPayloadX_m,sizeof(􏵶message􏵷->m_fHookPayloadX_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookPayloadY_m,sizeof(􏵶message􏵷->m_fHookPayloadY_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookPayloadZ_m,sizeof(􏵶message􏵷->m_fHookPayloadZ_m));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nSASMode,sizeof(􏵶message􏵷->m_nSASMode));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHeightAboveTerrain_feet,sizeof(􏵶message􏵷->m_fHeightAboveTerrain_feet));
+  J2_PACK_VAR(􏵶message􏵷->m_fPitchFlightControl);
+  J2_PACK_VAR(􏵶message􏵷->m_fRollFlightControl);
+  J2_PACK_VAR(􏵶message􏵷->m_fYawFlightControl);
+  J2_PACK_VAR(􏵶message􏵷->m_fCollectiveFlightControl);
+  J2_PACK_VAR(􏵶message􏵷->m_fPitchTrimPosition);
+  J2_PACK_VAR(􏵶message􏵷->m_fRollTrimPosition);
+  J2_PACK_VAR(􏵶message􏵷->m_fYawTrimPosition);
+  J2_PACK_FULL_ARRAY(􏵶message􏵷->m_pfYawSerialActuators);
+  J2_PACK_VAR(􏵶message􏵷->m_fYawTrimActuators);
+  J2_PACK_FULL_ARRAY(􏵶message􏵷->m_pfRollSerialActuators);
+  J2_PACK_VAR(􏵶message􏵷->m_fRollTrimActuators);
+  J2_PACK_FULL_ARRAY(􏵶message􏵷->m_pfPitchSerialActuators);
+  J2_PACK_VAR(􏵶message􏵷->m_fPitchTrimActuators);
+  J2_PACK_FULL_ARRAY(􏵶message􏵷->m_pfCollectiveSerialActuators);
+  J2_PACK_VAR(􏵶message􏵷->m_fCollectiveTrimActuators);
+  J2_PACK_VAR(􏵶message􏵷->m_nYawControlOverrideFlag);
+  J2_PACK_VAR(􏵶message􏵷->m_nPitchControlOverrideFlag);
+  J2_PACK_VAR(􏵶message􏵷->m_nRollControlOverrideFlag);
+  J2_PACK_VAR(􏵶message􏵷->m_nCollectiveControlOverrideFlag);
+  J2_PACK_VAR(􏵶message􏵷->m_fRightBrakes);
+  J2_PACK_VAR(􏵶message􏵷->m_fLeftBrakes);
+  J2_PACK_VAR(􏵶message􏵷->m_fNoseWheelControl);
+  J2_PACK_VAR(􏵶message􏵷->m_fRotorBrake);
+  J2_PACK_VAR(􏵶message􏵷->m_nWinchFlag);
+  J2_PACK_VAR(􏵶message􏵷->m_fWinchLength_m);
+  J2_PACK_VAR(􏵶message􏵷->m_fWinchPayloadMass_kg);
+  J2_PACK_VAR(􏵶message􏵷->m_fWinchPayloadX_m);
+  J2_PACK_VAR(􏵶message􏵷->m_fWinchPayloadY_m);
+  J2_PACK_VAR(􏵶message􏵷->m_fWinchPayloadZ_m);
+  J2_PACK_VAR(􏵶message􏵷->m_nHookFlag);
+  J2_PACK_VAR(􏵶message􏵷->m_fHookLength_m);
+  J2_PACK_VAR(􏵶message􏵷->m_fHookPayloadMass_Kg);
+  J2_PACK_VAR(􏵶message􏵷->m_fHookPayloadX_m);
+  J2_PACK_VAR(􏵶message􏵷->m_fHookPayloadY_m);
+  J2_PACK_VAR(􏵶message􏵷->m_fHookPayloadZ_m);
+  J2_PACK_VAR(􏵶message􏵷->m_nSASMode);
+  J2_PACK_VAR(􏵶message􏵷->m_fHeightAboveTerrain_feet);
     
     􏶲contact point packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfContactPoints,sizeof(􏵶message􏵷->m_nNumberOfContactPoints));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfGroundContactLocation_feet,sizeof(􏵶message􏵷->m_pfGroundContactLocation_feet[0]),􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
+    J2_PACK_VAR(􏵶message􏵷->m_nNumberOfContactPoints);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfGroundContactLocation_feet,􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
     
     􏶲engine related packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfThrottle,sizeof(􏵶message􏵷->m_pfThrottle[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfMixture,sizeof(􏵶message􏵷->m_pfMixture[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    J2_PACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfThrottle,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfMixture,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
     
     􏶲propeller packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPropPitch_degrees,sizeof(􏵶message􏵷->m_pfPropPitch_degrees[0]),􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    J2_PACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfPropPitch_degrees,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
     
     􏶲fuel tank packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfTanks,sizeof(􏵶message􏵷->m_nNumberOfTanks));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfFuelWeight_lbs,sizeof(􏵶message􏵷->m_pfFuelWeight_lbs[0]),􏵶message􏵷->m_nNumberOfTanks,NUM_FUEL_TANKS);
+    J2_PACK_VAR(􏵶message􏵷->m_nNumberOfTanks);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfFuelWeight_lbs,􏵶message􏵷->m_nNumberOfTanks,MAX_NUMBER_OF_FUEL_TANKS);
     
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nFlag1,sizeof(􏵶message􏵷->m_nFlag1));
+    J2_PACK_VAR(􏵶message􏵷->m_nFlag1);
 􏶳
 
 􏷘-􏷗􏷒pack j2 low speed send message payload􏷑
@@ -248,49 +282,48 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆SendLowSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶴
-
-    􏶲gear related packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfGears,sizeof(􏵶message􏵷->m_nNumberOfGears));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnGearRequestedPosition_pct,sizeof(􏵶message􏵷->m_pnGearRequestedPosition_pct[0]),􏵶message􏵷->m_nNumberOfGears,MAX_NUMBER_OF_LANDING_GEARS);
+  􏶲gear related packing􏶱
+  J2_PACK_VAR(􏵶message􏵷->m_nNumberOfGears);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnGearRequestedPosition_pct,􏵶message􏵷->m_nNumberOfGears,MAX_NUMBER_OF_LANDING_GEARS);
     
-    􏶲flap related packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfFlaps,sizeof(􏵶message􏵷->m_nNumberOfFlaps));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnFlapRequestedPosition_pct,sizeof(􏵶message􏵷->m_pnFlapRequestedPosition_pct[0]),􏵶message􏵷->m_nNumberOfFlaps,MAX_NUMBER_OF_FLAPS);
+  􏶲flap related packing􏶱
+  J2_PACK_VAR(􏵶message􏵷->m_nNumberOfFlaps);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnFlapRequestedPosition_pct,􏵶message􏵷->m_nNumberOfFlaps,MAX_NUMBER_OF_FLAPS);
     
-    􏶲speed brake related packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfSpeedBrakes,sizeof(􏵶message􏵷->m_nNumberOfSpeedBrakes));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct,sizeof(􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct[0]),􏵶message􏵷->m_nNumberOfSpeedBrakes,MAX_NUMBER_OF_SPEED_BRAKES);
+  􏶲speed brake related packing􏶱
+  J2_PACK_VAR(􏵶message􏵷->m_nNumberOfSpeedBrakes);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct,􏵶message􏵷->m_nNumberOfSpeedBrakes,MAX_NUMBER_OF_SPEED_BRAKES);
     
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fSeaLevelPressure_inHG,sizeof(􏵶message􏵷->m_fSeaLevelPressure_inHG));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fSeaLevelTemperature_degf,sizeof(􏵶message􏵷->m_fSeaLevelTemperature_degf));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRunwayRoughness,sizeof(􏵶message􏵷->m_fRunwayRoughness));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWindMagnitude_kts,sizeof(􏵶message􏵷->m_fWindMagnitude_kts));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWindHeading,sizeof(􏵶message􏵷->m_fWindHeading));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWindInclination,sizeof(􏵶message􏵷->m_fWindInclination));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fTurbulence,sizeof(􏵶message􏵷->m_fTurbulence));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPayloadWeight_lbs,sizeof(􏵶message􏵷->m_fPayloadWeight_lbs));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCGOffsetX_in,sizeof(􏵶message􏵷->m_fCGOffsetX_in));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCGOffsetY_in,sizeof(􏵶message􏵷->m_fCGOffsetY_in));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCGOffsetZ_in,sizeof(􏵶message􏵷->m_fCGOffsetZ_in));
+  J2_PACK_VAR(􏵶message􏵷->m_fSeaLevelPressure_inHg);
+  J2_PACK_VAR(􏵶message􏵷->m_fSeaLevelTemperature_degf);
+  J2_PACK_VAR(􏵶message􏵷->m_fRunwayRoughness);
+  J2_PACK_VAR(􏵶message􏵷->m_fWindMagnitude_kts);
+  J2_PACK_VAR(􏵶message􏵷->m_fWindHeading_deg);
+  J2_PACK_VAR(􏵶message􏵷->m_fWindInclination_deg);
+  J2_PACK_VAR(􏵶message􏵷->m_fTurbulence);
+  J2_PACK_VAR(􏵶message􏵷->m_fPayloadWeight_lbs);
+  J2_PACK_VAR(􏵶message􏵷->m_fCGOffsetX_in);
+  J2_PACK_VAR(􏵶message􏵷->m_fCGOffsetY_in);
+  J2_PACK_VAR(􏵶message􏵷->m_fCGOffsetZ_in);
     
-    􏶲engine related packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnEngineStarterRunning,sizeof(􏵶message􏵷->m_pnEngineStarterRunning[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnBleedAir,sizeof(􏵶message􏵷->m_pnBleedAir[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnIgnitionOn,sizeof(􏵶message􏵷->m_pnIgnitionOn[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnEngineFlags1,sizeof(􏵶message􏵷->m_pnEngineFlags1[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnEngineInletState,sizeof(􏵶message􏵷->m_pnEngineInletState[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_fIceStatesEngine_in,sizeof(􏵶message􏵷->m_fIceStatesEngine_in[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_nEngineFailureFlags,sizeof(􏵶message􏵷->m_nEngineFailureFlags[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfIceStatesProp_in,sizeof(􏵶message􏵷->m_pfIceStatesProp_in[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+  􏶲engine related packing􏶱
+  J2_PACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineStarterRunning,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnBleedAir,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnIgnitionOn,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineFlags1,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineInletState,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_fIceStatesEngine_in,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_nEngineFailureFlags,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStatesProp_in,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
     
     
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIceStateRightWing_in,sizeof(􏵶message􏵷->m_fIceStateRightWing_in));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIceStateLeftWing_in,sizeof(􏵶message􏵷->m_fIceStateLeftWing_in));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIceStateFuselage_in,sizeof(􏵶message􏵷->m_fIceStateFuselage_in));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIceStateTail_in,sizeof(􏵶message􏵷->m_fIceStateTail_in));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nTimeMultiplier,sizeof(􏵶message􏵷->m_nTimeMultiplier));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nFailureFlags1,sizeof(􏵶message􏵷->m_nFailureFlags1));
+  J2_PACK_VAR(􏵶message􏵷->m_fIceStateRightWing_in);
+  J2_PACK_VAR(􏵶message􏵷->m_fIceStateLeftWing_in);
+  J2_PACK_VAR(􏵶message􏵷->m_fIceStateFuselage_in);
+  J2_PACK_VAR(􏵶message􏵷->m_fIceStateTail_in);
+  J2_PACK_VAR(􏵶message􏵷->m_nTimeMultiplier);
+  J2_PACK_VAR(􏵶message􏵷->m_nFailureFlags1);
 􏶳
 
 􏷘-􏷗􏷒pack j2 reposition send message payload􏷑
@@ -300,32 +333,27 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆SendRepositionMessageT *const􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶴
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nRepositionType,sizeof(􏵶message􏵷->m_nRepositionType));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dLatitude_deg,sizeof(􏵶message􏵷->m_dLatitude_deg));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dLongitude_deg,sizeof(􏵶message􏵷->m_dLongitude_deg));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dMSLAltitude_ft,sizeof(􏵶message􏵷->m_dMSLAltitude_ft));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fMagneticHeading_deg,sizeof(􏵶message􏵷->m_fMagneticHeading_deg));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIndicatedAirspeed_kts,sizeof(􏵶message􏵷->m_fIndicatedAirspeed_kts));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAircraftPitch_deg,sizeof(􏵶message􏵷->m_fAircraftPitch_deg));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAircraftRoll_deg,sizeof(􏵶message􏵷->m_fAircraftRoll_deg));
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fVerticalSpeed_ft_m,sizeof(􏵶message􏵷->m_fVerticalSpeed_ft_m));
+  J2_PACK_VAR(􏵶message􏵷->m_nRepositionType);
+  J2_PACK_VAR(􏵶message􏵷->m_dLatitude_deg);
+  J2_PACK_VAR(􏵶message􏵷->m_dLongitude_deg);
+  J2_PACK_VAR(􏵶message􏵷->m_dMSLAltitude_ft);
+  J2_PACK_VAR(􏵶message􏵷->m_fMagneticHeading_deg);
+  J2_PACK_VAR(􏵶message􏵷->m_fIndicatedAirspeed_kts);
+  J2_PACK_VAR(􏵶message􏵷->m_fAircraftPitch_deg);
+  J2_PACK_VAR(􏵶message􏵷->m_fAircraftRoll_deg);
+  J2_PACK_VAR(􏵶message􏵷->m_fVerticalSpeed_ft_m);
     
     􏶲engine related packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pnEngineRunning,sizeof(􏵶message􏵷->m_pnEngineRunning[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfEngineRpm,sizeof(􏵶message􏵷->m_pfEngineRpm[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfN1,sizeof(􏵶message􏵷->m_pfN1[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfN2,sizeof(􏵶message􏵷->m_pfN2[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+  J2_PACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineRunning,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfEngineRpm,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfN1,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfN2,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
     
     􏶲propeller related packing􏶱
-    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
-    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_puPropellerRpm,sizeof(􏵶message􏵷->m_puPropellerRpm[0]),􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+  J2_PACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
+    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_puPropellerRpm,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
 􏶳
-
-
-
-
-
 
 
 􏷘-􏷗􏷒unpack j2 high speed send message payload􏷑
@@ -336,152 +364,152 @@ Implemented in order to test the pack version􏶡
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchFlightControl,sizeof(􏵶message􏵷->m_fPitchFlightControl));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollFlightControl,sizeof(􏵶message􏵷->m_fRollFlightControl));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawFlightControl,sizeof(􏵶message􏵷->m_fYawFlightControl));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCollectiveFlightControl,sizeof(􏵶message􏵷->m_fCollectiveFlightControl));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchTrimPosition,sizeof(􏵶message􏵷->m_fPitchTrimPosition));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollTrimPosition,sizeof(􏵶message􏵷->m_fRollTrimPosition));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawTrimPosition,sizeof(􏵶message􏵷->m_fYawTrimPosition));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfYawSerialActuators,sizeof(􏵶message􏵷->m_pfYawSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawTrimActuators,sizeof(􏵶message􏵷->m_fYawTrimActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfRollSerialActuators,sizeof(􏵶message􏵷->m_pfRollSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollTrimActuators,sizeof(􏵶message􏵷->m_fRollTrimActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPitchSerialActuators,sizeof(􏵶message􏵷->m_pfPitchSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchTrimActuators,sizeof(􏵶message􏵷->m_fPitchTrimActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfCollectiveSerialActuators,sizeof(􏵶message􏵷->m_pfCollectiveSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCollectiveTrimActuators,sizeof(􏵶message􏵷->m_fCollectiveTrimActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nYawControlOverrideFlag,sizeof(􏵶message􏵷->m_nYawControlOverrideFlag));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nPitchControlOverrideFlag,sizeof(􏵶message􏵷->m_nPitchControlOverrideFlag));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nRollControlOverrideFlag,sizeof(􏵶message􏵷->m_nRollControlOverrideFlag));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nCollectiveControlOverrideFlag,sizeof(􏵶message􏵷->m_nCollectiveControlOverrideFlag));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRightBrakes,sizeof(􏵶message􏵷->m_fRightBrakes));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fLeftBrakes,sizeof(􏵶message􏵷->m_fLeftBrakes));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fNoseWheelControl,sizeof(􏵶message􏵷->m_fNoseWheelControl));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRotorBrake,sizeof(􏵶message􏵷->m_fRotorBrake));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nWinchFlag,sizeof(􏵶message􏵷->m_nWinchFlag));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchLength_m,sizeof(􏵶message􏵷->m_fWinchLength_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadMass_kg,sizeof(􏵶message􏵷->m_fWinchPayloadMass_kg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadX_m,sizeof(􏵶message􏵷->m_fWinchPayloadX_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadY_m,sizeof(􏵶message􏵷->m_fWinchPayloadY_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fWinchPayloadZ_m,sizeof(􏵶message􏵷->m_fWinchPayloadZ_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nHookFlag,sizeof(􏵶message􏵷->m_nHookFlag));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookLength_m,sizeof(􏵶message􏵷->m_fHookLength_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookPayloadMass_Kg,sizeof(􏵶message􏵷->m_fHookPayloadMass_Kg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookPayloadX_m,sizeof(􏵶message􏵷->m_fHookPayloadX_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookPayloadY_m,sizeof(􏵶message􏵷->m_fHookPayloadY_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHookPayloadZ_m,sizeof(􏵶message􏵷->m_fHookPayloadZ_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nSASMode,sizeof(􏵶message􏵷->m_nSASMode));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fHeightAboveTerrain_feet,sizeof(􏵶message􏵷->m_fHeightAboveTerrain_feet));
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPitchFlightControl);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRollFlightControl);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fYawFlightControl);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fCollectiveFlightControl);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPitchTrimPosition);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRollTrimPosition);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fYawTrimPosition);
+    J2_UNPACK_FULL_ARRAY(􏵶message􏵷->m_pfYawSerialActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fYawTrimActuators);
+    J2_UNPACK_FULL_ARRAY(􏵶message􏵷->m_pfRollSerialActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRollTrimActuators);
+    J2_UNPACK_FULL_ARRAY(􏵶message􏵷->m_pfPitchSerialActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPitchTrimActuators);
+    J2_UNPACK_FULL_ARRAY(􏵶message􏵷->m_pfCollectiveSerialActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fCollectiveTrimActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nYawControlOverrideFlag);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nPitchControlOverrideFlag);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nRollControlOverrideFlag);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nCollectiveControlOverrideFlag);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRightBrakes);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fLeftBrakes);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fNoseWheelControl);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRotorBrake);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nWinchFlag);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fWinchLength_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fWinchPayloadMass_kg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fWinchPayloadX_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fWinchPayloadY_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fWinchPayloadZ_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nHookFlag);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fHookLength_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadMass_Kg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadX_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadY_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadZ_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nSASMode);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fHeightAboveTerrain_feet);
     
     􏶲contact point packing􏶱
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfContactPoints,sizeof(􏵶message􏵷->m_nNumberOfContactPoints));
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfGroundContactLocation_feet,sizeof(􏵶message􏵷->m_pfGroundContactLocation_feet[0]),􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfContactPoints);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfGroundContactLocation_feet,􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
     
     􏶲engine related unpacking􏶱
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfThrottle,sizeof(􏵶message􏵷->m_pfThrottle[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfMixture,sizeof(􏵶message􏵷->m_pfMixture[0]),􏵶message􏵷->m_nNumberOfEngines,NUM_ENGINES);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfThrottle,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfMixture,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
     
     􏶲propeller unpacking􏶱
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPropPitch_degrees,sizeof(􏵶message􏵷->m_pfPropPitch_degrees[0]),􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfPropPitch_degrees,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
     
     􏶲fuel tank unpacking􏶱
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfTanks,sizeof(􏵶message􏵷->m_nNumberOfTanks));
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfFuelWeight_lbs,sizeof(􏵶message􏵷->m_pfFuelWeight_lbs[0]),􏵶message􏵷->m_nNumberOfTanks,NUM_FUEL_TANKS);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfTanks);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfFuelWeight_lbs,􏵶message􏵷->m_nNumberOfTanks,MAX_NUMBER_OF_FUEL_TANKS);
     
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nFlag1,sizeof(􏵶message􏵷->m_nFlag1));
+    J2_UNPACK_VAR(􏵶message􏵷->m_nFlag1);
 􏶳
 
-􏷘+􏷗􏷒unpack j2 high speed received message payload􏷑
+􏷘-􏷗􏷒unpack j2 high speed received message payload􏷑
 􏷐Used to unpack the incoming J2 high speed payload.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆RcvHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dLatitude_deg,sizeof(􏵶message􏵷->m_dLatitude_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dLongitude_deg,sizeof(􏵶message􏵷->m_dLongitude_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_dMSLAltitude_ft,sizeof(􏵶message􏵷->m_dMSLAltitude_ft));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fTheta_deg,sizeof(􏵶message􏵷->m_fTheta_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPsi_deg,sizeof(􏵶message􏵷->m_fPsi_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fBeta_deg,sizeof(􏵶message􏵷->m_fBeta_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPhi_deg,sizeof(􏵶message􏵷->m_fPhi_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAlpha_deg,sizeof(􏵶message􏵷->m_fAlpha_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fSlip_deg,sizeof(􏵶message􏵷->m_fSlip_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAngleOfAttack,sizeof(􏵶message􏵷->m_fAngleOfAttack));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fVelocityX_mps,sizeof(􏵶message􏵷->m_fVelocityX_mps));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fVelocityY_mps,sizeof(􏵶message􏵷->m_fVelocityY_mps));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fVelocityZ_mps,sizeof(􏵶message􏵷->m_fVelocityZ_mps));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAccelX_mpss,sizeof(􏵶message􏵷->m_fAccelX_mpss));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAccelY_mpss,sizeof(􏵶message􏵷->m_fAccelY_mpss));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAccelZ_mpss,sizeof(􏵶message􏵷->m_fAccelZ_mpss));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchRate_dps,sizeof(􏵶message􏵷->m_fPitchRate_dps));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollRate_dps,sizeof(􏵶message􏵷->m_fRollRate_dps));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawRate_dps,sizeof(􏵶message􏵷->m_fYawRate_dps));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchAccel_dpss,sizeof(􏵶message􏵷->m_fPitchAccel_dpss));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollAccel_dpss,sizeof(􏵶message􏵷->m_fRollAccel_dpss));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawAccel_dpss,sizeof(􏵶message􏵷->m_fYawAccel_dpss));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fTrueAirspeed_kts,sizeof(􏵶message􏵷->m_fTrueAirspeed_kts));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fGroundSpeed_kts,sizeof(􏵶message􏵷->m_fGroundSpeed_kts));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fVerticalSpeed_fpm,sizeof(􏵶message􏵷->m_fVerticalSpeed_fpm));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fIndicatedAirspeed_kts,sizeof(􏵶message􏵷->m_fIndicatedAirspeed_kts));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fMachNumber,sizeof(􏵶message􏵷->m_fMachNumber));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fNorthVelocity_kts,sizeof(􏵶message􏵷->m_fNorthVelocity_kts));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fEastVelocity_kts,sizeof(􏵶message􏵷->m_fEastVelocity_kts));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fDynamicPressure_Pa,sizeof(􏵶message􏵷->m_fDynamicPressure_Pa));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fMagneticHeading_deg,sizeof(􏵶message􏵷->m_fMagneticHeading_deg));
+    J2_UNPACK_VAR(􏵶message􏵷->m_dLatitude_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_dLongitude_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_dMSLAltitude_ft);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fTheta_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPsi_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fBeta_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPhi_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fAlpha_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fSlip_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fAngleOfAttack);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fVelocityX_mps);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fVelocityY_mps);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fVelocityZ_mps);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fAccelX_mpss);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fAccelY_mpss);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fAccelZ_mpss);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPitchRate_dps);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRollRate_dps);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fYawRate_dps);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPitchAccel_dpss);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRollAccel_dpss);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fYawAccel_dpss);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fTrueAirspeed_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fGroundSpeed_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fVerticalSpeed_fpm);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fIndicatedAirspeed_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fMachNumber);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fNorthVelocity_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fEastVelocity_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fDynamicPressure_Pa);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fMagneticHeading_deg);
     
     
     􏶲landing gear unpacking􏶱
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfLandingGears,sizeof(􏵶message􏵷->m_nNumberOfLandingGears));
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfWeightOnLandingGear_lbs,sizeof(􏵶message􏵷->m_pfWeightOnLandingGear_lbs[0]),􏵶message􏵷->m_nNumberOfLandingGears,MAX_NUMBER_OF_LANDING_GEARS);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfLandingGears);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfWeightOnLandingGear_lbs,􏵶message􏵷->m_nNumberOfLandingGears,MAX_NUMBER_OF_LANDING_GEARS);
     
     
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nFlag1,sizeof(􏵶message􏵷->m_nFlag1));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPilotSeatCgOffsetX_m,sizeof(􏵶message􏵷->m_fPilotSeatCgOffsetX_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPilotSeatCgOffsetY_m,sizeof(􏵶message􏵷->m_fPilotSeatCgOffsetY_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPilotSeatCgOffsetZ_m,sizeof(􏵶message􏵷->m_fPilotSeatCgOffsetZ_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCoPilotSeatCgOffsetX_m,sizeof(􏵶message􏵷->m_fCoPilotSeatCgOffsetX_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCoPilotSeatCgOffsetY_m,sizeof(􏵶message􏵷->m_fCoPilotSeatCgOffsetY_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCoPilotSeatCgOffsetZ_m,sizeof(􏵶message􏵷->m_fCoPilotSeatCgOffsetZ_m));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfYawSerialActuators,sizeof(􏵶message􏵷->m_pfYawSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawTrimActuators,sizeof(􏵶message􏵷->m_fYawTrimActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfRollSerialActuators,sizeof(􏵶message􏵷->m_pfRollSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fRollTrimActuators,sizeof(􏵶message􏵷->m_fRollTrimActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfPitchSerialActuators,sizeof(􏵶message􏵷->m_pfPitchSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fPitchTrimActuators,sizeof(􏵶message􏵷->m_fPitchTrimActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfCollectiveSerialActuators,sizeof(􏵶message􏵷->m_pfCollectiveSerialActuators));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fCollectiveTrimActuators,sizeof(􏵶message􏵷->m_fCollectiveTrimActuators));
+    J2_UNPACK_VAR(􏵶message􏵷->m_nFlag1);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPilotSeatCgOffsetX_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPilotSeatCgOffsetY_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPilotSeatCgOffsetZ_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fCoPilotSeatCgOffsetX_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fCoPilotSeatCgOffsetY_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fCoPilotSeatCgOffsetZ_m);
+    J2_UNPACK_FULL_ARRAY(􏵶message􏵷->m_pfYawSerialActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fYawTrimActuators);
+    J2_UNPACK_FULL_ARRAY(􏵶message􏵷->m_pfRollSerialActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRollTrimActuators);
+    J2_UNPACK_FULL_ARRAY(􏵶message􏵷->m_pfPitchSerialActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPitchTrimActuators);
+    J2_UNPACK_FULL_ARRAY(􏵶message􏵷->m_pfCollectiveSerialActuators);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fCollectiveTrimActuators);
     
     􏶲surface unpacking􏶱
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfSurfaces,sizeof(􏵶message􏵷->m_nNumberOfSurfaces));
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfSurfaceQ,sizeof(􏵶message􏵷->m_pfSurfaceQ[0]),􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfSurfaceAngleOfIncidence,sizeof(􏵶message􏵷->m_pfSurfaceAngleOfIncidence[0]),􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfSurfaceTorque,sizeof(􏵶message􏵷->m_pfSurfaceTorque[0]),􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfSurfaces);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceQ,􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceAngleOfIncidence,􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceTorque,􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
     
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fBuffetMagnitude,sizeof(􏵶message􏵷->m_fBuffetMagnitude));
+    J2_UNPACK_VAR(􏵶message􏵷->m_fBuffetMagnitude);
     
     􏶲spare bucket unpacking􏶱
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nSpareBucketSize,sizeof(􏵶message􏵷->m_nSpareBucketSize));
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_pfSpareBucket,sizeof(􏵶message􏵷->m_pfSpareBucket[0]),􏵶message􏵷->m_nSpareBucketSize,MAX_SPARE_BUCKET_SIZE);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nSpareBucketSize);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfSpareBucket,􏵶message􏵷->m_nSpareBucketSize,MAX_SPARE_BUCKET_SIZE);
 􏶳
 
-􏷘+􏷗􏷒unpack j2 low speed received message payload􏷑
+􏷘-􏷗􏷒unpack j2 low speed received message payload􏷑
 􏷐Used to unpack the incoming J2 low speed payload.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆RcvLowSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fOutsideAirTemperature_degf,sizeof(􏵶message􏵷->m_fOutsideAirTemperature_degf));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fOutsideAirPressure_inHg,sizeof(􏵶message􏵷->m_fOutsideAirPressure_inHg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fNoseWheelPosition_deg,sizeof(􏵶message􏵷->m_fNoseWheelPosition_deg));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fMagneticVariation_deg,sizeof(􏵶message􏵷->m_fMagneticVariation_deg));
+    J2_UNPACK_VAR(􏵶message􏵷->m_fOutsideAirTemperature_degf);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fOutsideAirPressure_inHg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fNoseWheelPosition_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fMagneticVariation_deg);
 􏶳
 
-􏷘+􏷗􏷒unpack j2 engine received message payload􏷑
+􏷘-􏷗􏷒unpack j2 engine received message payload􏷑
 􏷐Used to unpack the incoming J2 engine payload.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
@@ -489,61 +517,61 @@ Implemented in order to test the pack version􏶡
 􏶜􏶝􏷆RcvEngineDataMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
     size_t uIndex = 0;
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfEngines,sizeof(􏵶message􏵷->m_nNumberOfEngines));
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
     
-    for(; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < NUM_ENGINES; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fN1_pct,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fN1_pct));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fN2_pct,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fN2_pct));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fTorque_ftlbs,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fTorque_ftlbs));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fFuelFlow_pph,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fFuelFlow_pph));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fOilTemperature_degf,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fOilTemperature_degf));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fOilPressure_psi,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fOilPressure_psi));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fExhaustGasTemperature_degf,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fExhaustGasTemperature_degf));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fCylinderHeadTemperature_degf,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fCylinderHeadTemperature_degf));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fEngineRPM,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fEngineRPM));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fEngineThrust_lbs,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fEngineThrust_lbs));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fManifoldPressure_inHg,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fManifoldPressure_inHg));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fInletTurbineTemperature_degc,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fInletTurbineTemperature_degc));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptEngine[uIndex].m_fBleedAirPressureGenerated_psi,sizeof(􏵶message􏵷->m_ptEngine[uIndex].m_fBleedAirPressureGenerated_psi));
+    for(; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fN1_pct);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fN2_pct);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fTorque_ftlbs);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fFuelFlow_pph);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fOilTemperature_degf);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fOilPressure_psi);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fExhaustGasTemperature_degf);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fCylinderHeadTemperature_degf);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fEngineRPM);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fEngineThrust_lbs);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fManifoldPressure_inHg);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fInletTurbineTemperature_degc);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fBleedAirPressureGenerated_psi);
     }
 
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfPropellers,sizeof(􏵶message􏵷->m_nNumberOfPropellers));
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
 
     uIndex = 0;
     for(; uIndex < 􏵶message􏵷->m_nNumberOfPropellers && uIndex < MAX_NUMBER_OF_PROPELLERS; ++uIndex){
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptPropeller[uIndex].m_fPropRPM,sizeof(􏵶message􏵷->m_ptPropeller[uIndex].m_fPropRPM));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptPropeller[uIndex].m_fPropPitch_deg,sizeof(􏵶message􏵷->m_ptPropeller[uIndex].m_fPropPitch_deg));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentDirection_deg,sizeof(􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentDirection_deg));
-        UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentForce_Nm,sizeof(􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentForce_Nm));
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptPropeller[uIndex].m_fPropRPM);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptPropeller[uIndex].m_fPropPitch_deg);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentDirection_deg);
+        J2_UNPACK_VAR(􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentForce_Nm);
     }
 􏶳
 
-􏷘+􏷗􏷒unpack j2 reposition received message payload􏷑
+􏷘-􏷗􏷒unpack j2 reposition received message payload􏷑
 􏷐Used to unpack the incoming J2 reposition payload.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆RepositionMessageReplyT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fYawControlPosition,sizeof(􏵶message􏵷->m_fYawControlPosition));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fThrottlePosition,sizeof(􏵶message􏵷->m_fThrottlePosition));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fLateralControlPosition,sizeof(􏵶message􏵷->m_fLateralControlPosition));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fLongitudinalControlPosition,sizeof(􏵶message􏵷->m_fLongitudinalControlPosition));
+    J2_UNPACK_VAR(􏵶message􏵷->m_fYawControlPosition);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fThrottlePosition);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fLateralControlPosition);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fLongitudinalControlPosition);
 􏶳
 
-􏷘+􏷗􏷒unpack j2 version received message payload􏷑
+􏷘-􏷗􏷒unpack j2 version received message payload􏷑
 􏷐Used to unpack the incoming J2 version request payload.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
 􏶜􏶝􏷆VersionMessageReplyT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶴
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fJ2Version,sizeof(􏵶message􏵷->m_fJ2Version));
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_fAircraftModel,sizeof(􏵶message􏵷->m_fAircraftModel));
+    J2_UNPACK_VAR(􏵶message􏵷->m_fJ2Version);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fAircraftModel);
     
     􏶲dev item unpacking􏶱
-    UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷->m_nNumberOfDeveloperItems,sizeof(􏵶message􏵷->m_nNumberOfDeveloperItems));
-    UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶message􏵷->m_szDevItem,sizeof(􏵶message􏵷->m_szDevItem[0]),􏵶message􏵷->m_nNumberOfDeveloperItems,MAX_DEV_ITEMS);
+    J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfDeveloperItems);
+    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_szDevItem,􏵶message􏵷->m_nNumberOfDeveloperItems,MAX_DEV_ITEMS);
 􏶳
 
 
@@ -577,18 +605,20 @@ Implemented in order to test the pack version􏶡
     􏶲the first byte is the message type􏶱
     BYTE pucHeader[4];
     size_t uIndex = 0;
+    short sSpecifiedSize;
     switch (􏵶message type􏵷){
         case SIMHOST_TO_J2_MESSAGE_TYPE_HIGH_SPEED: pucHeader[0] = 1; break;
         case SIMHOST_TO_J2_MESSAGE_TYPE_LOW_SPEED: pucHeader[0] = 2; break;
         case SIMHOST_TO_J2_MESSAGE_TYPE_REPOSITION: pucHeader[0] = 3; break;
         case SIMHOST_TO_J2_MESSAGE_TYPE_VERSION: pucHeader[0] = 4; break;
-        default: perror("invalid message type requested for J2 header");
+        default: fprintf(stderr,"invalid message type requested for J2 header");
     }
     
     􏶲the next two bytes are the total byte count􏶱
     􏶲(this gets derived from filling the payload + an extra 4 bytes for the header itself)􏶱
-    pucHeader[1] = (BYTE)􏵶buffer iterator􏵷;
-    pucHeader[2] = (BYTE)(􏵶buffer iterator􏵷>>8);
+    uIndex=1;
+    sSpecifiedSize = (short)􏵶buffer iterator􏵷;
+    PackBigEndian4ByteInvariance(pucHeader,&uIndex,&sSpecifiedSize,sizeof(short));
     
     􏶲the last byte is the version number􏶱
     pucHeader[3] = 1;
@@ -604,13 +634,15 @@ Implemented in order to test the pack version􏶡
 􏶴
     􏶲the header portion before the payload􏶱
     J2MessageHeaderT tHeader;
+    short sSpecifiedSize;
     
     􏶲the starting unpack iterator of the buffer􏶱
     􏶲we start at 1, because we already know the message type􏶱
     size_t uByteIterator = 1;
     
     􏶲store the byte count to verify at the end of unpacking􏶱
-    memcpy(&tHeader.m_uByteCount,&􏵶buffer􏵷[uByteIterator],2);
+    memcpy(&sSpecifiedSize,&􏵶buffer􏵷[uByteIterator],2);
+    tHeader.m_uByteCount = sSpecifiedSize;
     
     􏶲the message version􏶱
     tHeader.m_ucMessageVersion = 􏵶buffer􏵷[uByteIterator];
