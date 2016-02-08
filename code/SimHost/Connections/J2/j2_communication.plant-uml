@@ -1,0 +1,21 @@
+@startuml
+class j2_communication {
++J2 data receive()
++J2 control receive()
+-handle incoming data messages()
+-handle incoming control messages()
++J2 send()
+-reposition has changed()
+-version has changed()
+-send high speed message()
+-send low speed message()
+-send reposition message()
+-send version message()
+-send and handle errors()
+-report receive status()
+-report buffer failure to watchdog()
+-report send failure to watchdog()
+-report receive success to watchdog()
+-report receive failure to watchdog()
+}
+@enduml

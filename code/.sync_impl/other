@@ -5,7 +5,7 @@ function Transfer-Global(){
   Export-It-Good "$1";
   Copy-It "$1" "$2";
   Style-It "$1" "$2";
-  #Document-It "$1";
+  Document-It "$1";
   Remove-Generated-Code-From-Work-Area "$1";
 }
 function Transfer-Object-Good(){
@@ -67,6 +67,7 @@ function Export-It-Bad-Enums(){
 }
 function Document-It(){
   $TRANSCOMPILER_TOOL --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="plant-uml" --style="normal" "$1"."$UNILANG_FILE_EXTENSION";
+  $TRANSCOMPILER_TOOL --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="call-graph" --style="normal" "$1"."$UNILANG_FILE_EXTENSION";
 }
 
 
@@ -160,9 +161,9 @@ function Remove-Generated-Code-From-Work-Area(){
   
   #removes wrapper if it exists
   rm -rf "$f2siName""Wrapper";
-  
-  
 }
+
+
 
 
 function Clang-Format-Some-Other-Files(){

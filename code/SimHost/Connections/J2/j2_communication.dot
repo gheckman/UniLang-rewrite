@@ -1,0 +1,65 @@
+digraph j2_communication {
+rankdir=LR
+
+subgraph cluster_interface {
+label = "Interface";
+color=blue;
+rank=1
+"J2 data receive";
+"J2 control receive";
+"J2 send";
+
+}
+
+subgraph cluster_interface {
+label = "Interface";
+color=blue;
+rank=1
+"J2 data receive";
+"J2 control receive";
+"J2 send";
+
+}
+
+subgraph cluster_implementation {
+label = "Implementation";
+color=blue;
+rank=2
+"handle incoming data messages";
+"handle incoming control messages";
+"reposition has changed";
+"version has changed";
+"send high speed message";
+"send low speed message";
+"send reposition message";
+"send version message";
+"send and handle errors";
+"report receive status";
+"report buffer failure to watchdog";
+"report send failure to watchdog";
+"report receive success to watchdog";
+"report receive failure to watchdog";
+
+}
+
+"J2 data receive" -> "handle incoming data messages";
+"J2 control receive" -> "handle incoming control messages";
+"handle incoming data messages" -> "report receive status";
+"handle incoming control messages" -> "report receive status";
+"J2 send" -> "send high speed message";
+"J2 send" -> "send low speed message";
+"J2 send" -> "reposition has changed";
+"J2 send" -> "send reposition message";
+"J2 send" -> "version has changed";
+"J2 send" -> "send version message";
+"send high speed message" -> "send and handle errors";
+"send low speed message" -> "send and handle errors";
+"send reposition message" -> "send and handle errors";
+"send version message" -> "send and handle errors";
+"send and handle errors" -> "report buffer failure to watchdog";
+"send and handle errors" -> "report send failure to watchdog";
+"report receive status" -> "report receive failure to watchdog";
+"report receive status" -> "report receive success to watchdog";
+
+}
+

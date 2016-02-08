@@ -1,0 +1,27 @@
+digraph j2_message_types {
+rankdir=LR
+
+subgraph cluster_interface {
+label = "Interface";
+color=blue;
+rank=1
+
+}
+
+subgraph cluster_interface {
+label = "Interface";
+color=blue;
+rank=1
+
+}
+
+subgraph cluster_implementation {
+label = "Implementation";
+color=blue;
+rank=2
+
+}
+
+
+}
+

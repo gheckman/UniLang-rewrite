@@ -104,100 +104,130 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
     return uByteIterator;
 􏶳
 
+
+
+
+
 􏷘+􏷗􏷒unpack j2 high speed send message􏷑
 􏷐Used to fill structure from packed incoming J2 high speed message.􏷏
 􏶠Implemented in order to test the pack version􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message in􏶿
+􏶜c􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
 􏶜􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
-􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
+􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
-    􏵲unpack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲verify message size􏵳tHeader,uByteIterator);
-    return uByteIterator;
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+      􏵲unpack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+      return uByteIterator;
+    }
+    return 0;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 high speed received message􏷑
 􏷐Used to unpack the incoming J2 high speed message.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜c􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
 􏶜􏶝􏷆RcvHighSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
-􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the traversed buffer􏶹
+􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
-    􏵲unpack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲verify message size􏵳tHeader,uByteIterator);
-    return uByteIterator;
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+      􏵲unpack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+      return uByteIterator;
+    }
+    return 0;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 low speed received message􏷑
 􏷐Used to unpack the incoming J2 low speed message.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜c􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
 􏶜􏶝􏷆RcvLowSpeedMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
-􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the traversed buffer􏶹
+􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
-    􏵲unpack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲verify message size􏵳tHeader,uByteIterator);
-    return uByteIterator;
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+      􏵲unpack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+      return uByteIterator;
+    }
+    return 0;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 engine received message􏷑
 􏷐Used to unpack the incoming J2 engine message.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜c􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
 􏶜􏶝􏷆RcvEngineDataMessageT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
-􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the traversed buffer􏶹
+􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
-    􏵲unpack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲verify message size􏵳tHeader,uByteIterator);
-    return uByteIterator;
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+      􏵲unpack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+      return uByteIterator;
+    }
+    return 0;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 reposition received message􏷑
 􏷐Used to unpack the incoming J2 reposition message.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜c􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
 􏶜􏶝􏷆RepositionMessageReplyT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
-􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the traversed buffer􏶹
+􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
-    􏵲unpack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲verify message size􏵳tHeader,uByteIterator);
-    return uByteIterator;
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+      􏵲unpack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+      return uByteIterator;
+    }
+    return 0;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 version received message􏷑
 􏷐Used to unpack the incoming J2 version request message.􏷏
 􏶠Called after receiving a J2 Message.􏶡
 􏶜c􏶝􏷆BYTE *const􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜c􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
 􏶜􏶝􏷆VersionMessageReplyT *const􏷅􏷄message􏷃􏷀The message to unpack􏶿
-􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the traversed buffer􏶹
+􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
-    􏵲unpack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲verify message size􏵳tHeader,uByteIterator);
-    return uByteIterator;
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+      􏵲unpack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
+      return uByteIterator;
+    }
+    return 0;
 􏶳
 
-􏷘-􏷗􏷒verify message size􏷑
+
+
+
+
+
+􏷘-􏷗􏷒message size matches header claim􏷑
 􏷐verify the message size􏷏
 􏶠check that the message size in the header matches the amount of data unpacked􏶡
 􏶜c􏶝􏷆J2MessageHeaderT􏷅􏷄header􏷃􏷀The unpacked header􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄byte iterator􏷃􏷀The state of the iterator after an unpack􏶿
+􏶜c􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The state of the iterator after an unpack􏶿
+􏶾BOOL􏶽􏶼sizes match􏶻􏶺whether or not the buffer size matches the size advertised in the header􏶹
 􏶴
-  􏶲sanity check that their header indicates the correct size of the entire message􏶱
-  if (􏵶header􏵷.m_uByteCount != 􏵶byte iterator􏵷){
-    fprintf(stderr, "message size does not match what was indicated in the header");
+  􏶲A sanity check to see that their header indicates the correct size of the entire message􏶱
+  if (􏵶header􏵷.m_uByteCount != 􏵶buffer size􏵷){
+    fprintf(stderr, "message size does not match what was indicated in the header\n");
+    return 􏵰;
   }
+  return 􏵱;
 􏶳
 
 
