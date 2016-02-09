@@ -224,7 +224,7 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏶴
   􏶲A sanity check to see that their header indicates the correct size of the entire message􏶱
   if (􏵶header􏵷.m_uByteCount != 􏵶buffer size􏵷){
-    fprintf(stderr, "message size does not match what was indicated in the header\n");
+    fprintf(stderr, "J2 message size does not match what was indicated in the header. Expected: %i, but got: %zu\n",􏵶buffer size􏵷,􏵶header􏵷.m_uByteCount);
     return 􏵰;
   }
   return 􏵱;

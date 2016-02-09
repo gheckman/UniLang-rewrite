@@ -37,6 +37,7 @@
         􏶲Read from Ownship in case we are only changing part of J2InConnectionDataT􏶱
         ReadJ2DataMessageData(&tJ2Data);
         
+        􏶲listens for incoming data messages, and processes them into J2Data􏶱
         􏵲handle incoming data messages􏵳&tJ2Data);
 
         􏶲Write data back into Ownship􏶱
@@ -62,6 +63,7 @@
         􏶲Read from Ownship in case we are only changing part of J2InConnectionDataT􏶱
         ReadJ2ControlMessageData(&tJ2Data);
         
+        􏶲listens for incoming control messages, and processes them into J2Data􏶱
         􏵲handle incoming control messages􏵳&tJ2Data);
 
         􏶲Write data back into Ownship􏶱
@@ -79,33 +81,19 @@
 
     􏶲buffer data􏶱
     BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
-    int nBytesReceived = 0;
     
     􏶲Read UDP data􏶱
-    nBytesReceived = SocketReceive(SOCKET_GEN_J2_DATA_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
+    int nBytesReceived = SocketReceive(SOCKET_GEN_J2_DATA_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
     
     􏶲Error handling on UDP data.  Watchdog related􏶱
-    􏵲report receive status􏵳nBytesReceived);
+    􏵲report receive status􏵳nBytesReceived,"J2 Data Messages");
     
-    􏶲process message and parse data received into the input communication data􏶱
-    􏶲decide what data message was received, and receive it􏶱
-    switch(pucDataBuffer[0]){
-        case J2_TO_SIMHOST_MESSAGE_TYPE_HIGH_SPEED:
-            UnpackJ2HighSpeedReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tHighSpeed);
-            
-            􏶲Release the "flight model arrived" semaphore􏶱
-            SemaphoreGive(SEMAPHORE_SCHEDULE_IN);
-            
-            break;
-        case J2_TO_SIMHOST_MESSAGE_TYPE_LOW_SPEED:
-            UnpackJ2LowSpeedReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tLowSpeed);
-            break;
-        case J2_TO_SIMHOST_MESSAGE_TYPE_ENGINE:
-            UnpackJ2EngineReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tEngine);
-            break;
-        default:;
+    􏶲unpack valid socket stream􏶱
+    if (nBytesReceived != ERROR){
+        􏵲unpack received data message􏵳pucDataBuffer, nBytesReceived,􏵶J2Data􏵷);
     }
 􏶳
+
 􏷘-􏷗􏷒handle incoming control messages􏷑
 􏷐receives the J2 control message􏷏
 􏶠gets the control message from the J2 flight model and writes into the J2 Data􏶡
@@ -113,14 +101,25 @@
 􏶴
     􏶲buffer data􏶱
     BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
-    int nBytesReceived = 0;
     
     􏶲Read UDP data􏶱
-    nBytesReceived = SocketReceive(SOCKET_GEN_J2_CONTROL_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
+    int nBytesReceived = SocketReceive(SOCKET_GEN_J2_CONTROL_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
     
     􏶲Error handling on UDP data.  Watchdog related􏶱
-    􏵲report receive status􏵳nBytesReceived);
+    􏵲report receive status􏵳nBytesReceived,"J2 Control Messages");
     
+    􏶲unpack valid socket stream􏶱
+    if (nBytesReceived != ERROR){
+        􏵲unpack received control message􏵳pucDataBuffer, nBytesReceived,􏵶J2Data􏵷);
+    }
+􏶳
+􏷘-􏷗􏷒unpack received control message􏷑
+􏷐processes the j2 data buffer received from the socket and unpacks it into the appropriate structure􏷏
+􏶠assumes the data received over the socket was valid and completed successfully􏶡
+􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀the buffer received from the socket􏶿
+􏶜c􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the amount of bytes received from the socket􏶿
+􏶜􏶝􏷆J2InConnectionControlMessageT*const􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶴
     􏶲process message and parse data received into the input communication data􏶱
     􏶲decide what data message was received, and receive it􏶱
     switch(pucDataBuffer[0]){
@@ -132,6 +131,27 @@
             break;
         default:
             ;
+    }
+􏶳
+
+􏷘-􏷗􏷒unpack received data message􏷑
+􏷐processes the j2 data buffer received from the socket and unpacks it into the appropriate structure􏷏
+􏶠assumes the data received over the socket was valid and completed successfully􏶡
+􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀the buffer received from the socket􏶿
+􏶜c􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the amount of bytes received from the socket􏶿
+􏶜􏶝􏷆J2InConnectionDataMessageT*const􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶴
+    􏶲process message and parse data received into the input communication data􏶱
+    􏶲decide what data message was received, and receive it􏶱
+    switch(􏵶data buffer􏵷[0]){
+        case J2_TO_SIMHOST_MESSAGE_TYPE_HIGH_SPEED:
+            UnpackJ2HighSpeedReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tHighSpeed);
+            
+            􏶲Release the "flight model arrived" semaphore􏶱
+            SemaphoreGive(SEMAPHORE_SCHEDULE_IN); break;
+        case J2_TO_SIMHOST_MESSAGE_TYPE_LOW_SPEED: UnpackJ2LowSpeedReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tLowSpeed); break;
+        case J2_TO_SIMHOST_MESSAGE_TYPE_ENGINE:    UnpackJ2EngineReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tEngine);     break;
+        default:;
     }
 􏶳
 
@@ -205,37 +225,44 @@
             􏵲send low speed message􏵳&tLow);
         }
         
-        
-        􏶲if reposition has changed􏶱
-        if (􏵲reposition has changed􏵳&tReposition)){
-        
-            􏶲update reposition request data􏶱
-           UpdateJ2RepositionRequestData(&tReposition);
-        
-            􏶲send reposition message􏶱
-            􏵲send reposition message􏵳&tReposition);
-            
-        }
-        
-        􏶲if version has changed􏶱
-        if (􏵲version has changed􏵳&tVersion)){
-        
-            􏶲update version request data􏶱
-            UpdateJ2VersionRequestData(&tVersion);
-
-            􏶲send version message􏶱
-            􏵲send version message􏵳&tVersion);
-        }
-        
-        
-    
-        
+        􏶲conditional sending based on changed data􏶱
+        􏵲send reposition message on change􏵳&tReposition);
+        􏵲send version message on change􏵳&tVersion);
 
         􏶲delay the task􏶱
         DelayTaskNumberOfMilliseconds(J2_TASK_DELAY_MS);
     }
 
     return 0;
+􏶳
+
+
+􏷘-􏷗􏷒send reposition message on change􏷑
+􏷐sends a reposition message if the structure has changed since the last time it was sent􏷏
+􏶠sourcing the new data happens internally when checking for change􏶡
+􏶜􏶝􏷆SendRepositionMessageT*const􏷅􏷄message􏷃􏷀the current state of the reposition data􏶿
+􏶴
+    􏶲if reposition has changed􏶱
+    if (􏵲reposition has changed􏵳􏵶message􏵷)){
+
+        􏶲send reposition message􏶱
+        􏵲send reposition message􏵳􏵶message􏵷);
+        
+    }
+􏶳
+
+􏷘-􏷗􏷒send version message on change􏷑
+􏷐sends a reposition message if the structure has changed since the last time it was sent􏷏
+􏶠sourcing the new data happens internally when checking for change􏶡
+􏶜􏶝􏷆SendVersionRequestMessageT*const􏷅􏷄message􏷃􏷀the current state of the version data􏶿
+􏶴
+    􏶲if version has changed􏶱
+    if (􏵲version has changed􏵳􏵶message􏵷)){
+
+        􏶲send version message􏶱
+        􏵲send version message􏵳􏵶message􏵷);
+        
+    }
 􏶳
 
 􏷘-􏷗􏷒reposition has changed􏷑
@@ -253,7 +280,7 @@
     memset(&tNewMessage,0,sizeof(tNewMessage));
     
     􏶲source new message􏶱
-    􏶲TODO: ...􏶱
+    UpdateJ2RepositionRequestData(&tNewMessage);
     
     􏶲determine if the message has changed􏶱
     bHasChanged = !memcmp(􏵶message􏵷,&tNewMessage,sizeof(tNewMessage));
@@ -279,7 +306,7 @@
     memset(&tNewMessage,0,sizeof(tNewMessage));
     
     􏶲source new message􏶱
-    􏶲TODO: ...􏶱
+    UpdateJ2VersionRequestData(&tNewMessage);
     
     􏶲determine if the message has changed􏶱
     bHasChanged = !memcmp(􏵶message􏵷,&tNewMessage,sizeof(tNewMessage));
@@ -300,14 +327,11 @@
     size_t uByteCount=0;
     memset(pucDataBuffer, 0, MAX_J2_MESSAGE_SIZE);
     
-    􏶲source new message􏶱
-    􏶲TODO: 􏶱
-    
     􏶲fill the data buffer􏶱
     uByteCount = PackJ2HighSpeedSendMessage(pucDataBuffer,􏵶message􏵷);
     
     􏶲call socket send, and handle any errors that occur􏶱
-    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND);
+    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND,"J2 High Speed Message");
 
 􏶳
 􏷘-􏷗􏷒send low speed message􏷑
@@ -320,14 +344,11 @@
     size_t uByteCount=0;
     memset(pucDataBuffer, 0, MAX_J2_MESSAGE_SIZE);
     
-    􏶲source new message􏶱
-    􏶲TODO: 􏶱
-    
     􏶲fill the data buffer􏶱
     uByteCount = PackJ2LowSpeedSendMessage(pucDataBuffer,􏵶message􏵷);
     
     􏶲call socket send, and handle any errors that occur􏶱
-    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND);
+    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND,"J2 Low Speed Message");
 􏶳
 
 􏷘-􏷗􏷒send reposition message􏷑
@@ -344,7 +365,7 @@
     uByteCount = PackJ2RepositionSendMessage(pucDataBuffer,􏵶message􏵷);
     
     􏶲call socket send, and handle any errors that occur􏶱
-    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND);
+    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND,"J2 Reposition Message");
 􏶳
 
 􏷘-􏷗􏷒send version message􏷑
@@ -361,8 +382,30 @@
     uByteCount = PackJ2VersionRequestMessage(pucDataBuffer,􏵶message􏵷);
     
     􏶲call socket send, and handle any errors that occur􏶱
-    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND);
+    􏵲send and handle errors􏵳uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND,"Version Message");
 􏶳
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -372,15 +415,16 @@
 􏶜c􏶝􏷆int􏷅􏷄bytes packed􏷃􏷀the number of bytes packed􏶿
 􏶜c􏶝􏷆BYTE*􏷅􏷄buffer􏷃􏷀the buffer to send􏶿
 􏶜c􏶝􏷆int􏷅􏷄socket number􏷃􏷀the unique id for the particular socket􏶿
+􏶜c􏶝􏷆char*􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
 􏶴
     􏶲handle any data buffer errors􏶱
     if(􏵶bytes packed􏵷 == 0){
-        􏵲report buffer failure to watchdog􏵳);
+        􏵲report buffer failure to watchdog􏵳􏵶what sent􏵷);
     }
     
     􏶲if there are no errors, send the message to J2􏶱
     else if(SocketSend(􏵶socket number􏵷, (char *)􏵶buffer􏵷, 􏵶bytes packed􏵷) == ERROR){
-        􏵲report send failure to watchdog􏵳);
+        􏵲report send failure to watchdog􏵳􏵶what sent􏵷);
     }
 􏶳
 
@@ -388,15 +432,16 @@
 􏷐reports any failures or successes related to receiving data􏷏
 􏶠notifies watchdog􏶡
 􏶜c􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the number of bytes received which will indicate a possible error􏶿
+􏶜c􏶝􏷆char*􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
 􏶴
     􏶲report errors when receiving UDP data has failed􏶱
     if(􏵶bytes received􏵷 == ERROR){
         
-        􏵲report receive failure to watchdog􏵳);
+        􏵲report receive failure to watchdog􏵳􏵶received for􏵷);
         
     }
     else{
-        􏵲report receive success to watchdog􏵳);
+        􏵲report receive success to watchdog􏵳􏵶received for􏵷);
         g_bFMFirstTimeCompleted = TRUE;
     }
 􏶳
@@ -404,8 +449,10 @@
 􏷘-􏷗􏷒report buffer failure to watchdog􏷑
 􏷐handles buffer failures encountered􏷏
 􏶠notifies watchdog and reports error􏶡
+􏶜c􏶝􏷆char*􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
 􏶴
-    perror("J2 tx buffer failure");
+    fprintf(stderr,"%s failed to pack\n",􏵶what sent􏵷);
+
     􏶲TODO: report to watchdog􏶱
     􏶲watchdog not implemented􏶱
 􏶳
@@ -413,8 +460,10 @@
 􏷘-􏷗􏷒report send failure to watchdog􏷑
 􏷐handles send failures encountered􏷏
 􏶠notifies watchdog and reports error􏶡
+􏶜c􏶝􏷆char*􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
 􏶴
-    perror("J2 tx failure");
+    fprintf(stderr,"%s failed to send\n",􏵶what sent􏵷);
+    
     􏶲TODO: report to watchdog􏶱
     􏶲watchdog not implemented􏶱
 􏶳
@@ -422,6 +471,7 @@
 􏷘-􏷗􏷒report receive success to watchdog􏷑
 􏷐handles recieve success encountered􏷏
 􏶠notifies watchdog with the relevant health information􏶡
+􏶜c􏶝􏷆char*􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
 􏶴
     􏶲TODO: send timestamp to watchdog task􏶱
     􏶲timestamp,  nBytesReceived, ... ?􏶱
@@ -431,8 +481,11 @@
 􏷘-􏷗􏷒report receive failure to watchdog􏷑
 􏷐handles receive failures encountered􏷏
 􏶠notifies watchdog and reports error􏶡
+􏶜c􏶝􏷆char*􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
 􏶴
+    fprintf(stderr, "error receiving %s\n",􏵶received for􏵷);
+    
     􏶲TODO: report to watchdog􏶱
     􏶲watchdog not implemented􏶱
-    perror("ProcessSocketMessage error");
 􏶳
+
