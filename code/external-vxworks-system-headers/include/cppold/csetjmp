@@ -1,0 +1,24 @@
+/*	Implementation module : csetjmp
+
+	Copyright 1999 Diab Data Inc, USA
+
+	Description :
+	C++ library support
+
+	History :
+	When    Who     What
+	990901	SMP	Initial
+*/
+
+#ifndef	__Icsetjmp
+#define	__Icsetjmp
+
+#include <xmacros.h>
+
+_STD_BEGIN
+
+#include <setjmp.h>
+
+_STD_END
+
+#endif

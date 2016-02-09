@@ -1,0 +1,246 @@
+/*	Implementation module : complex
+
+	Copyright 1999 Diab Data Inc, USA
+
+	Description :
+	C++ library support
+
+	History :
+	When    Who     What
+	920727	aem	initial
+	990901	SMP	Put in std namespace
+*/
+
+#ifndef __Icomplex
+#define __Icomplex
+
+#include <xmacros.h>
+#include <iostream.h>
+#include <cmath>
+
+_STD_BEGIN
+
+/* ----------------------------------------------------------------------
+ * NOTE:
+ * All members marked (1) are not present in the AT&T version of this
+ * library, they are D-C++ features.
+ * ---------------------------------------------------------------------- */
+
+
+class complex {
+public:
+	// Constructor and destructor
+	complex();
+	complex(const double _re, const double _im=0.0);
+	~complex();
+
+	friend complex	polar(const double abs, const double arg=0.0);
+
+	// Get parts of members/friends
+	friend double	real(const complex c);
+	friend double	imag(const complex c);
+	friend double	abs(const complex c);
+	friend double	arg(const complex c);
+	friend double	norm(const complex c);
+
+	// Basic complex functions
+	friend complex	conj(const complex c);
+	complex		operator+(const complex c) const;
+	complex		operator+(const double c) const;		// (1)
+	friend complex	operator+(const double x, const complex y);	// (1)
+	complex		operator-(const complex c) const;
+	complex		operator-() const;				// (1)
+	complex		operator-(const double c) const;		// (1)
+	friend complex	operator-(const double x, const complex y);	// (1)
+	complex		operator*(const complex c) const;
+	complex		operator*(const double c) const;		// (1)
+	friend complex	operator*(const double x, const complex y);	// (1)
+	complex		operator/(const complex c) const;
+	complex		operator/(const double c) const;		// (1)
+	friend complex	operator/(const double x, const complex y);	// (1)
+	int			operator==(const complex c) const;
+	int			operator==(const double c) const;		// (1)
+	friend int		operator==(const double x, const complex y);	// (1)
+	int			operator!=(const complex c) const;
+	int			operator!=(const double x) const;		// (1)
+	friend int		operator!=(const double x, const complex c);	// (1)
+	void		operator+=(const complex c);	
+	void		operator+=(const double x);			// (1)
+	void		operator-=(const complex c);
+	void		operator-=(const double x);			// (1)
+	void		operator*=(const complex c);
+	void		operator*=(const double x);			// (1)
+	void		operator/=(const complex c);
+	void		operator/=(const double x);			// (1)
+
+	// Trigonometric functions
+	friend complex	sin(const complex c);
+	friend complex	cos(const complex c);
+	friend complex	tan(const complex c);				// (1)
+	friend complex	sinh(const complex c);
+	friend complex	cosh(const complex c);
+	friend complex	tanh(const complex c);				// (1)
+	friend complex	asinh(const complex c);
+
+	// Eponential functions
+	friend complex	exp(const complex c);
+	friend complex	log(const complex c);
+	friend complex	pow(const complex c, const complex e);
+	friend complex	pow(const complex c, const double e);
+	friend complex	pow(const complex c, const int e);
+	friend complex	pow(const double x, const complex e);
+	friend complex	sqrt(const complex c);
+
+private:
+	double re;
+	double im;
+};
+
+/* Some inlines needed right away
+ * ---------------------------------------------------------------------- */
+inline complex::complex() {
+	re = 0.0;
+	im = 0.0;
+}
+inline complex::complex(const double _re, const double _im) {
+	re = _re;
+	im = _im;
+}
+inline complex::~complex() {
+}
+
+/* Stream I/O operators
+ * ---------------------------------------------------------------------- */
+ostream& operator<<(ostream& os, const complex c);
+istream& operator>>(istream& is, complex& c);
+
+
+static const complex complex_zero(0,0);
+
+/* Exception handling
+ * ---------------------------------------------------------------------- */
+class c_exception {
+	int		type;
+	const char*	name;
+	complex	arg1;
+	complex	arg2;
+	complex	retval;
+public:
+	c_exception(const char* _name, const complex& _arg1,
+		    const complex& _arg2 = complex_zero);
+
+	// Error handling function
+	friend int	complex_error( c_exception& );
+
+	// Make functions/members that raise exception friends
+	friend complex log(const complex);
+	friend complex tan(const complex);
+	friend complex tanh(const complex);
+};
+
+#define SING		2
+#define OVERFLOW	3
+#define UNDERFLOW	4
+
+/* ----------------------------------------------------------------------
+ * Rest of the file: INLINES
+ * ---------------------------------------------------------------------- */
+
+inline double real(const complex c) {
+	return c.re;
+}
+inline double imag(const complex c) {
+	return c.im;
+}
+inline complex conj(const complex c) {
+	return complex(c.re, -c.im);
+}
+inline double norm(const complex z) {
+	return z.re*z.re + z.im*z.im;
+}
+inline complex complex::operator+(const complex c) const {
+	return complex(re+c.re, im+c.im);
+}
+inline complex complex::operator+(const double x) const {
+	return complex(re+x, im);
+}
+inline complex	operator+(const double x, const complex y) {
+	return complex(x+y.re, y.im);
+}
+inline complex complex::operator-() const {
+	return complex(-re, -im);
+}
+inline complex complex::operator-(const complex c) const {
+	return complex(re-c.re, im-c.im);
+}
+inline complex complex::operator-(const double x) const {
+	return complex(re-x, im);
+}
+inline complex operator-(const double x, const complex y) {
+	return complex(x-y.re, -y.im);
+}
+inline int complex::operator==(const complex c) const {
+	return re == c.re && im == c.im;
+}
+inline int complex::operator==(const double x) const {
+	return re == x && im == 0;
+}
+inline int operator==(const double x, const complex y) {
+	return x == y.re && y.im == 0;
+}
+inline int complex::operator!=(const complex c) const {
+	return re != c.re || im != c.im;
+}
+inline int complex::operator!=(const double x) const {
+	return re != x || im != 0;
+}
+inline int operator!=(const double x, const complex c) {
+	return x != c.re || 0 != c.im;
+}
+inline void complex::operator+=(const complex c) {
+	re += c.re;
+	im += c.im;
+}
+inline void complex::operator+=(const double x) {
+	re += x;
+}
+inline void complex::operator-=(const complex c) {
+	re -= c.re;
+	im -= c.im;
+}
+inline void complex::operator-=(const double x) {
+	re -= x;
+}
+inline double arg(const complex c) {
+	return _STD atan2(c.im, c.re);
+}
+inline complex complex::operator*(const double x) const {
+	return complex(re*x, im*x);
+}
+inline complex operator*(const double x, const complex c) {
+	return complex(c.re*x, c.im*x);
+}
+inline complex complex::operator/(const double x) const {
+	return complex(re/x, im/x);
+}
+inline complex complex::operator*(const complex c) const {
+	return complex(re*c.re - im*c.im, re*c.im + im*c.re);
+}
+inline void complex::operator*=(const double x) {
+	re *= x;
+	im *= x;
+}
+inline void complex::operator/=(const double x) {
+	re /= x;
+	im /= x;
+}
+inline c_exception::c_exception(const char* _name, const complex& _arg1,
+				const complex& _arg2 ) {
+	name = _name;
+	arg1 = _arg1;
+	arg2 = _arg2;
+}
+
+_STD_END
+
+#endif /* __Icomplex */

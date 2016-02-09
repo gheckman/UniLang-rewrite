@@ -1,0 +1,49 @@
+/*	Implementation module : new
+
+	Copyright 1999 Diab Data Inc, USA
+
+	Description :
+	C++ library support
+
+	History :
+	When    Who     What
+	990901	SMP	Initial
+*/
+
+#ifndef	__Inew
+#define	__Inew
+
+#include <xmacros.h>
+#include <cstddef>
+#include <exception>
+
+_STD_BEGIN
+
+class bad_alloc : public exception {
+public:
+	bad_alloc() throw() {}
+	bad_alloc(const bad_alloc &) throw() {}
+	bad_alloc &operator=(const bad_alloc &) throw() {
+		return *this;
+	}
+	virtual ~bad_alloc() throw() {}
+	virtual const char *what() const throw() {
+		return "bad_alloc";
+	}
+};
+
+typedef void (*new_handler)();	// handler for operator new failures
+new_handler set_new_handler(new_handler);
+
+_STD_END
+
+void *operator new(_CSTD size_t);
+void operator delete(void *);
+
+void *operator new[](_CSTD size_t);
+void operator delete[](void *);
+
+void *operator new(_CSTD size_t, void *);
+void *operator new[](_CSTD size_t, void *);
+
+#endif

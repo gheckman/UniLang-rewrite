@@ -1,0 +1,57 @@
+/*	Implementation module : exception
+
+	Copyright 1999 Diab Data Inc, USA
+
+	Description :
+	C++ library support
+
+	History :
+	When    Who     What
+	990901	SMP	Initial
+*/
+
+#ifndef	__Iexception
+#define	__Iexception
+
+#include <xmacros.h>
+#include <cstddef>
+
+_STD_BEGIN
+
+extern void terminate();
+extern void unexpected();
+typedef void (*terminate_handler)();
+typedef void (*unexpected_handler)();
+terminate_handler set_terminate(terminate_handler);
+unexpected_handler set_unexpected(unexpected_handler);
+bool uncaught_exception();
+
+class exception {
+public:
+	exception() throw() {}
+	exception(const exception &) throw() {}
+	exception &operator=(const exception &) throw() { 
+		return *this;
+	}
+	virtual ~exception() throw() {}
+	virtual const char *what() const throw() {
+		return "exception";
+	}
+};
+
+class bad_exception : public exception {
+public:
+	bad_exception() throw() {}
+	bad_exception(const bad_exception &) throw() {}
+	bad_exception &operator=(const bad_exception &) throw() {
+		return *this;
+	}
+	virtual ~bad_exception() throw() {}
+	virtual const char *what() const throw() {
+		return "bad_exception";
+	}
+};
+
+_STD_END
+
+#endif

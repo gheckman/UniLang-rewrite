@@ -1,0 +1,396 @@
+// cmath standard header
+#ifndef _CMATH_
+#define _CMATH_
+#include <yvals.h>
+
+
+ #if defined(__SUNPRO_CC)	/* compiler test */
+ #define exception	_Math_exception	/* KLUDGE to avoid ambiguity */
+ #endif /* defined(__SUNPRO_CC) */
+
+_C_STD_BEGIN
+_C_LIB_DECL
+
+		/* MACROS FOR _Dtest RETURN (0 => ZERO) */
+#define _DENORM		(-2)	/* C9X only */
+#define _FINITE		(-1)
+#define _INFCODE	1
+#define _NANCODE	2
+
+		/* MACROS FOR _Feraise ARGUMENT */
+#define _FE_DIVBYZERO	0x04
+#define _FE_INEXACT		0x20
+#define _FE_INVALID		0x01
+#define _FE_OVERFLOW	0x08
+#define _FE_UNDERFLOW	0x10
+
+		/* ERROR REPORTING */
+void _Feraise(int);
+
+#ifndef NOFP
+		/* double DECLARATIONS */
+double _Cosh(double, double);
+short _Dtest(double *);
+short _Exp(double *, double, short);
+double _Log(double, int);
+double _Sin(double, unsigned int);
+double _Sinh(double, double);
+
+		/* float DECLARATIONS */
+float _FCosh(float, float);
+short _FDtest(float *);
+short _FExp(float *, float, short);
+float _FLog(float, int);
+float _FSin(float, unsigned int);
+float _FSinh(float, float);
+
+		/* long double DECLARATIONS */
+long double _LCosh(long double, long double);
+short _LDtest(long double *);
+short _LExp(long double *, long double, short);
+long double _LLog(long double, int);
+long double _LSin(long double, unsigned int);
+long double _LSinh(long double, long double);
+
+		/* long double ADDITIONS TO math.h NEEDED FOR complex */
+#ifndef __Imath	/* if math.h is included, prevent redeclaration */
+long double (atan2l)(long double, long double);
+long double (cosl)(long double);
+long double (expl)(long double);
+long double (ldexpl)(long double, int);
+long double (logl)(long double);
+long double (powl)(long double, long double);
+long double (sinl)(long double);
+long double (sqrtl)(long double);
+long double (tanl)(long double);
+#endif
+		/* float ADDITIONS TO math.h NEEDED FOR complex */
+float (atan2f)(float, float);
+float (cosf)(float);
+float (expf)(float);
+float (ldexpf)(float, int);
+float (logf)(float);
+float (powf)(float, float);
+float (sinf)(float);
+float (sqrtf)(float);
+float (tanf)(float);
+
+#if 0
+typedef union {
+	struct {
+#if	defined(__LITTLE_ENDIAN__)
+		unsigned _M1:23;
+		unsigned _Exp:8;
+		unsigned _Sign:1;
+#else
+		unsigned _Sign:1;
+		unsigned _Exp:8;
+		unsigned _M1:23;
+#endif
+	} b;
+	float _Float;
+} _Fconst;
+
+extern const _Fconst _FDenorm, _FInf, _FNan, _FSnan;
+#endif
+
+typedef union {
+	struct {
+#if	defined(__LITTLE_ENDIAN__)
+		unsigned _Man2:32;
+		unsigned _Man1:20;
+		unsigned _Exp:11;
+		unsigned _Sign:1;
+#else
+		unsigned _Sign:1;
+		unsigned _Exp:11;
+		unsigned _Man1:20;
+		unsigned _Man2:32;
+#endif
+	} _Bits;
+	unsigned short _Word[8];
+	float _Float;
+	double _Double;
+	long double _Long_double;
+} _Dconst;
+
+extern const _Dconst _Denorm, _Inf, _Nan, _Snan;
+extern const _Dconst _FDenorm, _FInf, _FNan, _FSnan;
+
+#ifdef __LDBL__
+typedef union {
+	struct {
+#if	defined(__LITTLE_ENDIAN__)
+		unsigned _Man4:32;
+		unsigned _Man3:32;
+		unsigned _Man2:32;
+		unsigned _Man1:16;
+		unsigned _Exp:15;
+		unsigned _Sign:1;
+#else
+		unsigned _Sign:1;
+		unsigned _Exp:15;
+		unsigned _Man1:16;
+		unsigned _Man2:32;
+		unsigned _Man3:32;
+		unsigned _Man4:32;
+#endif
+	} _Bits;
+	long double _Long_double;
+} _LDconst;
+
+extern const _LDconst _LDenorm, _LInf, _LNan, _LSnan;
+
+#else
+#define	_LDenorm	_Denorm
+#define	_LInf		_Inf
+#define	_LNan		_Nan
+#define	_LSnan		_Snan
+#define	_Long_double	_Double
+#endif
+#endif /* NOFP */
+
+_END_C_LIB_DECL
+_C_STD_END
+
+#ifndef NOFP
+#ifdef _STD_USING
+ #undef _STD_USING
+  #include <math.h>
+#if !defined(__VXWORKS__)
+  #include <mathf.h>
+#endif /* __VXWORKS__ */
+ #define _STD_USING
+
+ #if defined(__GLIBC__)	/* compiler test */
+_STD_BEGIN
+inline double abs(double _Left)
+	{	// return absolute value
+	return (_CSTD fabs(_Left));
+	}
+_STD_END
+ #endif /* defined(__GNUC__) */
+
+#else /* _STD_USING */
+ #include <math.h>
+#if !defined(__VXWORKS__)
+  #include <mathf.h>
+#endif /* __VXWORKS__ */
+
+ #if defined(__GNUC__) && (3 <= __GNUC__) && defined(sparc)	/* compiler test */
+inline double abs(double _Left)
+	{	// return absolute value
+	return (_CSTD fabs(_Left));
+	}
+ #endif /* 3 <= __GNUC__ etc. */
+
+#endif /* _STD_USING */
+
+ #ifdef _GLOBAL_USING
+
+ #if defined(__BORLANDC__)	/* compiler test */
+_C_STD_BEGIN
+_C_LIB_DECL
+float (atan2f)(float, float);
+float (cosf)(float);
+float (expf)(float);
+float (ldexpf)(float, int);
+float (logf)(float);
+float (powf)(float, float);
+float (sinf)(float);
+float (sqrtf)(float);
+float (tanf)(float);
+_END_C_LIB_DECL
+_C_STD_END
+ #endif /* defined(__BORLANDC__) */
+
+ #if defined(__MINGW32__) || defined(__SUNPRO_CC)	/* compiler test */ \
+	|| defined(__APPLE__) || defined(__GLIBC__)
+_C_STD_BEGIN
+_C_LIB_DECL
+float (atan2f)(float, float);
+float (cosf)(float);
+float (expf)(float);
+float (ldexpf)(float, int);
+float (logf)(float);
+float (powf)(float, float);
+float (sinf)(float);
+float (sqrtf)(float);
+float (tanf)(float);
+
+long double (atan2l)(long double, long double);
+long double (cosl)(long double);
+long double (expl)(long double);
+long double (ldexpl)(long double, int);
+long double (logl)(long double);
+long double (powl)(long double, long double);
+long double (sinl)(long double);
+long double (sqrtl)(long double);
+long double (tanl)(long double);
+_END_C_LIB_DECL
+_C_STD_END
+ #endif /* defined(__MINGW32__) etc. */
+
+_STD_BEGIN
+
+ #if defined(__GLIBC__) || defined(__BORLANDC__)	/* compiler test */ \
+	 || defined(__MINGW32__) || defined(__APPLE__) || defined(__DCC__)
+		/* double OVERLOADS */
+inline double abs(double _Left)
+	{	// return absolute value
+	return (_CSTD fabs(_Left));
+	}
+
+ #else /* defined(__SUNPRO_CC) etc. */
+using _CSTD acosf; using _CSTD asinf;
+using _CSTD atanf; using _CSTD atan2f; using _CSTD ceilf;
+using _CSTD cosf; using _CSTD coshf; using _CSTD expf;
+using _CSTD fabsf; using _CSTD floorf; using _CSTD fmodf;
+using _CSTD ldexpf; using _CSTD logf;
+using _CSTD log10f; using _CSTD powf;
+using _CSTD sinf; using _CSTD sinhf; using _CSTD sqrtf;
+using _CSTD tanf; using _CSTD tanhf;
+
+#if !defined(__VXWORKS__)
+using _CSTD frexpf; using _CSTD modff; 
+using _CSTD acosl; using _CSTD asinl;
+using _CSTD atanl; using _CSTD ceill; using _CSTD coshl; 
+using _CSTD fabsl; 
+using _CSTD floorl; using _CSTD fmodl;
+using _CSTD frexpl; using _CSTD log10l; 
+using _CSTD modfl; using _CSTD sinhl; using _CSTD tanhl;
+using _CSTD abs;
+#endif /* __VXWORKS__ */
+
+using _CSTD atan2l; 
+using _CSTD cosl; using _CSTD expl;
+using _CSTD ldexpl; using _CSTD logl;
+using _CSTD powl;
+using _CSTD sinl; using _CSTD sqrtl;
+using _CSTD tanl; 
+
+ #endif /* defined(__SUNPRO_CC) etc. */
+
+using _CSTD acos; using _CSTD asin;
+using _CSTD atan; using _CSTD atan2; using _CSTD ceil;
+using _CSTD cos; using _CSTD cosh; using _CSTD exp;
+using _CSTD fabs; using _CSTD floor; using _CSTD fmod;
+using _CSTD frexp; using _CSTD ldexp; using _CSTD log;
+using _CSTD log10; using _CSTD modf; using _CSTD pow;
+using _CSTD sin; using _CSTD sinh; using _CSTD sqrt;
+using _CSTD tan; using _CSTD tanh;
+
+ #if _HAS_C9X
+using _CSTD float_t; using _CSTD double_t;
+
+using _CSTD acosh; using _CSTD asinh; using _CSTD atanh;
+using _CSTD cbrt; using _CSTD erf; using _CSTD erfc;
+using _CSTD expm1; using _CSTD exp2;
+using _CSTD hypot; using _CSTD ilogb; using _CSTD lgamma;
+using _CSTD log1p; using _CSTD log2; using _CSTD logb;
+using _CSTD llrint; using _CSTD lrint; using _CSTD nearbyint;
+using _CSTD rint; using _CSTD llround; using _CSTD lround;
+using _CSTD fdim; using _CSTD fma; using _CSTD fmax; using _CSTD fmin;
+using _CSTD round; using _CSTD trunc;
+using _CSTD remainder; using _CSTD remquo;
+using _CSTD copysign; using _CSTD nan; using _CSTD nextafter;
+using _CSTD scalbn; using _CSTD scalbln;
+using _CSTD nexttoward; using _CSTD tgamma;
+
+using _CSTD acoshf; using _CSTD asinhf; using _CSTD atanhf;
+using _CSTD cbrtf; using _CSTD erff; using _CSTD erfcf;
+using _CSTD expm1f; using _CSTD exp2f;
+using _CSTD hypotf; using _CSTD ilogbf; using _CSTD lgammaf;
+using _CSTD log1pf; using _CSTD log2f; using _CSTD logbf;
+using _CSTD llrintf; using _CSTD lrintf; using _CSTD nearbyintf;
+using _CSTD rintf; using _CSTD llroundf; using _CSTD lroundf;
+using _CSTD fdimf; using _CSTD fmaf; using _CSTD fmaxf; using _CSTD fminf;
+using _CSTD roundf; using _CSTD truncf;
+using _CSTD remainderf; using _CSTD remquof;
+using _CSTD copysignf; using _CSTD nanf;
+using _CSTD nextafterf; using _CSTD scalbnf; using _CSTD scalblnf;
+using _CSTD nexttowardf; using _CSTD tgammaf;
+
+using _CSTD acoshl; using _CSTD asinhl; using _CSTD atanhl;
+using _CSTD cbrtl; using _CSTD erfl; using _CSTD erfcl;
+using _CSTD expm1l; using _CSTD exp2l;
+using _CSTD hypotl; using _CSTD ilogbl; using _CSTD lgammal;
+using _CSTD log1pl; using _CSTD log2l; using _CSTD logbl;
+using _CSTD llrintl; using _CSTD lrintl; using _CSTD nearbyintl;
+using _CSTD rintl; using _CSTD llroundl; using _CSTD lroundl;
+using _CSTD fdiml; using _CSTD fmal; using _CSTD fmaxl; using _CSTD fminl;
+using _CSTD roundl; using _CSTD truncl;
+using _CSTD remainderl; using _CSTD remquol;
+using _CSTD copysignl; using _CSTD nanl;
+using _CSTD nextafterl; using _CSTD scalbnl; using _CSTD scalblnl;
+using _CSTD nexttowardl; using _CSTD tgammal;
+ #endif /* _HAS_C9X */
+
+
+#if !defined(__STRICT_ANSI__)
+using ::acosf; 
+using ::asinf;
+using ::atanf; 
+using ::ceilf;
+using ::coshf; 
+using ::fabsf; 
+using ::floorf; 
+using ::fmodf;
+using ::log10f; 
+using ::sinhf; 
+using ::tanhf;
+#endif
+
+using ::acos; using ::asin;
+using ::ldexp; using ::log;
+using ::atan2f; 
+using ::cosf; using ::expf;
+using ::ldexpf; using ::logf;
+using ::powf;
+using ::sinf; using ::sqrtf;
+using ::tanf; 
+
+using ::atan2l; 
+using ::cosl; using ::expl;
+using ::ldexpl; using ::logl;
+using ::powl;
+using ::sinl; using ::sqrtl;
+using ::tanl; 
+
+#if !defined(__VXWORKS__) && !defined(__STRICT_ANSI__)
+using ::frexpf;
+using ::modff;
+#endif
+
+#if !defined(__VXWORKS__)
+using ::abs;
+using ::acosl; 
+using ::asinl;
+using ::atanl; 
+using ::ceill;
+using ::coshl;
+using ::fabsl; 
+using ::floorl; 
+using ::fmodl;
+using ::frexp;
+using ::frexpl;
+using ::log10l; 
+using ::modfl; 
+using ::sinhl;
+using ::tanhl;
+#endif   /* __VXWORKS__ */
+
+_STD_END
+ #endif /* _GLOBAL_USING */
+
+#endif /* NOFP */
+ #if defined(__SUNPRO_CC)	/* compiler test */
+ #undef exception
+ #endif /* defined(__SUNPRO_CC) */
+
+#endif /* _CMATH_ */
+
+/*
+ * Copyright (c) 1992-2006 by P.J. Plauger.  ALL RIGHTS RESERVED.
+ * Consult your license regarding permissions and restrictions.
+V5.01:1278 */

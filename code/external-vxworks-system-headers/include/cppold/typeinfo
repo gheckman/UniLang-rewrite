@@ -1,0 +1,70 @@
+/*	Implementation module : typeinfo
+
+	Copyright 1999 Diab Data Inc, USA
+
+	Description :
+	C++ library support
+
+	History :
+	When    Who     What
+	990901	SMP	Initial
+*/
+#ifndef	__Itypeinfo
+#define	__Itypeinfo
+
+#include <exception>
+
+_STD_BEGIN
+
+class type_info {
+private:
+	const void *tmdescr;
+	const char *namep;
+	type_info(const type_info &);
+	type_info &operator =(const type_info &);
+public:
+	virtual ~type_info();
+	bool operator ==(const type_info &) const;
+	bool operator !=(const type_info &) const;
+	bool before(const type_info &) const;
+	const char *name() const;
+	friend void *__dynamic_cast(void *, const type_info *, const type_info *);
+};
+
+typedef type_info Typeinfo;
+
+
+class bad_cast : public exception {
+public:
+	bad_cast() throw() {}
+	bad_cast(const bad_cast &) throw() {}
+	bad_cast &operator=(const bad_cast &) throw() {
+		return *this;
+	}
+	virtual ~bad_cast() throw() {}
+	virtual const char *what() const throw() {
+		return "bad_cast";
+	}
+};
+
+typedef bad_cast Bad_cast;
+
+
+class bad_typeid : public exception {
+public:
+	bad_typeid() throw() {}
+	bad_typeid(const bad_typeid &) throw() {}
+	bad_typeid &operator=(const bad_typeid &) throw() {
+		return *this;
+	}
+	virtual ~bad_typeid() throw() {}
+	virtual const char *what() const throw() {
+		return "bad_typeid";
+	}
+};
+
+typedef bad_typeid bad_type_id;
+
+_STD_END
+
+#endif

@@ -1,0 +1,24 @@
+/*	Implementation module : cctype
+
+	Copyright 1999 Diab Data Inc, USA
+
+	Description :
+	C++ library support
+
+	History :
+	When    Who     What
+	990901	SMP	Initial
+*/
+
+#ifndef	__Icctype
+#define	__Icctype
+
+#include <xmacros.h>
+
+_STD_BEGIN
+
+#include <ctype.h>
+
+_STD_END
+
+#endif

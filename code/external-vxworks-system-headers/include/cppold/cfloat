@@ -1,0 +1,24 @@
+/*	Implementation module : cfloat
+
+	Copyright 1999 Diab Data Inc, USA
+
+	Description :
+	C++ library support
+
+	History :
+	When    Who     What
+	990901	SMP	Initial
+*/
+
+#ifndef	__Icfloat
+#define	__Icfloat
+
+#include <xmacros.h>
+
+_STD_BEGIN
+
+#include <float.h>
+
+_STD_END
+
+#endif

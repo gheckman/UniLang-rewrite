@@ -1,0 +1,24 @@
+/*	Implementation module : clocale
+
+	Copyright 1999 Diab Data Inc, USA
+
+	Description :
+	C++ library support
+
+	History :
+	When    Who     What
+	990901	SMP	Initial
+*/
+
+#ifndef	__Iclocale
+#define	__Iclocale
+
+#include <xmacros.h>
+
+_STD_BEGIN
+
+#include <locale.h>
+
+_STD_END
+
+#endif
