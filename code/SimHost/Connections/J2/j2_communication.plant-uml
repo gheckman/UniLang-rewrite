@@ -21,5 +21,6 @@ class j2_communication {
 -report send failure to watchdog()
 -report receive success to watchdog()
 -report receive failure to watchdog()
+-reestablish socket()
 }
 @enduml
