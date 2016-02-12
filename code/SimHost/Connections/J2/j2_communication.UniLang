@@ -434,7 +434,7 @@
         􏶲if the data did not reach its destination􏶱
         if (nBytesSent == ERROR || nBytesSent == 0){
             􏵲report send failure to watchdog􏵳􏵶what sent􏵷);
-            􏵲reestablish socket􏵳􏵶socket number􏵷);
+            ReestablishSocket(􏵶socket number􏵷);
         }
     }
 􏶳
@@ -498,15 +498,5 @@
     
     􏶲TODO: report to watchdog􏶱
     􏶲watchdog not implemented􏶱
-􏶳
-
-􏷘-􏷗􏷒reestablish socket􏷑
-􏷐reestablish a socket􏷏
-􏶠This is done when a socket continues to send out errors, regardless of the host's returned availability􏶡
-􏶜c􏶝􏷆int􏷅􏷄socket number􏷃􏷀the unique id for the particular socket􏶿
-􏶴
-    􏶲delete and re-create􏶱
-    close(*g_ptSocketMap[􏵶socket number􏵷].m_pnIDReference);
-    CreateSocket(g_pnSocketIDs[􏵶socket number􏵷]);
 􏶳
 

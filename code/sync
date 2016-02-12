@@ -8,9 +8,12 @@ BASE_DIRECTORY="$(dirname "$0")"
 . "$BASE_DIRECTORY""/.sync_impl/all"
 
 function Main(){
+
   echo "started sync"
-  #convert good code into terrible f2si code.
-  #this take the good code repo, and puts the converted files, into an f2si repo.
+  
+  #Convert good code into terrible f2si code.
+  #This process takes the good UniLang repo, and puts the converted files into our shitty C f2si repo.
+  #It may also be extended to transcompile and transfer SEP code.
   #--------------------#
   # UniLang -> F2si C  #
   #--------------------#

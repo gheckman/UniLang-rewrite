@@ -3,11 +3,12 @@
 #nonmutatable globals
 
 #TOOL NAMES
+#programs that are run in our transcompiler code formatting automation process.
 TRANSCOMPILER_TOOL='unilang-transcompiler';
 CLANG_FORMAT_TOOL='clang-format';
 
 
-
+#The expected file extension of our UniLang code
 UNILANG_FILE_EXTENSION='UniLang';
 
 ###################
@@ -15,6 +16,7 @@ UNILANG_FILE_EXTENSION='UniLang';
 ###################
 
 #PATHS
+#relevant for transferring created files, from one directory to another
 FULL_PATH_TO_ROOT_OF_ACTUAL_REPO='/home/malko/Desktop/work-related/fresh'
 FULL_PATH_TO_UNICODE_ROOT='/home/malko/Desktop/UniLang-rewrite/code'
 LOCAL_SOURCE_ROOT='SimHost/UH72A_VME/Src'
@@ -27,5 +29,5 @@ FULL_PATH_TO_TEST_ROOT="$FULL_PATH_TO_ROOT_OF_ACTUAL_REPO""/""$LOCAL_TEST_ROOT""
 ###########################
 # VXWORKS WRAPPER RELATED #
 ###########################
-
+#Used for the static analyzers
 FULL_PATH_TO_VXWORKS_WRAPPERS='/home/malko/Desktop/work-related/external-unit-test-deps/For_Linux/VxWorks_Wrappers'
