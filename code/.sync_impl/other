@@ -117,14 +117,14 @@ function Style-It(){
     squeeze-whitespace-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   fi
   
-  #remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
-  #remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   
-  #rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
-  #rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   
-  #whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
-  #whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   
   squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
