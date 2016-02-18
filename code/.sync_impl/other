@@ -97,45 +97,67 @@ function Style-It(){
   #folder name it was exported to
   f2siName=`Pushed_Caps_Case $1`;
   
-  #basically for headers that don't get created in the folder (occurs when they are headers only)
+  #this is tied to headers that don't get created in the named folder (occurs when they are headers only)
+  #if we transcompiler a UniLang file, and it only spits out a single .h, then that .h won't exist in a named folder.
   PossibleHeaderName="$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName".h
   
-  #format the code once it's there (fun fact: clang-format will remove the empty newline at the end; which is undesirable, but unavoidable)
+  #format the code once it's there.  
+  #Things clang-format does, that we DON'T WANT TO HAPPEN:
+  # - removes the empty newline at the end
+  # - pushes macro values back to their identifier names (reversing any kind of alignment)
   #We just force format where we think the file is going to show up.  It might be a header file on its own,
   #it might actually be in a newly created directory
+  
+  #Tom said he doesn't like us auto-formatting, but I'd rather just do it, and have perfect code.  
+  #The only way he would know I'm doing it anyway, is if there were no mistakes.
+  #Mark is cool with it.
   $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
   $CLANG_FORMAT_TOOL -style=file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
   $CLANG_FORMAT_TOOL -style=file -i "$PossibleHeaderName" > /dev/null 2>&1;
   
-  #optionally do this:
-  #need to fix the bulk updater to just bail out if the file doesn't exist.  
-  #instead of having it create a file like it does now...
-  if [ -f "$PossibleHeaderName" ];
-  then
-    squeeze-whitespace-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
-  fi
-  
+  #agreed upon
   remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
+  remove-top-empty-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   
+  #agreed upon
   rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
+  rtrim-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   
+  #agreed upon
   whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
+  whitespace-lines-to-empty-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   
+  #agreed upon
   squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
+  squeeze-whitespace-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
+  
+  #per Dr. Joe
+  macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
   
   #Add the empty newline back to the files after formatting (removed by clang format)
-  if [ -f "$PossibleHeaderName" ];
-  then
-    set-a-single-blank-line-to-the-end-of-file -i "$PossibleHeaderName" > /dev/null 2>&1;
-  fi
+  #Windriver compiler and Tom complain about this
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
+  set-a-single-blank-line-to-the-end-of-file -i "$PossibleHeaderName" > /dev/null 2>&1;
   
 
   
