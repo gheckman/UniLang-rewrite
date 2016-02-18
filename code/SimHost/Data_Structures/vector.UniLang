@@ -1,8 +1,7 @@
 􏶞o􏶟
 􏷲A basic generic vector type for adding and accessing a dynamic number of elements.􏷱
-􏷰The capacity of the vector is equal to its size.
-Be sure to type cast the void* returned when accessing.
-This is a typical practice of void pointers.􏷯
+􏷰Be sure to type cast the void* returned when accessing.
+This is the typical practice of void pointers.􏷯
 􏷮Vector􏷭 􏷮Data Structure􏷭
 􏷬Trevor Hickey􏷫
 
@@ -55,11 +54,11 @@ The added item will be the last item.􏶡
 
 􏷘-􏷗􏷒ensure there is enough space􏷑
 􏷐ensure there is enough space, by possibly resizing the internal array.􏷏
-􏶠if resizing the array is needed, but it cannot be preformed, FALSE is returned.􏶡
+􏶠if resizing the array is needed, but it cannot be preformed, 􏵰 is returned.􏶡
 􏶚􏶛􏶾BOOL􏶽􏶼available space􏶻􏶺whether there is enough space to add an item􏶹
 􏶴
     􏶲whether there is enough space to add an item􏶱
-    BOOL bAvailableSpace = TRUE;
+    BOOL bAvailableSpace = 􏵱;
     
     􏶲increase the size of the internal array if we are already full􏶱
     if (􏵴size􏵵 == 􏵴capacity􏵵){
@@ -109,7 +108,7 @@ return NULL;
 􏶴
 
     􏶲whether memory was successfully reallocated􏶱
-    BOOL bSuccessfulRealloc = TRUE;
+    BOOL bSuccessfulRealloc = 􏵱;
     
     􏶲Change the size of the internal array (most likely increasing it).􏶱
     void** NewElements = realloc(􏵴elements􏵵, sizeof(void *) * 􏵶new capacity􏵷);
@@ -118,9 +117,9 @@ return NULL;
     if (NewElements){
         􏵴elements􏵵 = NewElements;
         􏵴capacity􏵵 = 􏵶new capacity􏵷;
-        bSuccessfulRealloc = TRUE;
+        bSuccessfulRealloc = 􏵱;
     }else{
-        bSuccessfulRealloc = FALSE;
+        bSuccessfulRealloc = 􏵰;
     }
     
     return bSuccessfulRealloc;
@@ -128,8 +127,8 @@ return NULL;
 
 􏷘-􏷗􏷒valid index􏷑
 􏷐Check if an integer is a valid index􏷏
-􏶠True is returned if the index is an addressable element in the vector.
-False is returned if it is an out of range index􏶡
+􏶠􏵱 is returned if the index is an addressable element in the vector.
+􏵰 is returned if it is an out of range index􏶡
 􏶜c􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index to test for validity of􏶿
 􏶚􏶛􏶾BOOL􏶽􏶼is valid index􏶻􏶺whether the index is valid for the current state of the 􏶐􏶹
 􏶴
