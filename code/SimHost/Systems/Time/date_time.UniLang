@@ -100,16 +100,16 @@ This handles leap years.􏷏
 
 􏶨the number of milliseconds of the current day􏶧
 􏶦expect the value to be in a valid range of (0 - 86,399,999)􏶥
-􏶌observe􏶑􏶘-􏶙􏶮double􏶭􏶬milliseconds􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮double􏶭􏶬milliseconds􏶫􏶪0􏶩
 
 􏶨the current calendar day of the month􏶧
 􏶦expect the value to be in a valid range of (1 - 31)􏶥
-􏶌observe􏶑􏶘-􏶙􏶮unsigned int􏶭􏶬day􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮unsigned int􏶭􏶬day􏶫􏶪0􏶩
 
 􏶨the current month of the year􏶧
 􏶦expect the value to be in a valid range of (1 - 12)􏶥
-􏶌observe􏶑􏶘-􏶙􏶮MonthE􏶭􏶬month􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮MonthE􏶭􏶬month􏶫􏶪0􏶩
 
 􏶨the current year􏶧
 􏶦expect the value to be any positive number that fits the size of an unsigned int􏶥
-􏶌observe􏶑􏶘-􏶙􏶮unsigned int􏶭􏶬year􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮unsigned int􏶭􏶬year􏶫􏶪0􏶩

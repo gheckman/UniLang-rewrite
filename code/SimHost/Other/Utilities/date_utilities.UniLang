@@ -10,15 +10,13 @@ Function for looking up how many days are in a certain month.
 􏷤􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 
 
-􏶘+􏶙􏶰ce􏶯􏶮unsigned int􏶭􏶬number of milliseconds in a day􏶫􏶪86400000􏶩
-􏶘+􏶙􏶰ce􏶯􏶮unsigned int􏶭􏶬number of months in a year􏶫􏶪12􏶩
+􏶘+􏶙􏶰ec􏶯􏶮unsigned int􏶭􏶬number of milliseconds in a day􏶫􏶪86400000􏶩
+􏶘+􏶙􏶰ec􏶯􏶮unsigned int􏶭􏶬number of months in a year􏶫􏶪12􏶩
 
 􏷘+􏷗􏷒number of days in the month􏷑
 􏷐Determine the number of days in a particular month based on the particular year􏷏
-􏶠
-The number of days in February is contingent on whether the year is a leap year or not.
-This function will abstract that edge case, and allow for querying any month based on the year.
-􏶡
+􏶠The number of days in February is contingent on whether the year is a leap year or not.
+This function will abstract that edge case, and allow for querying any month based on the year.􏶡
 􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀a month given in return for its number of days􏶿
 􏶜c􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year in which to look up the number of days in the month􏶿
 􏶾unsigned int􏶽􏶼number of days􏶻􏶺the number of days in the given month on the given year􏶹

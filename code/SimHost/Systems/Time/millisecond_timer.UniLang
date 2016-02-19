@@ -90,11 +90,11 @@ if(!􏵴paused􏵵){
 
 􏶨The amount of milliseconds that have gone by􏶧
 􏶦Will change on each update unless the timer is paused􏶥
-􏶌observe􏶑􏶘-􏶙􏶮double􏶭􏶬elapsed time_ms􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮double􏶭􏶬elapsed time_ms􏶫􏶪0􏶩
 
 􏶨Whether the timer is paused or unpaused􏶧
 􏶦It can be changed during an update􏶥
-􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬paused􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮BOOL􏶭􏶬paused􏶫􏶪0􏶩
 
 􏶨The elapsed time from the last update􏶧
 􏶦Used internally to keep track of how much time has gone by since the last update.􏶥

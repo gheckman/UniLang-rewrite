@@ -16,7 +16,7 @@ it is recommended you create the message using one of its constructor functions.
 􏶔􏶕􏶒SemaphoreList􏶓􏶖USES: SEMAPHORE_DEBUG_DATA􏶗
 􏶔􏶕􏶒PackUtilities􏶓􏶖USES: PackBigEndian2ByteInvariance()􏶗
 􏶔􏶕􏶒SocketManager􏶓􏶖USES: SocketSend()􏶗
-􏶔􏶕􏶒SocketList􏶓􏶖USES: SOCKET_GEN_DEBUG_DATA_SEND􏶗
+􏶔􏶕􏶒SocketList􏶓􏶖USES: SOCKET_GEN_DYNAMIC_DEBUG_SEND􏶗
 􏶔􏶕􏶒stdioLib.h􏶓􏶖USES: perror()􏶗
 
 􏷘+􏷗􏷒send message to the dynamic debugger􏷑
@@ -200,7 +200,7 @@ This function increments and returns a shared count in a thread safe manner.􏶡
     {
         perror("DynamicDebug tx buffer failure");
     }
-    else if (SocketSend(SOCKET_GEN_DEBUG_DATA_SEND, (char *)􏵶buffer􏵷, 􏵶buffer iterator􏵷) == ERROR)
+    else if (SocketSend(SOCKET_GEN_DYNAMIC_DEBUG_SEND, (char *)􏵶buffer􏵷, 􏵶buffer iterator􏵷) == ERROR)
     {
         perror("DynamicDebug transmit data failure");
     }

@@ -5,12 +5,11 @@
 􏷬Mark Meyer􏷫
 
 􏶨General constants􏶧
-􏶘+􏶙􏶰ec􏶯􏶮float􏶭􏶬aircraft reposition timer sec􏶫 􏶪5􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬valve state open􏶫              􏶪0􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬valve state closed􏶫            􏶪1􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬annun flash rate ms􏶫           􏶪1000􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮int􏶭   􏶬invalid index􏶫                 􏶪-1􏶩
-
+􏶘+􏶙􏶰ec􏶯􏶮float􏶭􏶬aircraft reposition timer sec􏶫    􏶪5􏶩
+􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬valve state open􏶫               􏶪0􏶩
+􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬valve state closed􏶫             􏶪1􏶩
+􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬annun flash rate ms􏶫            􏶪1000􏶩
+􏶘+􏶙􏶰ec􏶯 􏶮int􏶭   􏶬invalid index􏶫                  􏶪-1􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬kias to fpm􏶫              􏶪101.268591􏶩􏶨Calculation constants􏶧
 􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬acceleration gravity fts􏶫 􏶪32.17405􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬pi􏶫                       􏶪3.1415926535897932384626433832795􏶩
@@ -22,7 +21,11 @@
 􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬inhg to pascals􏶫          􏶪3386.38866667􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬inhg to hp􏶫               􏶪33.8638866667􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬mps to knots􏶫             􏶪1.943844􏶩
+􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬deg to mas􏶫               􏶪3600000􏶩􏶨degrees to milli-arc-seconds􏶧
+􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬fpm to mps􏶫               􏶪.00508􏶩􏶨Feet/minute to meters/second􏶧
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬knots to mps􏶫             􏶪0.514444􏶩
+􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬knots to fps􏶫             􏶪1.6878083989501311􏶩􏶨Kts to Feet / second􏶧
+􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬rpm to rps􏶫               􏶪.10471975512􏶩􏶨RPM to Rotations / Second􏶧
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬feet to meters􏶫           􏶪0.3048􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬meters to feet􏶫           􏶪3.28084􏶩
 􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬ms per hour􏶫              􏶪3600000􏶩

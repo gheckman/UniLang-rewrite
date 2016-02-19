@@ -1,4 +1,0 @@
-@startuml
-class J2_communication_config {
-}
-@enduml
