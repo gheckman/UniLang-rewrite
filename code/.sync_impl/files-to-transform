@@ -23,6 +23,7 @@ function Transfer_Utilities(){ :
   Transfer-Global "time_utilities" "Shared/ffs"
   Transfer-Global "date_utilities" "Shared/ffs"
   Transfer-Global "pack_utilities" "Shared/ffs"
+  Transfer-Global "connection_utilities" "Shared/ffs"
 }
 function Transfer_Time(){ :
   Transfer-Global "month" "Components/Time"

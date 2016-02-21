@@ -18,6 +18,7 @@ it is recommended you create the message using one of its constructor functions.
 􏶔􏶕􏶒SocketManager􏶓􏶖USES: SocketSend()􏶗
 􏶔􏶕􏶒SocketList􏶓􏶖USES: SOCKET_GEN_DYNAMIC_DEBUG_SEND􏶗
 􏶔􏶕􏶒stdioLib.h􏶓􏶖USES: perror()􏶗
+􏶔􏶕􏶒ConnectionUtilities􏶓􏶖USES: SendAndHandleErrors()􏶗
 
 􏷘+􏷗􏷒send message to the dynamic debugger􏷑
 􏷐Sends a generic debug message to the dynamic debugger.􏷏
@@ -101,7 +102,7 @@ it is recommended you create the message using one of its constructor functions.
     PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
     
     􏶲send out the message􏶱
-    􏵲send and handle errors􏵳pucMessage,uIterator);
+    SendAndHandleErrors(uIterator,pucMessage,SOCKET_GEN_DYNAMIC_DEBUG_SEND,"Dynamic Debug");
 􏶳
 
 􏷘-􏷗􏷒pack header􏷑
@@ -165,7 +166,7 @@ it is recommended you create the message using one of its constructor functions.
     PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷)+1);
     
     􏶲send out the message􏶱
-    􏵲send and handle errors􏵳pucMessage,uIterator);
+    SendAndHandleErrors(uIterator,pucMessage,SOCKET_GEN_DYNAMIC_DEBUG_SEND,"Dynamic Debug");
 􏶳
 
 
@@ -186,28 +187,6 @@ This function increments and returns a shared count in a thread safe manner.􏶡
     
     return wCount;
 􏶳
-
-
-􏷘-􏷗􏷒send and handle errors􏷑
-􏷐Sends out the data buffer over the network􏷏
-􏶠relies on socket information􏶡
-􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶴
-    􏶲if byte count is zero, report buffer failure􏶱
-    􏶲if SocketSend fails, report send failure􏶱
-    if (􏵶buffer iterator􏵷 == 0)
-    {
-        perror("DynamicDebug tx buffer failure");
-    }
-    else if (SocketSend(SOCKET_GEN_DYNAMIC_DEBUG_SEND, (char *)􏵶buffer􏵷, 􏵶buffer iterator􏵷) == ERROR)
-    {
-        perror("DynamicDebug transmit data failure");
-    }
-􏶳
-
-
-
 
 
 􏶨the total number of messages sent by the dynamic debugger􏶧

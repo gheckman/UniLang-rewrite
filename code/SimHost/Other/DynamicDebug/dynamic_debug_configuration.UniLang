@@ -19,7 +19,7 @@ example: System/SubComponent/Name􏵻
 
 􏵺IP address of the dynamic debugger.􏵻
 􏵐+􏵑􏵾dynamic debugger IP address􏵿
-􏵼172.31.1.160􏵽
+􏵼"172.31.1.160"􏵽
 
 􏵺the port to send dynamic data to the dynamic debugger.􏵻
 􏵐+􏵑􏵾dynamic debugger send port number􏵿
