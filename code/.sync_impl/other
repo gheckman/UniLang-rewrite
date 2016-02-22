@@ -150,6 +150,7 @@ function Style-It(){
   squeeze-whitespace-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   
   #per Dr. Joe
+  #this doesn't work right on macro functions
   macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
@@ -187,6 +188,9 @@ function Remove-Generated-Code-From-Work-Area(){
   
   #removes wrapper if it exists
   rm -rf "$f2siName""Wrapper";
+  
+  #other generated stuff
+  rm -rf *.dot *.png *.plant-uml *.deps
 }
 
 
@@ -221,6 +225,9 @@ function Check-For-Duplicate-Headers(){
   recursively-detect-redundant-header-files --start-path "$FULL_PATH_TO_CODE_ROOT" --file-extension c
   recursively-detect-redundant-header-files --start-path "$FULL_PATH_TO_CODE_ROOT" --file-extension cpp 
 }
+
+
+#static analyzers:  
 function Cpp-Check-All-Files(){
   find "$FULL_PATH_TO_CODE_ROOT" -type f|while read f; do cppchecker "'""$f""'" --search-paths "$FULL_FULL_PATH_TO_CODE_ROOT" '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
 }
@@ -230,4 +237,23 @@ function Splint-Check-All-Files(){
 function Hungarian-Notation-Check-All-Files(){
   find "$FULL_PATH_TO_CODE_ROOT" -type f|while read f; do f2si-hungarian-notation-validator "'""$f""'" --search-paths "$FULL_FULL_PATH_TO_CODE_ROOT" '/home/malko/Desktop/work-related/fresh/SimHost/Tests/Test_Dependencies/For_Linux/VxWorks_Wrappers'; done
 }
+
+function Check-For-Double-Semicolons(){
+  find "$FULL_PATH_TO_CODE_ROOT" -type f|while read f; do double-semi-colon-checker "'""$f""'"; done
+}
+function Check-For-Empty-Spaces-At-The-Top-Of-File(){
+  find "$FULL_PATH_TO_CODE_ROOT" -type f|while read f; do whitespace-at-the-top-of-file-checker "'""$f""'"; done
+}
+
+function Check-For-Single-Blank-Line-At-The-End-Of-File(){
+  find "$FULL_PATH_TO_CODE_ROOT" -type f|while read f; do single-blank-line-at-the-end-of-file-checker "'""$f""'"; done
+}
+function Check-That-Structs-Use-The-Ridiculous-Double-Name(){
+  find "$FULL_PATH_TO_CODE_ROOT" -type f|while read f; do f2si-typedef-struct-double-name-checker "'""$f""'"; done
+}
+
+
+
+
+
 
