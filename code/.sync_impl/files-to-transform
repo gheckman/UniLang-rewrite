@@ -23,7 +23,8 @@ function Transfer_Utilities(){ :
   Transfer-Global "time_utilities" "Shared/ffs"
   Transfer-Global "date_utilities" "Shared/ffs"
   Transfer-Global "pack_utilities" "Shared/ffs"
-  Transfer-Global "connection_utilities" "Shared/ffs"
+  Transfer-Global "udp_connection_utilities" "Shared/ffs"
+  Transfer-Global "math_utilities" "Shared/ffs"
 }
 function Transfer_Time(){ :
   Transfer-Global "month" "Components/Time"
@@ -64,8 +65,6 @@ function Transfer_Electrical_Manager_Data(){ :
   #Transfer-Global "electrical_screen_data"
   #Transfer-Global "electrical_switches"
   #Transfer-Global "panel_breakers"
-  
-  
 }
 
 
@@ -88,13 +87,13 @@ function Transfer_Components(){ :
   Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
 }
 function Transfer_Connections_Config(){ :
-  Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
-  Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
+  #Transfer-Global "Gls_communication_config" "Connections/UDP/GLInstruments";
+  #Transfer-Global "Ios_communication_config" "Connections/UDP/IOS";
   #Transfer-Global "Sep_communication_config" "Connections/UDP/SEP";
-  Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
-  Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
-  Transfer-Global "aural_communication_config" "Connections/UDP/Aural";
-  Transfer-Global "bug_eye_communication_config" "Connections/UDP/BugEye";
+  #Transfer-Global "Srns_communication_config" "Connections/UDP/SRNS";
+  #Transfer-Global "Arc231_communication_config" "Connections/UDP/Arc231";
+  #Transfer-Global "aural_communication_config" "Connections/UDP/Aural";
+  #Transfer-Global "bug_eye_communication_config" "Connections/UDP/BugEye";
   #Transfer-Global "ctrl_loader_communication_config" "Connections/UDP/ControlLoader";
   #Transfer-Global "garmin_communication_config" "Connections/UDP/Garmin430";
   #Transfer-Global "motion_seats_communication_config" "Connections/UDP/MotionSeats";
@@ -117,11 +116,11 @@ function Transform-And_Transfer-SimHost-Files(){ :
   Step_In_Call_Function_Step_Out "Other/Utilities"               Transfer_Utilities;
   Step_In_Call_Function_Step_Out "Systems/Time"                  Transfer_Time;
   
-  #Step_In_Call_Function_Step_Out "Systems/Electrical/generic"    Transfer_Electrical_Generic;
-  #Step_In_Call_Function_Step_Out "Systems/Electrical/specific"   Transfer_Electrical_Specific;
-  #Step_In_Call_Function_Step_Out "Systems/Electrical/manager"    Transfer_Electrical_Manager;
-  #Step_In_Call_Function_Step_Out "Systems/Electrical/manager_data"    Transfer_Electrical_Manager_Data;
-  #Step_In_Call_Function_Step_Out "Systems/Electrical/components" Transfer_Electrical_Components;
+    Step_In_Call_Function_Step_Out "Systems/Electrical/generic"    Transfer_Electrical_Generic;
+    Step_In_Call_Function_Step_Out "Systems/Electrical/specific"   Transfer_Electrical_Specific;
+    Step_In_Call_Function_Step_Out "Systems/Electrical/manager"    Transfer_Electrical_Manager;
+    Step_In_Call_Function_Step_Out "Systems/Electrical/manager_data"    Transfer_Electrical_Manager_Data;
+    Step_In_Call_Function_Step_Out "Systems/Electrical/components" Transfer_Electrical_Components;
   
   Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
   Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;

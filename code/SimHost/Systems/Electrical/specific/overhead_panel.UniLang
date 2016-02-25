@@ -684,147 +684,147 @@ and put them into the generic electrical graph data structure.􏷏
 
 
 􏶨The IDs of the left and right essential bus which are used to connect essential devices.􏶧
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬essential bus􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬essential bus􏶫􏶪0􏶩
 
 􏶨The IDs of the left and right nonessential bus which are used to connect nonessential devices.􏶧
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬nonessential bus􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬nonessential bus􏶫􏶪0􏶩
 
 􏶨The IDs of the left and right shed bus which are used to connect shed devices.􏶧
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬shed bus􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬shed bus􏶫􏶪0􏶩
 
 􏶨Row 1 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬stby hor bat􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ic amp􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ics cab􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬com4 xcvr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬com4 ctrl􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬dimm test􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ics backup􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms2􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bat em ex lt􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬stby hor bat􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ic amp􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ics cab􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬com4 xcvr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬com4 ctrl􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬dimm test􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ics backup􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms2􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bat em ex lt􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨Row 2 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬vhf tx1􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms1􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms blw􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬lh mon􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bambi bucket􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬avio main1􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬avio main 2􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬emer bat􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬video dist􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬rh mon􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mov map􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬rad alt􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dme􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cm3 ant􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cm3 rt􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mkr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬com5 xcvr􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬vhf tx1􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms1􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms blw􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬lh mon􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bambi bucket􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬avio main1􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬avio main 2􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬emer bat􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬video dist􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬rh mon􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mov map􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬rad alt􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dme􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cm3 ant􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cm3 rt􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mkr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬com5 xcvr􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨Row 3 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fcds2 backup􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pt st cp􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ap2􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mir􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬pwr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cargo pax lt􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cont1 ls lt􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬xfera pump􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬htgv􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬inst cool􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pax blw􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cont2􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬atc􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬waas relay􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fcds2 backup􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pt st cp􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ap2􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mir􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬pwr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cargo pax lt􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cont1 ls lt􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬xfera pump􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬htgv􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬inst cool􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pax blw􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cont2􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬atc􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬waas relay􏶫􏶪0􏶩
 􏶨􏶧􏶦􏶥
 
 􏶨Row 4 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fcdm􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬nd􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬pfd􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬blw pel􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms12 relay􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ahrs1􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ahrs2􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬adc􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬avio mstr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ess avio main􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬roll2 sema􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fcdm􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬nd􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬pfd􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬blw pel􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nms12 relay􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ahrs1􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ahrs2􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬adc􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬avio mstr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ess avio main􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬roll2 sema􏶫􏶪0􏶩
 􏶨􏶧􏶦􏶥
 
 
 􏶨Row 5 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ics􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬instr lights􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬p1 sas􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬htg cont􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ckpt vent􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ftr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬roll1 sas􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬yaw sas􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬beep trim􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mast mom􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬xferf pump􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬p2 sema􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ap1􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬altm vibr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬vhf tx2􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ics􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬instr lights􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬p1 sas􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬htg cont􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ckpt vent􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ftr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬roll1 sas􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬yaw sas􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬beep trim􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mast mom􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬xferf pump􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬p2 sema􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ap1􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬altm vibr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬vhf tx2􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨Row 6 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬floats􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cont􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cc pil􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬boom􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pos􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ldg􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ckpt􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬var nr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬n2 trim􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬instr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬acol􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬em ex􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cc ped winch􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬aux tank􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pt st plt􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk adu b􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬floats􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cont􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cc pil􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬boom􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pos􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ldg􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ckpt􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬var nr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬n2 trim􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬instr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬acol􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬em ex􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cc ped winch􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬aux tank􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬pt st plt􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk adu b􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨Row 7 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬sand filt􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬wiper􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ovsp􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬prime p􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fire d􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fuel v􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ign􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬start􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬tq n2􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬rotor rpm􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬sand filt􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬wiper􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ovsp􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬prime p􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fire d􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fuel v􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ign􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬start􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬tq n2􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬rotor rpm􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 
 􏶨Row 8 􏶏 devices􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬gen􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬bt􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fire e􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fuel l􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬hyd p􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬wu􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬cad􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬vemd􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬gen􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬bt􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fire e􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fuel l􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬hyd p􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬wu􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬cad􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬vemd􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨The ID of a node that is conceptually stored on the control console􏶧
 􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cabin monitor􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dvr􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mx15 imager􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ls16 cntl􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk cntl􏶫􏶪0􏶩
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk adu􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬cabin monitor􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dvr􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬mx15 imager􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬ls16 cntl􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk cntl􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬dwnlnk adu􏶫􏶪0􏶩

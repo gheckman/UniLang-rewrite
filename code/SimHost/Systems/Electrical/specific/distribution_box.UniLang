@@ -211,49 +211,49 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬main bus􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬main bus􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 1􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 1􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 2􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 2􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 3􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 3􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 4􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬fuse 4􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nonessential bus relay􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nonessential bus relay􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬shed bus relay􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬shed bus relay􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bus tie relay􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬bus tie relay􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nonessential bus􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬nonessential bus􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌observe􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬shed bus􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬shed bus􏶫􏶪0􏶩

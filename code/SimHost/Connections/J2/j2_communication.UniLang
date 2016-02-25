@@ -20,7 +20,7 @@
 􏶔􏶕􏶒J2ConnectionData􏶓􏶖USES: UpdateJ2HighSpeedOutputData(), UpdateJ2LowSpeedOutputData(), UpdateJ2RepositionRequestData(), UpdateJ2VersionRequestData()􏶗
 􏶔􏶕􏶒SemaphoreManager􏶓􏶖USES: SemaphoreGive()􏶗
 􏶔􏶕􏶒SemaphoreList􏶓􏶖USES: SEMAPHORE_SCHEDULE_IN􏶗
-􏶔􏶕􏶒ConnectionUtilities􏶓􏶖USES: SendAndHandleErrors(), ReportRecieveStatus()􏶗
+􏶔􏶕􏶒UdpConnectionUtilities􏶓􏶖USES: SendAndHandleUdpErrors(), ReportUdpRecieveStatus()􏶗
 
 􏷘+􏷗􏷒J2 data receive􏷑
 􏷐Used to sequence incoming J2 Data Messages.􏷏
@@ -86,7 +86,7 @@
     int nBytesReceived = SocketReceive(SOCKET_GEN_J2_DATA_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
     
     􏶲Error handling on UDP data.  Watchdog related􏶱
-    ReportReceiveStatus(nBytesReceived,"J2 Data Messages");
+    ReportUdpReceiveStatus(nBytesReceived,"J2 Data Messages");
     
     􏶲unpack valid socket stream􏶱
     if (nBytesReceived != ERROR){
@@ -107,7 +107,7 @@
     int nBytesReceived = SocketReceive(SOCKET_GEN_J2_CONTROL_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
     
     􏶲Error handling on UDP data.  Watchdog related􏶱
-    ReportReceiveStatus(nBytesReceived,"J2 Control Messages");
+    ReportUdpReceiveStatus(nBytesReceived,"J2 Control Messages");
     
     􏶲unpack valid socket stream􏶱
     if (nBytesReceived != ERROR){
@@ -332,7 +332,7 @@
     uByteCount = PackJ2HighSpeedSendMessage(pucDataBuffer,􏵶message􏵷);
     
     􏶲call socket send, and handle any errors that occur􏶱
-    SendAndHandleErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND,"J2 High Speed Message");
+    SendAndHandleUdpErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND,"J2 High Speed Message");
 
 􏶳
 􏷘-􏷗􏷒send low speed message􏷑
@@ -349,7 +349,7 @@
     uByteCount = PackJ2LowSpeedSendMessage(pucDataBuffer,􏵶message􏵷);
     
     􏶲call socket send, and handle any errors that occur􏶱
-    SendAndHandleErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND,"J2 Low Speed Message");
+    SendAndHandleUdpErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND,"J2 Low Speed Message");
 􏶳
 
 􏷘-􏷗􏷒send reposition message􏷑
@@ -366,7 +366,7 @@
     uByteCount = PackJ2RepositionSendMessage(pucDataBuffer,􏵶message􏵷);
     
     􏶲call socket send, and handle any errors that occur􏶱
-    SendAndHandleErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND,"J2 Reposition Message");
+    SendAndHandleUdpErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND,"J2 Reposition Message");
 􏶳
 
 􏷘-􏷗􏷒send version message􏷑
@@ -383,5 +383,5 @@
     uByteCount = PackJ2VersionRequestMessage(pucDataBuffer,􏵶message􏵷);
     
     􏶲call socket send, and handle any errors that occur􏶱
-    SendAndHandleErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND,"Version Message");
+    SendAndHandleUdpErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_CONTROL_SEND,"Version Message");
 􏶳

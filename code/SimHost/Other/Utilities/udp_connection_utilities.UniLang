@@ -1,13 +1,13 @@
 􏶞g􏶟
 􏷲Connection Utilities􏷱
-􏷰Shared functionality among connections􏷯
+􏷰Shared functionality among UDP connections􏷯
 􏷮Utilities􏷭􏷮Connections􏷭
 􏷬Trevor Hickey􏷫
 
 􏷤􏷣􏷦Defs􏷥􏷢USES: BYTE􏷡
 􏶔􏶕􏶒SocketManager􏶓􏶖USES: SocketSend(), SocketReceive()􏶗
 
-􏷘+􏷗􏷒send and handle errors􏷑
+􏷘+􏷗􏷒send and handle Udp errors􏷑
 􏷐sends a byte array through a socket, and handles any errors that occur in the process􏷏
 􏶠uses socket send and notifies to watchdog􏶡
 􏶜c􏶝􏷆int􏷅􏷄bytes packed􏷃􏷀the number of bytes packed􏶿
@@ -38,7 +38,7 @@
     }
 􏶳
 
-􏷘+􏷗􏷒report receive status􏷑
+􏷘+􏷗􏷒report Udp receive status􏷑
 􏷐reports any failures or successes related to receiving data􏷏
 􏶠notifies watchdog􏶡
 􏶜c􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the number of bytes received which will indicate a possible error􏶿

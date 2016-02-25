@@ -6,7 +6,6 @@ sides are not exact, we can save a lot of redundancy using 2D arrays where appro
 􏷮Electrical􏷭
 􏷬Trevor Hickey􏷫
 
-
 􏶊Index into the left or right device of an overhead panel.􏶉
 􏶈It is to be used on devices that are redundant, and exist on both the left and the right side of the overhead panel􏶇
 􏶀electrical system side􏶋

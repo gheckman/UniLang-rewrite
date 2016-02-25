@@ -18,7 +18,7 @@ it is recommended you create the message using one of its constructor functions.
 􏶔􏶕􏶒SocketManager􏶓􏶖USES: SocketSend()􏶗
 􏶔􏶕􏶒SocketList􏶓􏶖USES: SOCKET_GEN_DYNAMIC_DEBUG_SEND􏶗
 􏶔􏶕􏶒stdioLib.h􏶓􏶖USES: perror()􏶗
-􏶔􏶕􏶒ConnectionUtilities􏶓􏶖USES: SendAndHandleErrors()􏶗
+􏶔􏶕􏶒UdpConnectionUtilities􏶓􏶖USES: SendAndHandleUdpErrors()􏶗
 
 􏷘+􏷗􏷒send message to the dynamic debugger􏷑
 􏷐Sends a generic debug message to the dynamic debugger.􏷏
@@ -102,7 +102,7 @@ it is recommended you create the message using one of its constructor functions.
     PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷) + 1);
     
     􏶲send out the message􏶱
-    SendAndHandleErrors(uIterator,pucMessage,SOCKET_GEN_DYNAMIC_DEBUG_SEND,"Dynamic Debug");
+    SendAndHandleUdpErrors(uIterator,pucMessage,SOCKET_GEN_DYNAMIC_DEBUG_SEND,"Dynamic Debug");
 􏶳
 
 􏷘-􏷗􏷒pack header􏷑
@@ -166,7 +166,7 @@ it is recommended you create the message using one of its constructor functions.
     PackBigEndian2ByteInvariance(pucMessage,&uIterator,􏵶path name􏵷,strlen(􏵶path name􏵷)+1);
     
     􏶲send out the message􏶱
-    SendAndHandleErrors(uIterator,pucMessage,SOCKET_GEN_DYNAMIC_DEBUG_SEND,"Dynamic Debug");
+    SendAndHandleUdpErrors(uIterator,pucMessage,SOCKET_GEN_DYNAMIC_DEBUG_SEND,"Dynamic Debug");
 􏶳
 
 

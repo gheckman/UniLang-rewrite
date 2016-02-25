@@ -60,8 +60,8 @@ of the overall path list returned to the user.􏷯
 
 􏶨A list of nodes that complete a valid path to ground.􏶧
 􏶦statically allocated to max a size􏶥
-􏶌observe􏶑􏶘-􏶙􏶮size_t[MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND]􏶭􏶬path􏶫
+􏶌g􏶑􏶘-􏶙􏶮size_t[MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND]􏶭􏶬path􏶫
 
 􏶨the size of the path being stored inside of the array.􏶧
 􏶦the size will increment each time a node is added to the list􏶥
-􏶌observe􏶑􏶘-􏶙􏶮size_t􏶭􏶬size􏶫
+􏶌g􏶑􏶘-􏶙􏶮size_t􏶭􏶬size􏶫

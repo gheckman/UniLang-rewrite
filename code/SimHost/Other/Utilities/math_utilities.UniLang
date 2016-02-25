@@ -1,0 +1,41 @@
+􏶞g􏶟
+􏷲math related utilities􏷱
+􏷰generic math related functions not found in math.h􏷯
+􏷮Math Utilities􏷭􏷮Utilities􏷭
+􏷬Trevor Hickey􏷫
+􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
+
+􏷘+􏷗􏷒float array average􏷑
+􏷐takes the average of an array of floats􏷏
+􏶠float specific function exists due to lack overloading/templates􏶡
+􏶜c􏶝􏷆float*const􏷅􏷄array􏷃􏷀array of numbers to average􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
+􏶾float􏶽􏶼average􏶻􏶺the average of the selected elements􏶹
+􏵪􏵫􏵨size must be <= the size of the array􏵩
+􏶴
+
+    float fTotal = 0;
+    size_t uIndex = 0;
+    for (; uIndex < 􏵶size􏵷; ++uIndex){
+        fTotal += 􏵶array􏵷[uIndex];
+    }
+    return fTotal / 􏵶size􏵷;
+􏶳
+
+􏷘+􏷗􏷒int array average􏷑
+􏷐takes the average of an array of ints􏷏
+􏶠int specific function exists due to lack overloading/templates􏶡
+􏶜c􏶝􏷆int*const􏷅􏷄array􏷃􏷀array of numbers to average􏶿
+􏶜c􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
+􏶾int􏶽􏶼average􏶻􏶺the average of the selected elements􏶹
+􏵪􏵫􏵨size must be <= the size of the array􏵩
+􏶴
+
+    int nTotal = 0;
+    size_t uIndex = 0;
+    for (; uIndex < 􏵶size􏵷; ++uIndex){
+        nTotal += 􏵶array􏵷[uIndex];
+    }
+    return nTotal / 􏵶size􏵷;
+􏶳
+

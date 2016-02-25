@@ -48,97 +48,7 @@
 #ifdef __cplusplus
 extern "C"
 {
-#endif //#ifdef __cplusplus
-
-/**
- * @brief Electrical Malfunctions Locals
- * @details Contains internal state that should not be referenced by the client.
- */
-typedef struct ElectricalMalfunctionsLocals_t
-{
-    /**
-     * @brief Batt relay fails open
-     * @details BAT DISCON caution advisory on CAD
-     */
-    BOOL m_bBatteryRelayFails;
-
-    /**
-     * @brief Bus Tie 1 Fails Open
-     * @details No load sharing possible BUSTIE OPEN caution indication and battery will not be charged
-     */
-    BOOL m_bBusTie1FailsOpen;
-
-    /**
-     * @brief Bus Tie 2 Fails Open
-     * @details No load sharing possible BUSTIE OPEN caution indication and battery will not be charged
-     */
-    BOOL m_bBusTie2FailsOpen;
-
-    /**
-     * @brief malfunction on battery bus
-     * @details ??
-     */
-    BOOL m_bCircuitBatteryBus;
-
-    /**
-     * @brief Starter/Generator 1 temperature high
-     * @details amp range=?
-     */
-    BOOL m_bGenerator1StarterGeneratorOverheat;
-
-    /**
-     * @brief Starter/Generator 2 temperature high
-     * @details amp range=?
-     */
-    BOOL m_bGenerator2StarterGeneratorOverheat;
-
-    /**
-     * @brief Respective generator is disconnected from the power distribution system
-     * @details If one generator has failed, both non-essential buses are disconnected.
-     *          If both generators are failed both non-essential buses and both shed buses are disconnected.
-     *          BATT DISCH warning illuminated.
-     */
-    BOOL m_bGenerator1StarterGeneratorFail;
-
-    /**
-     * @brief Respective generator is disconnected from the power distribution system
-     * @details If one generator has failed, both non-essential buses are disconnected.
-     *          If both generators are failed both non-essential buses and both shed buses are disconnected.
-     *          BATT DISCH warning illuminated.
-     */
-    BOOL m_bGenerator2StarterGeneratorFail;
-
-    /**
-     * @brief Over voltage causes the generator to go offline.
-     * @details GEN DISCON caution indicated
-     *          +0 to +10? Vdc
-     */
-    BOOL m_bGenerator1StarterGeneratorOvervoltage;
-
-    /**
-     * @brief Over voltage causes the generator to go offline.
-     * @details GEN DISCON caution indicated
-     *          +0 to +10? Vdc
-     */
-    BOOL m_bGenerator2StarterGeneratorOvervoltage;
-
-    /**
-     * @brief Electrical short circuit causes buss voltage to drop below 12 volts.
-     * @details Short circuit on the affected bus.
-     *          Power supply is interrupted to effected bus, shed bus and both non-essential bus systems.
-     *          Power supply is guaranteed to unaffected main bus and both essential buses.
-     */
-    BOOL m_bShortCircuitMainBus1;
-
-    /**
-     * @brief Electrical short circuit causes buss voltage to drop below 12 volts.
-     * @details Short circuit on the affected bus.
-     *          Power supply is interrupted to effected bus, shed bus and both non-essential bus systems.
-     *          Power supply is guaranteed to unaffected main bus and both essential buses.
-     */
-    BOOL m_bShortCircuitMainBus2;
-
-} ElectricalMalfunctionsLocalsT;
+#endif /* #ifdef __cplusplus */
 
 /**
  * @brief Electrical Malfunctions
@@ -146,18 +56,106 @@ typedef struct ElectricalMalfunctionsLocals_t
  */
 typedef struct ElectricalMalfunctions_t
 {
+
     /**
-     * @brief The local state of the Electrical Malfunctions
-     * @details Contains internal state that should not be referenced by the client.
+     * @brief Batt relay fails open
+     * @details BAT DISCON caution advisory on CAD
      */
-ElectricalMalfunctionsLocalsT m_tLocals;
+BOOL m_bBatteryRelayFails;
+
+
+    /**
+     * @brief Bus Tie 1 Fails Open
+     * @details No load sharing possible BUSTIE OPEN caution indication and battery will not be charged
+     */
+BOOL m_bBusTie1FailsOpen;
+
+
+    /**
+     * @brief Bus Tie 2 Fails Open
+     * @details No load sharing possible BUSTIE OPEN caution indication and battery will not be charged
+     */
+BOOL m_bBusTie2FailsOpen;
+
+
+    /**
+     * @brief malfunction on battery bus
+     * @details ??
+     */
+BOOL m_bCircuitBatteryBus;
+
+
+    /**
+     * @brief Starter/Generator 1 temperature high
+     * @details amp range=?
+     */
+BOOL m_bGenerator1StarterGeneratorOverheat;
+
+
+    /**
+     * @brief Starter/Generator 2 temperature high
+     * @details amp range=?
+     */
+BOOL m_bGenerator2StarterGeneratorOverheat;
+
+
+    /**
+     * @brief Respective generator is disconnected from the power distribution system
+     * @details If one generator has failed, both non-essential buses are disconnected.
+     *          If both generators are failed both non-essential buses and both shed buses are disconnected.
+     *          BATT DISCH warning illuminated.
+     */
+BOOL m_bGenerator1StarterGeneratorFail;
+
+
+    /**
+     * @brief Respective generator is disconnected from the power distribution system
+     * @details If one generator has failed, both non-essential buses are disconnected.
+     *          If both generators are failed both non-essential buses and both shed buses are disconnected.
+     *          BATT DISCH warning illuminated.
+     */
+BOOL m_bGenerator2StarterGeneratorFail;
+
+
+    /**
+     * @brief Over voltage causes the generator to go offline.
+     * @details GEN DISCON caution indicated
+     *          +0 to +10? Vdc
+     */
+BOOL m_bGenerator1StarterGeneratorOvervoltage;
+
+
+    /**
+     * @brief Over voltage causes the generator to go offline.
+     * @details GEN DISCON caution indicated
+     *          +0 to +10? Vdc
+     */
+BOOL m_bGenerator2StarterGeneratorOvervoltage;
+
+
+    /**
+     * @brief Electrical short circuit causes buss voltage to drop below 12 volts.
+     * @details Short circuit on the affected bus.
+     *          Power supply is interrupted to effected bus, shed bus and both non-essential bus systems.
+     *          Power supply is guaranteed to unaffected main bus and both essential buses.
+     */
+BOOL m_bShortCircuitMainBus1;
+
+
+    /**
+     * @brief Electrical short circuit causes buss voltage to drop below 12 volts.
+     * @details Short circuit on the affected bus.
+     *          Power supply is interrupted to effected bus, shed bus and both non-essential bus systems.
+     *          Power supply is guaranteed to unaffected main bus and both essential buses.
+     */
+BOOL m_bShortCircuitMainBus2;
 
 } ElectricalMalfunctionsT;
 
 
 #ifdef __cplusplus
 }
-#endif //#ifdef __cplusplus
+#endif /* #ifdef __cplusplus */
 
 #endif /* ElectricalMalfunctionsH */
 

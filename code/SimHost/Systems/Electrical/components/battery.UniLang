@@ -204,22 +204,22 @@
 􏶌􏶑􏶘-􏶙􏶮BOOL􏶭􏶬overheat failure􏶫􏶪0􏶩
 
 􏶨the voltage of the battery􏶧􏶦􏶥
-􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩
 
 􏶨the wattage of the battery􏶧􏶦􏶥
-􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬watts􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬watts􏶫􏶪0􏶩
 
 􏶨the temperature of the battery􏶧􏶦􏶥
-􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬temperature_degc􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬temperature_degc􏶫􏶪0􏶩
 
 􏶨whether or not the battery is charging􏶧􏶦􏶥
-􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬is charging􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮BOOL􏶭􏶬is charging􏶫􏶪0􏶩
 
 􏶨whether or not the battery is grounded􏶧􏶦􏶥
-􏶌observe􏶑􏶘-􏶙􏶮BOOL􏶭􏶬is grounded􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮BOOL􏶭􏶬is grounded􏶫􏶪0􏶩
 
 􏶨the current amp hours of the battery􏶧􏶦􏶥
-􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬amp hours􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬amp hours􏶫􏶪0􏶩
 
 􏶨the amp draw of the battery􏶧􏶦􏶥
-􏶌observe􏶑􏶘-􏶙􏶮float􏶭􏶬amp draw􏶫􏶪0􏶩
+􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬amp draw􏶫􏶪0􏶩
