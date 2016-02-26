@@ -24,6 +24,14 @@
   􏵴common ground􏵵 = 􏵲add node􏵳"common ground",NODE_TYPE_GROUND,0,0.0f,􏵱);
 􏶳
 
+􏷘+􏷗􏷒~􏶐􏷑
+􏷐Destruct the 􏶐􏷏
+􏶠􏶐 will leak memory unless destructed􏶡
+􏶴
+  􏶲C does not have destructors.􏶱
+  DestructVector(&􏵴nodestwo􏵵);
+􏶳
+
 􏷘+􏷗􏷒add node􏷑
 􏷐Adds a specified node to the graph.􏷏
 􏶠The user can construct a node into the graph, and receive back a unique ID to query for it later.􏶡

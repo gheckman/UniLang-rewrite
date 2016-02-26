@@ -23,11 +23,11 @@
 
 􏶨Starter/Generator 1 temperature high􏶧
 􏶦amp range=?􏶥
-􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 1 starter generator overheat􏶫􏵚􏵛􏶪􏶩
+􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬generator 1 starter generator overheat􏶫􏵚􏵛􏶪􏶩
 
 􏶨Starter/Generator 2 temperature high􏶧
 􏶦amp range=?􏶥
-􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 2 starter generator overheat􏶫􏵚􏵛􏶪􏶩
+􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬generator 2 starter generator overheat􏶫􏵚􏵛􏶪􏶩
 
 􏶨Respective generator is disconnected from the power distribution system􏶧
 􏶦If one generator has failed, both non-essential buses are disconnected.
@@ -45,12 +45,12 @@ BATT DISCH warning illuminated.􏶥
 􏶨Over voltage causes the generator to go offline.􏶧
 􏶦GEN DISCON caution indicated
 +0 to +10? Vdc􏶥
-􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 1 starter generator overvoltage􏶫􏵚􏵛􏶪􏶩
+􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬generator 1 starter generator overvoltage􏶫􏵚􏵛􏶪􏶩
 
 􏶨Over voltage causes the generator to go offline.􏶧
 􏶦GEN DISCON caution indicated
 +0 to +10? Vdc􏶥
-􏶘+􏶙􏶰􏶯􏶮BOOL􏶭􏶬generator 2 starter generator overvoltage􏶫􏵚􏵛􏶪􏶩
+􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬generator 2 starter generator overvoltage􏶫􏵚􏵛􏶪􏶩
 
 􏶨Electrical short circuit causes buss voltage to drop below 12 volts.􏶧
 􏶦Short circuit on the affected bus.

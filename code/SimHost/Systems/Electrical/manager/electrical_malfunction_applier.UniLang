@@ -68,27 +68,27 @@
     maybe we won't stop flow anywhere until the overheat reaches a certain temperature?
     the description says that the generator does not automatically trip off.
     At least for now, let's just check if it's overheating at all, and if it is, we'll shut off the flow􏶱
-    if (􏵶malfunction􏵷->m_nGen1StarterGeneratorOverheat > 0){
+    if (􏵶malfunction􏵷->m_nGenerator1StarterGeneratorOverheat > 0){
         􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uGenerator, TRUE);
     }
 
-    if (􏵶malfunction􏵷->m_nGen2StarterGeneratorOverheat > 0){
+    if (􏵶malfunction􏵷->m_nGenerator2StarterGeneratorOverheat > 0){
         􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uGenerator, TRUE);
     }
 
     􏶲possibly stop flow on generator 1 starter relay􏶱
-    􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uStarterRelay, 􏵶malfunction􏵷->m_bGen1StarterGeneratorFail);
+    􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uStarterRelay, 􏵶malfunction􏵷->m_bGenerator1StarterGeneratorFail);
 
     􏶲possibly stop flow on generator 2 starter relay􏶱
-    􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uStarterRelay, 􏵶malfunction􏵷->m_bGen2StarterGeneratorFail);
+    􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uStarterRelay, 􏵶malfunction􏵷->m_bGenerator2StarterGeneratorFail);
 
     􏶲possibly stop flow on generator 1 due to over-voltage􏶱
-    if (􏵶malfunction􏵷->m_nGen1StarterGeneratorOvervoltage > 0){
+    if (􏵶malfunction􏵷->m_nGenerator1StarterGeneratorOvervoltage > 0){
         􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uGenerator, TRUE);
     }
 
     􏶲possibly stop flow on generator 2 due to over-voltage􏶱
-    if (􏵶malfunction􏵷->m_nGen2StarterGeneratorOvervoltage > 0){
+    if (􏵶malfunction􏵷->m_nGenerator2StarterGeneratorOvervoltage > 0){
         􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uGenerator, TRUE);
     }
 􏶳

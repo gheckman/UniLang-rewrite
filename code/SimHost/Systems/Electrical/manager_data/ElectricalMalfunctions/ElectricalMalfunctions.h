@@ -89,14 +89,14 @@ BOOL m_bCircuitBatteryBus;
      * @brief Starter/Generator 1 temperature high
      * @details amp range=?
      */
-BOOL m_bGenerator1StarterGeneratorOverheat;
+int m_nGenerator1StarterGeneratorOverheat;
 
 
     /**
      * @brief Starter/Generator 2 temperature high
      * @details amp range=?
      */
-BOOL m_bGenerator2StarterGeneratorOverheat;
+int m_nGenerator2StarterGeneratorOverheat;
 
 
     /**
@@ -122,7 +122,7 @@ BOOL m_bGenerator2StarterGeneratorFail;
      * @details GEN DISCON caution indicated
      *          +0 to +10? Vdc
      */
-BOOL m_bGenerator1StarterGeneratorOvervoltage;
+int m_nGenerator1StarterGeneratorOvervoltage;
 
 
     /**
@@ -130,7 +130,7 @@ BOOL m_bGenerator1StarterGeneratorOvervoltage;
      * @details GEN DISCON caution indicated
      *          +0 to +10? Vdc
      */
-BOOL m_bGenerator2StarterGeneratorOvervoltage;
+int m_nGenerator2StarterGeneratorOvervoltage;
 
 
     /**

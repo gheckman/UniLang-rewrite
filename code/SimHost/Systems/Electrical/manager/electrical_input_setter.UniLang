@@ -235,18 +235,18 @@ but it could be other information as well􏶡
     ReadIOSData(&tIOSOutput);
     
     􏶲read in the IOS malfunctions􏶱
-    ptInputs->m_tMalfunctions.m_bBatteryRelayFails = tIOSOutput.m_bBatteryRelayFails;
-    ptInputs->m_tMalfunctions.m_bBusTie1FailsOpen = tIOSOutput.m_bBusTie1FailsOpen;
-    ptInputs->m_tMalfunctions.m_bBusTie2FailsOpen = tIOSOutput.m_bBusTie2FailsOpen;
-    ptInputs->m_tMalfunctions.m_bCircuitBatteryBus = tIOSOutput.m_bCircuitBatteryBus;
-    ptInputs->m_tMalfunctions.m_nGen1StarterGeneratorOverheat = tIOSOutput.m_nGen1StarterGeneratorOverheat;
-    ptInputs->m_tMalfunctions.m_nGen2StarterGeneratorOverheat = tIOSOutput.m_nGen2StarterGeneratorOverheat;
-    ptInputs->m_tMalfunctions.m_bGen1StarterGeneratorFail = tIOSOutput.m_bGen1StarterGeneratorFail;
-    ptInputs->m_tMalfunctions.m_bGen2StarterGeneratorFail = tIOSOutput.m_bGen2StarterGeneratorFail;
-    ptInputs->m_tMalfunctions.m_nGen1StarterGeneratorOvervoltage = tIOSOutput.m_nGen1StarterGeneratorOvervoltage;
-    ptInputs->m_tMalfunctions.m_nGen2StarterGeneratorOvervoltage = tIOSOutput.m_nGen2StarterGeneratorOvervoltage;
-    ptInputs->m_tMalfunctions.m_bShortCircuitMainBus1 = tIOSOutput.m_bShortCircuitMainBus1;
-    ptInputs->m_tMalfunctions.m_bShortCircuitMainBus2 = tIOSOutput.m_bShortCircuitMainBus2;
+    􏵶inputs􏵷->m_tMalfunctions.m_bBatteryRelayFails = tIOSOutput.m_bBatteryRelayFails;
+    􏵶inputs􏵷->m_tMalfunctions.m_bBusTie1FailsOpen = tIOSOutput.m_bBusTie1FailsOpen;
+    􏵶inputs􏵷->m_tMalfunctions.m_bBusTie2FailsOpen = tIOSOutput.m_bBusTie2FailsOpen;
+    􏵶inputs􏵷->m_tMalfunctions.m_bCircuitBatteryBus = tIOSOutput.m_bCircuitBatteryBus;
+    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator1StarterGeneratorOverheat = tIOSOutput.m_nGen1StarterGeneratorOverheat;
+    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator2StarterGeneratorOverheat = tIOSOutput.m_nGen2StarterGeneratorOverheat;
+    􏵶inputs􏵷->m_tMalfunctions.m_bGenerator1StarterGeneratorFail = tIOSOutput.m_bGen1StarterGeneratorFail;
+    􏵶inputs􏵷->m_tMalfunctions.m_bGenerator2StarterGeneratorFail = tIOSOutput.m_bGen2StarterGeneratorFail;
+    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator1StarterGeneratorOvervoltage = tIOSOutput.m_nGen1StarterGeneratorOvervoltage;
+    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator2StarterGeneratorOvervoltage = tIOSOutput.m_nGen2StarterGeneratorOvervoltage;
+    􏵶inputs􏵷->m_tMalfunctions.m_bShortCircuitMainBus1 = tIOSOutput.m_bShortCircuitMainBus1;
+    􏵶inputs􏵷->m_tMalfunctions.m_bShortCircuitMainBus2 = tIOSOutput.m_bShortCircuitMainBus2;
 􏶳
 
 􏷘-􏷗􏷒read from plc􏷑

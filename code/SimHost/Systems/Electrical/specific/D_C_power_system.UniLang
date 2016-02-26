@@ -61,6 +61,14 @@ which can be used to query the graph and get back the actual node.
   ConnectBoxesTogether(ptOutputs);
 􏶳
 
+􏷘+􏷗􏷒~􏶐􏷑
+􏷐Destruct the 􏶐􏷏
+􏶠􏶐 will leak memory unless destructed􏶡
+􏶴
+  􏶲C does not have destructors.􏶱
+  DestructElectricalGraph(&􏵴graph􏵵);
+􏶳
+
 􏷘-􏷗􏷒connect boxes together􏷑
 􏷐After all of the electrical boxes ares created,
 this stage adds the remaining wires to connect components in the boxes together􏷏
@@ -181,8 +189,6 @@ this stage adds the remaining wires to connect components in the boxes together�
   tInputs.m_fExpectedAmperage = 0.0f;
   tInputs.m_bHasFlow = 􏵱;
   UpdateElectricalGraph(&􏵴graph􏵵,&tInputs);
-  
-
 􏶳
 
 􏶨The UH72A Electrical System represented in a generic electrical graph data structure.􏶧
