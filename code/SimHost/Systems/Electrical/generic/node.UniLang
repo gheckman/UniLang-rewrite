@@ -105,11 +105,11 @@ The graph will most likely add a junction to the two different nodes on behalf o
 
 􏶨The name of the node [intended for debugging]􏶧
 􏶦􏶥
-􏶌g􏶑􏶘-􏶙􏶮char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏶭􏶬name􏶫􏶪0􏶩
+􏶘-g􏶙􏶮char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏶭􏶬name􏶫􏶪0􏶩
 
 􏶨A unique Id for the Node.  No node will ever have the same Id.􏶧
 􏶦Junctions will contain these Ids so we know how nodes are inter-connected.􏶥
-􏶌g􏶑􏶘-􏶙􏶮size_t􏶭􏶬id􏶫􏶪0􏶩
+􏶘-g􏶙􏶮size_t􏶭􏶬id􏶫􏶪0􏶩
 
 􏶨Three electrical properties of a component in a circuit.􏶧
 􏶦
@@ -127,18 +127,18 @@ Either way,
 we'll just provide all 3 for ease of use-ability.
 Power can still be computed later (P = IV)
 􏶥
-􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬resistance􏶫􏶪0􏶩
+􏶘-g􏶙􏶮float􏶭􏶬resistance􏶫􏶪0􏶩
 
 􏶨􏶧􏶦􏶥
-􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬current􏶫􏶪0􏶩
+􏶘-g􏶙􏶮float􏶭􏶬current􏶫􏶪0􏶩
 
 􏶨􏶧􏶦􏶥
-􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩
+􏶘-g􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩
 
 􏶨Based on documentation, we may have expected amperage draws for particular portions of the electrical circuit. 
 If so, we can record these expected amperage draws alongside the individual nodes that represent them.􏶧
 􏶦􏶥
-􏶌g􏶑􏶘-􏶙􏶮float􏶭􏶬expected amperage􏶫􏶪0􏶩
+􏶘-g􏶙􏶮float􏶭􏶬expected amperage􏶫􏶪0􏶩
 
 
 􏶨whether a node will allow electricity to flow through it.􏶧
@@ -148,21 +148,21 @@ These are all reasons flow could be 􏵰.
 Note: This property has nothing to do with the direction of current flow.
 It is the junctions whose flow properties determine current direction.
 􏶥
-􏶌g􏶑􏶘-􏶙􏶮BOOL􏶭􏶬has flow􏶫􏶪􏵰􏶩
+􏶘-g􏶙􏶮BOOL􏶭􏶬has flow􏶫􏶪􏵰􏶩
 
 
 􏶨What kind of electrical component the node actually is.􏶧
 􏶦􏶥
-􏶌g􏶑􏶘-􏶙􏶮NodeTypeE􏶭􏶬type􏶫􏶪0􏶩
+􏶘-g􏶙􏶮NodeTypeE􏶭􏶬type􏶫􏶪0􏶩
 
 
 􏶨Describes the routes in which electricity can flow out of this node and into another node.􏶧
 􏶦For the most part, all of these junctions will point to connected wires.􏶥
-􏶌g􏶑􏶘-􏶙􏶮JunctionOutputsT[MAX_NUMBER_OF_JUNCTIONS_IN_NODE]􏶭􏶬junctions􏶫􏶪0􏶩
+􏶘-g􏶙􏶮JunctionOutputsT[MAX_NUMBER_OF_JUNCTIONS_IN_NODE]􏶭􏶬junctions􏶫􏶪0􏶩
 
 􏶨􏶧
 􏶦􏶥
-􏶌g􏶑􏶘-􏶙􏶮size_t􏶭􏶬number of junctions􏶫􏶪0􏶩
+􏶘-g􏶙􏶮size_t􏶭􏶬number of junctions􏶫􏶪0􏶩
 
 
 

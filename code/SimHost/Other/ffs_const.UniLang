@@ -5,38 +5,38 @@
 􏷬Mark Meyer􏷫
 
 􏶨General constants􏶧
-􏶘+􏶙􏶰ec􏶯􏶮float􏶭􏶬aircraft reposition timer sec􏶫    􏶪5􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬valve state open􏶫               􏶪0􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬valve state closed􏶫             􏶪1􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭 􏶬annun flash rate ms􏶫            􏶪1000􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮int􏶭   􏶬invalid index􏶫                  􏶪-1􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬kias to fpm􏶫              􏶪101.268591􏶩􏶨Calculation constants􏶧
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬acceleration gravity fts􏶫 􏶪32.17405􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬pi􏶫                       􏶪3.1415926535897932384626433832795􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬deg to rad􏶫               􏶪0.01745329251994329576923690768489􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬rad to deg􏶫               􏶪57.295779513082320876798154814105􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬gc nm per rad􏶫            􏶪3437.74677471314􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬feet per nm􏶫              􏶪6076.1155􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬earth radius in miles􏶫    􏶪3956􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬inhg to pascals􏶫          􏶪3386.38866667􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬inhg to hp􏶫               􏶪33.8638866667􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮long double􏶭 􏶬mps to knots􏶫             􏶪1.943844􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬deg to mas􏶫               􏶪3600000􏶩􏶨degrees to milli-arc-seconds􏶧
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬fpm to mps􏶫               􏶪.00508􏶩􏶨Feet/minute to meters/second􏶧
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬knots to mps􏶫             􏶪0.514444􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬knots to fps􏶫             􏶪1.6878083989501311􏶩􏶨Kts to Feet / second􏶧
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬rpm to rps􏶫               􏶪.10471975512􏶩􏶨RPM to Rotations / Second􏶧
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬feet to meters􏶫           􏶪0.3048􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬meters to feet􏶫           􏶪3.28084􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬ms per hour􏶫              􏶪3600000􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬ms per minute􏶫            􏶪60000􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬ms per second􏶫            􏶪1000􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬sec per hour􏶫             􏶪3600􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬sec per minute􏶫           􏶪60􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬min per hour􏶫             􏶪60􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬lbs to kgs􏶫               􏶪0.45359237􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬psi to bar􏶫               􏶪0.0689475729􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬bar to psi􏶫               􏶪14.503773􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬psf to pascals􏶫           􏶪47.8803􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬e􏶫                        􏶪2.71828􏶩
-􏶘+􏶙􏶰ec􏶯 􏶮float􏶭       􏶬pounds j100 to gallons􏶫   􏶪.1501􏶩
+􏶘+e􏶙􏶰c􏶯􏶮float􏶭        􏶬aircraft reposition timer sec􏶫  􏶪5􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬valve state open􏶫               􏶪0􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬valve state closed􏶫             􏶪1􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬annun flash rate ms􏶫            􏶪1000􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮int􏶭         􏶬invalid index􏶫                  􏶪-1􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬kias to fpm􏶫                    􏶪101.268591􏶩􏶨Calculation constants􏶧
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬acceleration gravity fts􏶫       􏶪32.17405􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬pi􏶫                             􏶪3.1415926535897932384626433832795􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬deg to rad􏶫                     􏶪0.01745329251994329576923690768489􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬rad to deg􏶫                     􏶪57.295779513082320876798154814105􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬gc nm per rad􏶫                  􏶪3437.74677471314􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬feet per nm􏶫                    􏶪6076.1155􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬earth radius in miles􏶫          􏶪3956􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬inhg to pascals􏶫                􏶪3386.38866667􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬inhg to hp􏶫                     􏶪33.8638866667􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮long double􏶭 􏶬mps to knots􏶫                   􏶪1.943844􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬deg to mas􏶫                     􏶪3600000􏶩􏶨degrees to milli-arc-seconds􏶧
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬fpm to mps􏶫                     􏶪.00508􏶩􏶨Feet/minute to meters/second􏶧
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬knots to mps􏶫                   􏶪0.514444􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬knots to fps􏶫                   􏶪1.6878083989501311􏶩􏶨Kts to Feet / second􏶧
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬rpm to rps􏶫                     􏶪.10471975512􏶩􏶨RPM to Rotations / Second􏶧
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬feet to meters􏶫                 􏶪0.3048􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬meters to feet􏶫                 􏶪3.28084􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬ms per hour􏶫                    􏶪3600000􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬ms per minute􏶫                  􏶪60000􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬ms per second􏶫                  􏶪1000􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬sec per hour􏶫                   􏶪3600􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬sec per minute􏶫                 􏶪60􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬min per hour􏶫                   􏶪60􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬lbs to kgs􏶫                     􏶪0.45359237􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬psi to bar􏶫                     􏶪0.0689475729􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬bar to psi􏶫                     􏶪14.503773􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬psf to pascals􏶫                 􏶪47.8803􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬e􏶫                              􏶪2.71828􏶩
+􏶘+e􏶙􏶰c􏶯 􏶮float􏶭       􏶬pounds j100 to gallons􏶫         􏶪.1501􏶩

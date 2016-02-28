@@ -39,8 +39,8 @@
 
 􏶨A list of nodes that complete a valid path to ground.􏶧
 􏶦statically allocated to max a size􏶥
-􏶌g􏶑􏶘-􏶙􏶮PathOutputsT[MAX_NUMBER_OF_VALID_PATHS_THROUGH_THE_CIRCUIT]􏶭􏶬paths􏶫
+􏶘-g􏶙􏶮PathOutputsT[MAX_NUMBER_OF_VALID_PATHS_THROUGH_THE_CIRCUIT]􏶭􏶬paths􏶫
 
 􏶨the size of the path being stored inside of the array.􏶧
 􏶦the size will increment each time a node is added to the list􏶥
-􏶌g􏶑􏶘-􏶙􏶮size_t􏶭􏶬size􏶫
+􏶘-g􏶙􏶮size_t􏶭􏶬size􏶫

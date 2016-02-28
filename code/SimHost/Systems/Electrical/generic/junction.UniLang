@@ -34,8 +34,8 @@ From a node's perspective, think of a junction like this:
 
 􏶨Whether or not current can flow out a junction point.􏶧
 􏶦Useful for representing diodes􏶥
-􏶌g􏶑􏶘-􏶙􏶮BOOL􏶭􏶬has flow􏶫􏶪􏵰􏶩
+􏶘-g􏶙􏶮BOOL􏶭􏶬has flow􏶫􏶪􏵰􏶩
 
 􏶨Assuming current can flow out a junction point, this is where it will flow to.􏶧
 􏶦a connectionID is used to index into a list of all the nodes and give you back the appropriate NodeT􏶥
-􏶌g􏶑􏶘-􏶙􏶮size_t􏶭􏶬connection id􏶫􏶪0􏶩
+􏶘-g􏶙􏶮size_t􏶭􏶬connection id􏶫􏶪0􏶩

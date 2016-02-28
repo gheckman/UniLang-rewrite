@@ -192,4 +192,4 @@ This function increments and returns a shared count in a thread safe manner.􏶡
 􏶨the total number of messages sent by the dynamic debugger􏶧
 􏶦starts at 0 when the sim starts, and continues to increment each packet sent out.  
 This value is a part of the message header and is used by receiver to send acks.􏶥
-􏶘-􏶙􏶰s􏶯􏶮WORD􏶭􏶬total messages sent􏶫􏶪0􏶩
+􏶘-s􏶙􏶰􏶯􏶮WORD􏶭􏶬total messages sent􏶫􏶪0􏶩

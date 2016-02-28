@@ -7,7 +7,7 @@
 􏶔􏶕􏶒TimeUtilities􏶓􏶖USES: DelayTaskNumberOfMilliseconds()􏶗
 
 􏶨how long to delay the update of the time manager.􏶧
-􏶘-􏶙􏶰cs􏶯􏶮unsigned int􏶭􏶬task delay amount ms􏶫􏶪10􏶩
+􏶘-s􏶙􏶰c􏶯􏶮unsigned int􏶭􏶬task delay amount ms􏶫􏶪10􏶩
 
 􏷘+􏷗􏷒time thread entry point􏷑
 􏷐Continuously update time related data for the rest of the systems.􏷏

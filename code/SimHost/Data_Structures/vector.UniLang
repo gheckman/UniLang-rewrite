@@ -194,12 +194,12 @@ return NULL;
 􏶨the number of elements currently in the 􏶐􏶧
 􏶦This can be used for iteration of the elements.
 There is no hard limit on the size.  The internal array will grow to accommodate for new inserted elements.􏶥
-􏶌g􏶑􏶘-􏶙􏶮size_t􏶭􏶬size􏶫􏶪0􏶩
+􏶘-g􏶙􏶮size_t􏶭􏶬size􏶫􏶪0􏶩
 
 􏶨the amount of space allocated for the internal array􏶧
 􏶦different implementations do different initial capacity, and have the capacity grow at different rates.
 We will increase the capacity by *2 every time we need to add a new element to a full array.􏶥
-􏶌g􏶑􏶘-􏶙􏶮size_t􏶭􏶬capacity􏶫􏶪1􏶩
+􏶘-g􏶙􏶮size_t􏶭􏶬capacity􏶫􏶪1􏶩
 
 􏶨the internal array for all of our generic elements􏶧
 􏶦when accessing an element, you will need to type cast to the appropriate pointer type before dereferencing􏶥

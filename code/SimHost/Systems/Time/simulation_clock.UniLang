@@ -118,11 +118,11 @@ will already be up-to-date.􏶡
 
 􏶨Whether the clock is currently paused or unpaused􏶧
 􏶦This data member can be affected by the SetPauseState(BOOL)􏶥
-􏶌g􏶑􏶘-􏶙􏶮BOOL􏶭􏶬paused􏶫􏶪0􏶩
+􏶘-g􏶙􏶮BOOL􏶭􏶬paused􏶫􏶪0􏶩
 
 􏶨Holds the current date and time􏶧
 􏶦Updated internally using an internal timer􏶥
-􏶌g􏶑􏶘-􏶙􏶮DateTimeOutputsT􏶭􏶬date time􏶫􏶪0􏶩
+􏶘-g􏶙􏶮DateTimeOutputsT􏶭􏶬date time􏶫􏶪0􏶩
 
 􏶨A timer used internally to keep track of time gone by.􏶧
 􏶦The timer is reset after each update in order to get a delta time since the last update.  

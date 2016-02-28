@@ -136,19 +136,19 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬generator relay􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t􏶭􏶬generator relay􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬starter relay􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t􏶭􏶬starter relay􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬generator bus􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t􏶭􏶬generator bus􏶫􏶪0􏶩
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧
 􏶦This ID will be used to query the generic electrical graph
 and receive back the actual node object.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮size_t􏶭􏶬generator􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t􏶭􏶬generator􏶫􏶪0􏶩

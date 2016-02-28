@@ -194,25 +194,25 @@ this stage adds the remaining wires to connect components in the boxes together�
 􏶨The UH72A Electrical System represented in a generic electrical graph data structure.􏶧
 􏶦Using the Ids in the electrical boxes below,
 individual nodes on the electrical graph may be queried directly.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮ElectricalGraphOutputsT􏶭􏶬graph􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮ElectricalGraphOutputsT􏶭􏶬graph􏶫􏶪0􏶩
 
 􏶨An electrical box of the UH72A 􏶏􏶧
 􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮BatteryBoxOutputsT􏶭􏶬battery box􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮BatteryBoxOutputsT􏶭􏶬battery box􏶫􏶪0􏶩
 
 􏶨An electrical box of the UH72A 􏶏􏶧
 􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮DiodeBoxOutputsT[2]􏶭􏶬diode box􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮DiodeBoxOutputsT[2]􏶭􏶬diode box􏶫􏶪0􏶩
 
 􏶨An electrical box of the UH72A 􏶏􏶧
 􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮DistributionBoxOutputsT[2]􏶭􏶬distribution box􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮DistributionBoxOutputsT[2]􏶭􏶬distribution box􏶫􏶪0􏶩
 
 􏶨An electrical box of the UH72A 􏶏􏶧
 􏶦Contains node IDs that correlate to the actual nodes in the graph.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮AfterJunctionBoxOutputsT[2]􏶭􏶬after junction box􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮AfterJunctionBoxOutputsT[2]􏶭􏶬after junction box􏶫􏶪0􏶩
 
 􏶨The overhead panel of the UH72A 􏶏􏶧
 􏶦Contains node IDs that correlate to the actual nodes in the graph.
 The panel contains both left and right sides of symmetric devices internally.􏶥
-􏶌g􏶑􏶘-􏶙􏶰􏶯􏶮OverheadPanelOutputsT􏶭􏶬overhead panel􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮OverheadPanelOutputsT􏶭􏶬overhead panel􏶫􏶪0􏶩
