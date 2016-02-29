@@ -14,7 +14,7 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒pack big endian 4 byte invariance􏷑
 􏷐Packs a type into a big endian data buffer􏷏
 􏶠DWORDs are revered if needed􏶡
-􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
@@ -32,7 +32,7 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒unpack big endian 4 byte invariance􏷑
 􏷐Unpacks a type stored as big endian from a data buffer􏷏
 􏶠unpacked􏶡
-􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜c􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
@@ -49,7 +49,7 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒pack little endian 4 byte invariance􏷑
 􏷐Packs a type into a little endian data buffer􏷏
 􏶠􏶡
-􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
@@ -69,7 +69,7 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒unpack little endian 4 byte invariance􏷑
 􏷐Unpacks a type stored as little endian from a data buffer􏷏
 􏶠􏶡
-􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜c􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
@@ -90,7 +90,7 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒pack big endian 2 byte invariance􏷑
 􏷐Packs a type into a big endian data buffer􏷏
 􏶠􏶡
-􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
@@ -108,7 +108,7 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒unpack big endian 2 byte invariance􏷑
 􏷐Unpacks a type stored as big endian from a data buffer􏷏
 􏶠􏶡
-􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜c􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
@@ -125,7 +125,7 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒pack little endian 2 byte invariance􏷑
 􏷐Packs a type into a little endian data buffer􏷏
 􏶠􏶡
-􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜c􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
@@ -145,7 +145,7 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒unpack little endian 2 byte invariance􏷑
 􏷐Unpacks a type stored as little endian from a data buffer􏷏
 􏶠􏶡 
-􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜c􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜􏶝􏷆void*const􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
@@ -172,9 +172,9 @@ Relies on architecture for endianness􏷯
 􏷘+􏷗􏷒pack first n array elements􏷑
 􏷐Packs only the first number of array elements specified into a data buffer􏷏
 􏶠􏶡 
-􏶜􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜c􏶝􏷆void*const􏷅􏷄array􏷃􏷀the array to be packed􏶿
+􏶜c􏶝􏷆void[]􏷅􏷄array􏷃􏷀the array to be packed􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
@@ -186,16 +186,16 @@ Relies on architecture for endianness􏷯
     for (; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
     
         􏶲increment void pointer the number of appropriate bytes based on element size during each iteration􏶱
-        􏵲pack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(char*)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
+        􏵲pack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(const char *const)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
     }
 􏶳
 
 􏷘+􏷗􏷒unpack first n array elements􏷑
 􏷐Unpacks only the first number of array elements specified into a data buffer􏷏
 􏶠􏶡 
-􏶜c􏶝􏷆BYTE*const􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜c􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆size_t*const􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜􏶝􏷆void*􏷅􏷄array􏷃􏷀the array to be packed􏶿
+􏶜􏶝􏷆void[]􏷅􏷄array􏷃􏷀the array to be packed􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to unpack from the start of the array􏶿
 􏶜c􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
@@ -207,7 +207,7 @@ Relies on architecture for endianness􏷯
     for (; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
     
         􏶲increment void pointer the number of appropriate bytes based on element size during each iteration􏶱
-        􏵲unpack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(char*)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
+        􏵲unpack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(char*const)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
     }
 􏶳
 
@@ -220,8 +220,8 @@ Relies on architecture for endianness􏷯
 note: the bits will be in reverse order of the bools passed in
 example: {􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵰}
 becomes: 01111111􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆BOOL*􏷅􏷄pack bools􏷃􏷀an array of 8 bools to pack into a byte􏶿
+􏶜􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
+􏶜c􏶝􏷆BOOL[]􏷅􏷄pack bools􏷃􏷀an array of 8 bools to pack into a byte􏶿
 􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
 􏶴
     *􏵶data buffer􏵷 = (BYTE)(((􏵶pack bools􏵷[7] << 7) & 0xFF) + ((􏵶pack bools􏵷[6] << 6) & 0xFF) + ((􏵶pack bools􏵷[5] << 5) & 0xFF)
