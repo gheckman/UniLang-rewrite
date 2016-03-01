@@ -14,8 +14,8 @@ This is the typical practice of void pointers.􏷯
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
 􏶠􏶐 will be set to an empty state with a size of 0􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄type size􏷃􏷀the size of the types that will be held in the homogeneous container.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄initial capacity􏷃􏷀pre allocate a certain number of elements upon initialization.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄type size􏷃􏷀the size of the types that will be held in the homogeneous container.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄initial capacity􏷃􏷀pre allocate a certain number of elements upon initialization.􏶿
 􏶴
 􏶲start as an empty vector􏶱
 􏵴size􏵵 = 0;
@@ -36,7 +36,7 @@ This is the typical practice of void pointers.􏷯
 􏷐Adds an element to the end of the 􏶐􏷏
 􏶠Potentially increases the capacity if more room is needed.  Increases the size.
 The added item will be the last item.􏶡
-􏶜􏶝􏷆void*􏷅􏷄new element􏷃􏷀the new capacity to resize the internal array to.􏶿
+􏶜r􏶝􏷆void􏷅􏷄new element􏷃􏷀an element to add to the end of the vector􏶿
 􏶴
     
     􏶲adjust the allocation space if needed,􏶱
@@ -55,7 +55,7 @@ The added item will be the last item.􏶡
 􏷘-􏷗􏷒ensure there is enough space􏷑
 􏷐ensure there is enough space, by possibly resizing the internal array.􏷏
 􏶠if resizing the array is needed, but it cannot be preformed, 􏵰 is returned.􏶡
-􏶚􏶛􏶾BOOL􏶽􏶼available space􏶻􏶺whether there is enough space to add an item􏶹
+􏶚m􏶛􏶾BOOL􏶽􏶼available space􏶻􏶺whether there is enough space to add an item􏶹
 􏶴
     􏶲whether there is enough space to add an item􏶱
     BOOL bAvailableSpace = 􏵱;
@@ -73,7 +73,7 @@ The added item will be the last item.􏶡
 􏷘-􏷗􏷒determine resize amount􏷑
 􏷐determines the rate at which to resize the vector􏷏
 􏶠handles any changes where capacities 0 and up􏶡
-􏶚􏶛􏶾size_t􏶽􏶼new capacity􏶻􏶺the new cpacity amount for resizing􏶹
+􏶚m􏶛􏶾size_t􏶽􏶼new capacity􏶻􏶺the new cpacity amount for resizing􏶹
 􏶴
     􏶲handle edge case of 0 capacity􏶱
     if (􏵴capacity􏵵 == 0){
@@ -87,8 +87,8 @@ The added item will be the last item.􏶡
 􏷘+􏷗􏷒get􏷑
 􏷐Get an element at a particular index􏷏
 􏶠If an invalid index is given, NULL is returned􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the item to get􏶿
-􏶚􏶛􏶾void*􏶽􏶼selected element􏶻􏶺the selected element of the 􏶐 from the given index􏶹
+􏶜􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the item to get􏶿
+􏶚m􏶛􏶾void*􏶽􏶼selected element􏶻􏶺the selected element of the 􏶐 from the given index􏶹
 􏶴
 
 􏶲if the index is valid, return it.􏶱
@@ -103,8 +103,8 @@ return NULL;
 􏷘-􏷗􏷒resize􏷑
 􏷐Resize the internal array.􏷏
 􏶠This is done when new space is needed for a newly inserted element.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄new capacity􏷃􏷀the new capacity to resize the internal array to.􏶿
-􏶚􏶛􏶾BOOL􏶽􏶼successful reallocation􏶻􏶺whether memory was successfully reallocated􏶹
+􏶜􏶝􏷆size_t􏷅􏷄new capacity􏷃􏷀the new capacity to resize the internal array to.􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼successful reallocation􏶻􏶺whether memory was successfully reallocated􏶹
 􏶴
 
     􏶲whether memory was successfully reallocated􏶱
@@ -129,17 +129,19 @@ return NULL;
 􏷐Check if an integer is a valid index􏷏
 􏶠􏵱 is returned if the index is an addressable element in the vector.
 􏵰 is returned if it is an out of range index􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index to test for validity of􏶿
-􏶚􏶛􏶾BOOL􏶽􏶼is valid index􏶻􏶺whether the index is valid for the current state of the 􏶐􏶹
+􏶜􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index to test for validity of􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼is valid index􏶻􏶺whether the index is valid for the current state of the 􏶐􏶹
 􏶴
     􏶲Ensure the index is in range􏶱
-    return 􏵶index􏵷 >= 0 && 􏵶index􏵷 < 􏵴size􏵵;
+    􏶲We need not worry about negative numbers􏶱
+    􏶲the properties of our index type constrain to positive values􏶱
+    return 􏵶index􏵷 < 􏵴size􏵵;
 􏶳
 
 􏷘+􏷗􏷒remove􏷑
 􏷐removes an element at a particular index􏷏
 􏶠If an invalid index is given, NULL is returned􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the item to remove􏶿
+􏶜􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the item to remove􏶿
 􏶴
     􏶲only attempt to remove the item if it is at a valid index􏶱
     if (􏵲valid index􏵳􏵶index􏵷)){
@@ -162,7 +164,7 @@ return NULL;
 􏷘-􏷗􏷒shift elements from deleted index􏷑
 􏷐shifts all elements down from an index that is assumed to be deleted.􏷏
 􏶠this is done through pointer swapping of neighboring elements􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄deleted index􏷃􏷀the index that represents the deleted element.  Everything to the right, needs shifted one element to the left.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄deleted index􏷃􏷀the index that represents the deleted element.  Everything to the right, needs shifted one element to the left.􏶿
 􏶴
     􏶲shift each element one by one starting at the deletion point􏶱
     􏶲forget about the last element􏶱

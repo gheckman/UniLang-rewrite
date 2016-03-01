@@ -13,10 +13,10 @@ It can also be reset to another time if desired.􏷯
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Create a clock at a specified date and time􏷏
 􏶠The clock will start paused􏶡
-􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀the date month to start the clock at. valid range: (1 - 12)􏶿
-􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀the day of the month to start the clock at.  valid range: (1 - 31)􏶿
-􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀the date year to start the clock at.  valid range: any positive year number, that fits the size of the type.􏶿
-􏶜c􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀how many milliseconds of the current day to start the time at.  valid range: (0 - 86,399,999)􏶿
+􏶜􏶝􏷆MonthE􏷅􏷄month􏷃􏷀the date month to start the clock at. valid range: (1 - 12)􏶿
+􏶜􏶝􏷆int􏷅􏷄day􏷃􏷀the day of the month to start the clock at.  valid range: (1 - 31)􏶿
+􏶜􏶝􏷆int􏷅􏷄year􏷃􏷀the date year to start the clock at.  valid range: any positive year number, that fits the size of the type.􏶿
+􏶜􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀how many milliseconds of the current day to start the time at.  valid range: (0 - 86,399,999)􏶿
 􏶴
     􏶲construct date based on passed in values􏶱
     InitializeDateTime(&􏵴date time􏵵,
@@ -32,10 +32,10 @@ It can also be reset to another time if desired.􏷯
 􏷘+􏷗􏷒reset􏷑
 􏷐Reset the clock to a new date and time.􏷏
 􏶠Resetting the clock will not affect its pause state􏶡
-􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀current month of the year. valid range: (1 - 12)􏶿
-􏶜c􏶝􏷆int􏷅􏷄day􏷃􏷀the current calendar day of the month.  valid range: (1 - 31)􏶿
-􏶜c􏶝􏷆int􏷅􏷄year􏷃􏷀the current year.  valid range: any positive year number, that fits the size of the type.􏶿
-􏶜c􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀the number of milliseconds of the current day.  valid range: (0 - 86,399,999)􏶿
+􏶜􏶝􏷆MonthE􏷅􏷄month􏷃􏷀current month of the year. valid range: (1 - 12)􏶿
+􏶜􏶝􏷆int􏷅􏷄day􏷃􏷀the current calendar day of the month.  valid range: (1 - 31)􏶿
+􏶜􏶝􏷆int􏷅􏷄year􏷃􏷀the current year.  valid range: any positive year number, that fits the size of the type.􏶿
+􏶜􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀the number of milliseconds of the current day.  valid range: (0 - 86,399,999)􏶿
 􏶴
     􏶲reset the timer and set the datetime to a new date and time􏶱
 
@@ -55,7 +55,7 @@ It can also be reset to another time if desired.􏷯
 􏷘+􏷗􏷒set pause state􏷑
 􏷐Change whether the clock is paused or not.􏷏
 􏶠There is no harm in setting a clock to the same pause state that it is already in.􏶡
-􏶜c􏶝􏷆BOOL􏷅􏷄pause􏷃􏷀whether or not to pause the clock􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄pause􏷃􏷀whether or not to pause the clock􏶿
 􏶴
     􏶲pause or unpause the timer􏶱
     􏵶pause􏵷 ? 􏵲pause􏵳) : 􏵲un pause􏵳);

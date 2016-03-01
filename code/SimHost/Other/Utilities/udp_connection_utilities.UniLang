@@ -10,10 +10,10 @@
 􏷘+􏷗􏷒send and handle Udp errors􏷑
 􏷐sends a byte array through a socket, and handles any errors that occur in the process􏷏
 􏶠uses socket send and notifies to watchdog􏶡
-􏶜c􏶝􏷆int􏷅􏷄bytes packed􏷃􏷀the number of bytes packed􏶿
-􏶜c􏶝􏷆BYTE*􏷅􏷄buffer􏷃􏷀the buffer to send􏶿
-􏶜c􏶝􏷆int􏷅􏷄socket number􏷃􏷀the unique id for the particular socket􏶿
-􏶜c􏶝􏷆char*􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
+􏶜􏶝􏷆int􏷅􏷄bytes packed􏷃􏷀the number of bytes packed􏶿
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀the buffer to send􏶿
+􏶜􏶝􏷆int􏷅􏷄socket number􏷃􏷀the unique id for the particular socket􏶿
+􏶜􏶝􏷆char[]􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
 􏶴
     􏶲Calling SocketSend can "not fail", but still return 0 bytes-- which is still a problem.􏶱
     􏶲this means, we have two return values to check for.  ERROR(-1) and 0.􏶱
@@ -41,8 +41,8 @@
 􏷘+􏷗􏷒report Udp receive status􏷑
 􏷐reports any failures or successes related to receiving data􏷏
 􏶠notifies watchdog􏶡
-􏶜c􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the number of bytes received which will indicate a possible error􏶿
-􏶜c􏶝􏷆char*􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
+􏶜􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the number of bytes received which will indicate a possible error􏶿
+􏶜􏶝􏷆char[]􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
 􏶴
     􏶲report errors when receiving UDP data has failed􏶱
     if(􏵶bytes received􏵷 == ERROR){
@@ -58,7 +58,7 @@
 􏷘-􏷗􏷒report buffer failure to watchdog􏷑
 􏷐handles buffer failures encountered􏷏
 􏶠notifies watchdog and reports error􏶡
-􏶜c􏶝􏷆char*􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
+􏶜􏶝􏷆char[]􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
 􏶴
     fprintf(stderr,"%s failed to pack\n",􏵶what sent􏵷);
 
@@ -69,7 +69,7 @@
 􏷘-􏷗􏷒report send failure to watchdog􏷑
 􏷐handles send failures encountered􏷏
 􏶠notifies watchdog and reports error􏶡
-􏶜c􏶝􏷆char*􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
+􏶜􏶝􏷆char[]􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
 􏶴
     fprintf(stderr,"%s failed to send\n",􏵶what sent􏵷);
     
@@ -80,7 +80,7 @@
 􏷘-􏷗􏷒report receive success to watchdog􏷑
 􏷐handles recieve success encountered􏷏
 􏶠notifies watchdog with the relevant health information􏶡
-􏶜c􏶝􏷆char*􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
+􏶜􏶝􏷆char[]􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
 􏶴
     􏶲TODO: send timestamp to watchdog task􏶱
     􏶲timestamp,  nBytesReceived, ... ?􏶱
@@ -90,7 +90,7 @@
 􏷘-􏷗􏷒report receive failure to watchdog􏷑
 􏷐handles receive failures encountered􏷏
 􏶠notifies watchdog and reports error􏶡
-􏶜c􏶝􏷆char*􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
+􏶜􏶝􏷆char[]􏷅􏷄received for􏷃􏷀what task the bytes were received for􏶿
 􏶴
     fprintf(stderr, "error receiving %s\n",􏵶received for􏵷);
     

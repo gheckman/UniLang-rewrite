@@ -20,7 +20,7 @@
 􏷘+􏷗􏷒Add􏷑
 􏷐Adds a traversal path to the total list of paths􏷏
 􏶠If the list of lists is not full, this will add a path to the total list of paths and increment the size.􏶡
-􏶜c􏶝􏷆PathOutputsT􏷅􏷄path􏷃􏷀The new path to add.􏶿
+􏶜􏶝􏷆PathOutputsT􏷅􏷄path􏷃􏷀The new path to add.􏶿
 􏶴
     􏶲add the new node and increment the total count.
     the total count is used as an index, 

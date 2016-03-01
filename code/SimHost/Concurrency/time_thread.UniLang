@@ -13,7 +13,7 @@
 􏷐Continuously update time related data for the rest of the systems.􏷏
 􏶠A function that runs in an infinite loop, at the fastest update rate, to keep other systems
 (both hardware and software) in sync with one another.􏶡
-􏶾int􏶽􏶼status􏶻􏶺A status value that is specified by the Task API.
+􏶚m􏶛􏶾int􏶽􏶼status􏶻􏶺A status value that is specified by the Task API.
 This function will not return, and thus it is only here to meet the needs of the API.􏶹
 􏶴
 􏶲set the global singleton to a valid starting state􏶱

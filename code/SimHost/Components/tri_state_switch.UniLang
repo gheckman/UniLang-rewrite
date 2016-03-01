@@ -17,7 +17,7 @@
 􏷘+􏷗􏷒change state􏷑
 􏷐Sets the the state of the 􏶐􏷏
 􏶠Changes the state of the 􏶐 based off the value passed in.  State will then match the value provided􏶡
-􏶜c􏶝􏷆TriStateE􏷅􏷄state􏷃􏷀the state to change the 􏶐 to.􏶿
+􏶜􏶝􏷆TriStateE􏷅􏷄state􏷃􏷀the state to change the 􏶐 to.􏶿
 􏶴
 􏶲change the state􏶱
 􏵴state􏵵 = 􏵶state􏵷;

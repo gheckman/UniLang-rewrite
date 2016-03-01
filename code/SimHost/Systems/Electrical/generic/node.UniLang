@@ -52,12 +52,12 @@ Behaves like this when traversing:
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
 􏶠􏶐 will be in an invalid state until initialized􏶡
-􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the node􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄id􏷃􏷀a unique id for the node􏶿
-􏶜c􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node (what kind of electrical component it is)􏶿
-􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the node􏶿
-􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
-􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the node allows current to pass through it or not􏶿
+􏶜􏶝􏷆char[]􏷅􏷄name􏷃􏷀the name of the node􏶿
+􏶜􏶝􏷆size_t􏷅􏷄id􏷃􏷀a unique id for the node􏶿
+􏶜􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node (what kind of electrical component it is)􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the node􏶿
+􏶜􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether the node allows current to pass through it or not􏶿
 􏶴
   􏶲copy over name􏶱
   strcpy(􏵴name􏵵, 􏵶name􏵷);
@@ -84,7 +84,7 @@ A junction is not the node itself, but contains an id to the other node.
 The reason we use a node and junction instead of two nodes is to handle flow direction between the two nodes.
 The graph will most likely add a junction to the two different nodes on behalf of the user.
 􏶡
-􏶜c􏶝􏷆JunctionOutputsT􏷅􏷄junction􏷃􏷀the junction to add to the node􏶿
+􏶜􏶝􏷆JunctionOutputsT􏷅􏷄junction􏷃􏷀the junction to add to the node􏶿
 􏶴
   􏶲add the new junction and increment the total count.
   the total count is used as an index, 

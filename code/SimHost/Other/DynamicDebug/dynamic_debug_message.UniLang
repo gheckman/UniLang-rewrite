@@ -16,9 +16,9 @@ and different message types can be iterated over.􏷯
 􏷘+􏷗􏷒construct dynamic debug message from int􏷑
 􏷐Get back a struct representing the UDP data we would like to send to the dynamic debugger.􏷏
 􏶠Constructs a generic Dynamic Debug struct that can be transformed into a UDP message, and sent to the dynamic debugger􏶡
-􏶜c􏶝􏷆int􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
-􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
-􏶾DynamicDebugMessageT􏶽􏶼dynamic debug message􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
+􏶜􏶝􏷆int􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
+􏶜􏶝􏷆char[]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
+􏶚m􏶛􏶾DynamicDebugMessageT􏶽􏶼dynamic debug message􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
 􏶴
     􏶲Set the value, and provide the correct data type enum for later dispatching.􏶱
     DynamicDebugMessageT tMessage;
@@ -31,9 +31,9 @@ and different message types can be iterated over.􏷯
 􏷘+􏷗􏷒construct dynamic debug message from real􏷑
 􏷐Get back a struct representing the UDP data we would like to send to the dynamic debugger.􏷏
 􏶠Constructs a generic Dynamic Debug struct that can be transformed into a UDP message, and sent to the dynamic debugger􏶡
-􏶜c􏶝􏷆double􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
-􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
-􏶾DynamicDebugMessageT􏶽􏶼dynamic debug message􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
+􏶜􏶝􏷆double􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
+􏶜􏶝􏷆char[]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
+􏶚m􏶛􏶾DynamicDebugMessageT􏶽􏶼dynamic debug message􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
 􏶴
     􏶲Set the value, and provide the correct data type enum for later dispatching.􏶱
     DynamicDebugMessageT tMessage;
@@ -46,9 +46,9 @@ and different message types can be iterated over.􏷯
 􏷘+􏷗􏷒construct dynamic debug message from bool􏷑
 􏷐Get back a struct representing the UDP data we would like to send to the dynamic debugger.􏷏
 􏶠Constructs a generic Dynamic Debug struct that can be transformed into a UDP message, and sent to the dynamic debugger􏶡
-􏶜c􏶝􏷆BOOL􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
-􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
-􏶾DynamicDebugMessageT􏶽􏶼dynamic debug message􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
+􏶜􏶝􏷆BOOL􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
+􏶜􏶝􏷆char[]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
+􏶚m􏶛􏶾DynamicDebugMessageT􏶽􏶼dynamic debug message􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
 􏶴
     􏶲Set the value, and provide the correct data type enum for later dispatching.􏶱
     DynamicDebugMessageT tMessage;
@@ -61,9 +61,9 @@ and different message types can be iterated over.􏷯
 􏷘+􏷗􏷒construct dynamic debug message from string􏷑
 􏷐Get back a struct representing the UDP data we would like to send to the dynamic debugger.􏷏
 􏶠Constructs a generic Dynamic Debug struct that can be transformed into a UDP message, and sent to the dynamic debugger􏶡
-􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_STRING_VALUE]􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
-􏶜c􏶝􏷆char[MAX_LENGTH_OF_DEBUG_PATH_VALUE]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
-􏶾DynamicDebugMessageT􏶽􏶼dynamic debug message􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
+􏶜􏶝􏷆char[]􏷅􏷄debug value􏷃􏷀The value to send over the network to the dynamic debugger.􏶿
+􏶜􏶝􏷆char[]􏷅􏷄path name􏷃􏷀A descriptive path name for the debug value.  Looks like a file path.􏶿
+􏶚m􏶛􏶾DynamicDebugMessageT􏶽􏶼dynamic debug message􏶻􏶺The data that is to be sent over UDP to the dynamic debugger.􏶹
 􏶴
     􏶲Set the value, and provide the correct data type enum for later dispatching.􏶱
     DynamicDebugMessageT tMessage;

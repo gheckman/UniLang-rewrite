@@ -25,7 +25,7 @@
 􏷘+􏷗􏷒J2 data receive􏷑
 􏷐Used to sequence incoming J2 Data Messages.􏷏
 􏶠This is an infinitely running task.􏶡
-􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
+􏶚m􏶛􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
 􏶴
     􏶲Creates J2 data that will be filled􏶱
     J2InConnectionDataMessageT tJ2Data;
@@ -50,7 +50,7 @@
 􏷘+􏷗􏷒J2 control receive􏷑
 􏷐Used to sequence incoming J2 Control Messages.􏷏
 􏶠This is an infinitely running task.􏶡
-􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
+􏶚m􏶛􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
 􏶴
     
     􏶲Creates J2 data that will be filled􏶱
@@ -76,7 +76,7 @@
 􏷘-􏷗􏷒handle incoming data messages􏷑
 􏷐receives the J2 data message􏷏
 􏶠gets the data message from the J2 flight model and writes into the J2 Data􏶡
-􏶜􏶝􏷆J2InConnectionDataMessageT*const􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶜r􏶝􏷆J2InConnectionDataMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
 􏶴
 
     􏶲buffer data􏶱
@@ -98,7 +98,7 @@
 􏷘-􏷗􏷒handle incoming control messages􏷑
 􏷐receives the J2 control message􏷏
 􏶠gets the control message from the J2 flight model and writes into the J2 Data􏶡
-􏶜􏶝􏷆J2InConnectionControlMessageT*const􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶜r􏶝􏷆J2InConnectionControlMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
 􏶴
     􏶲buffer data􏶱
     BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
@@ -117,9 +117,9 @@
 􏷘-􏷗􏷒unpack received control message􏷑
 􏷐processes the j2 data buffer received from the socket and unpacks it into the appropriate structure􏷏
 􏶠assumes the data received over the socket was valid and completed successfully􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀the buffer received from the socket􏶿
-􏶜c􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the amount of bytes received from the socket􏶿
-􏶜􏶝􏷆J2InConnectionControlMessageT*const􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀the buffer received from the socket􏶿
+􏶜􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the amount of bytes received from the socket􏶿
+􏶜mr􏶝􏷆J2InConnectionControlMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
 􏶴
     􏶲process message and parse data received into the input communication data􏶱
     􏶲decide what data message was received, and receive it􏶱
@@ -138,9 +138,9 @@
 􏷘-􏷗􏷒unpack received data message􏷑
 􏷐processes the j2 data buffer received from the socket and unpacks it into the appropriate structure􏷏
 􏶠assumes the data received over the socket was valid and completed successfully􏶡
-􏶜􏶝􏷆BYTE*􏷅􏷄data buffer􏷃􏷀the buffer received from the socket􏶿
-􏶜c􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the amount of bytes received from the socket􏶿
-􏶜􏶝􏷆J2InConnectionDataMessageT*const􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀the buffer received from the socket􏶿
+􏶜􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the amount of bytes received from the socket􏶿
+􏶜mr􏶝􏷆J2InConnectionDataMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
 􏶴
     􏶲process message and parse data received into the input communication data􏶱
     􏶲decide what data message was received, and receive it􏶱
@@ -159,7 +159,7 @@
 􏷘+􏷗􏷒J2 send􏷑
 􏷐Used to sequence outgoing J2 Messages.􏷏
 􏶠This is an infinitely running task.􏶡
-􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
+􏶚m􏶛􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
 􏶴
 
     􏶲all of the data that will be updated and sent to J2􏶱
@@ -241,7 +241,7 @@
 􏷘-􏷗􏷒send reposition message on change􏷑
 􏷐sends a reposition message if the structure has changed since the last time it was sent􏷏
 􏶠sourcing the new data happens internally when checking for change􏶡
-􏶜􏶝􏷆SendRepositionMessageT*const􏷅􏷄message􏷃􏷀the current state of the reposition data􏶿
+􏶜mr􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀the current state of the reposition data􏶿
 􏶴
     􏶲if reposition has changed􏶱
     if (􏵲reposition has changed􏵳􏵶message􏵷)){
@@ -255,7 +255,7 @@
 􏷘-􏷗􏷒send version message on change􏷑
 􏷐sends a reposition message if the structure has changed since the last time it was sent􏷏
 􏶠sourcing the new data happens internally when checking for change􏶡
-􏶜􏶝􏷆SendVersionRequestMessageT*const􏷅􏷄message􏷃􏷀the current state of the version data􏶿
+􏶜mr􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀the current state of the version data􏶿
 􏶴
     􏶲if version has changed􏶱
     if (􏵲version has changed􏵳􏵶message􏵷)){
@@ -269,8 +269,8 @@
 􏷘-􏷗􏷒reposition has changed􏷑
 􏷐update the reposition message, and decide if it changed􏷏
 􏶠equality is checked with memcmp, so its important that both structs were memset to zero􏶡
-􏶜􏶝􏷆SendRepositionMessageT*const􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
-􏶾BOOL􏶽􏶼changed􏶻􏶺whether the message has changed or not􏶹
+􏶜mr􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼changed􏶻􏶺whether the message has changed or not􏶹
 􏵦􏵧􏵤the message will be updated as an out parameter while comparing its equality to the previous state􏵥
 􏶴
     SendRepositionMessageT tNewMessage;
@@ -295,8 +295,8 @@
 􏷘-􏷗􏷒version has changed􏷑
 􏷐update the version message, and decide if it changed􏷏
 􏶠equality is checked with memcmp, so its important that both structs were memset to zero􏶡
-􏶜􏶝􏷆SendVersionRequestMessageT*const􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
-􏶾BOOL􏶽􏶼changed􏶻􏶺whether the message has changed or not􏶹
+􏶜mr􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼changed􏶻􏶺whether the message has changed or not􏶹
 􏵦􏵧􏵤the message will be updated as an out parameter while comparing its equality to the previous state􏵥
 􏶴
     SendVersionRequestMessageT tNewMessage;
@@ -321,7 +321,7 @@
 􏷘-􏷗􏷒send high speed message􏷑
 􏷐sends the data message to J2 flight model􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
-􏶜􏶝􏷆SendHighSpeedMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
+􏶜r􏶝􏷆SendHighSpeedMessageT􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱
     BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
@@ -338,7 +338,7 @@
 􏷘-􏷗􏷒send low speed message􏷑
 􏷐sends the data message to J2 flight model􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
-􏶜􏶝􏷆SendLowSpeedMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
+􏶜r􏶝􏷆SendLowSpeedMessageT􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱
     BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
@@ -355,7 +355,7 @@
 􏷘-􏷗􏷒send reposition message􏷑
 􏷐sends the data message to J2 flight model􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
-􏶜c􏶝􏷆SendRepositionMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
+􏶜r􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱
     BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
@@ -372,7 +372,7 @@
 􏷘-􏷗􏷒send version message􏷑
 􏷐sends the data message to J2 flight model􏷏
 􏶠Uses a timer internally to only send the message when appropriate􏶡
-􏶜c􏶝􏷆SendVersionRequestMessageT *const􏷅􏷄message􏷃􏷀the message to send􏶿
+􏶜r􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱
     BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];

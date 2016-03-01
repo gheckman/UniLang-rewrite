@@ -13,7 +13,7 @@
 􏶠􏶐 will be in an invalid state until initialized.
 Initializing a 􏶐 will construct all of its nodes into the generic electrical graph.
 It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create all the internal nodes inside the graph data structure􏶱
   CreateNodes(ptOutputs,􏵶graph􏵷);
@@ -28,7 +28,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷘-􏷗􏷒create nodes􏷑
 􏷐Constructs all of the electrical components into the generic electrical graph data structure.􏷏
 􏶠This will give all of the node a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create all of the vertexes that are part of the 􏶐
   the essential bus is technically outside the 􏶐,
@@ -76,7 +76,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷘-􏷗􏷒create wires􏷑
 􏷐Connects all of the necessary 􏶐 nodes together.􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
 􏶴
   􏶲connect the related components􏶱
   ElectricalGraphInputsT tInputs = {0};
@@ -118,7 +118,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷘-􏷗􏷒apply nodes to ground􏷑
 􏷐Attach particular 􏶐 nodes to common ground.􏷏
 􏶠The nodes being connected to ground will need to be created first.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
 􏶴
   􏶲apply any nodes to ground that should be􏶱
   ElectricalGraphInputsT tInputs = {0};

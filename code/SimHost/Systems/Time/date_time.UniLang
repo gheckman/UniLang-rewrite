@@ -23,10 +23,10 @@ Set the 􏶐 to a particular date and time.
 Once a 􏶐 is initialized, it can only progress forward.  
 Reseting the time to a different value will require a re-initialize.
 􏶡
-􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀The month to start the date at􏶿
-􏶜c􏶝􏷆unsigned int􏷅􏷄day􏷃􏷀the number of days in a month to start the current date time at􏶿
-􏶜c􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year to set the date at􏶿
-􏶜c􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀the number of milliseconds in a day to start the current date time at􏶿
+􏶜􏶝􏷆MonthE􏷅􏷄month􏷃􏷀The month to start the date at􏶿
+􏶜􏶝􏷆unsigned int􏷅􏷄day􏷃􏷀the number of days in a month to start the current date time at􏶿
+􏶜􏶝􏷆unsigned int􏷅􏷄year􏷃􏷀the year to set the date at􏶿
+􏶜􏶝􏷆double􏷅􏷄milliseconds􏷃􏷀the number of milliseconds in a day to start the current date time at􏶿
 􏶴
 􏶲we assume the input parameters are valid􏶱
 􏵴day􏵵 = 􏵶day􏵷;
@@ -39,7 +39,7 @@ Reseting the time to a different value will require a re-initialize.
 􏷘+􏷗􏷒increase by number of milliseconds􏷑
 􏷐Increment the 􏶐 by a number of milliseconds.􏷏
 􏶠Moving forward a number of milliseconds will properly adjust all of the other values.􏶡
-􏶜c􏶝􏷆double􏷅􏷄number of milliseconds􏷃􏷀the number of milliseconds to increase the current date time by􏶿
+􏶜􏶝􏷆double􏷅􏷄number of milliseconds􏷃􏷀the number of milliseconds to increase the current date time by􏶿
 􏶴
 
 􏶲increase the number of milliseconds.􏶱

@@ -35,12 +35,12 @@
 􏷘+􏷗􏷒add node􏷑
 􏷐Adds a specified node to the graph.􏷏
 􏶠The user can construct a node into the graph, and receive back a unique ID to query for it later.􏶡
-􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the node being added􏶿
-􏶜c􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node that is being added􏶿
-􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the node being added􏶿
-􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
-􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the node allows electricity to flow through it.􏶿
-􏶾size_t􏶽􏶼id􏶻􏶺a unique id that represents the node just created.􏶹
+􏶜􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the node being added􏶿
+􏶜􏶝􏷆NodeTypeE􏷅􏷄type􏷃􏷀the type of the node that is being added􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the node being added􏶿
+􏶜􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the node allows electricity to flow through it.􏶿
+􏶚m􏶛􏶾size_t􏶽􏶼id􏶻􏶺a unique id that represents the node just created.􏶹
 􏶴
   􏶲calculate the new node id􏶱
   size_t uId = 􏵴nodestwo􏵵.m_uSize;
@@ -61,12 +61,12 @@
 􏷘+􏷗􏷒add wire􏷑
 􏷐Connect two nodes together and allow electricity to flow both ways.􏷏
 􏶠Connects two nodes together, adds a wire between them, and applies the appropriate junction points.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀One of the nodes to attach to the other node.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀One of the nodes to attach to the other node.􏶿
-􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀The resistance of the wire.􏶿
-􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
-􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀Whether he wire has flow initially.􏶿
-􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
+􏶜􏶝􏷆size_t􏷅􏷄node x􏷃􏷀One of the nodes to attach to the other node.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀One of the nodes to attach to the other node.􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏷀The resistance of the wire.􏶿
+􏶜􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀Whether he wire has flow initially.􏶿
+􏶚m􏶛􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   􏶲calculate the wire and get the id􏶱
   size_t uId = 􏵲add node􏵳"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶expected amperage􏵷,􏵶has flow􏵷);
@@ -82,12 +82,12 @@
 􏷐Connect two nodes together and allow electricity to only flow one way between them.􏷏
 􏶠Connects two nodes together, adds a wire between them,
 and applies the appropriate junction points.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀One of the nodes to attach to the other. Electricity will flow from this node to the other.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀One of the nodes to attach to the other. Electricity will NOT flow from this node to the other.􏶿
-􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀The resistance of the wire.􏶿
-􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
-􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀Whether he wire has flow initially.􏶿
-􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
+􏶜􏶝􏷆size_t􏷅􏷄node x􏷃􏷀One of the nodes to attach to the other. Electricity will flow from this node to the other.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀One of the nodes to attach to the other. Electricity will NOT flow from this node to the other.􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏷀The resistance of the wire.􏶿
+􏶜􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular node􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀Whether he wire has flow initially.􏶿
+􏶚m􏶛􏶾size_t􏶽􏶼id􏶻􏶺The id of the newly added node.􏶹
 􏶴
   􏶲calculate the wire and get the id􏶱
   size_t uId = 􏵲add node􏵳"wire",NODE_TYPE_WIRE,􏵶resistance􏵷,􏵶expected amperage􏵷,􏵶has flow􏵷);
@@ -103,7 +103,7 @@ and applies the appropriate junction points.􏶡
 􏷐Specifies that the node passed in, has a direct connection to common ground.􏷏
 􏶠Creates a connection between the component node passed in, and the internally managed ground node. 
 Having nodes connect to common ground, is important for identifying valid paths through the circuit.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that will be applied to ground.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that will be applied to ground.􏶿
 􏶴
   􏶲add a connection the the ground node which is a part of the graph itself.􏶱
   􏵲add wire􏵳􏵶node􏵷,􏵴common ground􏵵,0,0.0f,􏵱);
@@ -140,8 +140,8 @@ This will clear all the previous calculated electrical data.􏶡
 􏷘+􏷗􏷒get circuit component􏷑
 􏷐Query the graph with a node id to get back the actual node.􏷏
 􏶠Node ids are given to the client when they tell the graph to create nodes for them.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node id associated with the actual node in the graph􏶿
-􏶾NodeOutputsT*􏶽􏶼circuit component􏶻􏶺the id of the newly added node􏶹
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node id associated with the actual node in the graph􏶿
+􏶚m􏶛􏶾NodeOutputsT*􏶽􏶼circuit component􏶻􏶺the id of the newly added node􏶹
 􏶴
     􏶲query the entire list of nodes to get the one that matches the id passed in􏶱
     return ((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node􏵷));
@@ -153,8 +153,8 @@ This will clear all the previous calculated electrical data.􏶡
 Elements of the matrix can be used to query the graph for the actual nodes.
 see: GetCircuitComponent(size_t nNode);
 􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄start node􏷃􏷀The starting node in which to start the traversal from.􏶿
-􏶾PathsOutputsT􏶽􏶼paths to ground􏶻􏶺All of the valid electrical paths from starting node to common ground.􏶹
+􏶜􏶝􏷆size_t􏷅􏷄start node􏷃􏷀The starting node in which to start the traversal from.􏶿
+􏶚m􏶛􏶾PathsOutputsT􏶽􏶼paths to ground􏶻􏶺All of the valid electrical paths from starting node to common ground.􏶹
 􏶴 
   􏶲create a pathlist to store all of the paths􏶱
   􏶲a path to slowly build up as we traverse,􏶱
@@ -171,9 +171,9 @@ see: GetCircuitComponent(size_t nNode);
 􏷘-􏷗􏷒connect wire between two other nodes bidirectionally􏷑
 􏷐Allow current to flow bidirectionally between a wire and two nodes.􏷏
 􏶠The order of NodeX and NodeY IS NOT important.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀the wire used in the connection process􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀one of the nodes used in the connection process􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀one of the nodes used in the connection process􏶿
+􏶜􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀the wire used in the connection process􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node x􏷃􏷀one of the nodes used in the connection process􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀one of the nodes used in the connection process􏶿
 􏶴
   􏶲create a wire between two nodes that flows both ways􏶱
   􏵲allow current flow out of wire to nodes􏵳􏵶wire id􏵷,􏵶node x􏵷,􏵶node y􏵷);
@@ -183,9 +183,9 @@ see: GetCircuitComponent(size_t nNode);
 􏷘-􏷗􏷒connect wire between two other nodes unidirectionally􏷑
 􏷐Allow current to flow uidirectionally between a wire and two nodes.􏷏
 􏶠The order of NodeX and NodeY IS important.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀The node that will allow electricity in but not out.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀The node that will allow electricity to flow both ways.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node x􏷃􏷀The node that will allow electricity in but not out.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀The node that will allow electricity to flow both ways.􏶿
 􏶴
   􏶲create a wire between two nodes that flows ONE way􏶱
   􏵲allow current flow out of wire to nodes􏵳􏵶wire id􏵷,􏵶node x􏵷,􏵶node y􏵷);
@@ -195,9 +195,9 @@ see: GetCircuitComponent(size_t nNode);
 􏷘-􏷗􏷒allow current flow of nodes to wire bidirectionally􏷑
 􏷐Part of the connection process of adding bidirectional flow between a wire and two nodes.􏷏
 􏶠The order of NodeX and NodeY IS NOT important.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀one of the nodes used in the connection process􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀one of the nodes used in the connection process􏶿
+􏶜􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node x􏷃􏷀one of the nodes used in the connection process􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀one of the nodes used in the connection process􏶿
 􏶴
   􏶲add the bidirectional junctions for the nodes􏶱
   JunctionOutputsT tJunction;
@@ -213,9 +213,9 @@ see: GetCircuitComponent(size_t nNode);
 􏷘-􏷗􏷒allow current flow of nodes to wire unidirectionally􏷑
 􏷐Part of the connection process of adding uidirectional flow between a wire and two nodes.􏷏
 􏶠The order of NodeX and NodeY IS important.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀The node that will allow electricity in but not out.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀The node that will allow electricity to flow both ways.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node x􏷃􏷀The node that will allow electricity in but not out.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀The node that will allow electricity to flow both ways.􏶿
 􏶴
   􏶲add the uidirectional junctions for the nodes􏶱
   JunctionOutputsT tJunctionX, tJunctionY;
@@ -234,9 +234,9 @@ see: GetCircuitComponent(size_t nNode);
 􏷐Applies flow properties to wires􏷏
 􏶠The graph assumes that wires themselves will always carry current both ways
 The order of NodeX and NodeY IS NOT important.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node x􏷃􏷀one of the nodes used in the connection process􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄node y􏷃􏷀one of the nodes used in the connection process􏶿
+􏶜􏶝􏷆size_t􏷅􏷄wire id􏷃􏷀The wire used in the connection process.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node x􏷃􏷀one of the nodes used in the connection process􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀one of the nodes used in the connection process􏶿
 􏶴
   􏶲add the bidirectional junctions for the nodes􏶱
   JunctionOutputsT tJunctionX, tJunctionY;
@@ -254,10 +254,10 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏷘-􏷗􏷒recursive gather of paths􏷑
 􏷐Recursively builds up lists of complete paths to ground while exploring all depth first paths.􏷏
 􏶠Complete paths to ground represent paths that electricity is guaranteed to flow through.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that the traversal is currently on.􏶿
-􏶜􏶝􏷆PathOutputsT *const􏷅􏷄seen􏷃􏷀A list of nodes that have already been seen(used to avoid cycles)􏶿
-􏶜􏶝􏷆PathOutputsT *const􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
-􏶜􏶝􏷆PathsOutputsT *const􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that the traversal is currently on.􏶿
+􏶜mr􏶝􏷆PathOutputsT􏷅􏷄seen􏷃􏷀A list of nodes that have already been seen(used to avoid cycles)􏶿
+􏶜mr􏶝􏷆PathOutputsT􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
+􏶜mr􏶝􏷆PathsOutputsT􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
 􏶴
   􏶲used for input parameters to API methods􏶱
   PathInputsT tPathInputs = {0};
@@ -307,10 +307,10 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏷘-􏷗􏷒traverse neighbors􏷑
 􏷐Gathers all of the appropriate neighbors and traverses them.􏷏
 􏶠Avoids neighbors that would cause cycles.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that the traversal is currently on.􏶿
-􏶜􏶝􏷆PathOutputsT *const􏷅􏷄seen􏷃􏷀A list of nodes that have already been seen(used to avoid cycles)􏶿
-􏶜􏶝􏷆PathOutputsT *const􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
-􏶜􏶝􏷆PathsOutputsT *const􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that the traversal is currently on.􏶿
+􏶜mr􏶝􏷆PathOutputsT􏷅􏷄seen􏷃􏷀A list of nodes that have already been seen(used to avoid cycles)􏶿
+􏶜mr􏶝􏷆PathOutputsT􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
+􏶜mr􏶝􏷆PathsOutputsT􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
 􏶴
   􏶲recurse down all of the neighbors that we haven't seen before,􏶱
   􏶲and that we have the ability to flow through􏶱
@@ -326,9 +326,9 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏷘-􏷗􏷒get unseen neighbors􏷑
 􏷐Gets a list of a node's neighbors that have not yet been visited.􏷏
 􏶠Used to avoid cycles while traversing.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that whose unseen neighbors are being gathered.􏶿
-􏶜􏶝􏷆PathOutputsT *const􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen(unseen to filter out unseen neighbors)􏶿
-􏶾PathOutputsT􏶽􏶼unseen neighbors􏶻􏶺􏵱 if current can flow through the given node of the given graph; 􏵰 if it cannot.􏶹
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that whose unseen neighbors are being gathered.􏶿
+􏶜mr􏶝􏷆PathOutputsT􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen(unseen to filter out unseen neighbors)􏶿
+􏶚m􏶛􏶾PathOutputsT􏶽􏶼unseen neighbors􏶻􏶺􏵱 if current can flow through the given node of the given graph; 􏵰 if it cannot.􏶹
 􏶴
 
   􏶲the list of unseen paths that will be built and returned􏶱
@@ -363,10 +363,10 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏷐Decides whether a neighbor node is valid to visit during a path traversal.􏷏
 􏶠It decides this by checking to see if the neighbor has already been seen(to avoid cycles), 
 and whether or not the junction between them is 'flowable'.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node whose neighbors are being checked against.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄junction index􏷃􏷀The neighbor of the first node (represented by the the junction's index).􏶿
-􏶜􏶝􏷆PathOutputsT *const􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen.􏶿
-􏶾BOOL􏶽􏶼is traversable unseen neighbor􏶻􏶺􏵱 if the node has not been seen yet, and due to it's properties, is also traversable; 􏵰 if one or both of these stipulations are 􏵰.􏶹
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node whose neighbors are being checked against.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄junction index􏷃􏷀The neighbor of the first node (represented by the the junction's index).􏶿
+􏶜mr􏶝􏷆PathOutputsT􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen.􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼is traversable unseen neighbor􏶻􏶺􏵱 if the node has not been seen yet, and due to it's properties, is also traversable; 􏵰 if one or both of these stipulations are 􏵰.􏶹
 􏶴
   􏶲assume the neighbor is not worth traversing down until proven otherwise􏶱
   BOOL bValidNeighborToTraverse = 􏵰;
@@ -395,8 +395,8 @@ and whether or not the junction between them is 'flowable'.􏶡
 􏷘-􏷗􏷒can be traveled through􏷑
 􏷐Evaluates whether a node can be traversed through or not.􏷏
 􏶠Used to avoid gathering nodes that would lead to cycles.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node being checked to see if current can flow through it.􏶿
-􏶾BOOL􏶽􏶼can be travelled through􏶻􏶺􏵱 if current can flow through the given node of the given graph; 􏵰 if it cannot.􏶹
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node being checked to see if current can flow through it.􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼can be travelled through􏶻􏶺􏵱 if current can flow through the given node of the given graph; 􏵰 if it cannot.􏶹
 􏶴
   􏶲check if a component has flow using a node id􏶱
   return 􏵲get circuit component􏵳􏵶node􏵷)->m_bHasFlow;

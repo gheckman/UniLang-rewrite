@@ -27,8 +27,8 @@ Additional utility functions for iterating over months.
 􏷐determine the next month after the one is given􏷏
 􏶠This will allow for an iteration over months,
 that will handle the roll-over from Dec to Jan􏶡
-􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀the month used to find the next month􏶿
-􏶚􏶛􏶾MonthE􏶽􏶼next month􏶻􏶺the proceeding month􏶹
+􏶜􏶝􏷆MonthE􏷅􏷄month􏷃􏷀the month used to find the next month􏶿
+􏶚m􏶛􏶾MonthE􏶽􏶼next month􏶻􏶺the proceeding month􏶹
 􏶴
     if (􏵶month􏵷 == MONTH_DEC){
         return MONTH_JAN;
@@ -40,8 +40,8 @@ that will handle the roll-over from Dec to Jan􏶡
 􏷐determine the previous month after the one is given􏷏
 􏶠This will allow for an iteration over months,
 that will handle the roll-over from Dec to Jan􏶡
-􏶜c􏶝􏷆MonthE􏷅􏷄month􏷃􏷀the month used to find the previous month􏶿
-􏶚􏶛􏶾MonthE􏶽􏶼previous month􏶻􏶺the previous month􏶹
+􏶜􏶝􏷆MonthE􏷅􏷄month􏷃􏷀the month used to find the previous month􏶿
+􏶚m􏶛􏶾MonthE􏶽􏶼previous month􏶻􏶺the previous month􏶹
 􏶴
     if (􏵶month􏵷 == MONTH_JAN){
         return MONTH_DEC;

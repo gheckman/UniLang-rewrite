@@ -8,9 +8,9 @@
 􏷘+􏷗􏷒float array average􏷑
 􏷐takes the average of an array of floats􏷏
 􏶠float specific function exists due to lack overloading/templates􏶡
-􏶜c􏶝􏷆float*const􏷅􏷄array􏷃􏷀array of numbers to average􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
-􏶾float􏶽􏶼average􏶻􏶺the average of the selected elements􏶹
+􏶜􏶝􏷆float[]􏷅􏷄array􏷃􏷀array of numbers to average􏶿
+􏶜􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
+􏶚m􏶛􏶾float􏶽􏶼average􏶻􏶺the average of the selected elements􏶹
 􏵪􏵫􏵨size must be <= the size of the array􏵩
 􏶴
 
@@ -25,9 +25,9 @@
 􏷘+􏷗􏷒int array average􏷑
 􏷐takes the average of an array of ints􏷏
 􏶠int specific function exists due to lack overloading/templates􏶡
-􏶜c􏶝􏷆int*const􏷅􏷄array􏷃􏷀array of numbers to average􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
-􏶾int􏶽􏶼average􏶻􏶺the average of the selected elements􏶹
+􏶜􏶝􏷆int[]􏷅􏷄array􏷃􏷀array of numbers to average􏶿
+􏶜􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
+􏶚m􏶛􏶾int􏶽􏶼average􏶻􏶺the average of the selected elements􏶹
 􏵪􏵫􏵨size must be <= the size of the array􏵩
 􏶴
 

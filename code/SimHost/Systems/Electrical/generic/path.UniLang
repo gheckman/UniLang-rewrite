@@ -21,7 +21,7 @@ of the overall path list returned to the user.􏷯
 􏷘+􏷗􏷒Add􏷑
 􏷐Adds a node to the current path􏷏
 􏶠If the list is not full, this will add the node to the current end of the list and increment the size􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The new node to add.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The new node to add.􏶿
 􏶴
     􏶲add the new node and increment the total count.
     the total count is used as an index, 
@@ -41,8 +41,8 @@ of the overall path list returned to the user.􏷯
 􏷘+􏷗􏷒Exists􏷑
 􏷐Checks to see if the node exists in the current path􏷏
 􏶠Useful for avoiding cycles when traversing the electrical graph.􏶡
-􏶜c􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node to test the existence of.􏶿
-􏶾BOOL􏶽􏶼exists􏶻􏶺􏵱 if the node exists, and 􏵰 if it does not􏶹
+􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node to test the existence of.􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼exists􏶻􏶺􏵱 if the node exists, and 􏵰 if it does not􏶹
 􏶴
   􏶲linear search to check if node has already been added to list
   this functions gets called to avoid cycles when traversing the graph.

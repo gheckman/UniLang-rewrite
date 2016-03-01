@@ -18,7 +18,7 @@ The center panel circuit breakers are derived from MEP Instrument Functionality 
 􏶠􏶐 will be in an invalid state until initialized.
 Initializing a 􏶐 will construct all of its nodes into the generic electrical graph.
 It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create the buses on the 􏶏􏶱
   􏵲create buses􏵳􏵶graph􏵷);
@@ -33,7 +33,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷘-􏷗􏷒create buses􏷑
 􏷐Constructs all of the electrical components into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created nodes a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   size_t unIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
   for (; unIndex < NUM_ELECTRICAL_SYSTEM_SIDES; ++unIndex){
@@ -46,7 +46,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷘-􏷗􏷒create devices􏷑
 􏷐Constructs all of the electrical devices into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created nodes a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲if you tilt the "Wiring Diagram Manual (WDM) MBB BK117 C-2" on its side, you will have the 􏶏
   portion of the schematic on top of he other DC boxes.  From this position, you will will be able to differentiate
@@ -65,7 +65,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏,
 and puts them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel nodes into.􏶿
 􏶴
   //construct all the devices that are a part of 
   //the left portion of the 􏶏.
@@ -83,7 +83,7 @@ and puts them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏,
 and puts them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
   //construct all the devices that are a part of 
   //the right portion of the 􏶏.
@@ -101,7 +101,7 @@ and puts them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the center console portion of the 􏶏,
 and puts them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its center panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its center panel devices into.􏶿
 􏶴
   //CB001 SHED BUS 1 (spare)
   //CB002 SHED BUS 1 (vacant)
@@ -138,12 +138,12 @@ and puts them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒create device and apply to ground􏷑
 􏷐Adds a specified device node to the graph, and connects it to ground.􏷏
 􏶠Used to construct a device node into the graph, and then set that node to common ground.􏶡
-􏶜􏶝􏷆size_t*const􏷅􏷄node id􏷃􏷀the id to be set when creating the device􏶿
-􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the device being added􏶿
-􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the device being added􏶿
-􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular device􏶿
-􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the device allows electricity to flow through it.􏶿
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄node id􏷃􏷀the id to be set when creating the device􏶿
+􏶜􏶝􏷆char[]􏷅􏷄name􏷃􏷀the name of the device being added􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the device being added􏶿
+􏶜􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular device􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the device allows electricity to flow through it.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
 􏶴
   //create node for part of the 􏶐
   ElectricalGraphInputsT tInputs = {0};
@@ -168,12 +168,12 @@ and puts them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒create bus and apply to ground􏷑
 􏷐Adds a specified bus node to the graph, and connects it to ground.􏷏
 􏶠Used to construct a bus node into the graph, and then set that node to common ground.􏶡
-􏶜􏶝􏷆size_t*const􏷅􏷄node id􏷃􏷀the id to be set when creating the bus􏶿
-􏶜c􏶝􏷆char[MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME]􏷅􏷄name􏷃􏷀the name of the bus being added􏶿
-􏶜c􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the bus being added􏶿
-􏶜c􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular bus􏶿
-􏶜c􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the bus allows electricity to flow through it.􏶿
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄node id􏷃􏷀the id to be set when creating the bus􏶿
+􏶜􏶝􏷆char[]􏷅􏷄name􏷃􏷀the name of the bus being added􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the bus being added􏶿
+􏶜􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular bus􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the bus allows electricity to flow through it.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
 􏶴
   //create node for part of the 􏶐
   ElectricalGraphInputsT tInputs = {0};
@@ -199,7 +199,7 @@ and puts them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 2,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴stby hor bat􏵵,"Stby Nor Bat",0,2.0f,􏵱,􏵶graph􏵷); //CB135
                                                                                                              //CB136 (vacant)
@@ -215,7 +215,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 2,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
   CreateDeviceAndApplyToGround(ptOutputs,&􏵴vhf tx1􏵵,"VHF TX1",0,5.0f,􏵱,􏵶graph􏵷);                 //CB113
   CreateDeviceAndApplyToGround(ptOutputs,&􏵴nms1􏵵,"NMS1",0,5.0f,􏵱,􏵶graph􏵷);                       //CB114
@@ -234,7 +234,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 3,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴fcds2 backup􏵵,"FCDS2 BACKUP",0,7.50f,􏵱,􏵶graph􏵷); //CB093
                                                                               //CB094 (inactive)
@@ -252,7 +252,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 4,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
   
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴fcdm􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FCDM1",0,3.0f,􏵱,􏵶graph􏵷);                  //CB073
@@ -271,7 +271,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 5,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
     //CB053 (vacant)
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴ics􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ICS",0,5.0f,􏵱,􏵶graph􏵷);          //CB054
@@ -289,7 +289,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 6,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
     //CB035 (inactive)
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FLOATS",0,0.0f,􏵱,􏵶graph􏵷);       //CB036
@@ -306,7 +306,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 7,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴sand filt􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"SAND FILT",0,5.0f,􏵱,􏵶graph􏵷);     //CB017
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴wiper􏵵,"WIPER",0,15.0f,􏵱,􏵶graph􏵷);        //CB018
@@ -323,7 +323,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 8,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴gen􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"GEN",0,1.0f,􏵱,􏵶graph􏵷);          //CB001
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴bt􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"BT",0,1.0f,􏵱,􏵶graph􏵷);           //CB002
@@ -339,7 +339,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 1,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     //CB143 (vacant)
     //CB144 (vacant)
@@ -354,7 +354,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 2,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio main 2􏵵,"AVIO MAIN 2",0,20.0f,􏵱,􏵶graph􏵷);    //CB124
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴emer bat􏵵,"EMER BAT",0,15.0f,􏵱,􏵶graph􏵷);      //CB125
@@ -373,7 +373,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 3,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴htgv􏵵,"HTGV",0,3.0f,􏵱,􏵶graph􏵷);         //CB103
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴inst cool􏵵,"INST COOL",0,10.0f,􏵱,􏵶graph􏵷);     //CB104
@@ -391,7 +391,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 4,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS AVIO MAIN 2",0,20.0f,􏵱,􏵶graph􏵷); //CB083
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MAST",0,1.0f,􏵱,􏵶graph􏵷);     //CB084
@@ -410,7 +410,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 5,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴yaw sas􏵵,"YAW SAS",0,3.0f,􏵱,􏵶graph􏵷);       //CB063
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴beep trim􏵵,"BEEP TRIM",0,2.0f,􏵱,􏵶graph􏵷);     //CB064
@@ -428,7 +428,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 6,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴n2 trim􏵵,"N2 TRIM",0,5.0f,􏵱,􏵶graph􏵷);       //CB044
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴instr􏵵,"INSTR",0,7.5f,􏵱,􏵶graph􏵷);        //CB045
@@ -445,7 +445,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 7,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡  
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴start􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"START",0,5.0f,􏵱,􏵶graph􏵷);        //CB026
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴ign􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"IGN",0,7.5f,􏵱,􏵶graph􏵷);          //CB027
@@ -463,7 +463,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 8,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴vemd􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"VEMD",0,5.0f,􏵱,􏵶graph􏵷);         //CB009
     CreateDeviceAndApplyToGround(ptOutputs,&􏵴cad􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"CAD",0,5.0f,􏵱,􏵶graph􏵷);          //CB010
@@ -478,7 +478,7 @@ and put them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒connect devices􏷑
 􏷐Connects all of the necessary 􏶐 devices and buses together.􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
 􏶴
   size_t unIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
   for (; unIndex < NUM_ELECTRICAL_SYSTEM_SIDES; ++unIndex){
@@ -626,9 +626,9 @@ and put them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒connect device with essential􏷑
 􏷐Connects all of the necessary 􏶐 devices to the essential bus􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
-􏶜c􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
 􏶴
   //connect two nodes trigger
   ElectricalGraphInputsT tInputs = {0};
@@ -646,9 +646,9 @@ and put them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒connect device with nonessential􏷑
 􏷐Connects all of the necessary 􏶐 devices to the nonessential bus􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
-􏶜c􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
 􏶴
   //connect two nodes trigger
   ElectricalGraphInputsT tInputs = {0};
@@ -665,9 +665,9 @@ and put them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒connect device with shed􏷑
 􏷐Connects all of the necessary 􏶐 devices to the essential bus􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT*const􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
-􏶜c􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
+􏶜􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
 􏶴
   //connect two nodes trigger
   ElectricalGraphInputsT tInputs = {0};
