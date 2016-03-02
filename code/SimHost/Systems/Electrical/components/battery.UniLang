@@ -14,13 +14,13 @@
 􏷘+􏷗􏷒􏶐􏷑
 􏷐Initialize the 􏶐􏷏
 􏶠􏶐 will be in an invalid state until initialized􏶡
-􏶜c􏶝􏷆BatteryChemistryE􏷅􏷄chemistry􏷃􏷀the chemistry of the battery􏶿
-􏶜c􏶝􏷆int􏷅􏷄cell count􏷃􏷀the number of cells in the battery􏶿
-􏶜c􏶝􏷆float􏷅􏷄rated voltage􏷃􏷀the rated voltage od the battery􏶿
-􏶜c􏶝􏷆float􏷅􏷄rated amp hours􏷃􏷀the rated amp hours of the battery􏶿
-􏶜c􏶝􏷆float􏷅􏷄rate amperage􏷃􏷀the rate amperage of the battery􏶿
-􏶜c􏶝􏷆float􏷅􏷄normal temperature_degc􏷃􏷀the normal temperature of the battery􏶿
-􏶜c􏶝􏷆float􏷅􏷄normal temperature rate􏷃􏷀the normal temperature rate of the battery􏶿
+􏶜􏶝􏷆BatteryChemistryE􏷅􏷄chemistry􏷃􏷀the chemistry of the battery􏶿
+􏶜􏶝􏷆int􏷅􏷄cell count􏷃􏷀the number of cells in the battery􏶿
+􏶜􏶝􏷆float􏷅􏷄rated voltage􏷃􏷀the rated voltage od the battery􏶿
+􏶜􏶝􏷆float􏷅􏷄rated amp hours􏷃􏷀the rated amp hours of the battery􏶿
+􏶜􏶝􏷆float􏷅􏷄rate amperage􏷃􏷀the rate amperage of the battery􏶿
+􏶜􏶝􏷆float􏷅􏷄normal temperature_degc􏷃􏷀the normal temperature of the battery􏶿
+􏶜􏶝􏷆float􏷅􏷄normal temperature rate􏷃􏷀the normal temperature rate of the battery􏶿
 􏶴
     􏶲set all the local data during initalization􏶱
     􏵴cell count􏵵 = 􏵶cell count􏵷;
@@ -48,7 +48,7 @@
 􏶳
 
 􏷘+􏷗􏷒set overheat failure􏷑
-􏶜c􏶝􏷆BOOL􏷅􏷄overheat failure􏷃􏷀whether the overheat failure is on or off􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄overheat failure􏷃􏷀whether the overheat failure is on or off􏶿
 􏷰set whether the battery has overheated􏷯
 􏷐An overheated battery will affect its temperature.􏷏
 􏶴
@@ -57,7 +57,7 @@
 􏶳
 
 􏷘+􏷗􏷒set grounded􏷑
-􏶜c􏶝􏷆BOOL􏷅􏷄is grounded􏷃􏷀whether the battery is grounded or not􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄is grounded􏷃􏷀whether the battery is grounded or not􏶿
 􏷰set whether the battery is grounded􏷯
 􏷐A grounded/ungrounded battery will affect its voltage.􏷏
 􏶴
@@ -68,9 +68,9 @@
 􏷘+􏷗􏷒update over time􏷑
 􏷰Update the battery over time using a time delta􏷯
 􏷐Updates the electrical properties, temperature, and determines if the battery is charging.􏷏
-􏶜c􏶝􏷆float􏷅􏷄bus source voltage􏷃􏷀the voltage of the bus that the battery is attached to􏶿
-􏶜c􏶝􏷆float􏷅􏷄bus amp draw􏷃􏷀the amperage of the bus that the battery is attached to􏶿
-􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶜􏶝􏷆float􏷅􏷄bus source voltage􏷃􏷀the voltage of the bus that the battery is attached to􏶿
+􏶜􏶝􏷆float􏷅􏷄bus amp draw􏷃􏷀the amperage of the bus that the battery is attached to􏶿
+􏶜􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏶴
     float fPercentDischarged = 0.0f;
     float fCellVoltage = 0.0f;
@@ -107,9 +107,9 @@
 􏷘-􏷗􏷒get cell voltage􏷑
 􏷰gets the cell voltage􏷯
 􏷐Uses the chemistry of the battery and percent discharged, to calculate a new cell voltage.􏷏
-􏶜c􏶝􏷆BatteryChemistryE􏷅􏷄chemistry􏷃􏷀the chemistry of the battery􏶿
-􏶜c􏶝􏷆float􏷅􏷄percent discharged􏷃􏷀the percent discharged of the battery over time􏶿
-􏶾float􏶽􏶼cell voltage􏶻􏶺the voltage of each cell in the battery􏶹
+􏶜􏶝􏷆BatteryChemistryE􏷅􏷄chemistry􏷃􏷀the chemistry of the battery􏶿
+􏶜􏶝􏷆float􏷅􏷄percent discharged􏷃􏷀the percent discharged of the battery over time􏶿
+􏶚m􏶛􏶾float􏶽􏶼cell voltage􏶻􏶺the voltage of each cell in the battery􏶹
 􏶴
     float fCellVoltage = 0.0f;
     
@@ -127,7 +127,7 @@
 􏶳
 
 􏷘-􏷗􏷒sets whether battery is charging􏷑
-􏶜c􏶝􏷆float􏷅􏷄bus source voltage􏷃􏷀the current voltage of the bus that the battery is attached to.􏶿
+􏶜􏶝􏷆float􏷅􏷄bus source voltage􏷃􏷀the current voltage of the bus that the battery is attached to.􏶿
 􏷰Determines and sets whether the battery is charging.􏷯
 􏷐A charging battery affects the logic in the rest of the update􏷏
 􏶴
@@ -142,7 +142,7 @@
 
 
 􏷘-􏷗􏷒adjust amp draw􏷑
-􏶜c􏶝􏷆float􏷅􏷄bus amp draw􏷃􏷀the ampdraw of the bus in which the battery is connected to􏶿
+􏶜􏶝􏷆float􏷅􏷄bus amp draw􏷃􏷀the ampdraw of the bus in which the battery is connected to􏶿
 􏷰Adjust the amp draw of the battery.􏷯
 􏷐The amp draw adjusts differently if the battery is charging􏷏
 􏶴
@@ -160,7 +160,7 @@
 􏶳
 
 􏷘-􏷗􏷒adjust temperature􏷑
-􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶜􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏷰Adjust the temperature of the battery.􏷯
 􏷐Accounts for whether the battery has an overheat failure or not.􏷏
 􏶴
@@ -172,7 +172,7 @@
 􏶳
 
 􏷘-􏷗􏷒adjust temperature with overheat􏷑
-􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶜􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏷰adjusts the temperature on an overheated battery based on a time delta.􏷯
 􏷐Uses algorithm with limit rate􏷏
 􏶴
@@ -181,7 +181,7 @@
 􏶳
 
 􏷘-􏷗􏷒adjust temperature without overheat􏷑
-􏶜c􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶜􏶝􏷆float􏷅􏷄time delta_ms􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏷰adjusts the temperature on an overheated battery based on a time delta.􏷯
 􏷐Uses algorithm with limit rate􏷏
 􏶴
@@ -191,17 +191,17 @@
 
 􏶨properties of the battery􏶧
 􏶦these properties are decided during its initalization􏶥
-􏶌􏶑􏶘-􏶙􏶮int􏶭􏶬cell count􏶫􏶪0􏶩
-􏶌􏶑􏶘-􏶙􏶮BatteryChemistryE􏶭􏶬chemistry􏶫􏶪0􏶩
-􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬rated voltage􏶫􏶪0􏶩
-􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬rated amp hours􏶫􏶪0􏶩
-􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬rate amperage􏶫􏶪0􏶩
-􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬normal temperature_degc􏶫􏶪0􏶩
-􏶌􏶑􏶘-􏶙􏶮float􏶭􏶬normal temperature rate􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+􏶘-􏶙􏶮int􏶭􏶬cell count􏶫􏶪0􏶩
+􏶘-􏶙􏶮BatteryChemistryE􏶭􏶬chemistry􏶫􏶪0􏶩
+􏶘-􏶙􏶮float􏶭􏶬rated voltage􏶫􏶪0􏶩
+􏶘-􏶙􏶮float􏶭􏶬rated amp hours􏶫􏶪0􏶩
+􏶘-􏶙􏶮float􏶭􏶬rate amperage􏶫􏶪0􏶩
+􏶘-􏶙􏶮float􏶭􏶬normal temperature_degc􏶫􏶪0􏶩
+􏶘-􏶙􏶮float􏶭􏶬normal temperature rate􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
 
 􏶨whether or not the battery has an overheating failure􏶧
 􏶦the temperature is affected during an overheat failure􏶥
-􏶌􏶑􏶘-􏶙􏶮BOOL􏶭􏶬overheat failure􏶫􏶪0􏶩
+􏶘-􏶙􏶮BOOL􏶭􏶬overheat failure􏶫􏶪0􏶩
 
 􏶨the voltage of the battery􏶧􏶦􏶥
 􏶘-g􏶙􏶮float􏶭􏶬voltage􏶫􏶪0􏶩

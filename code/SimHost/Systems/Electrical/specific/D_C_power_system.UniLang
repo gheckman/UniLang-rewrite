@@ -61,6 +61,22 @@ which can be used to query the graph and get back the actual node.
   ConnectBoxesTogether(ptOutputs);
 􏶳
 
+􏷘+􏷗􏷒^􏶐􏷑
+􏷐Copy constructor for 􏶐􏷏
+􏶠Performs the necessary deep copy􏶡
+􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄􏶐 copy􏷃􏷀the 􏶐 to copy construct􏶿
+􏶴
+    􏶲perform deep copy􏶱
+    CopyElectricalGraph(&􏵴graph􏵵,&􏵶􏶐 copy􏵷->m_tGraph);
+    􏵶􏶐 copy􏵷->m_tBatteryBox = 􏵴battery box􏵵;
+    􏵶􏶐 copy􏵷->m_ptDiodeBox[0] = 􏵴diode box􏵵[0];
+    􏵶􏶐 copy􏵷->m_ptDiodeBox[1] = 􏵴diode box􏵵[1];
+    􏵶􏶐 copy􏵷->m_ptDistributionBox[0] = 􏵴distribution box􏵵[0];
+    􏵶􏶐 copy􏵷->m_ptDistributionBox[1] = 􏵴distribution box􏵵[1];
+    􏵶􏶐 copy􏵷->m_ptAfterJunctionBox[0] = 􏵴after junction box􏵵[0];
+    􏵶􏶐 copy􏵷->m_ptAfterJunctionBox[1] = 􏵴after junction box􏵵[1];
+    􏵶􏶐 copy􏵷->m_tOverheadPanel = 􏵴overhead panel􏵵;
+􏶳
 􏷘+􏷗􏷒~􏶐􏷑
 􏷐Destruct the 􏶐􏷏
 􏶠􏶐 will leak memory unless destructed􏶡

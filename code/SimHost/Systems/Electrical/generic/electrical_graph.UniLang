@@ -8,7 +8,7 @@
 􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
 􏷤􏷣􏷦Node􏷥􏷢HASA: NodeOutputsT􏷡
 􏷤􏷣􏷦Paths􏷥􏷢HASA: PathsOutputsT􏷡
-􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_ELECTRICAL_NODES􏷡
+􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME􏷡
 􏷤􏷣􏷦vector􏷥􏷢USES: VectorT􏷡
 􏶔􏶕􏶒NodeType􏶓􏶖USES: NodeTypeE􏶗
 􏶔􏶕􏶒stdio􏶓􏶖USES: perror()􏶗
@@ -18,10 +18,20 @@
 􏶠􏶐 will be in an invalid state until initialized􏶡
 􏶴
   􏶲the graph starts with zero nodes, and nothing connected􏶱
-  InitializeVector(&􏵴nodestwo􏵵,sizeof(NodeOutputsT),0);
+  InitializeVector(&􏵴nodes􏵵,sizeof(NodeOutputsT),0);
   
   􏶲establish a common ground􏶱
   􏵴common ground􏵵 = 􏵲add node􏵳"common ground",NODE_TYPE_GROUND,0,0.0f,􏵱);
+􏶳
+
+􏷘+􏷗􏷒^􏶐􏷑
+􏷐Copy constructor for 􏶐􏷏
+􏶠Performs the necessary deep copy􏶡
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄􏶐 copy􏷃􏷀the 􏶐 to copy construct􏶿
+􏶴
+    􏶲perform deep copy􏶱
+    􏵶􏶐 copy􏵷->m_tLocals.m_uCommonGround = 􏵴common ground􏵵;
+    CopyVector(&􏵴nodes􏵵,&􏵶􏶐 copy􏵷->m_tLocals.m_tNodes);
 􏶳
 
 􏷘+􏷗􏷒~􏶐􏷑
@@ -29,7 +39,7 @@
 􏶠􏶐 will leak memory unless destructed􏶡
 􏶴
   􏶲C does not have destructors.􏶱
-  DestructVector(&􏵴nodestwo􏵵);
+  DestructVector(&􏵴nodes􏵵);
 􏶳
 
 􏷘+􏷗􏷒add node􏷑
@@ -43,7 +53,7 @@
 􏶚m􏶛􏶾size_t􏶽􏶼id􏶻􏶺a unique id that represents the node just created.􏶹
 􏶴
   􏶲calculate the new node id􏶱
-  size_t uId = 􏵴nodestwo􏵵.m_uSize;
+  size_t uId = 􏵴nodes􏵵.m_uSize;
   
   􏶲create the new node with a unique id􏶱
   NodeOutputsT tNode;
@@ -53,7 +63,7 @@
   the total count is used as an index, 
   so this prepares the node list for the next insertion.
   we also have a safety check to avoid out-of-bounds indexing􏶱
-  VectorAdd(&􏵴nodestwo􏵵,&tNode);
+  VectorAdd(&􏵴nodes􏵵,&tNode);
   
   return uId;
 􏶳
@@ -117,10 +127,10 @@ This will clear all the previous calculated electrical data.􏶡
   􏶲iterate over all of the node elements,􏶱
   􏶲and clear their calculated electrical data.􏶱
   size_t unIndex = 0;
-  for (; unIndex < 􏵴nodestwo􏵵.m_uSize; ++unIndex)
+  for (; unIndex < 􏵴nodes􏵵.m_uSize; ++unIndex)
   {
-    ((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,unIndex))->m_fVoltage = 0;
-    ((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,unIndex))->m_fResistance = 0;
+    ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_fVoltage = 0;
+    ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_fResistance = 0;
   }
 􏶳
 
@@ -131,9 +141,9 @@ This will clear all the previous calculated electrical data.􏶡
   􏶲iterate over all of the node elements,􏶱
   􏶲and turn on their ability to receive flow.􏶱
   size_t unIndex = 0;
-  for (; unIndex < 􏵴nodestwo􏵵.m_uSize; ++unIndex)
+  for (; unIndex < 􏵴nodes􏵵.m_uSize; ++unIndex)
   {
-    ((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,unIndex))->m_bHasFlow = 􏵱;
+    ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_bHasFlow = 􏵱;
   }
 􏶳
 
@@ -144,7 +154,7 @@ This will clear all the previous calculated electrical data.􏶡
 􏶚m􏶛􏶾NodeOutputsT*􏶽􏶼circuit component􏶻􏶺the id of the newly added node􏶹
 􏶴
     􏶲query the entire list of nodes to get the one that matches the id passed in􏶱
-    return ((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node􏵷));
+    return ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷));
 􏶳
 
 􏷘+􏷗􏷒get paths to ground􏷑
@@ -206,8 +216,8 @@ see: GetCircuitComponent(size_t nNode);
   
   􏶲add the junction to the nodes􏶱
   tInputs.m_tJunction = tJunction;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node x􏵷),&tInputs);
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node y􏵷),&tInputs);
+  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node x􏵷),&tInputs);
+  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node y􏵷),&tInputs);
 􏶳
 
 􏷘-􏷗􏷒allow current flow of nodes to wire unidirectionally􏷑
@@ -225,9 +235,9 @@ see: GetCircuitComponent(size_t nNode);
   
   􏶲add the junctions to the nodes􏶱
   tInputs.m_tJunction = tJunctionX;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node x􏵷),&tInputs);
+  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node x􏵷),&tInputs);
   tInputs.m_tJunction = tJunctionY;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node y􏵷),&tInputs);
+  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node y􏵷),&tInputs);
 􏶳
 
 􏷘-􏷗􏷒allow current flow out of wire to nodes􏷑
@@ -246,9 +256,9 @@ The order of NodeX and NodeY IS NOT important.􏶡
   
   􏶲add the junctions to the nodes􏶱
   tInputs.m_tJunction = tJunctionX;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶wire id􏵷),&tInputs);
+  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶wire id􏵷),&tInputs);
   tInputs.m_tJunction = tJunctionY;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶wire id􏵷),&tInputs);
+  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶wire id􏵷),&tInputs);
 􏶳
 
 􏷘-􏷗􏷒recursive gather of paths􏷑
@@ -280,7 +290,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
     UpdatePath(􏵶list􏵷,&tPathInputs);
     
     􏶲continue traversing if the node is not the common ground􏶱
-    if (((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node􏵷))->m_eType != NODE_TYPE_GROUND)
+    if (((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_eType != NODE_TYPE_GROUND)
     {
       􏵲traverse neighbors􏵳􏵶node􏵷,􏵶seen􏵷,􏵶list􏵷,􏵶path list􏵷);
     }
@@ -343,14 +353,14 @@ The order of NodeX and NodeY IS NOT important.􏶡
   InitializePath(&tUnseenNodes);
   
   􏶲loop over all of the junctions for a particular node􏶱
-  for (;unIndex < ((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node􏵷))->m_uNumberOfJunctions; ++unIndex)
+  for (;unIndex < ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_uNumberOfJunctions; ++unIndex)
   {
     
     􏶲decide whether we have an unseen neighbor worth traversing􏶱
     if(􏵲is traversable unseen neighbor􏵳􏵶node􏵷,unIndex,􏵶seen􏵷))
     {
       􏶲add the node as it can be flowed through, and has not been visited yet􏶱
-      tPathInputs.m_uNode = ((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node􏵷))->m_ptJunctions[unIndex].m_uConnectionId;
+      tPathInputs.m_uNode = ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[unIndex].m_uConnectionId;
       UpdatePath(&tUnseenNodes,&tPathInputs);
     }
     
@@ -377,14 +387,14 @@ and whether or not the junction between them is 'flowable'.􏶡
   􏶲check if node already exists in path􏶱
   PathInputsT tPathInputs = {0};
   tPathInputs.m_bExists = 􏵱;
-  tPathInputs.m_uNode = ((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node􏵷))->m_ptJunctions[􏵶junction index􏵷].m_uConnectionId;
+  tPathInputs.m_uNode = ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[􏵶junction index􏵷].m_uConnectionId;
   UpdatePath(􏵶seen􏵷,&tPathInputs);
 
   􏶲if we haven't seen the node before􏶱
   if (!􏵶seen􏵷->m_bExists){
     
     􏶲and if the junction allows flow􏶱
-    if(((NodeOutputsT*)VectorGet(&􏵴nodestwo􏵵,􏵶node􏵷))->m_ptJunctions[􏵶junction index􏵷].m_bHasFlow){
+    if(((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[􏵶junction index􏵷].m_bHasFlow){
       bValidNeighborToTraverse = 􏵱;
     }
   }
@@ -409,5 +419,5 @@ It saves the user from having to create the node themselves.􏶥
 
 􏶨All of the nodes that make up the graph.􏶧
 􏶦The entire electrical graph is represented as an array of nodes.􏶥
-􏶘-􏶙􏶮VectorT􏶭􏶬nodestwo􏶫􏶪􏶩
+􏶘-􏶙􏶮VectorT􏶭􏶬nodes􏶫􏶪􏶩
 

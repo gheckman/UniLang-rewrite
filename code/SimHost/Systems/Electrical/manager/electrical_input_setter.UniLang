@@ -16,8 +16,8 @@ and put it into the electrical system's inputs.􏷯
 􏷐Fills the electrical manager's inputs with the appropriate data􏷏
 􏶠Reads from Ownship and fills the input struct
 based on the outputs of various systems and connections􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
-􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
     􏶲Turn all of the relevant outputs from other systems into the relevant inputs􏶱
     􏵲set inputs from systems􏵳􏵶inputs􏵷);
@@ -29,7 +29,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒set inputs from systems􏷑
 􏷐Applies inputs from the outputs of various other systems􏷏
 􏶠Uses ownship to get the various outputs from systems􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲Set the inputs from the various systems􏶱
     􏵲read from avionics􏵳􏵶inputs􏵷);
@@ -50,8 +50,8 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒set inputs from connections􏷑
 􏷐Applies inputs from the outputs of various other connections􏷏
 􏶠Uses ownship to get the various outputs from systems􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
-􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
     􏶲Set the inputs from the various connections􏶱
     􏵲read from IOS􏵳􏵶inputs􏵷);
@@ -68,7 +68,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from avionics􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     AvionicsSystemOutputT tAvionicsOutput;
@@ -81,7 +81,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from engine􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     EngineSystemOutputT tEngineOutput;
@@ -94,7 +94,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from fire􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     FireSystemOutputT tFireOutput;
@@ -107,7 +107,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from flight controls􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     //FlightConstrolsSystemOutputT tFlightConstrolsOutput;
@@ -120,7 +120,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from flight guidance􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     FlightGuidanceSystemOutputT tFlightGuidanceOutput;
@@ -133,7 +133,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from fuel􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the fuel outputs􏶱
     FuelSystemOutputT tFuelOutput;
@@ -145,8 +145,8 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒get potential power flags from fuel􏷑
 􏷐gets all of the potential power flags from fuel's output􏷏
 􏶠The potential power flags will be used to determine if the fuel subcomponents have power.􏶡
-􏶜c􏶝􏷆FuelSystemOutputT*const􏷅􏷄fuel output􏷃􏷀all of the fuel outputs􏶿
-􏶾FuelPowerFlagsT􏶽􏶼fuel power flags􏶻􏶺flags indicating what subcomponents of the fuel system are capable of being powered.􏶹
+􏶜r􏶝􏷆FuelSystemOutputT􏷅􏷄fuel output􏷃􏷀all of the fuel outputs􏶿
+􏶚m􏶛􏶾FuelPowerFlagsT􏶽􏶼fuel power flags􏶻􏶺flags indicating what subcomponents of the fuel system are capable of being powered.􏶹
 􏶴
     FuelPowerFlagsT tFuelFlags;
     
@@ -175,7 +175,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from hydraulic􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     HydraulicSystemOutputT tHydraulicOutput;
@@ -188,7 +188,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from lighting􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     LightingSystemOutputT tLightingOutput;
@@ -201,7 +201,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from master warning􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     MasterWarningSystemOutputT tMasterWarningOutput;
@@ -214,7 +214,7 @@ based on the outputs of various systems and connections􏶡
 􏷘-􏷗􏷒read from radio􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the outputs􏶱
     RadioSystemOutputT tRadioOutput;
@@ -228,7 +228,7 @@ based on the outputs of various systems and connections􏶡
 􏷐Applies inputs given from the IOS􏷏
 􏶠Uses ownship to get the IOS data.  This data is primarily malfunction triggers,
 but it could be other information as well􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the IOS􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the IOS􏶿
 􏶴
     􏶲get the outputs􏶱
     IOStoHostT tIOSOutput;
@@ -252,8 +252,8 @@ but it could be other information as well􏶡
 􏷘-􏷗􏷒read from plc􏷑
 􏷐Applies inputs signaled from the PLC􏷏
 􏶠􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
-􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
+􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
     􏶲turn PLC inputs into system inputs􏶱
     􏵲read plc circuit breakers􏵳􏵶inputs􏵷,􏵶plc􏵷);
@@ -263,8 +263,8 @@ but it could be other information as well􏶡
 􏷘-􏷗􏷒read plc circuit breakers􏷑
 􏷐Applies circuit breakers inputs signaled from the PLC􏷏
 􏶠􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
-􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
+􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
     􏶲turn PLC circuit breaker inputs into the system's input􏶱
     
@@ -445,8 +445,8 @@ but it could be other information as well􏶡
 􏷘-􏷗􏷒read plc switches􏷑
 􏷐Applies circuit breakers inputs signaled from the PLC􏷏
 􏶠􏶡
-􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
-􏶜c􏶝􏷆PLCInConnectionDataT *const􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
+􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
     􏶲turn PLC switch inputs into the system's input􏶱
     

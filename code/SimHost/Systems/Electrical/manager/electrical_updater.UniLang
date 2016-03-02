@@ -9,8 +9,8 @@
 􏷘+􏷗􏷒update electrical logic􏷑
 􏷐Update the electrical system logic􏷏
 􏶠Updates the electrical system using its inputs and setting its output􏶡
-􏶜􏶝􏷆ElectricalSystemT *const􏷅􏷄system􏷃􏷀The entire electrical system with all of its inputs and outputs.􏶿
-􏶜c􏶝􏷆float􏷅􏷄time delta􏷃􏷀Delta time since the last call in milliseconds.􏶿
+􏶜mr􏶝􏷆ElectricalSystemT􏷅􏷄system􏷃􏷀The entire electrical system with all of its inputs and outputs.􏶿
+􏶜􏶝􏷆float􏷅􏷄time delta􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏶴
     􏶲there may be a need to simulate a spike when the generator or battery is turned on.
     I have no information on this, so for the time being, I'll leave a comment only.
@@ -48,8 +48,8 @@
 􏷘-􏷗􏷒change electrical graph state􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜􏶝􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
-􏶜c􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃
+􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃
 􏶴
     􏶲In order to change the state of the power system, we will
     1. Apply malfunctions
@@ -71,28 +71,28 @@
 􏷘-􏷗􏷒update electrical data across graph􏷑
 􏷐􏷏
 􏶠􏶡
-􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
 􏶴
 􏶳
 
 􏷘-􏷗􏷒stop power on disconnected components􏷑
 􏷐􏷏
 􏶠􏶡
-􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
 􏶴
 􏶳
 
 􏷘-􏷗􏷒set power flags for other systems􏷑
 􏷐􏷏
 􏶠􏶡
-􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
 􏶴
 􏶳
 
 􏷘-􏷗􏷒set data needed for screen displays􏷑
 􏷐􏷏
 􏶠􏶡
-􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
 􏶴
 􏶳
 

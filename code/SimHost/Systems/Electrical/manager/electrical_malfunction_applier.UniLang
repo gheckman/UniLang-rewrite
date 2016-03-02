@@ -10,8 +10,8 @@
 􏷘+􏷗􏷒apply electrical malfunctions􏷑
 􏷐Applies electrical malfunctions to the electrical graph triggered from the IOS data􏷏
 􏶠These malfunctions will turn off flow for the particular graph nodes.􏶡
-􏶜􏶝􏷆DCPowerSystemOutputsT *const􏷅􏷄system􏷃􏷀The DC Power system that will be effected by the triggered malfunctions.􏶿
-􏶜c􏶝􏷆ElectricalMalfunctionsT *const􏷅􏷄malfunction􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
+􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃􏷀The DC Power system that will be effected by the triggered malfunctions.􏶿
+􏶜r􏶝􏷆ElectricalMalfunctionsT􏷅􏷄malfunction􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
 􏶴
     􏶲apply malfunctions that can occur on any of the following electrical boxes:􏶱
     􏵲apply battery box malfunctions􏵳&􏵶system􏵷->m_tGraph,&􏵶system􏵷->m_tBatteryBox,􏵶malfunction􏵷);
@@ -22,9 +22,9 @@
 􏷘-􏷗􏷒apply battery box malfunctions􏷑
 􏷐Uses the IOS malfunctions to potentially stop flow on protions of the battery box􏷏
 􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT *const􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
-􏶜c􏶝􏷆BatteryBoxOutputsT *const􏷅􏷄box􏷃􏷀The Battery Box that will be effected by the triggered malfunctions.􏶿
-􏶜c􏶝􏷆ElectricalMalfunctionsT *const􏷅􏷄malfunction􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
+􏶜r􏶝􏷆BatteryBoxOutputsT􏷅􏷄box􏷃􏷀The Battery Box that will be effected by the triggered malfunctions.􏶿
+􏶜r􏶝􏷆ElectricalMalfunctionsT􏷅􏷄malfunction􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
 􏶴
     􏶲possibly stop flow on the battery bus􏶱
     􏵲apply malfunction to component􏵳􏵶graph􏵷,􏵶box􏵷->m_uBus,􏵶malfunction􏵷->m_bCircuitBatteryBus);
@@ -36,9 +36,9 @@
 􏷘-􏷗􏷒apply distribution box malfunctions􏷑
 􏷐Uses the IOS malfunctions to potentially stop flow on protions of the distribution box􏷏
 􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT *const􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
-􏶜c􏶝􏷆DistributionBoxOutputsT *const􏷅􏷄box􏷃􏷀The Distribution Box that will be effected by the triggered malfunctions.􏶿
-􏶜c􏶝􏷆ElectricalMalfunctionsT *const􏷅􏷄malfunction􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
+􏶜r􏶝􏷆DistributionBoxOutputsT􏷅􏷄box􏷃􏷀The Distribution Box that will be effected by the triggered malfunctions.􏶿
+􏶜r􏶝􏷆ElectricalMalfunctionsT􏷅􏷄malfunction􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
 􏶴
 
     􏶲possibly stop flow on the bus tie 1 (force it to open)
@@ -60,9 +60,9 @@
 􏷘-􏷗􏷒apply after junction box malfunctions􏷑
 􏷐Uses the IOS malfunctions to potentially stop flow on protions of the after junction box􏷏
 􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT *const􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
-􏶜c􏶝􏷆AfterJunctionBoxOutputsT *const􏷅􏷄box􏷃􏷀The After Junction Box that will be effected by the triggered malfunctions.􏶿
-􏶜c􏶝􏷆ElectricalMalfunctionsT *const􏷅􏷄malfunction􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
+􏶜r􏶝􏷆AfterJunctionBoxOutputsT􏷅􏷄box􏷃􏷀The After Junction Box that will be effected by the triggered malfunctions.􏶿
+􏶜r􏶝􏷆ElectricalMalfunctionsT􏷅􏷄malfunction􏷃􏷀All of the possible malfunctions that can be applied to the electrical system.􏶿
 􏶴
     􏶲maybe we'll do something different depending on the level at which its overheating?
     maybe we won't stop flow anywhere until the overheat reaches a certain temperature?
@@ -96,9 +96,9 @@
 􏷘-􏷗􏷒apply malfunction to component􏷑
 􏷐given an id to a graph node, we can apply the malfunction to it􏷏
 􏶠Applying the malfunction to the node will turn off its ability "to flow"􏶡
-􏶜􏶝􏷆ElectricalGraphOutputsT *const􏷅􏷄graph􏷃􏷀The graph where the actual node exists.  The node element will be looked up through the Id􏶿
-􏶜c􏶝􏷆size_t􏷅􏷄id􏷃􏷀The ID of the node to change flow state on􏶿
-􏶜c􏶝􏷆BOOL􏷅􏷄malfunction􏷃􏷀whether or not the malfunction occured.  True malfunctions stop flow.  False malfunctions give flow.􏶿
+􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀The graph where the actual node exists.  The node element will be looked up through the Id􏶿
+􏶜􏶝􏷆size_t􏷅􏷄id􏷃􏷀The ID of the node to change flow state on􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄malfunction􏷃􏷀whether or not the malfunction occured.  True malfunctions stop flow.  False malfunctions give flow.􏶿
 􏶴
     􏶲set trigger to receive electrical components out of the graph􏶱
     ElectricalGraphInputsT tInputs;

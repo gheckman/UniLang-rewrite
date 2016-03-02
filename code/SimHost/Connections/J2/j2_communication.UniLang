@@ -76,7 +76,7 @@
 􏷘-􏷗􏷒handle incoming data messages􏷑
 􏷐receives the J2 data message􏷏
 􏶠gets the data message from the J2 flight model and writes into the J2 Data􏶡
-􏶜r􏶝􏷆J2InConnectionDataMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶜mr􏶝􏷆J2InConnectionDataMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
 􏶴
 
     􏶲buffer data􏶱
@@ -98,7 +98,7 @@
 􏷘-􏷗􏷒handle incoming control messages􏷑
 􏷐receives the J2 control message􏷏
 􏶠gets the control message from the J2 flight model and writes into the J2 Data􏶡
-􏶜r􏶝􏷆J2InConnectionControlMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
+􏶜mr􏶝􏷆J2InConnectionControlMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
 􏶴
     􏶲buffer data􏶱
     BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
