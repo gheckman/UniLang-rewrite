@@ -21,7 +21,7 @@
 􏶳
 
 􏷘-􏷗􏷒apply battery box malfunctions􏷑
-􏷐Uses the IOS malfunctions to potentially stop flow on protions of the battery box􏷏
+􏷐Uses the IOS malfunctions to potentially stop flow on portions of the battery box􏷏
 􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
 􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
 􏶜r􏶝􏷆BatteryBoxOutputsT􏷅􏷄box􏷃􏷀The Battery Box that will be effected by the triggered malfunctions.􏶿
@@ -35,7 +35,7 @@
 􏶳
 
 􏷘-􏷗􏷒apply distribution box malfunctions􏷑
-􏷐Uses the IOS malfunctions to potentially stop flow on protions of the distribution box􏷏
+􏷐Uses the IOS malfunctions to potentially stop flow on portions of the distribution box􏷏
 􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
 􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
 􏶜r􏶝􏷆DistributionBoxOutputsT􏷅􏷄box􏷃􏷀The Distribution Box that will be effected by the triggered malfunctions.􏶿
@@ -59,7 +59,7 @@
 􏶳
 
 􏷘-􏷗􏷒apply after junction box malfunctions􏷑
-􏷐Uses the IOS malfunctions to potentially stop flow on protions of the after junction box􏷏
+􏷐Uses the IOS malfunctions to potentially stop flow on portions of the after junction box􏷏
 􏶠Applying a malfunction, only stops the flow of the electrical node􏶡
 􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀The graph where the actual node elements exist.  The node element will be looked up through the box's Id􏶿
 􏶜r􏶝􏷆AfterJunctionBoxOutputsT􏷅􏷄box􏷃􏷀The After Junction Box that will be effected by the triggered malfunctions.􏶿
@@ -70,11 +70,11 @@
     the description says that the generator does not automatically trip off.
     At least for now, let's just check if it's overheating at all, and if it is, we'll shut off the flow􏶱
     if (􏵶malfunction􏵷->m_nGenerator1StarterGeneratorOverheat > 0){
-        􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uGenerator, TRUE);
+        􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uGenerator, 􏵱);
     }
 
     if (􏵶malfunction􏵷->m_nGenerator2StarterGeneratorOverheat > 0){
-        􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uGenerator, TRUE);
+        􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uGenerator, 􏵱);
     }
 
     􏶲possibly stop flow on generator 1 starter relay􏶱
@@ -85,12 +85,12 @@
 
     􏶲possibly stop flow on generator 1 due to over-voltage􏶱
     if (􏵶malfunction􏵷->m_nGenerator1StarterGeneratorOvervoltage > 0){
-        􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uGenerator, TRUE);
+        􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[0].m_uGenerator, 􏵱);
     }
 
     􏶲possibly stop flow on generator 2 due to over-voltage􏶱
     if (􏵶malfunction􏵷->m_nGenerator2StarterGeneratorOvervoltage > 0){
-        􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uGenerator, TRUE);
+        􏵲apply malfunction to component􏵳􏵶graph􏵷, 􏵶box􏵷[1].m_uGenerator, 􏵱);
     }
 􏶳
 
@@ -99,7 +99,7 @@
 􏶠Applying the malfunction to the node will turn off its ability "to flow"􏶡
 􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀The graph where the actual node exists.  The node element will be looked up through the Id􏶿
 􏶜􏶝􏷆size_t􏷅􏷄id􏷃􏷀The ID of the node to change flow state on􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄malfunction􏷃􏷀whether or not the malfunction occured.  True malfunctions stop flow.  False malfunctions give flow.􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄malfunction􏷃􏷀whether or not the malfunction occurred.  True malfunctions stop flow.  False malfunctions give flow.􏶿
 􏶴
     􏶲set trigger to receive electrical components out of the graph􏶱
     ElectricalGraphInputsT tInputs;
@@ -112,7 +112,7 @@
 
     􏶲apply a possible malfunction to it
     You'll notice that we NOT(!) the malfunction.
-    That's because the malfunction are true when they occur, but we're assining it to
+    That's because the malfunction are true when they occur, but we're assigning it to
     whether the component can flow.􏶱
     􏵶graph􏵷->m_ptCircuitComponent->m_bHasFlow = !􏵶malfunction􏵷;
 􏶳
