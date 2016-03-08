@@ -6,6 +6,7 @@
 
 􏷤􏷣􏷦ElectricalData􏷥􏷢USES: ElectricalMalfunctionsT􏷡
 􏷤􏷣􏷦DCPowerSystem􏷥􏷢USES: DCPowerSystemOutputsT􏷡
+􏶔􏶕􏶒string􏶓􏶖USES memset()􏶗
 
 􏷘+􏷗􏷒apply electrical malfunctions􏷑
 􏷐Applies electrical malfunctions to the electrical graph triggered from the IOS data􏷏
@@ -102,6 +103,7 @@
 􏶴
     􏶲set trigger to receive electrical components out of the graph􏶱
     ElectricalGraphInputsT tInputs;
+    memset(&tInputs,0,sizeof(tInputs));
     tInputs.m_bGetCircuitComponent = 􏵱;
 
     􏶲get the generic elecrical component􏶱

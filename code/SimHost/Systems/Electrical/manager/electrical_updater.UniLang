@@ -10,6 +10,7 @@
 􏷐Update the electrical system logic􏷏
 􏶠Updates the electrical system using its inputs and setting its output􏶡
 􏶜mr􏶝􏷆ElectricalSystemT􏷅􏷄system􏷃􏷀The entire electrical system with all of its inputs and outputs.􏶿
+􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄dc system􏷃􏷀The entire electrical system with all of its inputs and outputs.􏶿
 􏶜􏶝􏷆float􏷅􏷄time delta􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏶴
     􏶲there may be a need to simulate a spike when the generator or battery is turned on.
@@ -23,13 +24,13 @@
        - applying malfunctions
     
        *These changes may come from other systems, from the IOS, or from the PLC􏶱
-    􏵲change electrical graph state􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem, &􏵶system􏵷->m_tInputs);
+    􏵲change electrical graph state􏵳􏵶dc system􏵷, &􏵶system􏵷->m_tInputs);
 
     􏶲2. Run algorithm to compute new electrical data among the nodes.􏶱
-    􏵲update electrical data across graph􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem);
+    􏵲update electrical data across graph􏵳􏵶dc system􏵷);
 
     􏶲3. Turn off power on all components that are no longer receiving electricity in the graph.􏶱
-    􏵲stop power on disconnected components􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem);
+    􏵲stop power on disconnected components􏵳􏵶dc system􏵷);
 
     􏶲4. Potentially fudge data to match the documents on what should ACTUALLY be displayed on the screens.
        - Hopefully this does not need to be done if the resistances are set appropriately on each of the nodes.
@@ -38,10 +39,10 @@
          Deriving these perfectly seems unlikely without spending too much time tweaking resistances.􏶱
     
     􏶲5. Provide power flags for other systems􏶱
-    􏵲set power flags for other systems􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem);
+    􏵲set power flags for other systems􏵳􏵶dc system􏵷,&􏵶system􏵷->m_tInputs.m_tPotentialPowerFlags,&􏵶system􏵷->m_tOutputs.m_tSystemPower);
     
     􏶲6. Provide outputs for screens􏶱
-    􏵲set data needed for screen displays􏵳&􏵶system􏵷->m_tOutputs.m_tLocals.m_tDCPowerSystem);
+    􏵲set data needed for screen displays􏵳􏵶dc system􏵷);
 􏶳
 
 
@@ -86,7 +87,11 @@
 􏷐􏷏
 􏶠􏶡
 􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜r􏶝􏷆SystemPowerFlagsT􏷅􏷄can be powered􏷃
+􏶜mr􏶝􏷆SystemPowerFlagsT􏷅􏷄is powered􏷃
 􏶴
+  􏶲for now. gets power flags through the electrical system􏶱
+  *􏵶is powered􏵷 = *􏵶can be powered􏵷;
 􏶳
 
 􏷘-􏷗􏷒set data needed for screen displays􏷑

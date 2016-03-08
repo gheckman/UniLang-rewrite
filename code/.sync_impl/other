@@ -150,14 +150,14 @@ function Style-It(){
   squeeze-whitespace-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   
   #per Dr. Joe
-  #this doesn't work right on macro functions
+  #TODO: this doesn't work right on macro functions
   macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
   macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
   
   #Add the empty newline back to the files after formatting (removed by clang format)
-  #Windriver compiler and Tom complain about this
+  #Both diab compiler and Tom complain about this
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;

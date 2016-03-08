@@ -71,6 +71,7 @@ function Transfer_Electrical_Manager_Data(){ :
 function Transfer_Electrical_Components(){ :
   Transfer-Object-Bad-Bools "battery" "Components/Electrical" "Components/Electrical"
   Transfer-Global "battery_chemistry" "Components/Electrical/Battery" "Components/Electrical/Battery"
+  Transfer-Object-Bad-Bools "circuit_breaker" "Components/Electrical" "Components/Electrical"
 }
 function Transfer_Other(){ :
   Transfer-Global "ffs_const" "Shared/ffs"
@@ -124,7 +125,7 @@ function Transform-And_Transfer-SimHost-Files(){ :
   
   Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
   Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
-  Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
+  #Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
                   #Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
   Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;
   Step_In_Call_Function_Step_Out "Other/DynamicDebug"            Transfer_Dynamic_Debug;
