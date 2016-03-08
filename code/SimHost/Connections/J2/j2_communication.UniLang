@@ -161,13 +161,6 @@
 􏶠This is an infinitely running task.􏶡
 􏶚m􏶛􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
 􏶴
-
-    􏶲all of the data that will be updated and sent to J2􏶱
-    SendHighSpeedMessageT tHigh;
-    SendLowSpeedMessageT tLow;
-    SendRepositionMessageT tReposition;
-    SendVersionRequestMessageT tVersion;
-    
     
     􏶲for keeping track of change in time􏶱
     float fDeltaTime_ms = 0.0f;
@@ -178,15 +171,14 @@
     float fHighTimer_ms = 0;
     float fLowTimer_ms = 0;
     
+    􏶲messages that are sent on change􏶱
+    SendRepositionMessageT tReposition;
+    SendVersionRequestMessageT tVersion;
+    
     􏶲we want to set all the padding to zero.􏶱
     􏶲this way, we can compare two structs of the same type with memcmp later􏶱
-    memset(&tHigh,0,sizeof(tHigh));
-    memset(&tLow,0,sizeof(tLow));
     memset(&tReposition,0,sizeof(tReposition));
     memset(&tVersion,0,sizeof(tVersion));
-    
-    􏶲wait a second􏶱
-    DelayTaskNumberOfMilliseconds(1000);
     
     while(1)
     {
@@ -200,31 +192,9 @@
         fHighTimer_ms += fDeltaTime_ms;
         fLowTimer_ms += fDeltaTime_ms;
         
-        􏶲if too much time has passed􏶱
-        if (fHighTimer_ms > SIMHOST_HIGH_SPEED_TRANSMISSION_DELAY_MS){
-        
-            􏶲keep extra time􏶱
-            fHighTimer_ms -= SIMHOST_HIGH_SPEED_TRANSMISSION_DELAY_MS;
-            
-            􏶲update high speed outputs􏶱
-           UpdateJ2HighSpeedOutputData(&tHigh);
-            
-            􏶲send high speed message􏶱
-            􏵲send high speed message􏵳&tHigh);
-        }
-        
-        􏶲if too much time has passed􏶱
-        if (fLowTimer_ms > SIMHOST_LOW_SPEED_TRANSMISSION_DELAY_MS){
-        
-            􏶲keep extra time􏶱
-            fLowTimer_ms -= SIMHOST_LOW_SPEED_TRANSMISSION_DELAY_MS;
-            
-            􏶲update low speed outputs􏶱
-           UpdateJ2LowSpeedOutputData(&tLow);
-            
-            􏶲send low speed message􏶱
-            􏵲send low speed message􏵳&tLow);
-        }
+        􏶲sending based on timers􏶱
+        􏵲periodically send high speed􏵳&fHighTimer_ms,SIMHOST_HIGH_SPEED_TRANSMISSION_DELAY_MS);
+        􏵲periodically send low speed􏵳&fLowTimer_ms,SIMHOST_LOW_SPEED_TRANSMISSION_DELAY_MS);
         
         􏶲conditional sending based on changed data􏶱
         􏵲send reposition message on change􏵳&tReposition);
@@ -235,6 +205,64 @@
     }
 
     return 0;
+􏶳
+
+􏷘-􏷗􏷒periodically send high speed􏷑
+􏷐sends a high speed message at a particular rate􏷏
+􏶠may or may not send message based on timer state􏶡
+􏶜mr􏶝􏷆float􏷅􏷄timer􏷃􏵘milliseconds􏵙􏷀the amount of milliseconds the timer is at􏶿
+􏶜􏶝􏷆float􏷅􏷄total duration􏷃􏵘milliseconds􏵙􏷀the amount of time that the timer will tick to, before starting over􏶿
+􏶴
+        􏶲the high speed message to send􏶱
+        SendHighSpeedMessageT tHigh={0};
+        
+        􏶲if too much time has passed􏶱
+        if (􏵲timer expired􏵳􏵶timer􏵷,􏵶total duration􏵷)){
+            􏶲update high speed outputs􏶱
+            UpdateJ2HighSpeedOutputData(&tHigh);
+            
+            􏶲send high speed message􏶱
+            􏵲send high speed message􏵳&tHigh);
+        }
+􏶳
+
+􏷘-􏷗􏷒periodically send low speed􏷑
+􏷐sends a low speed message at a particular rate􏷏
+􏶠may or may not send message based on timer state􏶡
+􏶜mr􏶝􏷆float􏷅􏷄timer􏷃􏵘milliseconds􏵙􏷀the amount of milliseconds the timer is at􏶿
+􏶜􏶝􏷆float􏷅􏷄total duration􏷃􏵘milliseconds􏵙􏷀the amount of time that the timer will tick to, before starting over􏶿
+􏶴
+        􏶲the low speed message to send􏶱
+        SendLowSpeedMessageT tLow={0};
+        
+        􏶲if too much time has passed􏶱
+        if (􏵲timer expired􏵳􏵶timer􏵷,􏵶total duration􏵷)){
+            􏶲update low speed outputs􏶱
+            UpdateJ2LowSpeedOutputData(&tLow);
+            
+            􏶲send low speed message􏶱
+            􏵲send low speed message􏵳&tLow);
+        }
+􏶳
+
+
+􏷘-􏷗􏷒timer expired􏷑
+􏷐determine whether a timer has expired􏷏
+􏶠expired timers are adjusted after expiration has passed􏶡
+􏶜mr􏶝􏷆float􏷅􏷄timer􏷃􏵘milliseconds􏵙􏷀the amount of milliseconds the timer is at􏶿
+􏶜􏶝􏷆float􏷅􏷄total duration􏷃􏵘milliseconds􏵙􏷀the amount of time that the timer will tick to, before starting over􏶿
+􏶚m􏶛􏶾int􏶽􏶼expired􏶻􏶺whether the timer has expired or not􏶹
+􏶴
+        􏶲if too much time has passed􏶱
+        if (*􏵶timer􏵷 > 􏵶total duration􏵷){
+        
+            􏶲keep extra time, and return timer trigger􏶱
+            *􏵶timer􏵷 -= 􏵶total duration􏵷;
+            return 􏵱;
+        }
+        
+    􏶲timer has not yet expired􏶱
+    return 􏵰;
 􏶳
 
 

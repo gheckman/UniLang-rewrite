@@ -1,0 +1,58 @@
+􏶞g􏶟
+􏷲bit manipulation utilities􏷱
+􏷰utilities for bit manipulating values􏷯
+􏷮Bit Utilities􏷭􏷮Utilities􏷭
+􏷬Trevor Hickey􏷫
+􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
+
+􏷘+􏷗􏷒set all bits􏷑
+􏷐sets all bits to 1􏷏
+􏶠puts number to its max value􏶡
+􏶜mr􏶝􏷆int􏷅􏷄number􏷃􏷀the number that the bit manipulation will occur on􏶿
+􏶴
+    ~(*􏵶number􏵷 & 0)
+􏶳
+􏷘+􏷗􏷒set nth bit􏷑
+􏷐sets the nth bit of a number􏷏
+􏶠if the index is out of range, no value will be set􏶡
+􏶜mr􏶝􏷆int􏷅􏷄number􏷃􏷀the number that the bit manipulation will occur on􏶿
+􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the number to set (indexing starts at zero)􏶿
+􏶴
+    *􏵶number􏵷 |= 1 << 􏵶index􏵷;
+􏶳
+
+􏷘+􏷗􏷒clear all bits􏷑
+􏷐clears all bits to 0􏷏
+􏶠puts number to 0􏶡
+􏶜mr􏶝􏷆int􏷅􏷄number􏷃􏷀the number that the bit manipulation will occur on􏶿
+􏶴
+    *􏵶number􏵷 = 0;
+􏶳
+􏷘+􏷗􏷒clear nth bit􏷑
+􏷐clears the nth bit of a number􏷏
+􏶠if the index is out of range, no value will be set􏶡
+􏶜mr􏶝􏷆int􏷅􏷄number􏷃􏷀the number that the bit manipulation will occur on􏶿
+􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the number to set (indexing starts at zero)􏶿
+􏶴
+    *􏵶number􏵷 &= ~(1 << 􏵶index􏵷);
+􏶳
+
+􏷘+􏷗􏷒bit is set􏷑
+􏷐sets the nth bit of a number􏷏
+􏶠if the index is out of range, no value will be set􏶡
+􏶜􏶝􏷆int􏷅􏷄number􏷃􏷀the number that the bit manipulation will occur on􏶿
+􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the number to set (indexing starts at zero)􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼bit is set􏶻􏶺whether the bit is set􏶹
+􏶴
+    return (􏵶number􏵷 >> 􏵶index􏵷) & 1;
+􏶳
+
+􏷘+􏷗􏷒apply bool to bit􏷑
+􏷐sets the nth bit of a number based on a boolean value􏷏
+􏶠a TRUE bool sets a bit to 1.  a FALSE bool, sets a bit to 0􏶡
+􏶜mr􏶝􏷆int􏷅􏷄number􏷃􏷀the number that the bit manipulation will occur on􏶿
+􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the number to set (indexing starts at zero)􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool􏷃􏷀the boolean value to apply to the bit􏶿
+􏶴
+    *􏵶number􏵷 |= 1 << 􏵶index􏵷;
+􏶳
