@@ -78,11 +78,12 @@ function Transfer_Other(){ :
   Transfer-Global "ffs_const" "Shared/ffs"
 }
 function Transfer_J2(){ :
-  Transfer-Global "j2_communication" "Connections/UDP/";
-  Transfer-Global "j2_message_types" "Connections/UDP/J2Communication/J2Messages";
-  Transfer-Global "ground_contact_location" "Connections/UDP/J2Communication/J2Messages";
-  Transfer-Global "j2_network_packing" "Connections/UDP/J2Communication";
-  Transfer-Global "J2_communication_config" "Connections/UDP/J2Communication";
+  Transfer-Global "j2_communication" "Connections/UDP/J2";
+  Transfer-Global "j2_message_types" "Connections/UDP/J2/J2Messages";
+  Transfer-Global "ground_contact_location" "Connections/UDP/J2/J2Messages";
+  Transfer-Global "j2_packing" "Connections/UDP/J2";
+  Transfer-Global "j2_unpacking" "Connections/UDP/J2";
+  Transfer-Global "J2_communication_config" "Connections/UDP/J2/J2Communication";
 }
 function Transfer_Components(){ :
   Transfer-Object-Bad-Bools "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
