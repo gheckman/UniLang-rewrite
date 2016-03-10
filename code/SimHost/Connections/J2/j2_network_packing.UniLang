@@ -1,6 +1,6 @@
 􏶞g􏶟
 􏷲packs and unpacks the relevant J2 messages􏷱
-􏷰Based off version 2.0 of the ICD.
+􏷰Based off version 2.2 of the ICD.
 It would have been nice to automate the network packing/unpacking.
 Or use compiler pragmas to stop padding, and make grabbing of struct chunks possible.
 +----------------+----------------+----------------+----------------+
@@ -8,6 +8,9 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 +----------------+----------------+----------------+----------------+
 |  Message Type  |   Byte Count   |  Message Ver.  |     Payload    |
 +----------------+----------------+----------------+----------------+
+^                                                  ^
+|                                                  |
++--------------------- HEADER ---------------------+
 
  - Message Packs (callable)
  - Message Unpacks (callable)
@@ -51,6 +54,14 @@ Or use compiler pragmas to stop padding, and make grabbing of struct chunks poss
 􏵺method for partially packing arrays according to J2 ICD􏵻
 􏵸macro uses local local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UnPack_Partial_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼UnpackFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, MAX)􏵽
+
+􏵺method for partially packing engine arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_UNPACK_PARTIAL_ENGINE_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackEngineArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
+
+􏵺method for partially packing propeller arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_UnPack_Partial_Propeller_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackPropellerArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 􏷘+􏷗􏷒pack j2 high speed send message􏷑
 􏷐Used to fill buffer for sending outgoing J2 high speed message.􏷏
@@ -548,32 +559,10 @@ Implemented in order to test the pack version􏶡
 􏶴
     size_t uIndex = 0;
     J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
-    
-    for(; uIndex < 􏵶message􏵷->m_nNumberOfEngines && uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fN1_pct);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fN2_pct);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fTorque_ftlbs);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fFuelFlow_pph);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fOilTemperature_degf);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fOilPressure_psi);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fExhaustGasTemperature_degf);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fCylinderHeadTemperature_degf);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fEngineRPM);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fEngineThrust_lbs);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fManifoldPressure_inHg);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fInletTurbineTemperature_degc);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptEngine[uIndex].m_fBleedAirPressureGenerated_psi);
-    }
+    J2_UNPACK_PARTIAL_ENGINE_ARRAY(􏵶message􏵷->m_ptEngine,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
 
     J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-
-    uIndex = 0;
-    for(; uIndex < 􏵶message􏵷->m_nNumberOfPropellers && uIndex < MAX_NUMBER_OF_PROPELLERS; ++uIndex){
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptPropeller[uIndex].m_fPropRPM);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptPropeller[uIndex].m_fPropPitch_deg);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentDirection_deg);
-        J2_UNPACK_VAR(􏵶message􏵷->m_ptPropeller[uIndex].m_fMastMomentForce_Nm);
-    }
+    J2_UNPACK_PARTIAL_PROPELLER_ARRAY(􏵶message􏵷->m_ptPropeller,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
 􏶳
 
 􏷘-􏷗􏷒unpack j2 reposition received message payload􏷑
@@ -602,6 +591,77 @@ Implemented in order to test the pack version􏶡
     􏶲dev item unpacking􏶱
     J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfDeveloperItems);
     J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_szDevItem,􏵶message􏵷->m_nNumberOfDeveloperItems,MAX_DEV_ITEMS);
+􏶳
+
+
+
+􏷘-􏷗􏷒partially unpack engine array􏷑
+􏷐Used to partially unpack the incoming J2 engine array.􏷏
+􏶠Called after receiving a J2 Message.􏶡
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜􏶝􏷆FlightModelEngineMessageT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
+􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏶴
+    size_t uIndex = 0;
+    for(; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
+        􏵲unpack engine struct􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷[uIndex]);
+    }
+􏶳
+
+􏷘-􏷗􏷒partially unpack propeller array􏷑
+􏷐Used to partially unpack the incoming J2 propeller array.􏷏
+􏶠Called after receiving a J2 Message.􏶡
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜􏶝􏷆FlightModelEngineMessageT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
+􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏶴
+    size_t uIndex = 0;
+    for(; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
+        􏵲unpack propeller struct􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷[uIndex]);
+    }
+􏶳
+
+
+
+
+
+􏷘-􏷗􏷒unpack engine struct􏷑
+􏷐Used to unpack the incoming J2 engine struct.􏷏
+􏶠Called after receiving a J2 Message.􏶡
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
+􏶜mr􏶝􏷆FlightModelEngineMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
+􏶴
+    J2_UNPACK_VAR(􏵶message􏵷->m_fN1_pct);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fN2_pct);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fTorque_ftlbs);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fFuelFlow_pph);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fOilTemperature_degf);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fOilPressure_psi);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fExhaustGasTemperature_degf);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fCylinderHeadTemperature_degf);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fEngineRPM);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fEngineThrust_lbs);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fManifoldPressure_inHg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fInletTurbineTemperature_degc);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fBleedAirPressureGenerated_psi);
+􏶳
+
+􏷘-􏷗􏷒unpack propeller struct􏷑
+􏷐Used to unpack the incoming J2 propeller struct.􏷏
+􏶠Called after receiving a J2 Message.􏶡
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
+􏶜mr􏶝􏷆FlightModelPropellerMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
+􏶴
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPropRPM);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPropPitch_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fMastMomentDirection_deg);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fMastMomentForce_Nm);
 􏶳
 
 
