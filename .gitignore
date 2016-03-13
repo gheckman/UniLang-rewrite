@@ -1,3 +1,3 @@
-.dot
-.plant-uml
-.png
+*.dot
+*.plant-uml
+*.png
