@@ -331,6 +331,11 @@ From SimHost to Flight Model􏷏
     􏶲propeller related packing􏶱
     J2_PACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
     J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_puPropellerRpm,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    
+    J2_PACK_VAR(􏵶message􏵷->m_fPitchFlightControl);
+    J2_PACK_VAR(􏵶message􏵷->m_fRollFlightControl);
+    J2_PACK_VAR(􏵶message􏵷->m_fYawFlightControl);
+    J2_PACK_VAR(􏵶message􏵷->m_fCollectiveFlightControl);
 􏶳
 
 􏷘-􏷗􏷒pack j2 version send message payload􏷑
@@ -377,10 +382,14 @@ From Flight Model to SimHost􏷏
     J2_PACK_VAR(􏵶message􏵷->m_fPitchAccel_dpss);
     J2_PACK_VAR(􏵶message􏵷->m_fRollAccel_dpss);
     J2_PACK_VAR(􏵶message􏵷->m_fYawAccel_dpss);
-    J2_PACK_VAR(􏵶message􏵷->m_fTrueAirspeed_kts);
+    J2_PACK_VAR(􏵶message􏵷->m_fTrueAirspeedLong_kts);
+    J2_PACK_VAR(􏵶message􏵷->m_fTrueAirspeedLat_kts);
+    J2_PACK_VAR(􏵶message􏵷->m_fTrueAirspeedVert_kts);
     J2_PACK_VAR(􏵶message􏵷->m_fGroundSpeed_kts);
     J2_PACK_VAR(􏵶message􏵷->m_fVerticalSpeed_fpm);
-    J2_PACK_VAR(􏵶message􏵷->m_fIndicatedAirspeed_kts);
+    J2_PACK_VAR(􏵶message􏵷->m_fIndicatedAirspeedLong_kts);
+    J2_PACK_VAR(􏵶message􏵷->m_fIndicatedAirspeedLat_kts);
+    J2_PACK_VAR(􏵶message􏵷->m_fIndicatedAirspeedVert_kts);
     J2_PACK_VAR(􏵶message􏵷->m_fMachNumber);
     J2_PACK_VAR(􏵶message􏵷->m_fNorthVelocity_kts);
     J2_PACK_VAR(􏵶message􏵷->m_fEastVelocity_kts);
@@ -488,7 +497,7 @@ From Flight Model to SimHost􏷏
 􏷐Used to partially pack the incoming J2 engine array.
 From Flight Model to SimHost􏷏
 􏶠specific packing for engine struct􏶡
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜􏶝􏷆FlightModelEngineMessageT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
 􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
@@ -504,7 +513,7 @@ From Flight Model to SimHost􏷏
 􏷐Used to partially pack the incoming J2 propeller array.
 From Flight Model to SimHost􏷏
 􏶠specific packing for propeller struct􏶡
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜􏶝􏷆FlightModelPropellerMessageT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
 􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
@@ -522,7 +531,7 @@ From Flight Model to SimHost􏷏
 􏷐Used to pack the incoming J2 engine struct.
 From Flight Model to SimHost􏷏
 􏶠specific packing for version􏶡
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜r􏶝􏷆FlightModelEngineMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶴
@@ -545,7 +554,7 @@ From Flight Model to SimHost􏷏
 􏷐Used to pack the incoming J2 propeller struct.
 From Flight Model to SimHost􏷏
 􏶠specific packing for version􏶡
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜r􏶝􏷆FlightModelPropellerMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶴

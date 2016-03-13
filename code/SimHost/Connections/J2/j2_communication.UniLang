@@ -15,7 +15,8 @@
 􏶔􏶕􏶒SendToJ2Messages􏶓􏶖USES: all messages that get sent to J2􏶗
 􏶔􏶕􏶒ReceiveFromJ2Messages􏶓􏶖USES: all messages that get received from J2􏶗
 􏶔􏶕􏶒J2MessageTypes􏶓􏶖USES SimhostToJ2MessageTypeE, J2ToSimhostMessageTypeE􏶗
-􏶔􏶕􏶒J2NetworkPacking􏶓􏶖USES: pack and unpack functions􏶗
+􏶔􏶕􏶒J2Packing􏶓􏶖USES: pack functions􏶗
+􏶔􏶕􏶒J2Unpacking􏶓􏶖USES: unpack functions􏶗
 􏶔􏶕􏶒stddef.h􏶓􏶖USES: size_t􏶗
 􏶔􏶕􏶒J2ConnectionData􏶓􏶖USES: UpdateJ2HighSpeedOutputData(), UpdateJ2LowSpeedOutputData(), UpdateJ2RepositionRequestData(), UpdateJ2VersionRequestData()􏶗
 􏶔􏶕􏶒SemaphoreManager􏶓􏶖USES: SemaphoreGive()􏶗

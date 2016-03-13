@@ -364,6 +364,11 @@ From SimHost to Flight Model􏷏
     􏶲propeller related unpacking􏶱
     J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
     J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_puPropellerRpm,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPitchFlightControl);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fRollFlightControl);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fYawFlightControl);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fCollectiveFlightControl);
 􏶳
 
 􏷘-􏷗􏷒unpack j2 version request message payload􏷑
@@ -410,10 +415,14 @@ From Flight Model to SimHost􏷏
     J2_UNPACK_VAR(􏵶message􏵷->m_fPitchAccel_dpss);
     J2_UNPACK_VAR(􏵶message􏵷->m_fRollAccel_dpss);
     J2_UNPACK_VAR(􏵶message􏵷->m_fYawAccel_dpss);
-    J2_UNPACK_VAR(􏵶message􏵷->m_fTrueAirspeed_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fTrueAirspeedLong_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fTrueAirspeedLat_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fTrueAirspeedVert_kts);
     J2_UNPACK_VAR(􏵶message􏵷->m_fGroundSpeed_kts);
     J2_UNPACK_VAR(􏵶message􏵷->m_fVerticalSpeed_fpm);
-    J2_UNPACK_VAR(􏵶message􏵷->m_fIndicatedAirspeed_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fIndicatedAirspeedLong_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fIndicatedAirspeedLat_kts);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fIndicatedAirspeedVert_kts);
     J2_UNPACK_VAR(􏵶message􏵷->m_fMachNumber);
     J2_UNPACK_VAR(􏵶message􏵷->m_fNorthVelocity_kts);
     J2_UNPACK_VAR(􏵶message􏵷->m_fEastVelocity_kts);
@@ -527,7 +536,7 @@ From Flight Model to SimHost􏷏
 􏶠specific unpacking for engine struct􏶡
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
-􏶜􏶝􏷆FlightModelEngineMessageT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
+􏶜m􏶝􏷆FlightModelEngineMessageT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
 􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
 􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
 􏶴
@@ -543,7 +552,7 @@ From Flight Model to SimHost􏷏
 􏶠specific unpacking for propeller struct􏶡
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
-􏶜􏶝􏷆FlightModelPropellerMessageT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
+􏶜m􏶝􏷆FlightModelPropellerMessageT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
 􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
 􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
 􏶴

@@ -4,6 +4,7 @@
 􏷮Math Utilities􏷭􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
 􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
+􏷤􏷣􏷦math.h􏷥􏷢USES: sqrt()􏷡
 
 􏷘+􏷗􏷒float array average􏷑
 􏷐takes the average of an array of floats􏷏
@@ -14,8 +15,8 @@
 􏵪􏵫􏵨size must be <= the size of the array􏵩
 􏶴
 
-    float fTotal = 0;
-    size_t uIndex = 0;
+    float fTotal = 0.0f;
+    size_t uIndex = 0u;
     for (; uIndex < 􏵶size􏵷; ++uIndex){
         fTotal += 􏵶array􏵷[uIndex];
     }
@@ -32,10 +33,60 @@
 􏶴
 
     int nTotal = 0;
-    size_t uIndex = 0;
+    size_t uIndex = 0u;
     for (; uIndex < 􏵶size􏵷; ++uIndex){
         nTotal += 􏵶array􏵷[uIndex];
     }
     return nTotal / 􏵶size􏵷;
+􏶳
+
+􏷘+􏷗􏷒square􏷑
+􏷐squares a number􏷏
+􏶠n*n􏶡
+􏶜􏶝􏷆float􏷅􏷄number􏷃􏷀the number to square􏶿
+􏶚m􏶛􏶾float􏶽􏶼square􏶻􏶺the squared number􏶹
+􏶴
+    return 􏵶number􏵷*􏵶number􏵷;
+􏶳
+
+􏷘+􏷗􏷒dot product􏷑
+􏷐takes the dot product of two vectors􏷏
+􏶠assumes they are the same dimension on shared param􏶡
+􏶜􏶝􏷆float[]􏷅􏷄vector1􏷃􏷀a vector to use in the dot product􏶿
+􏶜􏶝􏷆float[]􏷅􏷄vector2􏷃􏷀a vector to use in the dot product􏶿
+􏶜􏶝􏷆size_t􏷅􏷄dimension􏷃􏷀the dimension of the two vectors􏶿
+􏶚m􏶛􏶾float􏶽􏶼dot product􏶻􏶺the dot product of the two elements􏶹
+􏶴
+    size_t uIndex = 0u;
+    float fProduct = 0.0f;
+    for (; uIndex < 􏵶dimension􏵷; ++uIndex){
+        fProduct += 􏵶vector1􏵷[uIndex] * 􏵶vector2􏵷[uIndex];
+    }
+    return fProduct;
+􏶳
+
+􏷘+􏷗􏷒norm of vector􏷑
+􏷐takes the norm of a vector􏷏
+􏶠uses the dot product to calculate the norm of a vector􏶡
+􏶜􏶝􏷆float[]􏷅􏷄vector􏷃􏷀a vector to get the norm of􏶿
+􏶜􏶝􏷆size_t􏷅􏷄dimension􏷃􏷀the dimension of the vector􏶿
+􏶚m􏶛􏶾float􏶽􏶼norm􏶻􏶺the norm of the vector􏶹
+􏶴
+    return sqrt(􏵲dot product􏵳􏵶vector􏵷,􏵶vector􏵷,􏵶dimension􏵷));
+􏶳
+
+
+􏷘+􏷗􏷒normalize vector􏷑
+􏷐normalizes a vector􏷏
+􏶠􏶡
+􏶜m􏶝􏷆float[]􏷅􏷄vector􏷃􏷀the vector to normalize􏶿
+􏶜􏶝􏷆size_t􏷅􏷄dimension􏷃􏷀the dimension of the vector􏶿
+􏶴
+    float fMagnitude = 􏵲norm of vector􏵳􏵶vector􏵷,􏵶dimension􏵷);
+    size_t uIndex = 0u;
+    for (;uIndex < 􏵶dimension􏵷; ++uIndex)
+    {
+        􏵶vector􏵷[uIndex] /= fMagnitude;
+    }
 􏶳
 
