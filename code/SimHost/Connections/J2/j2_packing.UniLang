@@ -30,7 +30,7 @@ Message sent from Sim Host to Flight Model
 􏷮J2_Connection􏷭􏷮Network􏷭
 􏷬Trevor Hickey􏷫
 
-􏷤􏷣􏷦J2MessageTypes.h􏷥􏷢USES: SimhostToJ2MessageTypeE􏷡
+􏷤􏷣􏷦J2MessageTypes.h􏷥􏷢USES: FlightModelMessageTypeE􏷡
 􏷤􏷣􏷦SendToJ2Messages.h􏷥􏷢USES: SendHighSpeedMessageT, SendLowSpeedMessageT, SendRepositionMessageT, SendVersionRequestMessageT􏷡
 􏷤􏷣􏷦ReceiveFromJ2Messages.h􏷥􏷢USES: RcvHighSpeedMessageT, RcvLowSpeedMessageT, RcvEngineDataMessageT, FlightModelEngineMessageT, FlightModelPropellerMessageT, RepositionMessageReplyT, VersionMessageReplyT􏷡
 􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
@@ -60,6 +60,14 @@ Message sent from Sim Host to Flight Model
 􏵸macro uses local local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_Pack_Partial_Propeller_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyPackPropellerArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
+􏵺method for partially packing engine reposition arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_PACK_PARTIAL_ENGINE_REPOSITION_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyPackEngineRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
+
+􏵺method for partially packing propeller reposition arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_Pack_Partial_Propeller_Reposition_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyPackPropellerRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
+
 􏷘+􏷗􏷒pack j2 high speed send message􏷑
 􏷐Used to fill buffer for sending J2 high speed messages.  
 From SimHost to Flight Model􏷏
@@ -70,7 +78,7 @@ From SimHost to Flight Model􏷏
 􏶴
     size_t uByteIterator = 4;
     􏵲pack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,SIMHOST_TO_J2_MESSAGE_TYPE_HIGH_SPEED);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_HIGH_SPEED);
     return uByteIterator;
 􏶳
 
@@ -84,7 +92,7 @@ From SimHost to Flight Model􏷏
 􏶴
     size_t uByteIterator = 4;
     􏵲pack j2 low speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,SIMHOST_TO_J2_MESSAGE_TYPE_LOW_SPEED);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_LOW_SPEED);
     return uByteIterator;
 􏶳
 
@@ -98,7 +106,7 @@ From SimHost to Flight Model􏷏
 􏶴
     size_t uByteIterator = 4;
     􏵲pack j2 reposition send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,SIMHOST_TO_J2_MESSAGE_TYPE_REPOSITION);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_REPOSITION);
     return uByteIterator;
 􏶳
 
@@ -112,7 +120,7 @@ From SimHost to Flight Model􏷏
 􏶴
     size_t uByteIterator = 4;
     􏵲pack j2 version send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,SIMHOST_TO_J2_MESSAGE_TYPE_VERSION);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_VERSION);
     return uByteIterator;
 􏶳
 
@@ -128,9 +136,9 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆RcvHighSpeedMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = 8;
     􏵲pack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,J2_TO_SIMHOST_MESSAGE_TYPE_HIGH_SPEED);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED);
     return uByteIterator;
 􏶳
 
@@ -142,9 +150,9 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆RcvLowSpeedMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = 8;
     􏵲pack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,J2_TO_SIMHOST_MESSAGE_TYPE_HIGH_SPEED);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED);
     return uByteIterator;
 􏶳
 
@@ -156,9 +164,9 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆RcvEngineDataMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = 8;
     􏵲pack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,J2_TO_SIMHOST_MESSAGE_TYPE_ENGINE);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE);
     return uByteIterator;
 􏶳
 
@@ -170,9 +178,9 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆RepositionMessageReplyT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = 8;
     􏵲pack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,J2_TO_SIMHOST_MESSAGE_TYPE_REPOSITION_REPLY);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY);
     return uByteIterator;
 􏶳
 
@@ -184,13 +192,11 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆VersionMessageReplyT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = 8;
     􏵲pack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,J2_TO_SIMHOST_MESSAGE_TYPE_VERSION);
+    􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION);
     return uByteIterator;
 􏶳
-
-
 
 
 
@@ -334,14 +340,11 @@ From SimHost to Flight Model􏷏
 
     􏶲engine related packing􏶱
     J2_PACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
-    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineRunning,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfEngineRpm,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfN1,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfN2,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    J2_PACK_PARTIAL_ENGINE_REPOSITION_ARRAY(􏵶message􏵷->m_ptEngineReposition,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
 
     􏶲propeller related packing􏶱
     J2_PACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-    J2_PACK_PARTIAL_ARRAY(􏵶message􏵷->m_puPropellerRpm,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    J2_PACK_PARTIAL_PROPELLER_REPOSITION_ARRAY(􏵶message􏵷->m_ptPropellerReposition,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
     
     J2_PACK_VAR(􏵶message􏵷->m_fPitchFlightControl);
     J2_PACK_VAR(􏵶message􏵷->m_fRollFlightControl);
@@ -364,7 +367,7 @@ From SimHost to Flight Model􏷏
 
 
 􏷘-􏷗􏷒pack j2 high speed received message payload􏷑
-􏷐Used to pack the incoming J2 high speed payload.
+􏷐Used to pack the outgoing J2 high speed payload.
 From Flight Model to SimHost􏷏
 􏶠specific packing for high speed􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
@@ -443,7 +446,7 @@ From Flight Model to SimHost􏷏
 􏶳
 
 􏷘-􏷗􏷒pack j2 low speed received message payload􏷑
-􏷐Used to pack the incoming J2 low speed payload.
+􏷐Used to pack the outgoing J2 low speed payload.
 From Flight Model to SimHost􏷏
 􏶠specific packing for low speed􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
@@ -457,7 +460,7 @@ From Flight Model to SimHost􏷏
 􏶳
 
 􏷘-􏷗􏷒pack j2 engine received message payload􏷑
-􏷐Used to pack the incoming J2 engine payload.
+􏷐Used to pack the outgoing J2 engine payload.
 From Flight Model to SimHost􏷏
 􏶠specific packing for engine􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
@@ -473,7 +476,7 @@ From Flight Model to SimHost􏷏
 􏶳
 
 􏷘-􏷗􏷒pack j2 reposition received message payload􏷑
-􏷐Used to pack the incoming J2 reposition payload.
+􏷐Used to pack the outgoing J2 reposition payload.
 From Flight Model to SimHost􏷏
 􏶠specific packing for reposition􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
@@ -487,7 +490,7 @@ From Flight Model to SimHost􏷏
 􏶳
 
 􏷘-􏷗􏷒pack j2 version received message payload􏷑
-􏷐Used to pack the incoming J2 version request payload.
+􏷐Used to pack the outgoing J2 version request payload.
 From Flight Model to SimHost􏷏
 􏶠specific packing for version􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
@@ -505,7 +508,7 @@ From Flight Model to SimHost􏷏
 
 
 􏷘-􏷗􏷒partially pack engine array􏷑
-􏷐Used to partially pack the incoming J2 engine array.
+􏷐Used to partially pack the outgoing J2 engine array.
 From Flight Model to SimHost􏷏
 􏶠specific packing for engine struct􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
@@ -521,7 +524,7 @@ From Flight Model to SimHost􏷏
 􏶳
 
 􏷘-􏷗􏷒partially pack propeller array􏷑
-􏷐Used to partially pack the incoming J2 propeller array.
+􏷐Used to partially pack the outgoing J2 propeller array.
 From Flight Model to SimHost􏷏
 􏶠specific packing for propeller struct􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
@@ -539,7 +542,7 @@ From Flight Model to SimHost􏷏
 
 
 􏷘-􏷗􏷒pack engine struct􏷑
-􏷐Used to pack the incoming J2 engine struct.
+􏷐Used to pack the outgoing J2 engine struct.
 From Flight Model to SimHost􏷏
 􏶠specific packing for version􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
@@ -562,7 +565,7 @@ From Flight Model to SimHost􏷏
 􏶳
 
 􏷘-􏷗􏷒pack propeller struct􏷑
-􏷐Used to pack the incoming J2 propeller struct.
+􏷐Used to pack the outgoing J2 propeller struct.
 From Flight Model to SimHost􏷏
 􏶠specific packing for version􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
@@ -573,6 +576,70 @@ From Flight Model to SimHost􏷏
     J2_PACK_VAR(􏵶message􏵷->m_fPropPitch_deg);
     J2_PACK_VAR(􏵶message􏵷->m_fMastMomentDirection_deg);
     J2_PACK_VAR(􏵶message􏵷->m_fMastMomentForce_Nm);
+􏶳
+
+
+
+
+
+
+
+
+􏷘-􏷗􏷒partially pack engine reposition array􏷑
+􏷐Used to partially pack the incoming J2 engine reposition array.
+From SimHost to Flight Model􏷏
+􏶠specific unpacking for engine reposition struct􏶡
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
+􏶜m􏶝􏷆EngineRepositionT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
+􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏶴
+    size_t uIndex = 0;
+    for(; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
+        􏵲pack engine reposition struct􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷[uIndex]);
+    }
+􏶳
+
+􏷘-􏷗􏷒partially pack propeller reposition array􏷑
+􏷐Used to partially pack the incoming J2 propeller reposition array.
+From SimHost to Flight Model􏷏
+􏶠specific unpacking for propeller reposition struct􏶡
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
+􏶜􏶝􏷆PropellerRepositionT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
+􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏶴
+    size_t uIndex = 0;
+    for(; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
+        􏵲pack propeller reposition struct􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷[uIndex]);
+    }
+􏶳
+
+􏷘-􏷗􏷒pack engine reposition struct􏷑
+􏷐Used to pack the outgoing J2 engine reposition struct.
+From SimHost to Flight Model􏷏
+􏶠specific packing for version􏶡
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜r􏶝􏷆EngineRepositionT􏷅􏷄message􏷃􏷀The message to pack􏶿
+􏶴
+    J2_PACK_VAR(􏵶message􏵷->m_nRunning);
+    J2_PACK_VAR(􏵶message􏵷->m_fPiston_rpm);
+    J2_PACK_VAR(􏵶message􏵷->m_fN1_pct);
+    J2_PACK_VAR(􏵶message􏵷->m_fN2_pct);
+􏶳
+
+􏷘-􏷗􏷒pack propeller reposition struct􏷑
+􏷐Used to pack the outgoing J2 propeller reposition struct.
+From SimHost to Flight Model􏷏
+􏶠specific packing for version􏶡
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜r􏶝􏷆PropellerRepositionT􏷅􏷄message􏷃􏷀The message to pack􏶿
+􏶴
+    J2_PACK_VAR(􏵶message􏵷->m_fPiston_rpm);
 􏶳
 
 
@@ -597,19 +664,25 @@ From Flight Model to SimHost􏷏
 􏶠The byte count portion is filled based on the iterated payload􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message in􏶿
 􏶜m􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜􏶝􏷆SimhostToJ2MessageTypeE􏷅􏷄message type􏷃􏷀The message to pack􏶿
+􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀The message to pack􏶿
 􏶴
     􏶲the header of the message is 4 bytes􏶱
     
     􏶲the first byte is the message type􏶱
     BYTE pucHeader[4];
     size_t uIndex = 0;
-    short sSpecifiedSize;
+    short sSpecifiedSize = 0;
+    unsigned int uFrameCounter = 123;
     switch (􏵶message type􏵷){
-        case SIMHOST_TO_J2_MESSAGE_TYPE_HIGH_SPEED: pucHeader[0] = 1; break;
-        case SIMHOST_TO_J2_MESSAGE_TYPE_LOW_SPEED: pucHeader[0] = 2; break;
-        case SIMHOST_TO_J2_MESSAGE_TYPE_REPOSITION: pucHeader[0] = 3; break;
-        case SIMHOST_TO_J2_MESSAGE_TYPE_VERSION: pucHeader[0] = 4; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_HIGH_SPEED: pucHeader[0] = 1; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_LOW_SPEED: pucHeader[0] = 2; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_REPOSITION: pucHeader[0] = 3; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_VERSION: pucHeader[0] = 4; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED: pucHeader[0] = 1; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED: pucHeader[0] = 2; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE: pucHeader[0] = 3; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY: pucHeader[0] = 4; break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION: pucHeader[0] = 5; break;
         default: fprintf(stderr,"invalid message type requested for J2 header");
     }
     
@@ -623,5 +696,18 @@ From Flight Model to SimHost􏷏
     pucHeader[3] = 1;
     uIndex = 0;
     PackBigEndian4ByteInvariance(􏵶buffer􏵷,&uIndex,pucHeader,sizeof(pucHeader));
+    
+    􏶲conditionally pack frame counter􏶱
+    􏶲we only pack the frame counter if the message type is from J2􏶱
+    switch (􏵶message type􏵷){
+      case FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED:
+      case FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED:
+      case FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE:
+      case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY:
+      case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION:
+      PackBigEndian4ByteInvariance(􏵶buffer􏵷,&uIndex, &uFrameCounter, sizeof(uFrameCounter)); break;
+      default:;
+    }
+    
 􏶳
 

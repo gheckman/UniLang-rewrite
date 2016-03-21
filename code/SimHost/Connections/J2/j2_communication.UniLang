@@ -125,10 +125,10 @@
     􏶲process message and parse data received into the input communication data􏶱
     􏶲decide what data message was received, and receive it􏶱
     switch(pucDataBuffer[0]){
-        case J2_TO_SIMHOST_MESSAGE_TYPE_REPOSITION_REPLY:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY:
             UnpackJ2RepositionReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tRepositionReply);
             break;
-        case J2_TO_SIMHOST_MESSAGE_TYPE_VERSION:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION:
             UnpackJ2VersionReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tVersion);
             break;
         default:
@@ -146,13 +146,13 @@
     􏶲process message and parse data received into the input communication data􏶱
     􏶲decide what data message was received, and receive it􏶱
     switch(􏵶data buffer􏵷[0]){
-        case J2_TO_SIMHOST_MESSAGE_TYPE_HIGH_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED:
             UnpackJ2HighSpeedReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tHighSpeed);
             
             􏶲Release the "flight model arrived" semaphore􏶱
             SemaphoreGive(SEMAPHORE_SCHEDULE_IN); break;
-        case J2_TO_SIMHOST_MESSAGE_TYPE_LOW_SPEED: UnpackJ2LowSpeedReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tLowSpeed); break;
-        case J2_TO_SIMHOST_MESSAGE_TYPE_ENGINE:    UnpackJ2EngineReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tEngine);     break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED: UnpackJ2LowSpeedReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tLowSpeed); break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE:    UnpackJ2EngineReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tEngine);     break;
         default:;
     }
 􏶳

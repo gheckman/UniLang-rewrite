@@ -4,19 +4,16 @@
 􏷮J2_Message_Types􏷭
 􏷬Trevor Hickey􏷫
 
-􏶀j2 to simhost message type􏶋
-􏶊Flight Model to Sim Host Message Types􏶉
-􏶈Used for processing messages sent to Simhost from the flight model􏶇
-􏶆high speed􏶅􏶄1􏶃􏶂􏶁
-􏶆low speed􏶅􏶂􏶁
-􏶆engine􏶅􏶂􏶁
-􏶆reposition reply􏶅􏶂􏶁
-􏶆version􏶅􏶂􏶁
+􏶀flight model message type􏶋
+􏶊Message Types for messages between Flight Model to Sim Host􏶉
+􏶈Used for processing messages sent between the Simhost and the flight model􏶇
+􏶆j2 high speed􏶅􏶄1􏶃􏶂􏶁
+􏶆j2 low speed􏶅􏶂􏶁
+􏶆j2 engine􏶅􏶂􏶁
+􏶆j2 reposition reply􏶅􏶂􏶁
+􏶆j2 version􏶅􏶂􏶁
+􏶆simhost high speed􏶅􏶂􏶁
+􏶆simhost low speed􏶅􏶂􏶁
+􏶆simhost reposition􏶅􏶂􏶁
+􏶆simhost version􏶅􏶂􏶁
 
-􏶀simhost to j2 message type􏶋
-􏶊Simhost to Flight Model Message Types􏶉
-􏶈Used for processing messages sent to the flight model from Simhost􏶇
-􏶆high speed􏶅􏶄1􏶃􏶂􏶁
-􏶆low speed􏶅􏶂􏶁
-􏶆reposition􏶅􏶂􏶁
-􏶆version􏶅􏶂􏶁

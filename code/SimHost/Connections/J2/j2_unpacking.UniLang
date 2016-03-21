@@ -56,9 +56,17 @@ Message sent from Sim Host to Flight Model
 􏵸macro uses local local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UNPACK_PARTIAL_ENGINE_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackEngineArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
-􏵺method for partially packing propeller arrays according to J2 ICD􏵻
+􏵺method for partially upacking propeller arrays according to J2 ICD􏵻
 􏵸macro uses local local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UnPack_Partial_Propeller_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackPropellerArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
+
+􏵺method for partially unpacking engine reposition arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_UNPACK_PARTIAL_ENGINE_REPOSITION_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackEngineRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
+
+􏵺method for partially unpacking propeller reposition arrays according to J2 ICD􏵻
+􏵸macro uses local local buffer data implicitly􏵹
+􏵐-􏵑􏵾J2_Unpack_Partial_Propeller_Reposition_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackPropellerRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 
 
@@ -72,7 +80,7 @@ From SimHost to Flight Model􏷏
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -90,7 +98,7 @@ From SimHost to Flight Model􏷏
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 low speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -108,7 +116,7 @@ From SimHost to Flight Model􏷏
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 reposition send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -126,7 +134,7 @@ From SimHost to Flight Model􏷏
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
     size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 version request message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -144,8 +152,8 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RcvHighSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    size_t uByteIterator = 8;
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -162,8 +170,8 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RcvLowSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    size_t uByteIterator = 8;
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -180,8 +188,8 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RcvEngineDataMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    size_t uByteIterator = 8;
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -198,8 +206,8 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RepositionMessageReplyT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    size_t uByteIterator = 8;
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -216,8 +224,8 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆VersionMessageReplyT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷);
+    size_t uByteIterator = 8;
+    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
       􏵲unpack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
@@ -367,14 +375,11 @@ From SimHost to Flight Model􏷏
 
     􏶲engine related unpacking􏶱
     J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
-    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineRunning,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfEngineRpm,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfN1,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfN2,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    J2_UNPACK_PARTIAL_ENGINE_REPOSITION_ARRAY(􏵶message􏵷->m_ptEngineReposition,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
 
     􏶲propeller related unpacking􏶱
     J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-    J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_puPropellerRpm,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    J2_UNPACK_PARTIAL_PROPELLER_REPOSITION_ARRAY(􏵶message􏵷->m_ptPropellerReposition,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
     
     J2_UNPACK_VAR(􏵶message􏵷->m_fPitchFlightControl);
     J2_UNPACK_VAR(􏵶message􏵷->m_fRollFlightControl);
@@ -620,6 +625,73 @@ From Flight Model to SimHost􏷏
 
 
 
+􏷘-􏷗􏷒partially unpack engine reposition array􏷑
+􏷐Used to partially pack the incoming J2 engine reposition array.
+From SimHost to Flight Model􏷏
+􏶠specific unpacking for engine reposition struct􏶡
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
+􏶜m􏶝􏷆EngineRepositionT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
+􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏶴
+    size_t uIndex = 0;
+    for(; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
+        􏵲unpack engine reposition struct􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷[uIndex]);
+    }
+􏶳
+
+􏷘-􏷗􏷒partially unpack propeller reposition array􏷑
+􏷐Used to partially pack the incoming J2 propeller reposition array.
+From SimHost to Flight Model􏷏
+􏶠specific unpacking for propeller reposition struct􏶡
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start unpacking the data at􏶿
+􏶜m􏶝􏷆PropellerRepositionT[]􏷅􏷄message􏷃􏷀the array to be packed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
+􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏶴
+    size_t uIndex = 0;
+    for(; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
+        􏵲unpack propeller reposition struct􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,&􏵶message􏵷[uIndex]);
+    }
+􏶳
+
+
+
+􏷘-􏷗􏷒unpack engine reposition struct􏷑
+􏷐Used to pack the incoming J2 engine reposition struct.
+From SimHost to Flight Model􏷏
+􏶠specific packing for version􏶡
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜rm􏶝􏷆EngineRepositionT􏷅􏷄message􏷃􏷀The message to pack􏶿
+􏶴
+    J2_UNPACK_VAR(􏵶message􏵷->m_nRunning);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPiston_rpm);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fN1_pct);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fN2_pct);
+􏶳
+
+􏷘-􏷗􏷒unpack propeller reposition struct􏷑
+􏷐Used to pack the incoming J2 propeller reposition struct.
+From SimHost to Flight Model􏷏
+􏶠specific packing for version􏶡
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message from􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜rm􏶝􏷆PropellerRepositionT􏷅􏷄message􏷃􏷀The message to pack􏶿
+􏶴
+    J2_UNPACK_VAR(􏵶message􏵷->m_fPiston_rpm);
+􏶳
+
+
+
+
+
+
+
+
+
 
 
 
@@ -646,6 +718,7 @@ From Flight Model to SimHost􏷏
 􏷐Used to unpack the buffer header that comes before the payload.􏷏
 􏶠returns the header which is a known size􏶡
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message in􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄from flight model􏷃􏷀whether the header has come from the flight model􏶿
 􏶚m􏶛􏶾J2MessageHeaderT􏶽􏶼header􏶻􏶺The header of the message􏶹
 􏶴
     􏶲the header portion before the payload􏶱
@@ -662,6 +735,12 @@ From Flight Model to SimHost􏷏
     
     􏶲the message version􏶱
     tHeader.m_ucMessageVersion = 􏵶buffer􏵷[uByteIterator];
+    ++uByteIterator;
+    
+    􏶲conditionally unpack frame counter􏶱
+    if (􏵶from flight model􏵷){
+      UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,&uByteIterator, &tHeader.m_uFrameCounter, sizeof(tHeader.m_uFrameCounter));
+    }
 
     return tHeader;
 􏶳

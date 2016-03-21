@@ -81,6 +81,7 @@ function Transfer_J2(){ :
   Transfer-Global "j2_communication" "Connections/UDP/J2";
   Transfer-Global "j2_message_types" "Connections/UDP/J2/J2Messages";
   Transfer-Global "ground_contact_location" "Connections/UDP/J2/J2Messages";
+  Transfer-Global "J2_message_header" "Connections/UDP/J2/J2Messages";
   Transfer-Global "j2_packing" "Connections/UDP/J2";
   Transfer-Global "j2_unpacking" "Connections/UDP/J2";
   Transfer-Global "j2_const" "Connections/UDP/J2/J2Messages";
