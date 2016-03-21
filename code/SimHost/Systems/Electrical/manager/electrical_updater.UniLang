@@ -42,7 +42,7 @@
     􏵲set power flags for other systems􏵳􏵶dc system􏵷,&􏵶system􏵷->m_tInputs.m_tPotentialPowerFlags,&􏵶system􏵷->m_tOutputs.m_tSystemPower);
     
     􏶲6. Provide outputs for screens􏶱
-    􏵲set data needed for screen displays􏵳􏵶dc system􏵷);
+    􏵲set electrical loads􏵳􏵶dc system􏵷,&􏵶system􏵷->m_tOutputs.m_tLoads);
 􏶳
 
 
@@ -94,11 +94,22 @@
   *􏵶is powered􏵷 = *􏵶can be powered􏵷;
 􏶳
 
-􏷘-􏷗􏷒set data needed for screen displays􏷑
-􏷐􏷏
-􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏷘-􏷗􏷒set electrical loads􏷑
+􏷐sets the electrical loads based of the updated graph􏷏
+􏶠picks nodes on the graph that other systems will be interested in,
+and provides the necessary electrical loads as an output to the system􏶡
+􏶜r􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆ElectricalLoadsDataT􏷅􏷄loads􏷃
 􏶴
+  􏶲for now􏶱
+  􏵶loads􏵷->pfGeneratorLoads_amps[0] = 20.0f;
+  􏵶loads􏵷->pfGeneratorLoads_amps[1] = 20.0f;
+  􏵶loads􏵷->pfBatteryLoads_amps[0] = 20.0f;
+  􏵶loads􏵷->pfBatteryLoads_amps[1] = 20.0f;
+  􏵶loads􏵷->pfDcVoltageLoads_amps[0] = 20.0f;
+  􏵶loads􏵷->pfDcVoltageLoads_amps[1] = 20.0f;
+  􏵶loads􏵷->pfEssentialBus_volts[0] = 20.0f;
+  􏵶loads􏵷->pfEssentialBus_volts[1] = 20.0f;
 􏶳
 
 􏷘-􏷗􏷒change circuitry based on switch state􏷑

@@ -1,15 +1,26 @@
 􏶞g􏶟
 􏷲packs the relevant J2 messages􏷱
-􏷰Based off version 2.2 of the ICD.
+􏷰Based off version 2.4 of the ICD.
 It would have been nice to automate the network packing/unpacking.
 Or use compiler pragmas to stop padding, and make grabbing of struct chunks possible.
+
+Message sent from Flight Model to Sim Host
++----------------+----------------+----------------+------------------+----------------+
+|        0       |       1-2      |        3       |       4-7        |     4-4095     |
++----------------+----------------+----------------+------------------+
+|  Message Type  |   Byte Count   |  Message Ver.  | Frame Counter    |     Payload    |
++----------------+----------------+----------------+------------------+----------------+
+^                                                                     ^
++--------------------- HEADER ----------------------------------------+
+
+
+Message sent from Sim Host to Flight Model
 +----------------+----------------+----------------+----------------+
 |        0       |       1-2      |        3       |     4-4095     |
 +----------------+----------------+----------------+----------------+
 |  Message Type  |   Byte Count   |  Message Ver.  |     Payload    |
 +----------------+----------------+----------------+----------------+
 ^                                                  ^
-|                                                  |
 +--------------------- HEADER ---------------------+
 
  - Message Packing (callable)

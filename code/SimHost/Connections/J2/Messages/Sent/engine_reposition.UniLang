@@ -1,0 +1,11 @@
+􏶞o􏶟
+􏷲engine data sent over reposition􏷱
+􏷰􏷯
+􏷮J2􏷭 􏷮Communication􏷭
+􏷬Trevor Hickey􏷫
+
+
+􏶨running􏶧􏶦0 = Engine off | 1 = Engine on􏶥􏶘+􏶙􏶮int􏶭􏶬running􏶫􏵚􏵛􏶪􏶩
+􏶨RPM of piston􏶧􏶦􏶥􏶘+􏶙􏶮float􏶭􏶬piston􏶫􏵚revolutions / minute􏵛􏶪􏶩
+􏶨n1 of turbine􏶧􏶦􏶥􏶘+􏶙􏶮float􏶭􏶬n1􏶫􏵚percentage􏵛􏶪􏶩
+􏶨n2 of turbine􏶧􏶦􏶥􏶘+􏶙􏶮float􏶭􏶬n2􏶫􏵚percentage􏵛􏶪􏶩

@@ -19,3 +19,8 @@
 􏶨the version of the message􏶧
 􏶦this is the version number that corresponds to the message structure / ICD􏶥
 􏶘+􏶙􏶮BYTE􏶭􏶬message version􏶫􏶪􏶩
+
+􏶨the frame counter of the flight model's message􏶧
+􏶦an incremental counter that is updated on every frame.  This should be in sync with the high speed message as this message is per frame.
+This is only part of the Flight Model's packets􏶥
+􏶘+􏶙􏶮unsigned int􏶭􏶬frame counter􏶫􏶪􏶩

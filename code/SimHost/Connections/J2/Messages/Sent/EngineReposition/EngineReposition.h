@@ -3,11 +3,9 @@
 *
 *    @author Trevor Hickey
 *
-*    @note Send To J2 Messages Interface
+*    @note Engine Reposition Data
 *
-*    @brief Messages sent to J2
-*
-*    @details structures that make up all the messages that are sent to the J2 flight model
+*    @brief engine data sent over reposition
 *
 *    @copyright Copyright 2015.
 *    @n         Fidelity Flight Simulation, Inc. (F2Si)
@@ -38,8 +36,9 @@
 *    @{
 */
 
-#ifndef SendToJ2MessagesH
-#define SendToJ2MessagesH
+#ifndef EngineRepositionH
+#define EngineRepositionH
+
 
 
 
@@ -48,14 +47,48 @@ extern "C"
 {
 #endif /* #ifdef __cplusplus */
 
+/**
+ * @brief Engine Reposition
+ * @details The internal state of the component
+ */
+typedef struct EngineReposition_t
+{
 
+    /**
+     * @brief running
+     * @details 0 = Engine off | 1 = Engine on
+     */
+int m_nRunning;
+
+
+    /**
+     * @brief RPM of piston
+     * @note units: revolutions / minute
+     */
+float m_fPiston_rpm;
+
+
+    /**
+     * @brief n1 of turbine
+     * @note units: percentage
+     */
+float m_fN1_pct;
+
+
+    /**
+     * @brief n2 of turbine
+     * @note units: percentage
+     */
+float m_fN2_pct;
+
+} EngineRepositionT;
 
 
 #ifdef __cplusplus
 }
 #endif /* #ifdef __cplusplus */
 
-#endif /* SendToJ2MessagesH */
+#endif /* EngineRepositionH */
 
 ///@}
 
