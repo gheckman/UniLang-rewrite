@@ -87,6 +87,9 @@ function Transfer_J2(){ :
   Transfer-Global "j2_const" "Connections/UDP/J2/J2Messages";
   Transfer-Global "J2_communication_config" "Connections/UDP/J2/J2Communication";
 }
+function Transfer_J2_Messages(){ :
+  Transfer-Global "send_to_j2_messages" "Connections/UDP/J2/J2Messages";
+}
 function Transfer_Components(){ :
   Transfer-Object-Bad-Bools "tri_state_switch" "Components/Generic/Controls" "Components/Generic/Controls";
   Transfer-Global "tri_state" "Components/Generic/Controls/TriStateSwitch";
@@ -129,6 +132,7 @@ function Transform-And_Transfer-SimHost-Files(){ :
   
   #Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
   Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
+  #Step_In_Call_Function_Step_Out "Connections/J2/Messages"       Transfer_J2_Messages;
   #Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
                   #Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
   #Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;

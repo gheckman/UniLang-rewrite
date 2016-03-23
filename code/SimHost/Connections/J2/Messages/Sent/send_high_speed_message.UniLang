@@ -4,169 +4,76 @@
 􏷮J2􏷭 􏷮Network_Message􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
 
- 􏶨􏶧􏶦1.0 = Full deflection up, -1.0 = full deflection down􏶥 
-􏶘+􏶙􏶮float􏶭􏶬pitch flight control􏶫
-
- 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
-􏶘+􏶙􏶮float􏶭􏶬roll flight control􏶫
-
- 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
-􏶘+􏶙􏶮float􏶭􏶬yaw flight control􏶫
-
- 􏶨􏶧􏶦1.0 = Full deflection up, 0.0 = full deflection down􏶥 
-􏶘+􏶙􏶮float􏶭􏶬collective flight control􏶫
-
- 􏶨􏶧􏶦1.0 = Full deflection up, -1.0 = full deflection down􏶥 
-􏶘+􏶙􏶮float􏶭􏶬pitch trim position􏶫
-
- 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
-􏶘+􏶙􏶮float􏶭􏶬roll trim position􏶫
-
- 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥 
-􏶘+􏶙􏶮float􏶭􏶬yaw trim position􏶫
-
- 􏶨􏶧􏶦AutoPilot Trim Control.  
-1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
-􏶘+􏶙􏶮float[2]􏶭􏶬yaw serial actuators􏶫
-
- 􏶨􏶧􏶦AutoPilot Trim Control.  
-1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
-􏶘+􏶙􏶮float􏶭􏶬yaw trim actuators􏶫
-
- 􏶨􏶧􏶦AutoPilot Trim Control.
-1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
-􏶘+􏶙􏶮float[2]􏶭􏶬roll serial actuators􏶫
-
- 􏶨􏶧􏶦AutoPilot Trim Control.
-1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥 
-􏶘+􏶙􏶮float􏶭􏶬roll trim actuators􏶫
-
- 􏶨􏶧􏶦AutoPilot Trim Control.
-1.0 = Full deflection up, -1.0 = Full deflection down Both􏶥 
-􏶘+􏶙􏶮float[2]􏶭􏶬pitch serial actuators􏶫
-
- 􏶨􏶧􏶦AutoPilot Trim Control.
-1.0 = Full deflection up, -1.0 = Full deflection down Both􏶥 
-􏶘+􏶙􏶮float􏶭􏶬pitch trim actuators􏶫
-
- 􏶨􏶧􏶦AutoPilot Trim Control.
-1.0 = Full deflection up, -1.0 = Full deflection down􏶥 
-􏶘+􏶙􏶮float[2]􏶭􏶬collective serial actuators􏶫
-
- 􏶨􏶧􏶦AutoPilot Trim Control.
-1.0 = Full deflection up, -1.0 = Full deflection down Helicopter􏶥 
-􏶘+􏶙􏶮float􏶭􏶬collective trim actuators􏶫
-
+􏶨􏶧􏶦1.0 = Full deflection up, -1.0 = full deflection down􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬pitch flight control􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬roll flight control􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬yaw flight control􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = Full deflection up, 0.0 = full deflection down􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬collective flight control􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = Full deflection up, -1.0 = full deflection down􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬pitch trim position􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬roll trim position􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬yaw trim position􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦AutoPilot Trim Control.  
+1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬yaw serial actuators􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦AutoPilot Trim Control.  
+1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬yaw trim actuators􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬roll serial actuators􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection right, -1.0 = Full deflection left Both􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬roll trim actuators􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection up, -1.0 = Full deflection down Both􏶥􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬pitch serial actuators􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection up, -1.0 = Full deflection down Both􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬pitch trim actuators􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection up, -1.0 = Full deflection down􏶥􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬collective serial actuators􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦AutoPilot Trim Control.
+1.0 = Full deflection up, -1.0 = Full deflection down Helicopter􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬collective trim actuators􏶫􏵚􏵛􏶪􏶩
 􏶨􏶧􏶦0 = Normal(Actuator 1)
 1 = Normal(Actuator 2)
-2 = Trim Actuator Normal􏶥 
-􏶘+􏶙􏶮int􏶭􏶬yaw control override flag􏶫
-
+2 = Trim Actuator Normal􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬yaw control override flag􏶫􏵚􏵛􏶪􏶩
 􏶨􏶧􏶦0 = Normal(Actuator 1)
 1 = Normal(Actuator 2)
-2 = Trim Actuator Normal􏶥 
-􏶘+􏶙􏶮int􏶭􏶬pitch control override flag􏶫
-
+2 = Trim Actuator Normal􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬pitch control override flag􏶫􏵚􏵛􏶪􏶩
 􏶨􏶧􏶦0 = Normal(Actuator 1)
 1 = Normal(Actuator 2)
-2 = Trim Actuator Normal􏶥 
-􏶘+􏶙􏶮int􏶭􏶬roll control override flag􏶫
-
+2 = Trim Actuator Normal􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬roll control override flag􏶫􏵚􏵛􏶪􏶩
 􏶨􏶧􏶦0 = Normal(Actuator 1)
 1 = Normal(Actuator 2)
-2 = Trim Actuator Normal􏶥 
-􏶘+􏶙􏶮int􏶭􏶬collective control override flag􏶫
-
- 􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
-􏶘+􏶙􏶮float􏶭􏶬fRightBrakes􏶫
-
- 􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
-􏶘+􏶙􏶮float􏶭􏶬fLeftBrakes􏶫
-
- 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left.
-This only controls the nose wheel when it is not a caster or linked to the rudder.􏶥 
-􏶘+􏶙􏶮float􏶭􏶬nose wheel control􏶫
-
- 􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥 
-􏶘+􏶙􏶮float􏶭􏶬rotor brake􏶫
-
- 􏶨􏶧􏶦0 = Not attached | 1 = Attached | 2 = Fire Bucket | 3 = Cargo Pallet | 4 = Other􏶥 
-􏶘+􏶙􏶮int􏶭􏶬winch flag􏶫
-
- 􏶨􏶧􏶦􏶥 
-􏶘+􏶙􏶮float􏶭􏶬winch length􏶫􏵚meters􏵛􏶪􏶩
-
- 􏶨􏶧􏶦􏶥 
-􏶘+􏶙􏶮float􏶭􏶬winch payload mass􏶫􏵚kilograms􏵛􏶪􏶩
-
- 􏶨􏶧􏶦􏶥 
-􏶘+􏶙􏶮float􏶭􏶬winch payload x􏶫􏵚meters􏵛􏶪􏶩
-
- 􏶨􏶧􏶦􏶥 
-􏶘+􏶙􏶮float􏶭􏶬winch payload y􏶫􏵚meters􏵛􏶪􏶩
-
- 􏶨􏶧􏶦􏶥 
-􏶘+􏶙􏶮float􏶭􏶬winch payload z􏶫􏵚meters􏵛􏶪􏶩
-
- 􏶨􏶧􏶦0 = not attached
+2 = Trim Actuator Normal􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬collective control override flag􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬fRightBrakes􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬fLeftBrakes􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left.
+This only controls the nose wheel when it is not a caster or linked to the rudder.􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬nose wheel control􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦1.0 = maximum braking, 0.0 = No braking􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬rotor brake􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦0 = Not attached | 1 = Attached | 2 = Fire Bucket | 3 = Cargo Pallet | 4 = Other􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬winch flag􏶫 􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch length􏶫􏵚meters􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch payload mass􏶫􏵚kilograms􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch payload x􏶫􏵚meters􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch payload y􏶫􏵚meters􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch payload z􏶫􏵚meters􏵛􏶪􏶩
+􏶨􏶧􏶦0 = not attached
 1 = attached
 2 = fire bucket
 3 = cargo pallet
-4 = other􏶥
-􏶘+􏶙􏶮int􏶭􏶬hook flag􏶫
-
- 􏶨􏶧􏶦helicopter􏶥 
-􏶘+􏶙􏶮float􏶭􏶬hook length􏶫􏵚meters􏵛􏶪􏶩
-
- 􏶨􏶧􏶦helicopter􏶥 
-􏶘+􏶙􏶮float􏶭􏶬hook payload mass􏶫􏵚kilograms􏵛􏶪􏶩
-
- 􏶨􏶧􏶦helicopter􏶥 
-􏶘+􏶙􏶮float􏶭􏶬hook playload x􏶫􏵚meters􏵛􏶪􏶩
-
- 􏶨􏶧􏶦helicopter􏶥 
-􏶘+􏶙􏶮float􏶭􏶬hook playload y􏶫􏵚meters􏵛􏶪􏶩
-
- 􏶨􏶧􏶦helicopter􏶥 
-􏶘+􏶙􏶮float􏶭􏶬hook playload z􏶫􏵚meters􏵛􏶪􏶩
-
+4 = other􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬hook flag􏶫
+􏶨􏶧􏶦helicopter􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook length􏶫􏵚meters􏵛􏶪􏶩
+􏶨􏶧􏶦helicopter􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook payload mass􏶫􏵚kilograms􏵛􏶪􏶩
+􏶨􏶧􏶦helicopter􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook playload x􏶫􏵚meters􏵛􏶪􏶩
+􏶨􏶧􏶦helicopter􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook playload y􏶫􏵚meters􏵛􏶪􏶩
+􏶨􏶧􏶦helicopter􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook playload z􏶫􏵚meters􏵛􏶪􏶩
 􏶨􏶧􏶦SAS Mode
 Bit 0 = Pitch SAS On
 Bit 1 = Roll SAS On
-Bit 2 = Yaw SAS􏶥
-􏶘+􏶙􏶮int􏶭􏶬SAS Mode􏶫
-
-􏶨􏶧􏶦HAT for GC reference􏶥
-􏶘+􏶙􏶮float􏶭􏶬height above terrain􏶫􏵚feet􏵛􏶪􏶩
-
-􏶨􏶧􏶦up to 8􏶥
-􏶘+􏶙􏶮int􏶭􏶬number of contact points􏶫
-
-􏶨􏶧􏶦enumerated􏶥
-􏶘+􏶙􏶮float[MAX_NUMBER_OF_CONTACT_LOCATIONS]􏶭􏶬ground contact location􏶫􏵚feet􏵛􏶪􏶩
-
-􏶨􏶧􏶦up to 8􏶥
-􏶘+􏶙􏶮int􏶭􏶬number of engines􏶫
-
-􏶨􏶧􏶦1.0 = maximum throttle, 0.0 = idle throttle􏶥
-􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫
-
-􏶨􏶧􏶦1.0 = maximum mixture, 0.0 = fuel cutoff􏶥
-􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬mixture􏶫
-
-􏶨􏶧􏶦up to 8􏶥
-􏶘+􏶙􏶮int􏶭􏶬number of propellers􏶫
-
- 􏶨􏶧􏶦􏶥 
-􏶘+􏶙􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬prop pitch􏶫􏵚degrees􏵛􏶪􏶩
-
- 􏶨􏶧􏶦up to 8􏶥 
-􏶘+􏶙􏶮int􏶭􏶬number of tanks􏶫
-
- 􏶨􏶧􏶦􏶥 
-􏶘+􏶙􏶮float􏶭􏶬fuel weight[MAX_NUMBER_OF_FUEL_TANKS]􏶫􏵚pounds􏵛􏶪􏶩
-
- 􏶨􏶧􏶦Bit 0 = Pause
+Bit 2 = Yaw SAS􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬SAS Mode􏶫
+􏶨􏶧􏶦HAT for GC reference􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬height above terrain􏶫􏵚feet􏵛􏶪􏶩
+􏶨􏶧􏶦up to 8􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬number of contact points􏶫
+􏶨􏶧􏶦enumerated􏶥􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_CONTACT_LOCATIONS]􏶭􏶬ground contact location􏶫􏵚feet􏵛􏶪􏶩
+􏶨􏶧􏶦up to 8􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬number of engines􏶫
+􏶨􏶧􏶦1.0 = maximum throttle, 0.0 = idle throttle􏶥􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫
+􏶨􏶧􏶦1.0 = maximum mixture, 0.0 = fuel cutoff􏶥􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬mixture􏶫
+􏶨􏶧􏶦up to 8􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬number of propellers􏶫
+􏶨􏶧􏶦􏶥􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬prop pitch􏶫􏵚degrees􏵛􏶪􏶩
+􏶨􏶧􏶦up to 8􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬number of tanks􏶫
+􏶨􏶧􏶦􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬fuel weight[MAX_NUMBER_OF_FUEL_TANKS]􏶫􏵚pounds􏵛􏶪􏶩
+􏶨􏶧􏶦Bit 0 = Pause
 Bit 1 = Freeze (vertical)
-Bit 1 = Freeze (horizontal)􏶥
-􏶘+􏶙􏶮int􏶭􏶬flag1􏶫
+Bit 1 = Freeze (horizontal)􏶥􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬flag1􏶫

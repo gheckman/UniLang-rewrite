@@ -164,6 +164,9 @@ function Style-It(){
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
   set-a-single-blank-line-to-the-end-of-file -i "$PossibleHeaderName" > /dev/null 2>&1;
   
+  #warn about it:
+  #- header related
+  
 
   
 }
