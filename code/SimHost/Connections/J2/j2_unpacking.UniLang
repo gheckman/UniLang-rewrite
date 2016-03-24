@@ -81,7 +81,7 @@ From SimHost to Flight Model􏷏
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"high speed")){
       􏵲unpack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
     }
@@ -99,7 +99,7 @@ From SimHost to Flight Model􏷏
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"low speed")){
       􏵲unpack j2 low speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
     }
@@ -117,7 +117,7 @@ From SimHost to Flight Model􏷏
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"reposition")){
       􏵲unpack j2 reposition send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
     }
@@ -135,7 +135,7 @@ From SimHost to Flight Model􏷏
 􏶴
     size_t uByteIterator = 4;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"version")){
       􏵲unpack j2 version request message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
     }
@@ -154,10 +154,10 @@ From Flight Model to SimHost􏷏
 􏶴
     size_t uByteIterator = 8;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    //if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"high speed")){
       􏵲unpack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
-    }
+    //}
     return 0;
 􏶳
 
@@ -172,7 +172,7 @@ From Flight Model to SimHost􏷏
 􏶴
     size_t uByteIterator = 8;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"low speed")){
       􏵲unpack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
     }
@@ -190,7 +190,7 @@ From Flight Model to SimHost􏷏
 􏶴
     size_t uByteIterator = 8;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"engine")){
       􏵲unpack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
     }
@@ -208,7 +208,7 @@ From Flight Model to SimHost􏷏
 􏶴
     size_t uByteIterator = 8;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"reposition")){
       􏵲unpack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
     }
@@ -226,7 +226,7 @@ From Flight Model to SimHost􏷏
 􏶴
     size_t uByteIterator = 8;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷)){
+    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"version")){
       􏵲unpack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
       return uByteIterator;
     }
@@ -704,11 +704,12 @@ From SimHost to Flight Model􏷏
 􏶠check that the message size in the header matches the amount of data unpacked􏶡
 􏶜􏶝􏷆J2MessageHeaderT􏷅􏷄header􏷃􏷀The unpacked header􏶿
 􏶜􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The state of the iterator after an unpack􏶿
+􏶜􏶝􏷆char[]􏷅􏷄packet name􏷃􏷀A descriptive name for the packet.  Used for printing a descriptive error􏶿
 􏶚m􏶛􏶾BOOL􏶽􏶼sizes match􏶻􏶺whether or not the buffer size matches the size advertised in the header􏶹
 􏶴
   􏶲A sanity check to see that their header indicates the correct size of the entire message􏶱
   if (􏵶header􏵷.m_uByteCount != 􏵶buffer size􏵷){
-    fprintf(stderr, "J2 message size does not match what was indicated in the header. Expected: %i, but got: %zu\n",􏵶buffer size􏵷,􏵶header􏵷.m_uByteCount);
+    fprintf(stderr, "J2 %s message size does not match what was indicated in the header. Expected: %i, but got: %u\n",􏵶packet name􏵷,􏵶buffer size􏵷,􏵶header􏵷.m_uByteCount);
     return 􏵰;
   }
   return 􏵱;

@@ -181,6 +181,11 @@
     memset(&tReposition,0,sizeof(tReposition));
     memset(&tVersion,0,sizeof(tVersion));
     
+    􏶲source the current reposition / version messages􏶱
+    􏶲this prevents us from initially sending out a message when the connection starts􏶱
+    UpdateJ2RepositionRequestData(&tReposition);
+    UpdateJ2VersionRequestData(&tVersion);
+    
     while(1)
     {
     

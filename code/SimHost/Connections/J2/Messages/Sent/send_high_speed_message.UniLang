@@ -4,7 +4,12 @@
 􏷮J2􏷭 􏷮Network_Message􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
 
-􏶨􏶧􏶦1.0 = Full deflection up, -1.0 = full deflection down􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬pitch flight control􏶫􏵚􏵛􏶪􏶩
+
+􏴽>= -1.0􏴾􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection down􏴺􏴻1.0􏴼􏴹full deflection up􏴺
+􏶨􏶧􏶦􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬pitch flight control􏶫􏵚􏵛􏶪􏶩
+
+
 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬roll flight control􏶫􏵚􏵛􏶪􏶩
 􏶨􏶧􏶦1.0 = Full deflection right, -1.0 = full deflection left􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬yaw flight control􏶫􏵚􏵛􏶪􏶩
 􏶨􏶧􏶦1.0 = Full deflection up, 0.0 = full deflection down􏶥􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬collective flight control􏶫􏵚􏵛􏶪􏶩
