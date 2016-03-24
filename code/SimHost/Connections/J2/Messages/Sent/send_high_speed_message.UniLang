@@ -330,7 +330,8 @@
 􏶨􏶧􏶦enumerated􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬ground contact location􏶫􏵚feet􏵛􏶪􏶩
+􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_CONTACT_LOCATIONS]􏶭􏶬ground contact location􏶫􏵚feet􏵛􏶪􏶩
+􏴷number of contact points􏴸
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -347,6 +348,7 @@
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -356,6 +358,7 @@
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬mixture􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -368,6 +371,7 @@
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵰􏵀
 􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬prop pitch􏶫􏵚degrees􏵛􏶪􏶩
+􏴷number of propellers􏴸
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -380,6 +384,7 @@
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_FUEL_TANKS]􏶭􏶬fuel weight􏶫􏵚pounds􏵛􏶪􏶩
+􏴷number of tanks􏴸
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
