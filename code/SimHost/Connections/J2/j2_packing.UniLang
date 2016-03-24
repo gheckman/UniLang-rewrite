@@ -76,7 +76,7 @@ From SimHost to Flight Model􏷏
 􏶜r􏶝􏷆SendHighSpeedMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
     􏵲pack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_HIGH_SPEED);
     return uByteIterator;
@@ -90,7 +90,7 @@ From SimHost to Flight Model􏷏
 􏶜r􏶝􏷆SendLowSpeedMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
     􏵲pack j2 low speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_LOW_SPEED);
     return uByteIterator;
@@ -104,7 +104,7 @@ From SimHost to Flight Model􏷏
 􏶜r􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
     􏵲pack j2 reposition send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_REPOSITION);
     return uByteIterator;
@@ -118,7 +118,7 @@ From SimHost to Flight Model􏷏
 􏶜r􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
     􏵲pack j2 version send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_VERSION);
     return uByteIterator;
@@ -136,7 +136,7 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆RcvHighSpeedMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     􏵲pack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED);
     return uByteIterator;
@@ -150,7 +150,7 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆RcvLowSpeedMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     􏵲pack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED);
     return uByteIterator;
@@ -164,7 +164,7 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆RcvEngineDataMessageT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     􏵲pack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE);
     return uByteIterator;
@@ -178,7 +178,7 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆RepositionMessageReplyT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     􏵲pack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY);
     return uByteIterator;
@@ -192,7 +192,7 @@ From Flight Model to SimHost􏷏
 􏶜r􏶝􏷆VersionMessageReplyT􏷅􏷄message􏷃􏷀The message to pack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     􏵲pack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
     􏵲pack header􏵳􏵶buffer􏵷,uByteIterator,FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION);
     return uByteIterator;

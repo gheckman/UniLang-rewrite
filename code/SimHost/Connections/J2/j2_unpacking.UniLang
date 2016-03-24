@@ -79,7 +79,7 @@ From SimHost to Flight Model􏷏
 􏶜rm􏶝􏷆SendHighSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"high speed")){
       􏵲unpack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
@@ -97,7 +97,7 @@ From SimHost to Flight Model􏷏
 􏶜rm􏶝􏷆SendLowSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"low speed")){
       􏵲unpack j2 low speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
@@ -115,7 +115,7 @@ From SimHost to Flight Model􏷏
 􏶜rm􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"reposition")){
       􏵲unpack j2 reposition send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
@@ -133,7 +133,7 @@ From SimHost to Flight Model􏷏
 􏶜rm􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 4;
+    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"version")){
       􏵲unpack j2 version request message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
@@ -152,7 +152,7 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RcvHighSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     //if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"high speed")){
       􏵲unpack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
@@ -170,7 +170,7 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RcvLowSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"low speed")){
       􏵲unpack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
@@ -188,7 +188,7 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RcvEngineDataMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"engine")){
       􏵲unpack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
@@ -206,7 +206,7 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RepositionMessageReplyT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"reposition")){
       􏵲unpack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
@@ -224,7 +224,7 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆VersionMessageReplyT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = 8;
+    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
     J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
     if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"version")){
       􏵲unpack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);

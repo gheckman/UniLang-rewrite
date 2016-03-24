@@ -15,3 +15,6 @@
 􏵐+􏵑􏵺􏵻􏵸􏵹􏵾MAX_NUMBER_OF_PROPELLERS􏵿􏵖􏵗􏵼8􏵽
 􏵐+􏵑􏵺􏵻􏵸􏵹􏵾MAX_NUMBER_OF_FUEL_TANKS􏵿􏵖􏵗􏵼8􏵽
 􏵐+􏵑􏵺􏵻􏵸􏵹􏵾MAX_NUMBER_OF_CONTACT_LOCATIONS􏵿􏵖􏵗􏵼8􏵽
+
+􏵐+􏵑􏵺The expected size of the message header􏵻􏵸􏵹􏵾simhost to flight model header size􏵿􏵖􏵗􏵼4􏵽
+􏵐+􏵑􏵺The expected size of the message header􏵻􏵸􏵹􏵾flight model to simhost header size􏵿􏵖􏵗􏵼8􏵽
