@@ -339,7 +339,7 @@ From SimHost to Flight Model􏷏
   J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
   J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineStarterRunning,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
   J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnBleedAir,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnIgnitionOn,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnIgnition,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
   J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineFlags1,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
   J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineInletState,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
   J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStateEngine_in,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
