@@ -11,7 +11,7 @@
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬pitch flight control􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬pitch flight control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -20,7 +20,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬roll flight control􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬roll flight control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -29,7 +29,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬yaw flight control􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬yaw flight control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -38,7 +38,7 @@
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬collective flight control􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬collective flight control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -47,7 +47,7 @@
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬pitch trim position􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬pitch trim position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -56,7 +56,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬roll trim position􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬roll trim position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -65,7 +65,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬yaw trim position􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬yaw trim position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -74,7 +74,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬yaw serial actuators􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬yaw serial actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -83,7 +83,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬yaw trim actuators􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬yaw trim actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -92,7 +92,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬roll serial actuators􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬roll serial actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -101,7 +101,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬roll trim actuators􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬roll trim actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -110,7 +110,7 @@
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬pitch serial actuators􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬pitch serial actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -119,7 +119,7 @@
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬pitch trim actuators􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬pitch trim actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -128,7 +128,7 @@
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬collective serial actuators􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬collective serial actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= -1.0􏴾
@@ -137,7 +137,7 @@
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬collective trim actuators􏶫􏵚􏵛􏶪􏶩 
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬collective trim actuators􏶫􏵚􏵛􏶪􏶩 
 
 
 􏶨􏶧􏶦􏶥
@@ -151,7 +151,7 @@
 􏴻bit 2 unset􏴼􏴹trim actuator is Overridden􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬yaw control override flag􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬yaw control override flag􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -164,7 +164,7 @@
 􏴻bit 2 unset􏴼􏴹trim actuator is Overridden􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬pitch control override flag􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬pitch control override flag􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -177,7 +177,7 @@
 􏴻bit 2 unset􏴼􏴹trim actuator is Overridden􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬roll control override flag􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬roll control override flag􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -190,7 +190,7 @@
 􏴻bit 2 unset􏴼􏴹trim actuator is Overridden􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬collective control override flag􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬collective control override flag􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -199,7 +199,7 @@
 􏴻1􏴼􏴹maximum breaking􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬right brake􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬right brake􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -208,7 +208,7 @@
 􏴻1􏴼􏴹maximum breaking􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬left brake􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬left brake􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦This only controls the nose wheel when it is not a caster or linked to the rudder.􏶥
 􏴽>= -1.0􏴾
@@ -217,7 +217,7 @@
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬nose wheel control􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬nose wheel control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -226,7 +226,7 @@
 􏴻1􏴼􏴹maximum breaking􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬rotor brake􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬rotor brake􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -238,32 +238,32 @@
 􏴻4􏴼􏴹Other􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬winch flag􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬winch flag􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch length􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch length􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch payload mass􏶫􏵚kilograms􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch payload mass􏶫􏵚kilograms􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch payload x􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch payload x􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch payload y􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch payload y􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬winch payload z􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch payload z􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -275,32 +275,32 @@
 􏴻4􏴼􏴹Other􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬hook flag􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬hook flag􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook length􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook length􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook payload mass􏶫􏵚kilograms􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook payload mass􏶫􏵚kilograms􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook playload x􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook playload x􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook playload y􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook playload y􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬hook playload z􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook playload z􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -313,24 +313,24 @@
 􏴻bit 2 unset􏴼􏴹Yaw SAS Off􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬SAS Mode􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬SAS Mode􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦HAT for GC reference􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬height above terrain􏶫􏵚feet􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬height above terrain􏶫􏵚feet􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
 􏴽<= MAX_NUMBER_OF_CONTACT_LOCATIONS􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬number of contact points􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of contact points􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦enumerated􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_CONTACT_LOCATIONS]􏶭􏶬ground contact location􏶫􏵚feet􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_CONTACT_LOCATIONS]􏶭􏶬ground contact location􏶫􏵚feet􏵛􏶪􏶩
 􏴷number of contact points􏴸
 
 􏶨􏶧􏶦􏶥
@@ -338,7 +338,7 @@
 􏴽<= MAX_NUMBER_OF_ENGINES􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -347,7 +347,7 @@
 􏴻0􏴼􏴹idle throttle􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
 􏶨􏶧􏶦􏶥
@@ -357,7 +357,7 @@
 􏴻0􏴼􏴹fuel cutoff􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬mixture􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬mixture􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
 􏶨􏶧􏶦􏶥
@@ -365,12 +365,12 @@
 􏴽<= MAX_NUMBER_OF_PROPELLERS􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵰􏵀
-􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬prop pitch􏶫􏵚degrees􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬prop pitch􏶫􏵚degrees􏵛􏶪􏶩
 􏴷number of propellers􏴸
 
 􏶨􏶧􏶦􏶥
@@ -378,12 +378,12 @@
 􏴽<= MAX_NUMBER_OF_FUEL_TANKS􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬number of tanks􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of tanks􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_FUEL_TANKS]􏶭􏶬fuel weight􏶫􏵚pounds􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_FUEL_TANKS]􏶭􏶬fuel weight􏶫􏵚pounds􏵛􏶪􏶩
 􏴷number of tanks􏴸
 
 􏶨􏶧􏶦􏶥
@@ -397,5 +397,5 @@
 􏴻bit 2 unset􏴼􏴹horizontal unfreeze􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+􏶙􏶰􏶯􏶮int􏶭􏶬flag1􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬flag1􏶫􏵚􏵛􏶪􏶩
 

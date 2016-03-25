@@ -4,137 +4,315 @@
 􏷮J2􏷭 􏷮Network_Message􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
 
-􏶨􏶧􏶦up to 8􏶥 
-􏶘+􏶙􏶮int􏶭􏶬number of gears􏶫􏵚􏵛􏶪􏶩 
-
-􏶨􏶧􏶦(0 = up, 100 = full down)􏶥 
-􏶘+􏶙􏶮int􏶭􏶬gear requested position[MAX_NUMBER_OF_LANDING_GEARS]􏶫􏵚percentage􏵛􏶪􏶩
-
-􏶨􏶧􏶦up to 4􏶥 
-􏶘+􏶙􏶮int􏶭􏶬number of flaps􏶫􏵚􏵛􏶪􏶩
-
-􏶨􏶧􏶦(0 = retracted, 100 = extended)􏶥 
-􏶘+􏶙􏶮int􏶭􏶬flap requested position[MAX_NUMBER_OF_FLAPS]􏶫􏵚percentage􏵛􏶪􏶩
-
-􏶨􏶧􏶦up to 8􏶥 
-􏶘+􏶙􏶮int􏶭􏶬number of speed brakes􏶫􏵚􏵛􏶪􏶩
-
-􏶨􏶧􏶦(0 = retracted, 100 = extended)􏶥 
-􏶘+􏶙􏶮int􏶭􏶬speed brake requested position[MAX_NUMBER_OF_SPEED_BRAKES]􏶫􏵚percentage􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬sea level pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_LANDING_GEARS􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of gears􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬sea level temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
-
-􏶨􏶧􏶦0.0 = Smooth, 10.0 = extremely rough􏶥
-􏶘+􏶙􏶮float􏶭􏶬runway roughness􏶫􏵚􏵛􏶪􏶩
-
-􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬wind magnitude􏶫􏵚knots􏵛􏶪􏶩
-
-􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬wind heading􏶫􏵚degrees􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏴽<= 100􏴾
+􏴻0􏴼􏴹full up􏴺
+􏴻100􏴼􏴹full down􏴺
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_LANDING_GEARS]􏶭􏶬gear requested position􏶫􏵚percentage􏵛􏶪􏶩
+􏴷number of gears􏴸
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬wind inclination􏶫􏵚degrees􏵛􏶪􏶩
-
-􏶨􏶧􏶦0.0 = Smooth, 10.0 = extremely rough􏶥
-􏶘+􏶙􏶮float􏶭􏶬turbulence􏶫􏵚􏵛􏶪􏶩
-
-􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬payload weight􏶫􏵚pounds􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_FLAPS􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of flaps􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬CG offset x􏶫􏵚inches􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏴽<= 100􏴾
+􏴻0􏴼􏴹fully retracted􏴺
+􏴻100􏴼􏴹fully extended􏴺
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_FLAPS]􏶭􏶬flap requested position􏶫􏵚percentage􏵛􏶪􏶩
+􏴷number of flaps􏴸
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬CG offset y􏶫􏵚inches􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_SPEED_BRAKES􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of speed brakes􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬CG offset z􏶫􏵚inches􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏴽<= 100􏴾
+􏴻0􏴼􏴹fully retracted􏴺
+􏴻100􏴼􏴹fully extended􏴺
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_SPEED_BRAKES]􏶭􏶬speed brake requested position􏶫􏵚percentage􏵛􏶪􏶩
+􏴷number of speed brakes􏴸
 
-􏶨􏶧􏶦up to 8􏶥
-􏶘+􏶙􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
 
-􏶨􏶧􏶦Engine starter running (1 = true)􏶥
-􏶘+􏶙􏶮int􏶭􏶬engine starter running[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
 
-􏶨􏶧􏶦Engine Bleed Air On (1 = true)
-0 = Off
-1 = Pneumatic
-2 = Pneumatic & Environmental􏶥
-􏶘+􏶙􏶮int􏶭􏶬bleed air[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= 10􏴾
+􏴻0􏴼􏴹smooth􏴺
+􏴻100􏴼􏴹extremely rough􏴺
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬runway roughness􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦Engine ignition on (1 = true)􏶥
-􏶘+􏶙􏶮int􏶭􏶬ignition on[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind magnitude􏶫􏵚knots􏵛􏶪􏶩
 
-􏶨􏶧􏶦Bit 00 Set = Fuel available
-Bit 01 Set = Boost pump on
-Bit 02 Set = Fuel jet pump on
-Bit 03 Set = Engine driven jet pump on
-Bit 04 Set = Oil pump on􏶥
-􏶘+􏶙􏶮int􏶭􏶬engine flags 1[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind heading􏶫􏵚degrees􏵛􏶪􏶩
 
-􏶨􏶧􏶦0 = Normal
-1 = Anti-Ice doors in use
-2 = Sand filters in use
-3 = Sand filters pre-clogged
-4 = Sand filters clogged
-5 = Sand filters bypass door not fully open􏶥
-􏶘+􏶙􏶮int􏶭􏶬engine inlet state[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind inclination􏶫􏵚degrees􏵛􏶪􏶩
 
-􏶨􏶧􏶦Ice build up on engine􏶥
-􏶘+􏶙􏶮float􏶭􏶬ice state engine􏶫􏵚inches􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= 10􏴾
+􏴻0􏴼􏴹smooth􏴺
+􏴻100􏴼􏴹extremely rough􏴺
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬turbulence􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦Bit 00 Set = Engine hot start
-Bit 01 Set = Engine hung start
-Bit 02 Set = Engine overspeed governor fail
-Bit 03 Set = Engine compressor stall
-Bit 04 Set = Engine overspeed driveshaft fail
-Bit 05 Set = Engine underspeed governor fail
-Bit 06 Set = Engine failure
-Bit 07 Set = Engine droop compensation fail
-Bit 08 Set = Engine fire
-Bit 09 Set = Fuel filter 1/2 clogged
-Bit 10 Set = Engine chip detected
-Bit 11 Set = Engine oil filter clogged􏶥
-􏶘+􏶙􏶮int􏶭􏶬engine failure flags[MAX_NUMBER_OF_ENGINES]􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬payload weight􏶫􏵚pounds􏵛􏶪􏶩
 
-􏶨􏶧􏶦up to 8􏶥
-􏶘+􏶙􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬CG offset x􏶫􏵚inches􏵛􏶪􏶩
 
-􏶨􏶧􏶦Ice build up on propeller􏶥
-􏶘+􏶙􏶮float􏶭􏶬ice states prop􏶫􏵚inches􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬CG offset y􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬CG offset z􏶫􏵚inches􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_ENGINES􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 1􏴾
+􏴻0􏴼􏴹not running􏴺
+􏴻1􏴼􏴹running􏴺
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine starter running􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
+
+􏶨􏶧􏶦enumeration􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 2􏴾
+􏴻0􏴼􏴹off􏴺
+􏴻1􏴼􏴹pneumatic􏴺
+􏴻2􏴼􏴹pneumatic & environmental􏴺
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬bleed air􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 1􏴾
+􏴻0􏴼􏴹off􏴺
+􏴻1􏴼􏴹on􏴺
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬ignition􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 31􏴾
+􏴻bit 0 set􏴼  􏴹Fuel available􏴺
+􏴻bit 0 unset􏴼􏴹Fuel not available􏴺
+􏴻bit 1 set􏴼  􏴹boost pump on􏴺
+􏴻bit 1 unset􏴼􏴹boost pump off􏴺
+􏴻bit 2 set􏴼  􏴹fuel jet pump on􏴺
+􏴻bit 2 unset􏴼􏴹fuel jet pump off􏴺
+􏴻bit 3 set􏴼  􏴹engine driven jet pump on􏴺
+􏴻bit 3 unset􏴼􏴹engine driven jet pump off􏴺
+􏴻bit 4 set􏴼  􏴹oil pump on􏴺
+􏴻bit 4 unset􏴼􏴹oil pump off􏴺
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine flags 1􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 5􏴾
+􏴻0􏴼􏴹Normal􏴺
+􏴻1􏴼􏴹Anti-Ice doors in use􏴺
+􏴻2􏴼􏴹Sand filters in use􏴺
+􏴻3􏴼􏴹Sand filters pre-clogged􏴺
+􏴻4􏴼􏴹Sand filters clogged􏴺
+􏴻5􏴼􏴹Sand filters bypass door not fully open􏴺
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine inlet state􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
+
+􏶨􏶧􏶦Ice buildup on engine􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬ice state engine􏶫􏵚inches􏵛􏶪􏶩
+􏴷number of engines􏴸
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 65535􏴾
+􏴻bit 0 set􏴼   􏴹Engine hot start􏴺
+􏴻bit 0 unset􏴼 􏴹Engine hot not started􏴺
+􏴻bit 1 set􏴼   􏴹Engine hung start􏴺
+􏴻bit 1 unset􏴼 􏴹Engine hung not started􏴺
+􏴻bit 2 set􏴼   􏴹Engine overspeed governor fail􏴺
+􏴻bit 2 unset􏴼 􏴹Engine overspeed governor functioning􏴺
+􏴻bit 3 set􏴼   􏴹Engine compressor stall􏴺
+􏴻bit 3 unset􏴼 􏴹Engine compressor functioning􏴺
+􏴻bit 4 set􏴼   􏴹Engine overspeed driveshaft fail􏴺
+􏴻bit 4 unset􏴼 􏴹Engine overspeed driveshaft functioning􏴺
+􏴻bit 5 set􏴼   􏴹Engine underspeed governor fail􏴺
+􏴻bit 5 unset􏴼 􏴹Engine underspeed governor functioning􏴺
+􏴻bit 6 set􏴼   􏴹Engine failure􏴺
+􏴻bit 6 unset􏴼 􏴹Engine functioning􏴺
+􏴻bit 7 set􏴼   􏴹Engine droop compensation fail􏴺
+􏴻bit 7 unset􏴼 􏴹Engine droop compensation functioning􏴺
+􏴻bit 8 set􏴼   􏴹Engine fire􏴺
+􏴻bit 8 unset􏴼 􏴹No Engine fire􏴺
+􏴻bit 9 set􏴼   􏴹Fuel filter 1/2 clogged􏴺
+􏴻bit 9 unset􏴼 􏴹Fuel filter not 1/2 clogged􏴺
+􏴻bit 10 set􏴼  􏴹Engine chip detected􏴺
+􏴻bit 10 unset􏴼􏴹No Engine chip detected􏴺
+􏴻bit 11 set􏴼  􏴹Engine oil filter clogged􏴺
+􏴻bit 11 unset􏴼􏴹Engine oil filter unclogged􏴺
+􏴻bit 12 set􏴼  􏴹Engine oil pressure low􏴺
+􏴻bit 12 unset􏴼􏴹Engine oil pressure not low􏴺
+􏴻bit 13 set􏴼  􏴹Engine oil pressure high􏴺
+􏴻bit 13 unset􏴼􏴹Engine oil pressure not high􏴺
+􏴻bit 14 set􏴼  􏴹Engine oil temperature low􏴺
+􏴻bit 14 unset􏴼􏴹Engine oil temperature not low􏴺
+􏴻bit 15 set􏴼  􏴹Engine oil temperature high􏴺
+􏴻bit 15 unset􏴼􏴹Engine oil temperature not high􏴺
+􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine failure flags􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
+
+􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_PROPELLERS􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦Ice buildup on propeller􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬ice states prop􏶫􏵚inches􏵛􏶪􏶩
+􏴷number of propellers􏴸
 
 􏶨􏶧􏶦Ice build up on right wing􏶥
-􏶘+􏶙􏶮float􏶭􏶬ice state right wing􏶫􏵚inches􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state right wing􏶫􏵚inches􏵛􏶪􏶩
 
 􏶨􏶧􏶦Ice build up on left wing􏶥
-􏶘+􏶙􏶮float􏶭􏶬ice state left wing􏶫􏵚inches􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state left wing􏶫􏵚inches􏵛􏶪􏶩
 
 􏶨􏶧􏶦Ice build up on fuselage􏶥
-􏶘+􏶙􏶮float􏶭􏶬ice state fuselage􏶫􏵚inches􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state fuselage􏶫􏵚inches􏵛􏶪􏶩
 
 􏶨􏶧􏶦Ice build up on tail􏶥
-􏶘+􏶙􏶮float􏶭􏶬ice state tail􏶫􏵚inches􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state tail􏶫􏵚inches􏵛􏶪􏶩
 
-􏶨􏶧􏶦Time multiplier to allow for x2 (or more) passage of time􏶥
-􏶘+􏶙􏶮float􏶭􏶬time multiplier􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦Time multiplier to allow for x2 (or more) passage of time.􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬time multiplier􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦Bit 00 = Blow Tire #1 (1 = failed)
-Bit 01 = Blow Tire #2
-Bit 02 = Blow Tire #3
-Bit 03 = Blow Tire #4
-Bit 04 = Blow Tire #5
-Bit 05 = Blow Tire #6
-Bit 06 = Blow Tire #7
-Bit 07 = Blow Tire #8
-Bit 08 = Left door open
-Bit 09 = Right door open
-Bit 10 = EPU door open
-Bit 11 = Flight control's tail rotor pedals disconnected
-Bit 12 = Tail rotor drive failure
-Bit 13 = Loss of tail rotor effectiveness􏶥
-􏶘+􏶙􏶮int􏶭􏶬failure flags 1􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 16383􏴾
+􏴻bit 0 set􏴼   􏴹Blow Tire #1􏴺
+􏴻bit 0 unset􏴼 􏴹Don't blow Tire #1􏴺
+􏴻bit 1 set􏴼   􏴹Blow Tire #2􏴺
+􏴻bit 1 unset􏴼 􏴹Don't blow Tire #2􏴺
+􏴻bit 2 set􏴼   􏴹Blow Tire #3􏴺
+􏴻bit 2 unset􏴼 􏴹Don't blow Tire #3􏴺
+􏴻bit 3 set􏴼   􏴹Blow Tire #4􏴺
+􏴻bit 3 unset􏴼 􏴹Don't blow Tire #4􏴺
+􏴻bit 4 set􏴼   􏴹Blow Tire #5􏴺
+􏴻bit 4 unset􏴼 􏴹Don't blow Tire #5􏴺
+􏴻bit 5 set􏴼   􏴹Blow Tire #6􏴺
+􏴻bit 5 unset􏴼 􏴹Don't blow Tire #6􏴺
+􏴻bit 6 set􏴼   􏴹Blow Tire #7􏴺
+􏴻bit 6 unset􏴼 􏴹Don't blow Tire #7􏴺
+􏴻bit 7 set􏴼   􏴹Blow Tire #8􏴺
+􏴻bit 7 unset􏴼 􏴹Don't blow Tire #8􏴺
+􏴻bit 8 set􏴼   􏴹Left door open􏴺
+􏴻bit 8 unset􏴼 􏴹Left door closed􏴺
+􏴻bit 9 set􏴼   􏴹Right door open􏴺
+􏴻bit 9 unset􏴼 􏴹Right door closed􏴺
+􏴻bit 10 set􏴼  􏴹EPU door open􏴺
+􏴻bit 10 unset􏴼􏴹EPU door closed􏴺
+􏴻bit 11 set􏴼  􏴹Flight control - tail rotor pedals disconnected􏴺
+􏴻bit 11 unset􏴼􏴹Flight control - tail rotor pedals connected􏴺
+􏴻bit 12 set􏴼  􏴹Tail rotor drive failure􏴺
+􏴻bit 12 unset􏴼􏴹Tail rotor drive functional􏴺
+􏴻bit 13 set􏴼  􏴹Loss of tail rotor effectiveness􏴺
+􏴻bit 13 unset􏴼􏴹tail rotor functional􏴺
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬failure flags 1􏶫􏵚􏵛􏶪􏶩
+
+
+
+
+
