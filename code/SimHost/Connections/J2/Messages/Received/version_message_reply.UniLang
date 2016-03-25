@@ -1,4 +1,14 @@
-J2 Version
-Aircraft Model
-Number of Developer Items
-Dev Item
+􏶨􏶧􏶦version number􏶥
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬J2 Version􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦version number􏶥
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Aircraft Model􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= MAX_DEV_ITEMS􏴾
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬Number of Developer Items􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦version number and description􏶥
+􏶘+i􏶙􏶰􏶯􏶮char[MAX_DEV_ITEMS]􏶭􏶬Dev Item􏶫􏵚􏵛􏶪􏶩
+􏴷Number of Developer Items􏴸
