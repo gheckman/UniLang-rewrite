@@ -1,13 +1,65 @@
-N1
-N2
-Torque
-Fuel Flow
-Oil Temperature
-Oil Pressure
-Exhaust Gas Temperature
-Cylinder Head Temperature
-Engine RPM
-Engine Thrust
-Manifold Pressure
-Inlet Turbine Temperature
-Bleed Air Pressure Generated
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵰􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬N1􏶫􏵚percentage􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵰􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬N2􏶫􏵚percentage􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵰􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Torque􏶫􏵚foot pounds􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Fuel Flow􏶫􏵚pounds / hour􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Oil Temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Oil Pressure􏶫􏵚pounds / square inch􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Exhaust Gas Temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Cylinder Head Temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Engine􏶫􏵚revolutions / minute􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Engine Thrust􏶫􏵚pounds􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Manifold Pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵰􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Inlet Turbine Temperature􏶫􏵚degree celsius􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵰􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Bleed Air Pressure Generated􏶫􏵚pounds / square inch􏵛􏶪􏶩
