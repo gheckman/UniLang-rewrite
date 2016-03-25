@@ -5,50 +5,77 @@
 􏷬Trevor Hickey􏷫
 
 
-􏶨􏶧􏶦0 = Normal reposition | 1 = Special reposition􏶥
-􏶘+􏶙􏶮int􏶭􏶬reposition type􏶫􏵚􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= 1􏴾
+􏴻0􏴼􏴹Normal Reposition􏴺
+􏴻1􏴼􏴹Special Reposition􏴺
+􏶘+i􏶙􏶮int􏶭􏶬reposition type􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮double􏶭􏶬latitude􏶫􏵚degrees􏵛􏶪􏶩
+􏶘+i􏶙􏶮double􏶭􏶬latitude􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮double􏶭􏶬longitude􏶫􏵚degrees􏵛􏶪􏶩
+􏶘+i􏶙􏶮double􏶭􏶬longitude􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮double􏶭􏶬MSL altitude􏶫􏵚feet􏵛􏶪􏶩
+􏶘+i􏶙􏶮double􏶭􏶬MSL altitude􏶫􏵚feet􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬magnetic heading􏶫􏵚degrees􏵛􏶪􏶩
+􏶘+i􏶙􏶮float􏶭􏶬magnetic heading􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬indicated airspeed􏶫􏵚knots􏵛􏶪􏶩
+􏶘+i􏶙􏶮float􏶭􏶬indicated airspeed􏶫􏵚knots􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬aircraft pitch􏶫􏵚degrees􏵛􏶪􏶩
+􏶘+i􏶙􏶮float􏶭􏶬aircraft pitch􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬aircraft roll􏶫􏵚degrees􏵛􏶪􏶩
+􏶘+i􏶙􏶮float􏶭􏶬aircraft roll􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float􏶭􏶬vertical speed􏶫􏵚feet / minute􏵛􏶪􏶩
-
-􏶨􏶧􏶦up to 8􏶥
-􏶘+􏶙􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
-
-􏶨􏶧􏶦Engine running (1 = true)􏶥
-􏶘+􏶙􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶮float􏶭􏶬vertical speed􏶫􏵚feet / minute􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine􏶫􏵚revolutions / minute􏵛􏶪􏶩
-
-􏶨􏶧􏶦turbine􏶥
-􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬n1􏶫􏵚percentage􏵛􏶪􏶩
-
-􏶨􏶧􏶦turbine􏶥
-􏶘+􏶙􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬n2􏶫􏵚percentage􏵛􏶪􏶩
-
-􏶨􏶧􏶦up to 8􏶥
-􏶘+􏶙􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_ENGINES􏴾
+􏶘+i􏶙􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏶘+􏶙􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬propeller􏶫􏵚revolutions / minute􏵛􏶪􏶩
+􏶘+i􏶙􏶮EngineRepositionT[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_PROPELLERS􏴾
+􏶘+i􏶙􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏶘+i􏶙􏶮PropellerRepositionT[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬propeller􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection down􏴺
+􏴻1.0􏴼􏴹full deflection up􏴺
+􏶘+i􏶙􏶮float􏶭􏶬pitch flight control􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection left􏴺
+􏴻1.0􏴼􏴹full deflection right􏴺
+􏶘+i􏶙􏶮float􏶭􏶬roll flight control􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection left􏴺
+􏴻1.0􏴼􏴹full deflection right􏴺
+􏶘+i􏶙􏶮float􏶭􏶬yaw flight control􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection down􏴺
+􏴻1.0􏴼􏴹full deflection up􏴺
+􏶘+i􏶙􏶮float􏶭􏶬collective flight control􏶫􏵚􏵛􏶪􏶩

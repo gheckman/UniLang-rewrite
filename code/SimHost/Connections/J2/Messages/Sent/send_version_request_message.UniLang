@@ -4,5 +4,5 @@
 􏷮J2􏷭 􏷮Network_Message􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
 
-􏶨􏶧􏶦unused data member as an empty struct will not compile􏶥
+􏶨􏶧􏶦unused data member as an empty struct will not compile without it􏶥
 􏶘+􏶙􏶮int􏶭􏶬empty􏶫􏵚􏵛􏶪􏶩

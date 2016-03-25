@@ -5,7 +5,16 @@
 􏷬Trevor Hickey􏷫
 
 
-􏶨running􏶧􏶦0 = Engine off | 1 = Engine on􏶥􏶘+􏶙􏶮int􏶭􏶬running􏶫􏵚􏵛􏶪􏶩
-􏶨RPM of piston􏶧􏶦􏶥􏶘+􏶙􏶮float􏶭􏶬piston􏶫􏵚revolutions / minute􏵛􏶪􏶩
-􏶨n1 of turbine􏶧􏶦􏶥􏶘+􏶙􏶮float􏶭􏶬n1􏶫􏵚percentage􏵛􏶪􏶩
-􏶨n2 of turbine􏶧􏶦􏶥􏶘+􏶙􏶮float􏶭􏶬n2􏶫􏵚percentage􏵛􏶪􏶩
+􏶨􏶧􏶦􏶥
+􏴻0􏴼􏴹engine off􏴺
+􏴻1􏴼􏴹engine on􏴺
+􏶘+i􏶙􏶮int􏶭􏶬running􏶫􏵚􏵛􏶪􏶩
+
+􏶨RPM of piston􏶧􏶦􏶥
+􏶘+i􏶙􏶮float􏶭􏶬piston􏶫􏵚revolutions / minute􏵛􏶪􏶩
+
+􏶨n1 of turbine􏶧􏶦􏶥
+􏶘+i􏶙􏶮float􏶭􏶬n1􏶫􏵚percentage􏵛􏶪􏶩
+
+􏶨n2 of turbine􏶧􏶦􏶥
+􏶘+i􏶙􏶮float􏶭􏶬n2􏶫􏵚percentage􏵛􏶪􏶩
