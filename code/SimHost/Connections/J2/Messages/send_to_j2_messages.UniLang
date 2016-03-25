@@ -5,6 +5,8 @@
 􏷬Trevor Hickey􏷫
 􏷤i􏷣􏷦send_high_speed_message􏷥􏷢􏷡
 􏷤i􏷣􏷦send_low_speed_message􏷥􏷢􏷡
+􏷤i􏷣􏷦engine_reposition􏷥􏷢􏷡
+􏷤i􏷣􏷦propeller_reposition􏷥􏷢􏷡
 􏷤i􏷣􏷦send_reposition_message􏷥􏷢􏷡
 􏷤i􏷣􏷦send_version_request_message􏷥􏷢􏷡
 􏷤􏷣􏷦GroundContactLocation􏷥􏷢USES: NUM_CONTACT_LOCATION􏷡
