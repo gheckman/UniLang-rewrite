@@ -290,17 +290,17 @@
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook playload x􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook payload x􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook playload y􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook payload y􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook playload z􏶫􏵚meters􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook payload z􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾

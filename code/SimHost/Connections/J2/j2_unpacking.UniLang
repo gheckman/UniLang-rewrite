@@ -264,8 +264,8 @@ From SimHost to Flight Model􏷏
   J2_UNPACK_VAR(􏵶message􏵷->m_nPitchControlOverrideFlag);
   J2_UNPACK_VAR(􏵶message􏵷->m_nRollControlOverrideFlag);
   J2_UNPACK_VAR(􏵶message􏵷->m_nCollectiveControlOverrideFlag);
-  J2_UNPACK_VAR(􏵶message􏵷->m_fRightBrakes);
-  J2_UNPACK_VAR(􏵶message􏵷->m_fLeftBrakes);
+  J2_UNPACK_VAR(􏵶message􏵷->m_fRightBrake);
+  J2_UNPACK_VAR(􏵶message􏵷->m_fLeftBrake);
   J2_UNPACK_VAR(􏵶message􏵷->m_fNoseWheelControl);
   J2_UNPACK_VAR(􏵶message􏵷->m_fRotorBrake);
   J2_UNPACK_VAR(􏵶message􏵷->m_nWinchFlag);
@@ -276,16 +276,16 @@ From SimHost to Flight Model􏷏
   J2_UNPACK_VAR(􏵶message􏵷->m_fWinchPayloadZ_m);
   J2_UNPACK_VAR(􏵶message􏵷->m_nHookFlag);
   J2_UNPACK_VAR(􏵶message􏵷->m_fHookLength_m);
-  J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadMass_Kg);
+  J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadMass_kg);
   J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadX_m);
   J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadY_m);
   J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadZ_m);
   J2_UNPACK_VAR(􏵶message􏵷->m_nSASMode);
-  J2_UNPACK_VAR(􏵶message􏵷->m_fHeightOfTerrain_feet);
+  J2_UNPACK_VAR(􏵶message􏵷->m_fHeightAboveTerrain_ft);
     
   􏶲contact point unpacking􏶱
   J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfContactPoints);
-  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfGroundContactLocation_feet,􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
+  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfGroundContactLocation_ft,􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
   
   􏶲engine related unpacking􏶱
   J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
@@ -294,7 +294,7 @@ From SimHost to Flight Model􏷏
   
   􏶲propeller unpacking􏶱
   J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfPropPitch_degrees,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfPropPitch_deg,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
   
   􏶲fuel tank unpacking􏶱
   J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfTanks);
@@ -342,10 +342,12 @@ From SimHost to Flight Model􏷏
   J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnIgnitionOn,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
   J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineFlags1,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
   J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineInletState,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_fIceStatesEngine_in,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_nEngineFailureFlags,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStatesProp_in,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-    
+  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStateEngine_in,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineFailureFlags,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  
+  􏶲propeller related unpacking􏶱
+  J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
+  J2_UNPACK_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStatesProp_in,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
     
   J2_UNPACK_VAR(􏵶message􏵷->m_fIceStateRightWing_in);
   J2_UNPACK_VAR(􏵶message􏵷->m_fIceStateLeftWing_in);
@@ -371,15 +373,15 @@ From SimHost to Flight Model􏷏
     J2_UNPACK_VAR(􏵶message􏵷->m_fIndicatedAirspeed_kts);
     J2_UNPACK_VAR(􏵶message􏵷->m_fAircraftPitch_deg);
     J2_UNPACK_VAR(􏵶message􏵷->m_fAircraftRoll_deg);
-    J2_UNPACK_VAR(􏵶message􏵷->m_fVerticalSpeed_ft_m);
+    J2_UNPACK_VAR(􏵶message􏵷->m_fVerticalSpeed_fpm);
 
     􏶲engine related unpacking􏶱
     J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfEngines);
-    J2_UNPACK_PARTIAL_ENGINE_REPOSITION_ARRAY(􏵶message􏵷->m_ptEngineReposition,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    J2_UNPACK_PARTIAL_ENGINE_REPOSITION_ARRAY(􏵶message􏵷->m_ptEngine,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
 
     􏶲propeller related unpacking􏶱
     J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-    J2_UNPACK_PARTIAL_PROPELLER_REPOSITION_ARRAY(􏵶message􏵷->m_ptPropellerReposition,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    J2_UNPACK_PARTIAL_PROPELLER_REPOSITION_ARRAY(􏵶message􏵷->m_ptPropeller,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
     
     J2_UNPACK_VAR(􏵶message􏵷->m_fPitchFlightControl);
     J2_UNPACK_VAR(􏵶message􏵷->m_fRollFlightControl);
