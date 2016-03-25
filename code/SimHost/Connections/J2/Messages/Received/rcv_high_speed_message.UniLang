@@ -1,0 +1,350 @@
+
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮double􏶭􏶬Latitude􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮double􏶭􏶬Longitude􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮double􏶭􏶬MSL Altitude􏶫􏵚feet􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Theta􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Psi􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Beta􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Phi􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Alpha􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Slip􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Angle of Attack􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬X Velocity􏶫􏵚meters / second􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Y Velocity􏶫􏵚meters / second􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Z Velocity􏶫􏵚meters / second􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬X Acceleration􏶫􏵚meters / second^2􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Y Acceleration􏶫􏵚meters / second^2􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Z Acceleration􏶫􏵚meters / second^2􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Pitch Rate􏶫􏵚degrees / second􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Roll Rate􏶫􏵚degrees / second􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Yaw Rate􏶫􏵚degrees / second􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Pitch Acceleration􏶫􏵚degrees / second^2􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Roll Acceleration􏶫􏵚degrees / second^2􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Yaw Acceleration􏶫􏵚degrees / second^2􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬True Airspeed Longitudinal􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬True Airspeed Lateral􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬True Airspeed Vertical􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Ground Speed􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Vertical Speed􏶫􏵚feet / minute􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Indicated Airspeed Longitudinal􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Indicated Airspeed Lateral􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Indicated Airspeed Vertical􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Mach Number􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬North Velocity􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬East Velocity􏶫􏵚knots􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Dynamic Pressure􏶫􏵚pascal􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Magnetic Heading􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_LANDING_GEARS􏴾
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬Number of Landing Gears􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_LANDING_GEARS]􏶭􏶬Weight On Landing Gear􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 7􏴾
+􏴻bit 0 set􏴼  􏴹Indicate stall􏴺
+􏴻bit 0 unset􏴼􏴹Do not indicate stall􏴺
+􏴻bit 1 set􏴼  􏴹Crashed􏴺
+􏴻bit 1 unset􏴼􏴹Not crashed􏴺
+􏴻bit 2 set􏴼  􏴹Paused􏴺
+􏴻bit 2 unset􏴼􏴹Unpaused􏴺
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬Flag #1􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Pilot Seat CG Offset X􏶫􏵚meters􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Pilot Seat CG Offset Y􏶫􏵚meters􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Pilot Seat CG Offset Z􏶫􏵚meters􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Co-Pilot Seat CG Offset X􏶫􏵚meters􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Co-Pilot Seat CG Offset Y􏶫􏵚meters􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Co-Pilot Seat CG Offset Z􏶫􏵚meters􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection left􏴺
+􏴻1.0􏴼􏴹full deflection right􏴺
+􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬Yaw Serial Actuators􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection left􏴺
+􏴻1.0􏴼􏴹full deflection right􏴺
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Yaw Trim Actuators􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection left􏴺
+􏴻1.0􏴼􏴹full deflection right􏴺
+􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬Roll Serial Actuators􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection left􏴺
+􏴻1.0􏴼􏴹full deflection right􏴺
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Roll Trim Actuators􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection down􏴺
+􏴻1.0􏴼􏴹full deflection up􏴺
+􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬Pitch Serial Actuators􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection down􏴺
+􏴻1.0􏴼􏴹full deflection up􏴺
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Pitch Trim Actuators􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection down􏴺
+􏴻1.0􏴼􏴹full deflection up􏴺
+􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬Collective Serial Actuators􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -1.0􏴾
+􏴽<= 1.0􏴾
+􏴻-1.0􏴼􏴹full deflection down􏴺
+􏴻1.0􏴼􏴹full deflection up􏴺
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Collective Trim Actuators􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵰􏵀
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_SURFACES􏴾
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬Number of Surfaces􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_SURFACES]􏶭􏶬Surface Q􏶫􏵚pascal􏵛􏶪􏶩
+􏴷Number of Surfaces􏴸
+
+􏶨􏶧􏶦Relative to neutral surface􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_SURFACES]􏶭􏶬Surface Angle of Incidence􏶫􏵚degrees􏵛􏶪􏶩
+􏴷Number of Surfaces􏴸
+
+􏶨􏶧􏶦Aerodynamically applied torque on the surface􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵰􏵀
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_SURFACES]􏶭􏶬Surface Torque􏶫􏵚newton meters􏵛􏶪􏶩
+􏴷Number of Surfaces􏴸
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 1􏴾
+􏴻0􏴼􏴹No buffet􏴺
+􏴻1􏴼􏴹Max buffet􏴺
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Buffet magnitude􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= MAX_SPARE_BUCKET_SIZE􏴾
+􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬Spares Bucket Size􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_SPARE_BUCKET_SIZE]􏶭􏶬Spares Bucket􏶫􏵚􏵛􏶪􏶩
+􏴷Spares Bucket Size􏴸

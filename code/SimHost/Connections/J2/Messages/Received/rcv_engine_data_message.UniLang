@@ -1,0 +1,25 @@
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_ENGINES􏴾
+􏶘+i􏶙􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶮FlightModelEngineMessageT[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine􏶫􏵚􏵛􏶪􏶩
+􏴷number of engines􏴸
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= MAX_NUMBER_OF_PROPELLERS􏴾
+􏶘+i􏶙􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Piston􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶮FlightModelPropellerMessageT[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬propeller􏶫􏵚􏵛􏶪􏶩
+􏴷number of propellers􏴸

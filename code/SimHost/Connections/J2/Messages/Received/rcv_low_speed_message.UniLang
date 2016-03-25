@@ -1,0 +1,21 @@
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Outside Air Temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Outside Air Pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
+
+􏶨􏶧􏶦Position of the nose wheel􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴻0􏴼􏴹straight ahead􏴺
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Nose Wheel Position􏶫􏵚degrees􏵛􏶪􏶩
+
+􏶨􏶧􏶦􏶥
+􏵁Fixed Wing􏵂􏴿􏵱􏵀
+􏵁Helicopter􏵂􏴿􏵱􏵀
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Magnetic Variation􏶫􏵚degrees􏵛􏶪􏶩
