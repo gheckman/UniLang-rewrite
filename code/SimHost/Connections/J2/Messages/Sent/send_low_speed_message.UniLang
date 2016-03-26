@@ -15,8 +15,8 @@
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
 􏴽<= 100􏴾
-􏴻0􏴼􏴹full up􏴺
-􏴻100􏴼􏴹full down􏴺
+􏴻0􏴼􏴹full up (stowed)􏴺
+􏴻100􏴼􏴹full down (extended)􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_LANDING_GEARS]􏶭􏶬gear requested position􏶫􏵚percentage􏵛􏶪􏶩
@@ -56,17 +56,24 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_SPEED_BRAKES]􏶭􏶬speed brake requested position􏶫􏵚percentage􏵛􏶪􏶩
 􏴷number of speed brakes􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦atmospheric pressure at seas level􏶥
+􏴽>= 0􏴾
+􏴽<= 35􏴾
+􏴻29.92􏴼􏴹standard􏴺
+􏴻27 - 31􏴼
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
+􏴽>= -100􏴾
+􏴽<= 150 C􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴻15 C􏴼􏴹standard􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦general measurement of friction on the ground􏶥
 􏴽>= 0􏴾
 􏴽<= 10􏴾
 􏴻0􏴼􏴹smooth􏴺
@@ -75,22 +82,30 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬runway roughness􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦magnitude of the velocity of wind present􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 200􏴾
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind magnitude􏶫􏵚knots􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦direction in degrees of the wind􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -360􏴾
+􏴽<= 360􏴾
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind heading􏶫􏵚degrees􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦vertical angle of the wind􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= -360􏴾
+􏴽<= 360􏴾
+􏴻0􏴼􏴹straight at you􏴺
+􏴻0􏴼􏴹90 straight vertical􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind inclination􏶫􏵚degrees􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦scaled value of he turbulence of the airflow􏶥
 􏴽>= 0􏴾
 􏴽<= 10􏴾
 􏴻0􏴼􏴹smooth􏴺
@@ -100,11 +115,12 @@
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬turbulence􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬payload weight􏶫􏵚pounds􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦plus or minus each access from the predefined CG􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬CG offset x􏶫􏵚inches􏵛􏶪􏶩
@@ -136,9 +152,11 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine starter running􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦enumeration􏶥
+􏶨􏶧􏶦enumeration  air taken from the engine system to be used in other places.  where to be used after taken from the engine􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏵁Piston􏵂􏴿􏵰􏵀
 􏴽>= 0􏴾
 􏴽<= 2􏴾
 􏴻0􏴼􏴹off􏴺
@@ -150,6 +168,8 @@
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
+􏵁Turbine􏵂􏴿􏵱􏵀
+􏵁Piston􏵂􏴿􏵰􏵀
 􏴽>= 0􏴾
 􏴽<= 1􏴾
 􏴻0􏴼􏴹off􏴺
@@ -175,7 +195,7 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine flags 1􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦different covers can be used on the inlet.  physical grill or screen placed over the engine to prevent things from going in􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴽>= 0􏴾
@@ -275,6 +295,7 @@
 􏶨􏶧􏶦Time multiplier to allow for x2 (or more) passage of time.􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬time multiplier􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥

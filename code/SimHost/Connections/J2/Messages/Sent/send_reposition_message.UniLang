@@ -5,7 +5,7 @@
 􏷬Trevor Hickey􏷫
 
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦during a normal reposition, location/speed is sent to the flight model, the flight model trims the helicopter to a state of zero accelerations and then returns control positions to f2si for unpausing.  Special reposition: the flight model is provided all values of the state, and adjusts to that state􏶥
 􏴽>= 0􏴾
 􏴽<= 1􏴾
 􏴻0􏴼􏴹Normal Reposition􏴺
@@ -21,19 +21,27 @@
 􏶨􏶧􏶦􏶥
 􏶘+i􏶙􏶮double􏶭􏶬MSL altitude􏶫􏵚feet􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦heading of the magnetic compass􏶥
+􏴽>= 0􏴾
+􏴽<= 360􏴾
 􏶘+i􏶙􏶮float􏶭􏶬magnetic heading􏶫􏵚degrees􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦airspeed as read by aircraft gages􏶥
 􏶘+i􏶙􏶮float􏶭􏶬indicated airspeed􏶫􏵚knots􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
+􏴽>= -360􏴾
+􏴽<= 360􏴾
 􏶘+i􏶙􏶮float􏶭􏶬aircraft pitch􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
+􏴽>= -360􏴾
+􏴽<= 360􏴾
 􏶘+i􏶙􏶮float􏶭􏶬aircraft roll􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
+􏴽>= -100,000􏴾
+􏴽<= 100,000􏴾
 􏶘+i􏶙􏶮float􏶭􏶬vertical speed􏶫􏵚feet / minute􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥

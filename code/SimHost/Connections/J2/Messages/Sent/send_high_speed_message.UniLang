@@ -4,7 +4,11 @@
 􏷮J2􏷭 􏷮Network_Message􏷭 􏷮Communication􏷭
 􏷬Trevor Hickey􏷫
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦longitudinal displacement of the cyclic forward and aft.
+This varies the main rotor blade pitch with fore and aft movement,
+causing induced pitch to the nose up or down.  
+Used in forward flight:  To adjust forward speed and control rolled-turn
+Used in hover flight: To move forwards/backwards􏶥
 􏴽>= -1.0􏴾
 􏴽<= 1.0􏴾
 􏴻-1.0􏴼􏴹full deflection down􏴺
@@ -13,7 +17,10 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬pitch flight control􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦latitudinal displacement of the cyclic left and right.
+This varies the main rotor blade pitch with left and right movement,
+causing induced roll in the direction moved.  
+This is done to move sideways􏶥􏶥
 􏴽>= -1.0􏴾
 􏴽<= 1.0􏴾
 􏴻-1.0􏴼􏴹full deflection left􏴺
@@ -22,7 +29,7 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬roll flight control􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦left and right displacement of the yaw pedals􏶥
 􏴽>= -1.0􏴾
 􏴽<= 1.0􏴾
 􏴻-1.0􏴼􏴹full deflection left􏴺
@@ -31,7 +38,7 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬yaw flight control􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦displacement or travel of the collective lever up and down􏶥
 􏴽>= -1.0􏴾
 􏴽<= 1.0􏴾
 􏴻-1.0􏴼􏴹full deflection down􏴺
@@ -219,7 +226,7 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬nose wheel control􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦slows down the rotor when applied􏶥
 􏴽>= 0􏴾
 􏴽<= 1􏴾
 􏴻0􏴼􏴹no braking􏴺
@@ -228,7 +235,7 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬rotor brake􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦describes different winch applications􏶥
 􏴽>= 0􏴾
 􏴽<= 4􏴾
 􏴻0􏴼􏴹Not attached􏴺
@@ -240,17 +247,19 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬winch flag􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦the current length of the cable for the length.  used to determine if what is attached is onthe ground.  hat + length of cord is to the ground it has ground.􏶥
+􏴽>= 0􏴾
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch length􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
+􏴽>= 0􏴾
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch payload mass􏶫􏵚kilograms􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦in body frame of the attachment point of the winch.  location point of the winch on the helicopter􏶥
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch payload x􏶫􏵚meters􏵛􏶪􏶩
@@ -264,6 +273,10 @@
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch payload z􏶫􏵚meters􏵛􏶪􏶩
+
+
+*duplicated with hook ^
+*winch is off the door
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -302,7 +315,7 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬hook payload z􏶫􏵚meters􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦supplentaryy augmentation system􏶥
 􏴽>= 0􏴾
 􏴽<= 7􏴾
 􏴻bit 0 set􏴼  􏴹Pitch SAS On􏴺
@@ -318,7 +331,7 @@
 􏶨􏶧􏶦HAT for GC reference􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬height above terrain􏶫􏵚feet􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬height of terrain􏶫􏵚feet􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏴽>= 0􏴾
@@ -340,17 +353,17 @@
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦physical deflection of the throttle control􏶥
 􏴽>= 0􏴾
 􏴽<= 1􏴾
 􏴻1􏴼􏴹maximum throttle􏴺
 􏴻0􏴼􏴹idle throttle􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫􏵚􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫􏵚percent deflection of control movement􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦increase or decrease of throttle. *like another throttle􏶥
 􏴽>= 0􏴾
 􏴽<= 1􏴾
 􏴻1􏴼􏴹maximum mixture􏴺
@@ -370,6 +383,10 @@
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵰􏵀
+􏴽>= 180􏴾
+􏴽<= -180􏴾
+􏴻-30􏴼􏴹general range􏴺
+􏴻45􏴼􏴹general range􏴺
 􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬prop pitch􏶫􏵚degrees􏵛􏶪􏶩
 􏴷number of propellers􏴸
 
@@ -383,10 +400,12 @@
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
+􏴽>= 0􏴾
+􏴽<= 3000-4000 pounds􏴾
 􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_FUEL_TANKS]􏶭􏶬fuel weight􏶫􏵚pounds􏵛􏶪􏶩
 􏴷number of tanks􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦horizontal or vertical movement of the craft when paused.􏶥
 􏴽>= 0􏴾
 􏴽<= 7􏴾
 􏴻bit 0 set􏴼  􏴹pause􏴺

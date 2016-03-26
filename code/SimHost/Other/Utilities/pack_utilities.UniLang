@@ -1,15 +1,74 @@
 􏶞g􏶟
 􏷲Utilities for packing / unpacking on network data buffers􏷱
-􏷰Deals with endianness and address invariance. not padding/offsets
-Relies on architecture for endianness􏷯
+􏷰Deals with endianness and address invariance. not padding/offsets􏷯
 􏷮Pack Utilities􏷭 􏷮Network􏷭 􏷮Utilities􏷭
 􏷬Dave Corapi􏷫
 􏷬Trevor Hickey􏷫
 􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
 􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
-􏷤􏷣􏷦stdioLib.h􏷥􏷢USES: BOOL􏷡
+􏷤􏷣􏷦stdioLib.h􏷥􏷢USES: BOOL, UINT16􏷡
 􏶔􏶕􏶒FfsCommon.h􏶓􏶖USES: DwordReverseByteOrder􏶗
 􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
+
+
+􏷘-􏷗􏷒on big endian architecture􏷑
+􏷐determines if the machine is big endian􏷏
+􏶠returns 􏵱 if it is big endian.  􏵰 if it is little endian􏶡
+􏶴
+    union U { UINT16 m_u16; unsigned char m_ucC; };
+    union U u;
+    u.m_u16 = 1;
+    u.m_ucC = 0;
+    return !u.m_ucC;
+􏶳
+
+􏷘-􏷗􏷒on little endian architecture􏷑
+􏷐determines if the machine is little endian􏷏
+􏶠returns 􏵱 if it is little endian.  􏵰 if it is big endian􏶡
+􏶴
+    return !􏵲on big endian architecture􏵳;
+􏶳
+
+
+􏷘-􏷗􏷒reverse endian by 4 bytes when on little endian machine􏷑
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏶴
+    if (􏵲on little endian architecture􏵳)){
+        DwordReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
+    }
+􏶳
+
+􏷘-􏷗􏷒reverse endian by 4 bytes when on big endian machine􏷑
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏶴
+    if (􏵲on big endian architecture􏵳)){
+        DwordReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
+    }
+􏶳
+
+􏷘-􏷗􏷒reverse endian by 2 bytes when on little endian machine􏷑
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏶴
+    if (􏵲on little endian architecture􏵳)){
+        ReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
+    }
+􏶳
+
+􏷘-􏷗􏷒reverse endian by 2 bytes when on big endian machine􏷑
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏶴
+    if (􏵲on big endian architecture􏵳)){
+        ReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
+    }
+􏶳
+
+
+
+
 
 􏷘+􏷗􏷒pack big endian 4 byte invariance􏷑
 􏷐Packs a type into a big endian data buffer􏷏
@@ -23,6 +82,9 @@ Relies on architecture for endianness􏷯
 􏶴
     􏶲pack data into the byte array􏶱
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
+    
+    􏶲potentially reverse the packed data so that it is in big endian􏶱
+    􏵲reverse endian by 4 bytes when on little endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -42,6 +104,9 @@ Relies on architecture for endianness􏷯
     􏶲unpack data from byte array􏶱
     memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
+    􏶲potentially reverse the unpacked data so that it is back to little endian􏶱
+    􏵲reverse endian by 4 bytes when on little endian machine􏵳􏵶data􏵷,􏵶data size􏵷);
+    
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
@@ -59,8 +124,8 @@ Relies on architecture for endianness􏷯
     􏶲pack data into the byte array􏶱
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
-    􏶲reverse the packed data so that it is in little endian􏶱
-    DwordReverseByteOrder(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    􏶲potentially reverse the packed data so that it is in little endian􏶱
+    􏵲reverse endian by 4 bytes when on big endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷 += 􏵶data size􏵷;
@@ -79,12 +144,37 @@ Relies on architecture for endianness􏷯
     􏶲unpack data from byte array􏶱
     memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
-    􏶲reverse the unpacked data so that it is back to big endian􏶱
-    DwordReverseByteOrder(􏵶data􏵷,􏵶data size􏵷);
+    􏶲potentially reverse the unpacked data so that it is back to big endian􏶱
+    􏵲reverse endian by 4 bytes when on big endian machine􏵳􏵶data􏵷,􏵶data size􏵷);
 
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 􏷘+􏷗􏷒pack big endian 2 byte invariance􏷑
@@ -99,6 +189,11 @@ Relies on architecture for endianness􏷯
 􏶴
     􏶲pack data into the byte array􏶱
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
+    
+    􏶲potentially reverse the packed data so that it is in big endian􏶱
+    if (!IS_BIG_ENDIAN){
+        ReverseByteOrder(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    }
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -118,6 +213,11 @@ Relies on architecture for endianness􏷯
     􏶲unpack data from byte array􏶱
     memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
+    􏶲potentially reverse the unpacked data so that it is back to little endian􏶱
+    if (!IS_BIG_ENDIAN){
+        ReverseByteOrder(􏵶data􏵷,􏵶data size􏵷);
+    }
+    
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
@@ -135,8 +235,10 @@ Relies on architecture for endianness􏷯
     􏶲pack data into the byte array􏶱
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
-    􏶲reverse the packed data so that it is in little endian􏶱
-    ReverseByteOrder(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    􏶲potentially reverse the packed data so that it is in little endian􏶱
+    if (IS_BIG_ENDIAN){
+        ReverseByteOrder(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    }
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -155,8 +257,10 @@ Relies on architecture for endianness􏷯
     􏶲unpack data from byte array􏶱
     memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
-    􏶲reverse the unpacked data so that it is back to big endian􏶱
-    ReverseByteOrder(􏵶data􏵷,􏵶data size􏵷);
+    􏶲potentially reverse the unpacked data so that it is back to big endian􏶱
+    if (IS_BIG_ENDIAN){
+        ReverseByteOrder(􏵶data􏵷,􏵶data size􏵷);
+    }
 
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;

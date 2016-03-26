@@ -11,10 +11,16 @@
 􏶘+i􏶙􏶮int􏶭􏶬running􏶫􏵚􏵛􏶪􏶩
 
 􏶨RPM of piston􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= 100,000􏴾
 􏶘+i􏶙􏶮float􏶭􏶬piston􏶫􏵚revolutions / minute􏵛􏶪􏶩
 
 􏶨n1 of turbine􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= 100􏴾
 􏶘+i􏶙􏶮float􏶭􏶬n1􏶫􏵚percentage􏵛􏶪􏶩
 
 􏶨n2 of turbine􏶧􏶦􏶥
+􏴽>= 0􏴾
+􏴽<= 100􏴾
 􏶘+i􏶙􏶮float􏶭􏶬n2􏶫􏵚percentage􏵛􏶪􏶩
