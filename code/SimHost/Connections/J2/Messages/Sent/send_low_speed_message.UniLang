@@ -5,14 +5,14 @@
 􏷬Trevor Hickey􏷫
 
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦the number of landing gears on the craft􏶥
 􏴽>= 0􏴾
 􏴽<= MAX_NUMBER_OF_LANDING_GEARS􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of gears􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦how fully extended or stowed each landing gear is􏶥
 􏴽>= 0􏴾
 􏴽<= 100􏴾
 􏴻0􏴼􏴹full up (stowed)􏴺
@@ -22,14 +22,14 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_LANDING_GEARS]􏶭􏶬gear requested position􏶫􏵚percentage􏵛􏶪􏶩
 􏴷number of gears􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦the number of flaps on the craft􏶥
 􏴽>= 0􏴾
 􏴽<= MAX_NUMBER_OF_FLAPS􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵰􏵀
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of flaps􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦how fully retracted or extended each flap is􏶥
 􏴽>= 0􏴾
 􏴽<= 100􏴾
 􏴻0􏴼􏴹fully retracted􏴺
@@ -39,14 +39,14 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_FLAPS]􏶭􏶬flap requested position􏶫􏵚percentage􏵛􏶪􏶩
 􏴷number of flaps􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦the number of speed brakes on the craft􏶥
 􏴽>= 0􏴾
 􏴽<= MAX_NUMBER_OF_SPEED_BRAKES􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵰􏵀
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of speed brakes􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦how fully retracted or extended each speed brake is􏶥
 􏴽>= 0􏴾
 􏴽<= 100􏴾
 􏴻0􏴼􏴹fully retracted􏴺
@@ -56,21 +56,21 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_SPEED_BRAKES]􏶭􏶬speed brake requested position􏶫􏵚percentage􏵛􏶪􏶩
 􏴷number of speed brakes􏴸
 
-􏶨􏶧􏶦atmospheric pressure at seas level􏶥
+􏶨􏶧􏶦atmospheric pressure at sea level􏶥
 􏴽>= 0􏴾
 􏴽<= 35􏴾
 􏴻29.92􏴼􏴹standard􏴺
-􏴻27 - 31􏴼
+􏴻27 - 31􏴼􏴹normal􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -100􏴾
-􏴽<= 150 C􏴾
+􏴽>= -148􏴾
+􏴽<= 302􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏴻15 C􏴼􏴹standard􏴺
+􏴻59􏴼􏴹standard􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
 
 􏶨􏶧􏶦general measurement of friction on the ground􏶥
@@ -102,47 +102,48 @@
 􏴽>= -360􏴾
 􏴽<= 360􏴾
 􏴻0􏴼􏴹straight at you􏴺
-􏴻0􏴼􏴹90 straight vertical􏴺
+􏴻90􏴼􏴹straight vertical up􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind inclination􏶫􏵚degrees􏵛􏶪􏶩
 
-􏶨􏶧􏶦scaled value of he turbulence of the airflow􏶥
+􏶨􏶧􏶦a scaled value of the turbulence of airflow􏶥
 􏴽>= 0􏴾
 􏴽<= 10􏴾
 􏴻0􏴼􏴹smooth􏴺
-􏴻100􏴼􏴹extremely rough􏴺
+􏴻10􏴼􏴹extremely rough􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬turbulence􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
-􏴽>= 0􏴾
+􏶨􏶧􏶦the payload of a vehicle may include cargo, passengers, flight crew,
+munitions, scientific instruments or experiments, or other equipment.􏶥
+􏴽> 0􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬payload weight􏶫􏵚pounds􏵛􏶪􏶩
 
-􏶨􏶧􏶦plus or minus each access from the predefined CG􏶥
+􏶨􏶧􏶦offset on the x axis of the center of gravity􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬CG offset x􏶫􏵚inches􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦offset on the y axis of the center of gravity􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬CG offset y􏶫􏵚inches􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦offset on the z axis of the center of gravity􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬CG offset z􏶫􏵚inches􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦the number of engines on the craft􏶥
 􏴽>= 0􏴾
 􏴽<= MAX_NUMBER_OF_ENGINES􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦boolean for whether each engine's starter is running􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴽>= 0􏴾
@@ -152,7 +153,8 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine starter running􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦enumeration  air taken from the engine system to be used in other places.  where to be used after taken from the engine􏶥
+􏶨􏶧􏶦Enumeration.
+Air taken from the engine system to be used in other systems.􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏵁Turbine􏵂􏴿􏵱􏵀
@@ -165,7 +167,7 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬bleed air􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦whether the ignition is started for each engine􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏵁Turbine􏵂􏴿􏵱􏵀
@@ -177,7 +179,7 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬ignition􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦various flags applied to each engine􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴽>= 0􏴾
@@ -195,7 +197,8 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine flags 1􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦different covers can be used on the inlet.  physical grill or screen placed over the engine to prevent things from going in􏶥
+􏶨􏶧􏶦A physical grill or screen placed over the engine to prevent debris intake.  
+Different covers can be used on the inlet.􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴽>= 0􏴾
@@ -209,13 +212,13 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine inlet state􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦Ice buildup on engine􏶥
+􏶨􏶧􏶦Ice buildup on each of the engines􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬ice state engine􏶫􏵚inches􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦various failures that can occur on each engine􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴽>= 0􏴾
@@ -255,38 +258,38 @@
 􏶘+i􏶙􏶰􏶯􏶮int[MAX_NUMBER_OF_ENGINES]􏶭􏶬engine failure flags􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦the number of propellers on the craft􏶥
 􏴽>= 0􏴾
 􏴽<= MAX_NUMBER_OF_PROPELLERS􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦Ice buildup on propeller􏶥
+􏶨􏶧􏶦Ice buildup on each propeller􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬ice states prop􏶫􏵚inches􏵛􏶪􏶩
 􏴷number of propellers􏴸
 
-􏶨􏶧􏶦Ice build up on right wing􏶥
+􏶨􏶧􏶦Ice build up on the right wing􏶥
 􏴽>= 0􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state right wing􏶫􏵚inches􏵛􏶪􏶩
 
-􏶨􏶧􏶦Ice build up on left wing􏶥
+􏶨􏶧􏶦Ice build up on the left wing􏶥
 􏴽>= 0􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state left wing􏶫􏵚inches􏵛􏶪􏶩
 
-􏶨􏶧􏶦Ice build up on fuselage􏶥
+􏶨􏶧􏶦Ice build up on the fuselage􏶥
 􏴽>= 0􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state fuselage􏶫􏵚inches􏵛􏶪􏶩
 
-􏶨􏶧􏶦Ice build up on tail􏶥
+􏶨􏶧􏶦Ice build up on the tail􏶥
 􏴽>= 0􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
@@ -298,7 +301,7 @@
 􏴽>= 0􏴾
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬time multiplier􏶫􏵚􏵛􏶪􏶩
 
-􏶨􏶧􏶦􏶥
+􏶨􏶧􏶦Various failures that can occur on tires, doors, and rotors􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴽>= 0􏴾
