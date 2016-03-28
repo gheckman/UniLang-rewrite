@@ -14,6 +14,7 @@
 􏷘-􏷗􏷒on big endian architecture􏷑
 􏷐determines if the machine is big endian􏷏
 􏶠returns 􏵱 if it is big endian.  􏵰 if it is little endian􏶡
+􏶚m􏶛􏶾BOOL􏶽􏶼is on big endian􏶻􏵜􏵝􏶺whether the machine is on big endian or not􏶹
 􏶴
     union U { UINT16 m_u16; unsigned char m_ucC; };
     union U u;
@@ -25,14 +26,18 @@
 􏷘-􏷗􏷒on little endian architecture􏷑
 􏷐determines if the machine is little endian􏷏
 􏶠returns 􏵱 if it is little endian.  􏵰 if it is big endian􏶡
+􏶚m􏶛􏶾BOOL􏶽􏶼is on big endian􏶻􏵜􏵝􏶺whether the machine is on big endian or not􏶹
 􏶴
-    return !􏵲on big endian architecture􏵳;
+    return !􏵲on big endian architecture􏵳);
 􏶳
 
 
 􏷘-􏷗􏷒reverse endian by 4 bytes when on little endian machine􏷑
+􏷐reverses endian for little endian machines only􏷏 
+􏶠only performs transformations on a little endian machine􏶡 
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
 􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
 􏶴
     if (􏵲on little endian architecture􏵳)){
         DwordReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
@@ -40,8 +45,11 @@
 􏶳
 
 􏷘-􏷗􏷒reverse endian by 4 bytes when on big endian machine􏷑
+􏷐reverses endian for big endian machines only􏷏 
+􏶠only performs transformations on a big endian machine􏶡 
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
 􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
 􏶴
     if (􏵲on big endian architecture􏵳)){
         DwordReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
@@ -49,8 +57,11 @@
 􏶳
 
 􏷘-􏷗􏷒reverse endian by 2 bytes when on little endian machine􏷑
+􏷐reverses endian for little endian machines only􏷏 
+􏶠only performs transformations on a little endian machine􏶡 
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
 􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
 􏶴
     if (􏵲on little endian architecture􏵳)){
         ReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
@@ -58,8 +69,11 @@
 􏶳
 
 􏷘-􏷗􏷒reverse endian by 2 bytes when on big endian machine􏷑
+􏷐reverses endian for big endian machines only􏷏 
+􏶠only performs transformations on a big endian machine􏶡 
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
 􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
 􏶴
     if (􏵲on big endian architecture􏵳)){
         ReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
@@ -72,7 +86,7 @@
 
 􏷘+􏷗􏷒pack big endian 4 byte invariance􏷑
 􏷐Packs a type into a big endian data buffer􏷏
-􏶠DWORDs are revered if needed􏶡
+􏶠the bytes of the type are converted to big endian with a 4 byte invariance􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜r􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -93,7 +107,7 @@
 
 􏷘+􏷗􏷒unpack big endian 4 byte invariance􏷑
 􏷐Unpacks a type stored as big endian from a data buffer􏷏
-􏶠unpacked􏶡
+􏶠the bytes of the type are converted to big endian with a 4 byte invariance􏶡
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -113,7 +127,7 @@
 
 􏷘+􏷗􏷒pack little endian 4 byte invariance􏷑
 􏷐Packs a type into a little endian data buffer􏷏
-􏶠􏶡
+􏶠the bytes of the type are converted to little endian with a 4 byte invariance􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜r􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -133,7 +147,7 @@
 
 􏷘+􏷗􏷒unpack little endian 4 byte invariance􏷑
 􏷐Unpacks a type stored as little endian from a data buffer􏷏
-􏶠􏶡
+􏶠the bytes of the type are converted to little endian with a 4 byte invariance􏶡
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -179,7 +193,7 @@
 
 􏷘+􏷗􏷒pack big endian 2 byte invariance􏷑
 􏷐Packs a type into a big endian data buffer􏷏
-􏶠􏶡
+􏶠the bytes of the type are converted to big endian with a 2 byte invariance􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜r􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -191,9 +205,7 @@
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
     􏶲potentially reverse the packed data so that it is in big endian􏶱
-    if (!IS_BIG_ENDIAN){
-        ReverseByteOrder(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    }
+    􏵲reverse endian by 2 bytes when on little endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -202,7 +214,7 @@
 
 􏷘+􏷗􏷒unpack big endian 2 byte invariance􏷑
 􏷐Unpacks a type stored as big endian from a data buffer􏷏
-􏶠􏶡
+􏶠the bytes of the type are converted to big endian with a 2 byte invariance􏶡
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -214,9 +226,7 @@
     memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲potentially reverse the unpacked data so that it is back to little endian􏶱
-    if (!IS_BIG_ENDIAN){
-        ReverseByteOrder(􏵶data􏵷,􏵶data size􏵷);
-    }
+    􏵲reverse endian by 2 bytes when on little endian machine􏵳􏵶data􏵷,􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -224,7 +234,7 @@
 
 􏷘+􏷗􏷒pack little endian 2 byte invariance􏷑
 􏷐Packs a type into a little endian data buffer􏷏
-􏶠􏶡
+􏶠the bytes of the type are converted to little endian with a 2 byte invariance􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜r􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -236,9 +246,7 @@
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
     􏶲potentially reverse the packed data so that it is in little endian􏶱
-    if (IS_BIG_ENDIAN){
-        ReverseByteOrder(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    }
+    􏵲reverse endian by 2 bytes when on big endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -246,7 +254,7 @@
 
 􏷘+􏷗􏷒unpack little endian 2 byte invariance􏷑
 􏷐Unpacks a type stored as little endian from a data buffer􏷏
-􏶠􏶡 
+􏶠the bytes of the type are converted to little endian with a 2 byte invariance􏶡 
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
@@ -258,9 +266,7 @@
     memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲potentially reverse the unpacked data so that it is back to big endian􏶱
-    if (IS_BIG_ENDIAN){
-        ReverseByteOrder(􏵶data􏵷,􏵶data size􏵷);
-    }
+    􏵲reverse endian by 2 bytes when on big endian machine􏵳􏵶data􏵷,􏵶data size􏵷);
 
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
