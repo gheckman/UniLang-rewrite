@@ -5,7 +5,9 @@
 􏷬Trevor Hickey􏷫
 
 
-􏶨􏶧􏶦during a normal reposition, location/speed is sent to the flight model, the flight model trims the helicopter to a state of zero accelerations and then returns control positions to f2si for unpausing.  Special reposition: the flight model is provided all values of the state, and adjusts to that state􏶥
+􏶨􏶧􏶦During a normal reposition, the location/speed are sent to the flight model.
+The flight model trims the helicopter to a state of zero accelerations and then returns control positions to f2si for unpausing.
+During a Special reposition, the flight model is provided all values of the state, and adjusts to that particular state.􏶥
 􏴽>= 0􏴾
 􏴽<= 1􏴾
 􏴻0􏴼􏴹Normal Reposition􏴺
