@@ -357,7 +357,7 @@ used to determine if what is attached, is on the ground.􏶥
 􏴻0􏴼􏴹idle throttle􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫􏵚percent deflection of control movement􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_ENGINES]􏶭􏶬throttle􏶫􏵚􏵛􏶪􏶩
 􏴷number of engines􏴸
 
 􏶨􏶧􏶦increase or decrease of throttle􏶥

@@ -43,7 +43,15 @@ function Transfer-Data(){
    #Test-It "$1" "$3";
    #Document-It "$1";
 }
-   
+function Transfer-Constraints(){
+   Print-Whats-Happening "Constraint" "$1"
+   Export-It-Constraints "$1";
+   ##all this is kinda broken by design
+   #Copy-It "$1" "$2";
+   #Style-It "$1" "$2";
+   #Test-It "$1" "$3";
+   #Document-It "$1";
+}
 
 
 
@@ -58,6 +66,9 @@ function Print-Whats-Happening(){
 }
 function Export-It-Good(){
   $TRANSCOMPILER_TOOL --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="c" --style="good" "$1"."$UNILANG_FILE_EXTENSION";
+}
+function Export-It-Constraints(){
+  $TRANSCOMPILER_TOOL --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="c" --style="constraints" "$1"."$UNILANG_FILE_EXTENSION";
 }
 function Export-It-Bad-Bools(){
   $TRANSCOMPILER_TOOL --recursive_dependency_paths="$FULL_PATH_TO_UNICODE_ROOT" --exporter="f2si" --language="c" --style="bad-bools" "$1"."$UNILANG_FILE_EXTENSION";
