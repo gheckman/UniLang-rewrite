@@ -281,7 +281,7 @@ From SimHost to Flight Model􏷏
   J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadY_m);
   J2_UNPACK_VAR(􏵶message􏵷->m_fHookPayloadZ_m);
   J2_UNPACK_VAR(􏵶message􏵷->m_nSASMode);
-  J2_UNPACK_VAR(􏵶message􏵷->m_fHeightAboveTerrain_ft);
+  J2_UNPACK_VAR(􏵶message􏵷->m_fHeightOfTerrain_ft);
     
   􏶲contact point unpacking􏶱
   J2_UNPACK_VAR(􏵶message􏵷->m_nNumberOfContactPoints);

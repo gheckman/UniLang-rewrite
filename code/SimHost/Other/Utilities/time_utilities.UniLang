@@ -52,7 +52,7 @@ tick period of 1 millisecond.􏶱
 if (􏵲tick period in milliseconds􏵳) != 0.0f){
   return 􏵶number of milliseconds􏵷 / 􏵲tick period in milliseconds􏵳);
 }
-return 0;
+return 0.0f;
 􏶳
 
 􏷘+􏷗􏷒ticks to milliseconds􏷑

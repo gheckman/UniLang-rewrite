@@ -19,6 +19,7 @@
 􏶔􏶕􏶒J2Unpacking􏶓􏶖USES: unpack functions􏶗
 􏶔􏶕􏶒stddef.h􏶓􏶖USES: size_t􏶗
 􏶔􏶕􏶒J2ConnectionData􏶓􏶖USES: UpdateJ2HighSpeedOutputData(), UpdateJ2LowSpeedOutputData(), UpdateJ2RepositionRequestData(), UpdateJ2VersionRequestData()􏶗
+􏶔􏶕􏶒J2SendConstraints􏶓􏶖USES: CheckConstraintsOnSendHighSpeedMessage(), CheckConstraintsOnSendLowSpeedMessage(), CheckConstraintsOnSendRepositionMessage(), CheckConstraintsOnSendVersionRequestMessage()􏶗
 􏶔􏶕􏶒SemaphoreManager􏶓􏶖USES: SemaphoreGive()􏶗
 􏶔􏶕􏶒SemaphoreList􏶓􏶖USES: SEMAPHORE_SCHEDULE_IN􏶗
 􏶔􏶕􏶒UdpConnectionUtilities􏶓􏶖USES: SendAndHandleUdpErrors(), ReportUdpRecieveStatus()􏶗
@@ -224,8 +225,12 @@
         
         􏶲if too much time has passed􏶱
         if (􏵲timer expired􏵳􏵶timer􏵷,􏵶total duration􏵷)){
+        
             􏶲update high speed outputs􏶱
             UpdateJ2HighSpeedOutputData(&tHigh);
+            
+            􏶲check that we are sending valid data to J2􏶱
+            CheckConstraintsOnSendHighSpeedMessage(&tHigh);
             
             􏶲send high speed message􏶱
             􏵲send high speed message􏵳&tHigh);
@@ -243,8 +248,12 @@
         
         􏶲if too much time has passed􏶱
         if (􏵲timer expired􏵳􏵶timer􏵷,􏵶total duration􏵷)){
+        
             􏶲update low speed outputs􏶱
             UpdateJ2LowSpeedOutputData(&tLow);
+            
+            􏶲check that we are sending valid data to J2􏶱
+            CheckConstraintsOnSendLowSpeedMessage(&tLow);
             
             􏶲send low speed message􏶱
             􏵲send low speed message􏵳&tLow);
@@ -279,6 +288,9 @@
 􏶴
     􏶲if reposition has changed􏶱
     if (􏵲reposition has changed􏵳􏵶message􏵷)){
+    
+        􏶲check that we are sending valid data to J2􏶱
+        CheckConstraintsOnSendRepositionMessage(􏵶message􏵷);
 
         􏶲send reposition message􏶱
         􏵲send reposition message􏵳􏵶message􏵷);
@@ -293,6 +305,9 @@
 􏶴
     􏶲if version has changed􏶱
     if (􏵲version has changed􏵳􏵶message􏵷)){
+    
+        􏶲check that we are sending valid data to J2􏶱
+        CheckConstraintsOnSendVersionRequestMessage(􏵶message􏵷);
 
         􏶲send version message􏶱
         􏵲send version message􏵳􏵶message􏵷);

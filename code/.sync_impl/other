@@ -46,8 +46,8 @@ function Transfer-Data(){
 function Transfer-Constraints(){
    Print-Whats-Happening "Constraint" "$1"
    Export-It-Constraints "$1";
-   Copy-It "$3" "$2";
-   Style-It "$3" "$2";
+   Copy-It "$4" "$3";
+   Style-It "$4" "$3";
    #Document-It "$3";
 }
 

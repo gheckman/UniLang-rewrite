@@ -5,9 +5,9 @@
 *
 *    @note J2 Send Constraints Interface
 *
-*    @brief brief
+*    @brief A set of debug functions used to determine that the value constraints of a set of data are being met.
 *
-*    @details details
+*    @details Data constraints may be specified by an ICD, or constrained based on what we deem acceptable.
 *
 *    @copyright Copyright 2015.
 *    @n         Fidelity Flight Simulation, Inc. (F2Si)
@@ -42,6 +42,8 @@
 #define J2SendConstraintsH
 
 
+#include "SendToJ2Messages.h"  //all structs
+
 
 #ifdef __cplusplus
 extern "C"
@@ -49,13 +51,6 @@ extern "C"
 #endif /* #ifdef __cplusplus */
 
 
-
-/**
- * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
- *         The value should either be adjusted, or the constraint should be modified
- * @param[in] ptSendToJ2Messages the data type whose member variables will be checked against value constraints
- */
-void CheckConstraintsOnSendToJ2Messages(const SendToJ2MessagesT *const ptSendToJ2Messages);
 
 /**
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
