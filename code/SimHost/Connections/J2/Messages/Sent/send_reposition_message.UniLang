@@ -50,8 +50,8 @@ uncorrected for airspeed system errors.􏶥
 􏶘+i􏶙􏶮float􏶭􏶬aircraft roll􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦indicates whether the aircraft is climbing, descending, or in level flight.􏶥
-􏴽>= -100,000􏴾
-􏴽<= 100,000􏴾
+􏴽>= -100000􏴾
+􏴽<= 100000􏴾
 􏶘+i􏶙􏶮float􏶭􏶬vertical speed􏶫􏵚feet / minute􏵛􏶪􏶩
 
 􏶨􏶧􏶦the number of engines that make up the craft􏶥
