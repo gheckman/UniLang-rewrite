@@ -230,7 +230,8 @@
             UpdateJ2HighSpeedOutputData(&tHigh);
             
             􏶲check that we are sending valid data to J2􏶱
-            CheckConstraintsOnSendHighSpeedMessage(&tHigh);
+            􏶲disabled due to sim lag􏶱
+            //CheckConstraintsOnSendHighSpeedMessage(&tHigh);
             
             􏶲send high speed message􏶱
             􏵲send high speed message􏵳&tHigh);
@@ -253,7 +254,8 @@
             UpdateJ2LowSpeedOutputData(&tLow);
             
             􏶲check that we are sending valid data to J2􏶱
-            CheckConstraintsOnSendLowSpeedMessage(&tLow);
+            􏶲disabled due to sim lag􏶱
+            //CheckConstraintsOnSendLowSpeedMessage(&tLow);
             
             􏶲send low speed message􏶱
             􏵲send low speed message􏵳&tLow);
@@ -290,7 +292,8 @@
     if (􏵲reposition has changed􏵳􏵶message􏵷)){
     
         􏶲check that we are sending valid data to J2􏶱
-        CheckConstraintsOnSendRepositionMessage(􏵶message􏵷);
+        􏶲disabled due to sim lag􏶱
+        //CheckConstraintsOnSendRepositionMessage(􏵶message􏵷);
 
         􏶲send reposition message􏶱
         􏵲send reposition message􏵳􏵶message􏵷);
@@ -307,7 +310,8 @@
     if (􏵲version has changed􏵳􏵶message􏵷)){
     
         􏶲check that we are sending valid data to J2􏶱
-        CheckConstraintsOnSendVersionRequestMessage(􏵶message􏵷);
+        􏶲disabled due to sim lag􏶱
+        //CheckConstraintsOnSendVersionRequestMessage(􏵶message􏵷);
 
         􏶲send version message􏶱
         􏵲send version message􏵳􏵶message􏵷);
@@ -367,9 +371,50 @@
     return bHasChanged;
 􏶳
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+􏷘-􏷗􏷒source and send high speed message􏷑
+􏷐source all of new data for the message, and then send it to the flight model􏷏
+􏶠􏶡
+􏶴
+􏶳
+
+􏷘-􏷗􏷒source and send low speed message􏷑
+􏶴
+􏶳
+
+􏷘-􏷗􏷒source and send reposition message􏷑
+􏶴
+􏶳
+
+􏷘-􏷗􏷒source and send version message􏷑
+􏶴
+􏶳
+
+
+
+
+
+
+
+
+
 􏷘-􏷗􏷒send high speed message􏷑
 􏷐sends the data message to J2 flight model􏷏
-􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶠Sends the message over UDP, and handles errors􏶡
 􏶜r􏶝􏷆SendHighSpeedMessageT􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱
@@ -386,7 +431,7 @@
 􏶳
 􏷘-􏷗􏷒send low speed message􏷑
 􏷐sends the data message to J2 flight model􏷏
-􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶠Sends the message over UDP, and handles errors􏶡
 􏶜r􏶝􏷆SendLowSpeedMessageT􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱
@@ -403,7 +448,7 @@
 
 􏷘-􏷗􏷒send reposition message􏷑
 􏷐sends the data message to J2 flight model􏷏
-􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶠Sends the message over UDP, and handles errors􏶡
 􏶜r􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱
@@ -420,7 +465,7 @@
 
 􏷘-􏷗􏷒send version message􏷑
 􏷐sends the data message to J2 flight model􏷏
-􏶠Uses a timer internally to only send the message when appropriate􏶡
+􏶠Sends the message over UDP, and handles errors􏶡
 􏶜r􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀the message to send􏶿
 􏶴
     􏶲initializes data buffer information􏶱

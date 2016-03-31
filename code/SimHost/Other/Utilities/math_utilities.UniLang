@@ -17,6 +17,12 @@
 
     float fTotal = 0.0f;
     size_t uIndex = 0u;
+    
+    􏶲if there are no elements, the average will be 0􏶱
+    if(􏵶size􏵷 == 0){
+        return 0.0f;
+    }
+    
     for (; uIndex < 􏵶size􏵷; ++uIndex){
         fTotal += 􏵶array􏵷[uIndex];
     }
@@ -34,6 +40,12 @@
 
     int nTotal = 0;
     size_t uIndex = 0u;
+    
+    􏶲if there are no elements, the average will be 0􏶱
+    if(􏵶size􏵷 == 0){
+        return 0;
+    }
+    
     for (; uIndex < 􏵶size􏵷; ++uIndex){
         nTotal += 􏵶array􏵷[uIndex];
     }

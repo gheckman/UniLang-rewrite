@@ -9,10 +9,10 @@ This varies the main rotor blade pitch with fore and aft movement,
 causing induced pitch to the nose up or down.  
 Used in forward flight:  To adjust forward speed and control rolled-turn
 Used in hover flight: To move forwards/backwards􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection down􏴺
-􏴻1.0􏴼􏴹full deflection up􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection down􏴺
+􏴻1.0f􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬pitch flight control􏶫􏵚􏵛􏶪􏶩
@@ -21,127 +21,127 @@ Used in hover flight: To move forwards/backwards􏶥
 This varies the main rotor blade pitch with left and right movement,
 causing induced roll in the direction moved.  
 This is done to move sideways􏶥􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection left􏴺
-􏴻1.0􏴼􏴹full deflection right􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection left􏴺
+􏴻1.0f􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬roll flight control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦left and right displacement of the yaw pedals􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection left􏴺
-􏴻1.0􏴼􏴹full deflection right􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection left􏴺
+􏴻1.0f􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬yaw flight control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦scaled value representing the displacement or travel of the collective lever up and down􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection down􏴺
-􏴻1.0􏴼􏴹full deflection up􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection down􏴺
+􏴻1.0f􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬collective flight control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦scaled value of the pitch trim position􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection down􏴺
-􏴻1.0􏴼􏴹full deflection up􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection down􏴺
+􏴻1.0f􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬pitch trim position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦scaled value of the roll trim position􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection left􏴺
-􏴻1.0􏴼􏴹full deflection right􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection left􏴺
+􏴻1.0f􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬roll trim position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦scaled value of the yaw trim position􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection left􏴺
-􏴻1.0􏴼􏴹full deflection right􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection left􏴺
+􏴻1.0f􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬yaw trim position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection left􏴺
-􏴻1.0􏴼􏴹full deflection right􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection left􏴺
+􏴻1.0f􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬yaw serial actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection left􏴺
-􏴻1.0􏴼􏴹full deflection right􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection left􏴺
+􏴻1.0f􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬yaw trim actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection left􏴺
-􏴻1.0􏴼􏴹full deflection right􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection left􏴺
+􏴻1.0f􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬roll serial actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection left􏴺
-􏴻1.0􏴼􏴹full deflection right􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection left􏴺
+􏴻1.0f􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬roll trim actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection down􏴺
-􏴻1.0􏴼􏴹full deflection up􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection down􏴺
+􏴻1.0f􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬pitch serial actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection down􏴺
-􏴻1.0􏴼􏴹full deflection up􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection down􏴺
+􏴻1.0f􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬pitch trim actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection down􏴺
-􏴻1.0􏴼􏴹full deflection up􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection down􏴺
+􏴻1.0f􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float[2]􏶭􏶬collective serial actuators􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
-􏴻-1.0􏴼􏴹full deflection down􏴺
-􏴻1.0􏴼􏴹full deflection up􏴺
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
+􏴻-1.0f􏴼􏴹full deflection down􏴺
+􏴻1.0f􏴼􏴹full deflection up􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬collective trim actuators􏶫􏵚􏵛􏶪􏶩 
@@ -200,8 +200,8 @@ This is done to move sideways􏶥􏶥
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬collective control override flag􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦scaled value of right brake position􏶥
-􏴽>= 0􏴾
-􏴽<= 1􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 1.0f􏴾
 􏴻0􏴼􏴹no braking􏴺
 􏴻1􏴼􏴹maximum breaking􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -209,8 +209,8 @@ This is done to move sideways􏶥􏶥
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬right brake􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦scaled value of left brake position􏶥
-􏴽>= 0􏴾
-􏴽<= 1􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 1.0f􏴾
 􏴻0􏴼􏴹no braking􏴺
 􏴻1􏴼􏴹maximum breaking􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -218,8 +218,8 @@ This is done to move sideways􏶥􏶥
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬left brake􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦This only controls the nose wheel when it is not a caster or linked to the rudder.􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
+􏴽>= -1.0f􏴾
+􏴽<= 1.0f􏴾
 􏴻-1.0􏴼􏴹full deflection left􏴺
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -227,8 +227,8 @@ This is done to move sideways􏶥􏶥
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬nose wheel control􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦slows down the rotor when applied􏶥
-􏴽>= 0􏴾
-􏴽<= 1􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 1.0f􏴾
 􏴻0􏴼􏴹no braking􏴺
 􏴻1􏴼􏴹maximum breaking􏴺
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
@@ -249,13 +249,13 @@ This is done to move sideways􏶥􏶥
 
 􏶨􏶧􏶦the current length of the cable for the length.
 used to determine if what is attached, is on the ground.􏶥
-􏴽>= 0􏴾
+􏴽>= 0.0f􏴾
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch length􏶫􏵚meters􏵛􏶪􏶩
 
 􏶨􏶧􏶦the mass of the winch payload􏶥
-􏴽>= 0􏴾
+􏴽>= 0.0f􏴾
 􏵁Fixed Wing􏵂􏴿􏵰􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬winch payload mass􏶫􏵚kilograms􏵛􏶪􏶩
@@ -351,8 +351,8 @@ used to determine if what is attached, is on the ground.􏶥
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦physical deflection of the throttle control􏶥
-􏴽>= 0􏴾
-􏴽<= 1􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 1.0f􏴾
 􏴻1􏴼􏴹maximum throttle􏴺
 􏴻0􏴼􏴹idle throttle􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -361,8 +361,8 @@ used to determine if what is attached, is on the ground.􏶥
 􏴷number of engines􏴸
 
 􏶨􏶧􏶦increase or decrease of throttle􏶥
-􏴽>= 0􏴾
-􏴽<= 1􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 1.0f􏴾
 􏴻1􏴼􏴹maximum mixture􏴺
 􏴻0􏴼􏴹fuel cutoff􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -380,8 +380,8 @@ used to determine if what is attached, is on the ground.􏶥
 􏶨􏶧􏶦the current pitch of each propeller􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵰􏵀
-􏴽>= 180􏴾
-􏴽<= -180􏴾
+􏴽>= -180.0f􏴾
+􏴽<= 180.0f􏴾
 􏴻-30􏴼􏴹general range􏴺
 􏴻45􏴼􏴹general range􏴺
 􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_PROPELLERS]􏶭􏶬prop pitch􏶫􏵚degrees􏵛􏶪􏶩
@@ -397,8 +397,8 @@ used to determine if what is attached, is on the ground.􏶥
 􏶨􏶧􏶦the weight of the current fuel􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏴽>= 0􏴾
-􏴽<= 4000􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 4000.0f􏴾
 􏶘+i􏶙􏶰􏶯􏶮float[MAX_NUMBER_OF_FUEL_TANKS]􏶭􏶬fuel weight􏶫􏵚pounds􏵛􏶪􏶩
 􏴷number of tanks􏴸
 

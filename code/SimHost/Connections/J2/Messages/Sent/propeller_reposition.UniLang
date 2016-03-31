@@ -6,6 +6,6 @@
 
 
 􏶨RPM of piston􏶧􏶦􏶥
-􏴽>= 0􏴾
-􏴽<= 10000􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 10000.0f􏴾
 􏶘+􏶙􏶮float􏶭􏶬piston􏶫􏵚revolutions / minute􏵛􏶪􏶩

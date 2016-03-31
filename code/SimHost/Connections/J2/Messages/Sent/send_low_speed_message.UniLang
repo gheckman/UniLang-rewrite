@@ -57,8 +57,8 @@
 􏴷number of speed brakes􏴸
 
 􏶨􏶧􏶦atmospheric pressure at sea level􏶥
-􏴽>= 0􏴾
-􏴽<= 35􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 35.0f􏴾
 􏴻29.92􏴼􏴹standard􏴺
 􏴻27 - 31􏴼􏴹normal􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -66,16 +66,16 @@
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level pressure􏶫􏵚inches of mercury􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -148􏴾
-􏴽<= 302􏴾
+􏴽>= -148.0f􏴾
+􏴽<= 302.0f􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴻59􏴼􏴹standard􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
 
 􏶨􏶧􏶦general measurement of friction on the ground􏶥
-􏴽>= 0􏴾
-􏴽<= 10􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 10.0f􏴾
 􏴻0􏴼􏴹smooth􏴺
 􏴻100􏴼􏴹extremely rough􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -85,29 +85,29 @@
 􏶨􏶧􏶦magnitude of the velocity of wind present􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏴽>= 0􏴾
-􏴽<= 200􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 200.0f􏴾
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind magnitude􏶫􏵚knots􏵛􏶪􏶩
 
 􏶨􏶧􏶦direction in degrees of the wind􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏴽>= -360􏴾
-􏴽<= 360􏴾
+􏴽>= -360.0f􏴾
+􏴽<= 360.0f􏴾
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind heading􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦vertical angle of the wind􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏴽>= -360􏴾
-􏴽<= 360􏴾
+􏴽>= -360.0f􏴾
+􏴽<= 360.0f􏴾
 􏴻0􏴼􏴹straight at you􏴺
 􏴻90􏴼􏴹straight vertical up􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬wind inclination􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦a scaled value of the turbulence of airflow􏶥
-􏴽>= 0􏴾
-􏴽<= 10􏴾
+􏴽>= 0.0f􏴾
+􏴽<= 10.0f􏴾
 􏴻0􏴼􏴹smooth􏴺
 􏴻10􏴼􏴹extremely rough􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -116,7 +116,7 @@
 
 􏶨􏶧􏶦the payload of a vehicle may include cargo, passengers, flight crew,
 munitions, scientific instruments or experiments, or other equipment.􏶥
-􏴽> 0􏴾
+􏴽>= 0.0f􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬payload weight􏶫􏵚pounds􏵛􏶪􏶩
@@ -272,25 +272,25 @@ Different covers can be used on the inlet.􏶥
 􏴷number of propellers􏴸
 
 􏶨􏶧􏶦Ice build up on the right wing􏶥
-􏴽>= 0􏴾
+􏴽>= 0.0f􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state right wing􏶫􏵚inches􏵛􏶪􏶩
 
 􏶨􏶧􏶦Ice build up on the left wing􏶥
-􏴽>= 0􏴾
+􏴽>= 0.0f􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state left wing􏶫􏵚inches􏵛􏶪􏶩
 
 􏶨􏶧􏶦Ice build up on the fuselage􏶥
-􏴽>= 0􏴾
+􏴽>= 0.0f􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state fuselage􏶫􏵚inches􏵛􏶪􏶩
 
 􏶨􏶧􏶦Ice build up on the tail􏶥
-􏴽>= 0􏴾
+􏴽>= 0.0f􏴾
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬ice state tail􏶫􏵚inches􏵛􏶪􏶩
