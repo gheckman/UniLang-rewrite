@@ -1,6 +1,6 @@
 􏶞g􏶟
 􏷲J2 System Connection􏷱
-􏷰Sends and receives J2 flight model messages􏷯
+􏷰Sends J2 flight model messages􏷯
 􏷮J2_Connection􏷭
 􏷬Trevor Hickey􏷫
 
@@ -23,140 +23,6 @@
 􏶔􏶕􏶒SemaphoreManager􏶓􏶖USES: SemaphoreGive()􏶗
 􏶔􏶕􏶒SemaphoreList􏶓􏶖USES: SEMAPHORE_SCHEDULE_IN􏶗
 􏶔􏶕􏶒UdpConnectionUtilities􏶓􏶖USES: SendAndHandleUdpErrors(), ReportUdpRecieveStatus()􏶗
-
-􏷘+􏷗􏷒J2 data receive􏷑
-􏷐Used to sequence incoming J2 Data Messages.􏷏
-􏶠This is an infinitely running task.􏶡
-􏶚m􏶛􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
-􏶴
-    􏶲Creates J2 data that will be filled􏶱
-    J2InConnectionDataMessageT tJ2Data;
-    memset(&tJ2Data, 0, sizeof(tJ2Data));
-
-    while(1)
-    {
-
-        􏶲Read from Ownship in case we are only changing part of J2InConnectionDataT􏶱
-        ReadJ2DataMessageData(&tJ2Data);
-        
-        􏶲listens for incoming data messages, and processes them into J2Data􏶱
-        􏵲handle incoming data messages􏵳&tJ2Data);
-
-        􏶲Write data back into Ownship􏶱
-        WriteJ2DataMessageData(&tJ2Data);
-    }
-
-    return 0;
-􏶳
-
-􏷘+􏷗􏷒J2 control receive􏷑
-􏷐Used to sequence incoming J2 Control Messages.􏷏
-􏶠This is an infinitely running task.􏶡
-􏶚m􏶛􏶾int􏶽􏶼status􏶻􏶺The return status of the task.  Not relevant as the task does not return.􏶹
-􏶴
-    
-    􏶲Creates J2 data that will be filled􏶱
-    J2InConnectionControlMessageT tJ2Data;
-    memset(&tJ2Data, 0, sizeof(tJ2Data));
-
-    while(1)
-    {
-
-        􏶲Read from Ownship in case we are only changing part of J2InConnectionDataT􏶱
-        ReadJ2ControlMessageData(&tJ2Data);
-        
-        􏶲listens for incoming control messages, and processes them into J2Data􏶱
-        􏵲handle incoming control messages􏵳&tJ2Data);
-
-        􏶲Write data back into Ownship􏶱
-        WriteJ2ControlMessageData(&tJ2Data);
-    }
-
-    return 0;
-􏶳
-
-􏷘-􏷗􏷒handle incoming data messages􏷑
-􏷐receives the J2 data message􏷏
-􏶠gets the data message from the J2 flight model and writes into the J2 Data􏶡
-􏶜mr􏶝􏷆J2InConnectionDataMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
-􏶴
-
-    􏶲buffer data􏶱
-    BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
-    
-    􏶲Read UDP data􏶱
-    int nBytesReceived = SocketReceive(SOCKET_GEN_J2_DATA_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
-    
-    􏶲Error handling on UDP data.  Watchdog related􏶱
-    ReportUdpReceiveStatus(nBytesReceived,"J2 Data Messages");
-    
-    􏶲unpack valid socket stream􏶱
-    if (nBytesReceived != ERROR){
-        g_bFMFirstTimeCompleted = TRUE;
-        􏵲unpack received data message􏵳pucDataBuffer, nBytesReceived,􏵶J2Data􏵷);
-    }
-􏶳
-
-􏷘-􏷗􏷒handle incoming control messages􏷑
-􏷐receives the J2 control message􏷏
-􏶠gets the control message from the J2 flight model and writes into the J2 Data􏶡
-􏶜mr􏶝􏷆J2InConnectionControlMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
-􏶴
-    􏶲buffer data􏶱
-    BYTE pucDataBuffer[MAX_J2_MESSAGE_SIZE];
-    
-    􏶲Read UDP data􏶱
-    int nBytesReceived = SocketReceive(SOCKET_GEN_J2_CONTROL_RECEIVE, (char *)pucDataBuffer, sizeof(pucDataBuffer));
-    
-    􏶲Error handling on UDP data.  Watchdog related􏶱
-    ReportUdpReceiveStatus(nBytesReceived,"J2 Control Messages");
-    
-    􏶲unpack valid socket stream􏶱
-    if (nBytesReceived != ERROR){
-        􏵲unpack received control message􏵳pucDataBuffer, nBytesReceived,􏵶J2Data􏵷);
-    }
-􏶳
-􏷘-􏷗􏷒unpack received control message􏷑
-􏷐processes the j2 data buffer received from the socket and unpacks it into the appropriate structure􏷏
-􏶠assumes the data received over the socket was valid and completed successfully􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀the buffer received from the socket􏶿
-􏶜􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the amount of bytes received from the socket􏶿
-􏶜mr􏶝􏷆J2InConnectionControlMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
-􏶴
-    􏶲process message and parse data received into the input communication data􏶱
-    􏶲decide what data message was received, and receive it􏶱
-    switch(pucDataBuffer[0]){
-        case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY:
-            UnpackJ2RepositionReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tRepositionReply);
-            break;
-        case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION:
-            UnpackJ2VersionReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tVersion);
-            break;
-        default:
-            ;
-    }
-􏶳
-
-􏷘-􏷗􏷒unpack received data message􏷑
-􏷐processes the j2 data buffer received from the socket and unpacks it into the appropriate structure􏷏
-􏶠assumes the data received over the socket was valid and completed successfully􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀the buffer received from the socket􏶿
-􏶜􏶝􏷆int􏷅􏷄bytes received􏷃􏷀the amount of bytes received from the socket􏶿
-􏶜mr􏶝􏷆J2InConnectionDataMessageT􏷅􏷄J2Data􏷃􏷀the J2 data we expect to be filled by the J2 flight model􏶿
-􏶴
-    􏶲process message and parse data received into the input communication data􏶱
-    􏶲decide what data message was received, and receive it􏶱
-    switch(􏵶data buffer􏵷[0]){
-        case FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED:
-            UnpackJ2HighSpeedReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tHighSpeed);
-            
-            􏶲Release the "flight model arrived" semaphore􏶱
-            SemaphoreGive(SEMAPHORE_SCHEDULE_IN); break;
-        case FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED: UnpackJ2LowSpeedReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tLowSpeed); break;
-        case FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE:    UnpackJ2EngineReceivedMessage(􏵶data buffer􏵷,􏵶bytes received􏵷,&􏵶J2Data􏵷->m_tEngine);     break;
-        default:;
-    }
-􏶳
 
 􏷘+􏷗􏷒J2 send􏷑
 􏷐Used to sequence outgoing J2 Messages.􏷏
@@ -220,21 +86,14 @@
 􏶜mr􏶝􏷆float􏷅􏷄timer􏷃􏵘milliseconds􏵙􏷀the amount of milliseconds the timer is at􏶿
 􏶜􏶝􏷆float􏷅􏷄total duration􏷃􏵘milliseconds􏵙􏷀the amount of time that the timer will tick to, before starting over􏶿
 􏶴
-        􏶲the high speed message to send􏶱
-        SendHighSpeedMessageT tHigh={0};
+        􏶲instantiate the message􏶱
+        SendHighSpeedMessageT tMessage={0};
         
         􏶲if too much time has passed􏶱
         if (􏵲timer expired􏵳􏵶timer􏵷,􏵶total duration􏵷)){
         
-            􏶲update high speed outputs􏶱
-            UpdateJ2HighSpeedOutputData(&tHigh);
-            
-            􏶲check that we are sending valid data to J2􏶱
-            􏶲disabled due to sim lag􏶱
-            //CheckConstraintsOnSendHighSpeedMessage(&tHigh);
-            
-            􏶲send high speed message􏶱
-            􏵲send high speed message􏵳&tHigh);
+            􏶲source and send the message􏶱
+            􏵲source and send high speed message􏵳&tMessage);
         }
 􏶳
 
@@ -244,21 +103,14 @@
 􏶜mr􏶝􏷆float􏷅􏷄timer􏷃􏵘milliseconds􏵙􏷀the amount of milliseconds the timer is at􏶿
 􏶜􏶝􏷆float􏷅􏷄total duration􏷃􏵘milliseconds􏵙􏷀the amount of time that the timer will tick to, before starting over􏶿
 􏶴
-        􏶲the low speed message to send􏶱
-        SendLowSpeedMessageT tLow={0};
+        􏶲instantiate the message􏶱
+        SendLowSpeedMessageT tMessage={0};
         
         􏶲if too much time has passed􏶱
         if (􏵲timer expired􏵳􏵶timer􏵷,􏵶total duration􏵷)){
         
-            􏶲update low speed outputs􏶱
-            UpdateJ2LowSpeedOutputData(&tLow);
-            
-            􏶲check that we are sending valid data to J2􏶱
-            􏶲disabled due to sim lag􏶱
-            //CheckConstraintsOnSendLowSpeedMessage(&tLow);
-            
-            􏶲send low speed message􏶱
-            􏵲send low speed message􏵳&tLow);
+            􏶲source and send the message􏶱
+            􏵲source and send high speed message􏵳&tMessage);
         }
 􏶳
 
@@ -288,15 +140,11 @@
 􏶠sourcing the new data happens internally when checking for change􏶡
 􏶜mr􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀the current state of the reposition data􏶿
 􏶴
-    􏶲if reposition has changed􏶱
+    􏶲if the message has changed􏶱
     if (􏵲reposition has changed􏵳􏵶message􏵷)){
     
-        􏶲check that we are sending valid data to J2􏶱
-        􏶲disabled due to sim lag􏶱
-        //CheckConstraintsOnSendRepositionMessage(􏵶message􏵷);
-
-        􏶲send reposition message􏶱
-        􏵲send reposition message􏵳􏵶message􏵷);
+        􏶲send the new message􏶱
+        􏵲source and send reposition message􏵳􏵶message􏵷);
         
     }
 􏶳
@@ -306,15 +154,11 @@
 􏶠sourcing the new data happens internally when checking for change􏶡
 􏶜mr􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀the current state of the version data􏶿
 􏶴
-    􏶲if version has changed􏶱
+    􏶲if the message has changed􏶱
     if (􏵲version has changed􏵳􏵶message􏵷)){
-    
-        􏶲check that we are sending valid data to J2􏶱
-        􏶲disabled due to sim lag􏶱
-        //CheckConstraintsOnSendVersionRequestMessage(􏵶message􏵷);
 
-        􏶲send version message􏶱
-        􏵲send version message􏵳􏵶message􏵷);
+        􏶲send the new message􏶱
+        􏵲source and send version message􏵳􏵶message􏵷);
         
     }
 􏶳
@@ -322,7 +166,7 @@
 􏷘-􏷗􏷒reposition has changed􏷑
 􏷐update the reposition message, and decide if it changed􏷏
 􏶠equality is checked with memcmp, so its important that both structs were memset to zero􏶡
-􏶜mr􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
+􏶜r􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
 􏶚m􏶛􏶾BOOL􏶽􏶼changed􏶻􏶺whether the message has changed or not􏶹
 􏵦􏵧􏵤the message will be updated as an out parameter while comparing its equality to the previous state􏵥
 􏶴
@@ -339,16 +183,13 @@
     􏶲determine if the message has changed􏶱
     bHasChanged = memcmp(􏵶message􏵷,&tNewMessage,sizeof(tNewMessage));
     
-    􏶲update the message􏶱
-    *􏵶message􏵷 = tNewMessage;
-    
     return bHasChanged;
 􏶳
 
 􏷘-􏷗􏷒version has changed􏷑
 􏷐update the version message, and decide if it changed􏷏
 􏶠equality is checked with memcmp, so its important that both structs were memset to zero􏶡
-􏶜mr􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
+􏶜r􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀the message we are checking for changes in.􏶿
 􏶚m􏶛􏶾BOOL􏶽􏶼changed􏶻􏶺whether the message has changed or not􏶹
 􏵦􏵧􏵤the message will be updated as an out parameter while comparing its equality to the previous state􏵥
 􏶴
@@ -364,9 +205,6 @@
     
     􏶲determine if the message has changed􏶱
     bHasChanged = memcmp(􏵶message􏵷,&tNewMessage,sizeof(tNewMessage));
-    
-    􏶲update the message􏶱
-    *􏵶message􏵷 = tNewMessage;
     
     return bHasChanged;
 􏶳
@@ -388,20 +226,66 @@
 
 􏷘-􏷗􏷒source and send high speed message􏷑
 􏷐source all of new data for the message, and then send it to the flight model􏷏
-􏶠􏶡
+􏶠Warns about failed value constraints for each member of the message􏶡
+􏶜mr􏶝􏷆SendHighSpeedMessageT􏷅􏷄message􏷃􏷀the message to source and send􏶿
 􏶴
+    􏶲source message􏶱
+    UpdateJ2HighSpeedOutputData(􏵶message􏵷);
+    
+    􏶲check that we are sending valid data to J2􏶱
+    􏶲disabled due to sim lag􏶱
+    //CheckConstraintsOnSendHighSpeedMessage(􏵶message􏵷);
+    
+    􏶲send message􏶱
+    􏵲send high speed message􏵳􏵶message􏵷);
 􏶳
 
 􏷘-􏷗􏷒source and send low speed message􏷑
+􏷐source all of new data for the message, and then send it to the flight model􏷏
+􏶠Warns about failed value constraints for each member of the message􏶡
+􏶜mr􏶝􏷆SendLowSpeedMessageT􏷅􏷄message􏷃􏷀the message to source and send􏶿
 􏶴
+    􏶲source message􏶱
+    UpdateJ2LowSpeedOutputData(􏵶message􏵷;
+    
+    􏶲check that we are sending valid data to J2􏶱
+    􏶲disabled due to sim lag􏶱
+    //CheckConstraintsOnSendLowSpeedMessage(􏵶message􏵷;
+    
+    􏶲send message􏶱
+    􏵲send low speed message􏵳􏵶message􏵷;
 􏶳
 
 􏷘-􏷗􏷒source and send reposition message􏷑
+􏷐source all of new data for the message, and then send it to the flight model􏷏
+􏶠Warns about failed value constraints for each member of the message􏶡
+􏶜mr􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀the message to source and send􏶿
 􏶴
+    􏶲source new message􏶱
+    UpdateJ2RepositionRequestData(􏵶message􏵷));
+    
+    􏶲check that we are sending valid data to J2􏶱
+    􏶲disabled due to sim lag􏶱
+    //CheckConstraintsOnSendRepositionMessage(􏵶message􏵷);
+
+    􏶲send message􏶱
+    􏵲send reposition message􏵳􏵶message􏵷);
 􏶳
 
 􏷘-􏷗􏷒source and send version message􏷑
+􏷐source all of new data for the message, and then send it to the flight model􏷏
+􏶠Warns about failed value constraints for each member of the message􏶡
+􏶜mr􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀the message to source and send􏶿
 􏶴
+    􏶲source message􏶱
+    UpdateJ2VersionRequestData(􏵶message􏵷);
+
+    􏶲check that we are sending valid data to J2􏶱
+    􏶲disabled due to sim lag􏶱
+    //CheckConstraintsOnSendVersionRequestMessage(􏵶message􏵷);
+
+    􏶲send message􏶱
+    􏵲send version message􏵳􏵶message􏵷);
 􏶳
 
 
@@ -427,7 +311,6 @@
     
     􏶲call socket send, and handle any errors that occur􏶱
     SendAndHandleUdpErrors(uByteCount,pucDataBuffer,SOCKET_GEN_J2_DATA_SEND,"J2 High Speed Message");
-
 􏶳
 􏷘-􏷗􏷒send low speed message􏷑
 􏷐sends the data message to J2 flight model􏷏
