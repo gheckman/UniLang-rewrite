@@ -5,6 +5,29 @@
 􏷬Trevor Hickey􏷫
 􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
 􏷤􏷣􏷦math.h􏷥􏷢USES: sqrt()􏷡
+􏷤􏷣􏷦float.h􏷥􏷢USES: FLT_EPSILON􏷡
+
+
+􏷘+􏷗􏷒f min f􏷑
+􏷐Calculates the minimum of two floating point numbers􏷏
+􏶠This function would normally exist in math.h, but we are using C89 and not C9X􏶡
+􏶜􏶝􏷆float􏷅􏷄f1􏷃􏷀one of the numbers to compare against􏶿
+􏶜􏶝􏷆float􏷅􏷄f2􏷃􏷀one of the numbers to compare against􏶿
+􏶚m􏶛􏶾float􏶽􏶼max􏶻􏶺the maximum of the two numbers􏶹
+􏶴
+    return (f1 < f2) ? f1 : f2;
+􏶳
+
+􏷘+􏷗􏷒f max f􏷑
+􏷐Calculates the maximum of two floating point numbers􏷏
+􏶠This function would normally exist in math.h, but we are using C89 and not C9X􏶡
+􏶜􏶝􏷆float􏷅􏷄f1􏷃􏷀one of the numbers to compare against􏶿
+􏶜􏶝􏷆float􏷅􏷄f2􏷃􏷀one of the numbers to compare against􏶿
+􏶚m􏶛􏶾float􏶽􏶼max􏶻􏶺the minimum of the two numbers􏶹
+􏶴
+    return (f1 > f2) ? f1 : f2;
+􏶳
+
 
 􏷘+􏷗􏷒float array average􏷑
 􏷐takes the average of an array of floats􏷏
