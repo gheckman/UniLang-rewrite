@@ -3,31 +3,70 @@
 􏷰generic math related functions not found in math.h􏷯
 􏷮Math Utilities􏷭􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
-􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
-􏷤􏷣􏷦math.h􏷥􏷢USES: sqrt()􏷡
-􏷤􏷣􏷦float.h􏷥􏷢USES: FLT_EPSILON􏷡
-
+􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
+􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏶔s􏶕􏶒math􏶓􏶖USES: sqrt(), fabs()􏶗
+􏶔s􏶕􏶒float.h􏶓􏶖USES: FLT_EPSILON, DBL_EPSILON􏶗
 
 􏷘+􏷗􏷒f min f􏷑
 􏷐Calculates the minimum of two floating point numbers􏷏
 􏶠This function would normally exist in math.h, but we are using C89 and not C9X􏶡
-􏶜􏶝􏷆float􏷅􏷄f1􏷃􏷀one of the numbers to compare against􏶿
-􏶜􏶝􏷆float􏷅􏷄f2􏷃􏷀one of the numbers to compare against􏶿
+􏶜􏶝􏷆float􏷅􏷄x􏷃􏷀one of the numbers to compare against􏶿
+􏶜􏶝􏷆float􏷅􏷄y􏷃􏷀one of the numbers to compare against􏶿
 􏶚m􏶛􏶾float􏶽􏶼max􏶻􏶺the maximum of the two numbers􏶹
 􏶴
-    return (f1 < f2) ? f1 : f2;
+    return (􏵶x􏵷 < 􏵶y􏵷) ? 􏵶x􏵷 : 􏵶y􏵷;
 􏶳
 
 􏷘+􏷗􏷒f max f􏷑
 􏷐Calculates the maximum of two floating point numbers􏷏
 􏶠This function would normally exist in math.h, but we are using C89 and not C9X􏶡
-􏶜􏶝􏷆float􏷅􏷄f1􏷃􏷀one of the numbers to compare against􏶿
-􏶜􏶝􏷆float􏷅􏷄f2􏷃􏷀one of the numbers to compare against􏶿
+􏶜􏶝􏷆float􏷅􏷄x􏷃􏷀one of the numbers to compare against􏶿
+􏶜􏶝􏷆float􏷅􏷄y􏷃􏷀one of the numbers to compare against􏶿
 􏶚m􏶛􏶾float􏶽􏶼max􏶻􏶺the minimum of the two numbers􏶹
 􏶴
-    return (f1 > f2) ? f1 : f2;
+    return (􏵶x􏵷 > 􏵶y􏵷) ? 􏵶x􏵷 : 􏵶y􏵷;
 􏶳
 
+􏷘+􏷗􏷒f min􏷑
+􏷐Calculates the minimum of two floating point numbers􏷏
+􏶠This function would normally exist in math.h, but we are using C89 and not C9X􏶡
+􏶜􏶝􏷆double􏷅􏷄x􏷃􏷀one of the numbers to compare against􏶿
+􏶜􏶝􏷆double􏷅􏷄y􏷃􏷀one of the numbers to compare against􏶿
+􏶚m􏶛􏶾double􏶽􏶼max􏶻􏶺the maximum of the two numbers􏶹
+􏶴
+    return (􏵶x􏵷 < 􏵶y􏵷) ? 􏵶x􏵷 : 􏵶y􏵷;
+􏶳
+
+􏷘+􏷗􏷒f max􏷑
+􏷐Calculates the maximum of two floating point numbers􏷏
+􏶠This function would normally exist in math.h, but we are using C89 and not C9X􏶡
+􏶜􏶝􏷆double􏷅􏷄x􏷃􏷀one of the numbers to compare against􏶿
+􏶜􏶝􏷆double􏷅􏷄y􏷃􏷀one of the numbers to compare against􏶿
+􏶚m􏶛􏶾double􏶽􏶼max􏶻􏶺the minimum of the two numbers􏶹
+􏶴
+    return (􏵶x􏵷 > 􏵶y􏵷) ? 􏵶x􏵷 : 􏵶y􏵷;
+􏶳
+
+􏷘+􏷗􏷒approximately equal f􏷑
+􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
+􏶠approximates the equality of two floating point numbers using the std float epsilon􏶡
+􏶜􏶝􏷆float􏷅􏷄x􏷃􏷀one of the numbers used to test equality􏶿
+􏶜􏶝􏷆float􏷅􏷄y􏷃􏷀one of the numbers used to test equality􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the two numbers are approximately equal􏶹
+􏶴
+    return fabs(􏵶x􏵷 - 􏵶y􏵷) <= 􏵲f max f􏵳fabs(􏵶x􏵷),fabs(􏵶y􏵷)) * FLT_EPSILON;
+􏶳
+
+􏷘+􏷗􏷒approximately equal d􏷑
+􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
+􏶠approximates the equality of two floating point numbers using the std double epsilon􏶡
+􏶜􏶝􏷆double􏷅􏷄x􏷃􏷀one of the numbers used to test equality􏶿
+􏶜􏶝􏷆double􏷅􏷄y􏷃􏷀one of the numbers used to test equality􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the two numbers are approximately equal􏶹
+􏶴
+    return fabs(􏵶x􏵷 - 􏵶y􏵷) <= 􏵲f max􏵳fabs(􏵶x􏵷),fabs(􏵶y􏵷)) * DBL_EPSILON;
+􏶳
 
 􏷘+􏷗􏷒float array average􏷑
 􏷐takes the average of an array of floats􏷏
