@@ -5,14 +5,16 @@
 􏷬Trevor Hickey􏷫
 
 􏶨􏶧􏶦version number􏶥
+􏴽>=􏴾􏴵0􏴶
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬J2 Version􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦version number􏶥
+􏴽>=􏴾􏴵0􏴶
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Aircraft Model􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= 0􏴾
-􏴽<= MAX_DEV_ITEMS􏴾
+􏴽>=􏴾􏴵0􏴶
+􏴽<=􏴾􏴵MAX_DEV_ITEMS􏴶
 􏶘+i􏶙􏶰􏶯􏶮int􏶭􏶬Number of Developer Items􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦version number and description􏶥

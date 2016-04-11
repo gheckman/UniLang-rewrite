@@ -48,6 +48,7 @@
     return (􏵶x􏵷 > 􏵶y􏵷) ? 􏵶x􏵷 : 􏵶y􏵷;
 􏶳
 
+
 􏷘+􏷗􏷒approximately equal f􏷑
 􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
 􏶠approximates the equality of two floating point numbers using the std float epsilon􏶡
@@ -56,6 +57,26 @@
 􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the two numbers are approximately equal􏶹
 􏶴
     return fabs(􏵶x􏵷 - 􏵶y􏵷) <= 􏵲f max f􏵳fabs(􏵶x􏵷),fabs(􏵶y􏵷)) * FLT_EPSILON;
+􏶳
+
+􏷘+􏷗􏷒approximately greater equal f􏷑
+􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
+􏶠approximates if one float is >= to another using the std float epsilon􏶡
+􏶜􏶝􏷆float􏷅􏷄left􏷃􏷀left operand􏶿
+􏶜􏶝􏷆float􏷅􏷄right􏷃􏷀right operand􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the left operand is approximately >= to the right operand􏶹
+􏶴
+    return 􏵲approximately equal f􏵳􏵶left􏵷,􏵶right􏵷) || 􏵶left􏵷 > 􏵶right􏵷;
+􏶳
+
+􏷘+􏷗􏷒approximately less equal f􏷑
+􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
+􏶠approximates if one float is <= to another using the std float epsilon􏶡
+􏶜􏶝􏷆float􏷅􏷄left􏷃􏷀left operand􏶿
+􏶜􏶝􏷆float􏷅􏷄right􏷃􏷀right operand􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the left operand is approximately <= to the right operand􏶹
+􏶴
+    return 􏵲approximately equal f􏵳􏵶left􏵷,􏵶right􏵷) || 􏵶left􏵷 < 􏵶right􏵷;
 􏶳
 
 􏷘+􏷗􏷒approximately equal d􏷑
@@ -67,6 +88,32 @@
 􏶴
     return fabs(􏵶x􏵷 - 􏵶y􏵷) <= 􏵲f max􏵳fabs(􏵶x􏵷),fabs(􏵶y􏵷)) * DBL_EPSILON;
 􏶳
+
+􏷘+􏷗􏷒approximately greater equal d􏷑
+􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
+􏶠approximates if one double is >= to another using the std double epsilon􏶡
+􏶜􏶝􏷆float􏷅􏷄left􏷃􏷀left operand􏶿
+􏶜􏶝􏷆float􏷅􏷄right􏷃􏷀right operand􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the left operand is approximately >= to the right operand􏶹
+􏶴
+    return 􏵲approximately equal d􏵳􏵶left􏵷,􏵶right􏵷) || 􏵶left􏵷 > 􏵶right􏵷;
+􏶳
+
+􏷘+􏷗􏷒approximately less equal d􏷑
+􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
+􏶠approximates if one double is <= to another using the std double epsilon􏶡
+􏶜􏶝􏷆float􏷅􏷄left􏷃􏷀left operand􏶿
+􏶜􏶝􏷆float􏷅􏷄right􏷃􏷀right operand􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the left operand is approximately <= to the right operand􏶹
+􏶴
+    return 􏵲approximately equal d􏵳􏵶left􏵷,􏵶right􏵷) || 􏵶left􏵷 < 􏵶right􏵷;
+􏶳
+
+
+
+
+
+
 
 􏷘+􏷗􏷒float array average􏷑
 􏷐takes the average of an array of floats􏷏
@@ -113,6 +160,9 @@
     }
     return nTotal / 􏵶size􏵷;
 􏶳
+
+
+
 
 􏷘+􏷗􏷒square􏷑
 􏷐squares a number􏷏
@@ -164,3 +214,55 @@
     }
 􏶳
 
+􏷘-􏷗􏷒swap f􏷑
+􏷐swaps two values􏷏
+􏶠􏶡
+􏶜rm􏶝􏷆float􏷅􏷄x􏷃􏷀one of the values to swap􏶿
+􏶜rm􏶝􏷆float􏷅􏷄y􏷃􏷀one of the values to swap􏶿
+􏶴
+    float fTemp = *􏵶x􏵷;
+    *􏵶x􏵷 = *􏵶y􏵷;
+    *􏵶y􏵷 = fTemp;
+􏶳
+
+􏷘-􏷗􏷒adjust interval end points􏷑
+􏷐swaps the two interval endpoints so that the begin endpoint has a smaller magnitude than the end endpoint􏷏
+􏶠This is done to ensure that a value is properly compared in open/closed intervals􏶡
+􏶜rm􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
+􏶜rm􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
+􏶴
+    􏶲potentially swap the interval end points to ensure we compare the value properly􏶱
+    if (*􏵶begin interval􏵷 > *􏵶end interval􏵷){
+        􏵲swap f􏵳􏵶begin interval􏵷,􏵶end interval􏵷);
+    }
+􏶳
+
+
+􏷘+􏷗􏷒between closed interval􏷑
+􏷐checks to see if a number is in between an inclusive range􏷏
+􏶠uses float approximation to avoid precision errors􏶡
+􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to be checked with an interval􏶿
+􏶜􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
+􏶜􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼between interval􏶻􏶺whether the number passed in, is in between the specified interval􏶹
+􏶴
+    
+    􏶲potentially swap the interval end points to ensure we compare the value properly􏶱
+    􏵲adjust interval end points􏵳&􏵶begin interval􏵷,&􏵶end interval􏵷);
+    
+    return 􏵲approximately greater equal f􏵳􏵶value􏵷,􏵶begin interval􏵷) && 􏵲approximately less equal f􏵳􏵶value􏵷,􏵶end interval􏵷);
+􏶳
+
+􏷘+􏷗􏷒between open interval􏷑
+􏷐checks to see if a number is in between an exclusive range􏷏
+􏶠􏶡
+􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to be checked with an interval􏶿
+􏶜􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
+􏶜􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼between interval􏶻􏶺whether the number passed in, is in between the specified interval􏶹
+􏶴
+    􏶲potentially swap the interval end points to ensure we compare the value properly􏶱
+    􏵲adjust interval end points􏵳&􏵶begin interval􏵷,&􏵶end interval􏵷);
+    
+    return 􏵶value􏵷 > 􏵶begin interval􏵷 && 􏵶value􏵷 < 􏵶end interval􏵷;
+􏶳

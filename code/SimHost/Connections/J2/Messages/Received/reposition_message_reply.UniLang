@@ -5,29 +5,29 @@
 􏷬Trevor Hickey􏷫
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
+􏴽>=􏴾􏴵-1􏴶
+􏴽<=􏴾􏴵1􏴶
 􏴻-1.0􏴼􏴹full deflection left􏴺
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Yaw Control Position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
+􏴽>=􏴾􏴵-1􏴶
+􏴽<=􏴾􏴵1􏴶
 􏴻-1.0􏴼􏴹full deflection down􏴺
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Throttle/Collective Position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
+􏴽>=􏴾􏴵-1􏴶
+􏴽<=􏴾􏴵1􏴶
 􏴻-1.0􏴼􏴹full deflection left􏴺
 􏴻1.0􏴼􏴹full deflection right􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Lateral Control Position􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
-􏴽>= -1.0􏴾
-􏴽<= 1.0􏴾
+􏴽>=􏴾􏴵-1􏴶
+􏴽<=􏴾􏴵1􏴶
 􏴻-1.0􏴼􏴹full deflection down􏴺
 􏴻1.0􏴼􏴹full deflection up􏴺
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Longitudinal Control Position􏶫􏵚􏵛􏶪􏶩

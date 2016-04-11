@@ -353,7 +353,6 @@ used to determine if what is attached, is on the ground.􏶥
 􏶨􏶧􏶦physical deflection of the throttle control􏶥
 􏴽>=􏴾􏴵0􏴶
 􏴽<=􏴾􏴵1􏴶
-􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏴻1􏴼􏴹maximum throttle􏴺
 􏴻0􏴼􏴹idle throttle􏴺
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
@@ -389,7 +388,7 @@ used to determine if what is attached, is on the ground.􏶥
 􏴷number of propellers􏴸
 
 􏶨􏶧􏶦the total number of fuel tanks on the craft􏶥
-􏴽>=􏴾􏴵-180􏴶
+􏴽>=􏴾􏴵0􏴶
 􏴽<=􏴾􏴵MAX_NUMBER_OF_FUEL_TANKS􏴶
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀

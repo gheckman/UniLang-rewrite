@@ -18,13 +18,13 @@
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴻0􏴼􏴹straight ahead􏴺
-􏴽>= -360􏴾
-􏴽<= 360􏴾
+􏴽>=􏴾􏴵-360􏴶
+􏴽<=􏴾􏴵360􏴶
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Nose Wheel Position􏶫􏵚degrees􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
-􏴽>= -360􏴾
-􏴽<= 360􏴾
+􏴽>=􏴾􏴵-360􏴶
+􏴽<=􏴾􏴵360􏴶
 􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Magnetic Variation􏶫􏵚degrees􏵛􏶪􏶩

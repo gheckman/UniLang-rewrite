@@ -134,7 +134,7 @@ function Transform-And_Transfer-SimHost-Files(){ :
   
   #Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
   ##Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
-  #Step_In_Call_Function_Step_Out "Connections/J2/Messages"       Transfer_J2_Messages;
+  Step_In_Call_Function_Step_Out "Connections/J2/Messages"       Transfer_J2_Messages;
   #Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
                   #Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;
   #Step_In_Call_Function_Step_Out "Concurrency"                   Transfer_Concurrency;

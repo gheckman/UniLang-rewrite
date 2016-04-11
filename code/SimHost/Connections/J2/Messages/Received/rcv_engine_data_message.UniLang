@@ -7,8 +7,8 @@
 􏶨􏶧􏶦􏶥
 􏵁Piston􏵂􏴿􏵱􏵀
 􏵁Turbine􏵂􏴿􏵱􏵀
-􏴽>= 0􏴾
-􏴽<= MAX_NUMBER_OF_ENGINES􏴾
+􏴽>=􏴾􏴵0􏴶
+􏴽<=􏴾􏴵MAX_NUMBER_OF_ENGINES􏴶
 􏶘+i􏶙􏶮int􏶭􏶬number of engines􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
@@ -20,8 +20,8 @@
 􏶨􏶧􏶦􏶥
 􏵁Piston􏵂􏴿􏵱􏵀
 􏵁Turbine􏵂􏴿􏵱􏵀
-􏴽>= 0􏴾
-􏴽<= MAX_NUMBER_OF_PROPELLERS􏴾
+􏴽>=􏴾􏴵0􏴶
+􏴽<=􏴾􏴵MAX_NUMBER_OF_PROPELLERS􏴶
 􏶘+i􏶙􏶮int􏶭􏶬number of propellers􏶫􏵚􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
