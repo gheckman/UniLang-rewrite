@@ -701,14 +701,8 @@ From SimHost to Flight Model􏷏
     
     􏶲conditionally pack frame counter􏶱
     􏶲we only pack the frame counter if the message type is from J2􏶱
-    switch (􏵶message type􏵷){
-      case FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED:
-      case FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED:
-      case FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE:
-      case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY:
-      case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION:
-      PackBigEndian4ByteInvariance(􏵶buffer􏵷,&uIndex, &uFrameCounter, sizeof(uFrameCounter)); break;
-      default:;
+    if (MessageTypeSentFromFlightModel(􏵶message type􏵷)){
+        PackBigEndian4ByteInvariance(􏵶buffer􏵷,&uIndex, &uFrameCounter, sizeof(uFrameCounter)); break;
     }
     
 􏶳

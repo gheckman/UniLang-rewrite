@@ -39,7 +39,7 @@
     return bFromFlightModel;
 􏶳
 
-􏷘+􏷗􏷒message type sent from flight model􏷑
+􏷘+􏷗􏷒message type sent from host􏷑
 􏷐determines if the flight model message type belongs to messages sent by the host􏷏
 􏶠􏵱 if the message type is used when sending from the host
 􏵰 if the message type is used when sending from the flight model􏶡
