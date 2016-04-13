@@ -225,7 +225,7 @@
     *􏵶y􏵷 = fTemp;
 􏶳
 
-􏷘-􏷗􏷒adjust interval end points􏷑
+􏷘-􏷗􏷒order interval end points􏷑
 􏷐swaps the two interval endpoints so that the begin endpoint has a smaller magnitude than the end endpoint􏷏
 􏶠This is done to ensure that a value is properly compared in open/closed intervals􏶡
 􏶜rm􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
@@ -248,7 +248,7 @@
 􏶴
     
     􏶲potentially swap the interval end points to ensure we compare the value properly􏶱
-    􏵲adjust interval end points􏵳&􏵶begin interval􏵷,&􏵶end interval􏵷);
+    􏵲order interval end points􏵳&􏵶begin interval􏵷,&􏵶end interval􏵷);
     
     return 􏵲approximately greater equal f􏵳􏵶value􏵷,􏵶begin interval􏵷) && 􏵲approximately less equal f􏵳􏵶value􏵷,􏵶end interval􏵷);
 􏶳
@@ -262,7 +262,7 @@
 􏶚m􏶛􏶾BOOL􏶽􏶼between interval􏶻􏶺whether the number passed in, is in between the specified interval􏶹
 􏶴
     􏶲potentially swap the interval end points to ensure we compare the value properly􏶱
-    􏵲adjust interval end points􏵳&􏵶begin interval􏵷,&􏵶end interval􏵷);
+    􏵲order interval end points􏵳&􏵶begin interval􏵷,&􏵶end interval􏵷);
     
     return 􏵶value􏵷 > 􏵶begin interval􏵷 && 􏵶value􏵷 < 􏵶end interval􏵷;
 􏶳

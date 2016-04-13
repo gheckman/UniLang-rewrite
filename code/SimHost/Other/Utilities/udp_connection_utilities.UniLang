@@ -15,9 +15,6 @@
 􏶜􏶝􏷆int􏷅􏷄socket number􏷃􏷀the unique id for the particular socket􏶿
 􏶜􏶝􏷆char[]􏷅􏷄what sent􏷃􏷀the name of message being sent􏶿
 􏶴
-    􏶲Calling SocketSend can "not fail", but still return 0 bytes-- which is still a problem.􏶱
-    􏶲this means, we have two return values to check for.  ERROR(-1) and 0.􏶱
-    􏶲Should this be fixed in the SocketSend implementation?  Probably.􏶱
     int nBytesSent = 0;
     
     􏶲handle any data buffer errors from a failed packing􏶱
@@ -31,7 +28,7 @@
         nBytesSent = SocketSend(􏵶socket number􏵷, (char *)􏵶buffer􏵷, 􏵶bytes packed􏵷);
         
         􏶲if the data did not reach its destination􏶱
-        if (nBytesSent == ERROR || nBytesSent == 0){
+        if (nBytesSent == ERROR){
             􏵲report send failure to watchdog􏵳􏵶what sent􏵷);
             ReestablishSocket(􏵶socket number􏵷);
         }

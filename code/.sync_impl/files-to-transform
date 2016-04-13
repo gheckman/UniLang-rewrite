@@ -20,12 +20,12 @@ function Transfer_Data_Structures(){ :
 }
 
 function Transfer_Utilities(){ :
-  #Transfer-Global "time_utilities" "Shared/ffs"
+  Transfer-Global "time_utilities" "Shared/ffs"
   Transfer-Global "date_utilities" "Shared/ffs"
-  #Transfer-Global "pack_utilities" "Shared/ffs"
-  #Transfer-Global "udp_connection_utilities" "Shared/ffs"
+  Transfer-Global "pack_utilities" "Shared/ffs"
+  Transfer-Global "udp_connection_utilities" "Shared/ffs"
   Transfer-Global "math_utilities" "Shared/ffs"
-  #Transfer-Global "bit_utilities" "Shared/ffs"
+  Transfer-Global "bit_utilities" "Shared/ffs"
 }
 function Transfer_Time(){ :
   Transfer-Global "month" "Components/Time"
@@ -78,14 +78,14 @@ function Transfer_Other(){ :
   Transfer-Global "ffs_const" "Shared/ffs"
 }
 function Transfer_J2(){ :
-  Transfer-Global "j2_sends" "Connections/UDP/J2/J2Communication";
-  Transfer-Global "j2_receives" "Connections/UDP/J2/J2Communication";
-  #Transfer-Global "j2_message_types" "Connections/UDP/J2/J2Messages";
-  #Transfer-Global "ground_contact_location" "Connections/UDP/J2/J2Messages";
+  #Transfer-Global "j2_sends" "Connections/UDP/J2/J2Communication";
+  #Transfer-Global "j2_receives" "Connections/UDP/J2/J2Communication";
+  Transfer-Global "j2_message_types" "Connections/UDP/J2/J2Messages";
+  Transfer-Global "ground_contact_location" "Connections/UDP/J2/J2Messages";
   Transfer-Global "J2_message_header" "Connections/UDP/J2/J2Messages";
   Transfer-Global "j2_packing" "Connections/UDP/J2/J2Serialization";
   Transfer-Global "j2_unpacking" "Connections/UDP/J2/J2Serialization";
-  #Transfer-Global "j2_const" "Connections/UDP/J2/J2Messages";
+  Transfer-Global "j2_const" "Connections/UDP/J2/J2Messages";
   Transfer-Global "J2_communication_config" "Connections/UDP/J2/J2Communication";
 }
 function Transfer_J2_Messages(){ :
@@ -133,7 +133,7 @@ function Transform-And_Transfer-SimHost-Files(){ :
     #Step_In_Call_Function_Step_Out "Systems/Electrical/components" Transfer_Electrical_Components;
   
   #Step_In_Call_Function_Step_Out "Other"                         Transfer_Other;
-  ##Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
+  Step_In_Call_Function_Step_Out "Connections/J2"                Transfer_J2;
   Step_In_Call_Function_Step_Out "Connections/J2/Messages"       Transfer_J2_Messages;
   #Step_In_Call_Function_Step_Out "Components"                    Transfer_Components;
                   #Step_In_Call_Function_Step_Out "Connections/Configs"           Transfer_Connections_Config;

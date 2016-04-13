@@ -17,3 +17,44 @@
 􏶆simhost reposition􏶅􏶂􏶁
 􏶆simhost version􏶅􏶂􏶁
 
+
+􏷘+􏷗􏷒message type sent from flight model􏷑
+􏷐determines if the flight model message type belongs to messages sent by the flight model􏷏
+􏶠􏵱 if the message type is used when sending from the flight model
+􏵰 if the message type is used when sending from the host􏶡
+􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀the message type used in J2 communication􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼from flight model􏶻􏶺whether the message type is sent from the flight model or not􏶹
+􏶴
+    BOOL bFromFlightModel = 􏵰;
+    
+    switch(􏵶message type􏵷){
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION:
+        bFromFlightModel = 􏵱;
+    }
+    
+    return bFromFlightModel;
+􏶳
+
+􏷘+􏷗􏷒message type sent from flight model􏷑
+􏷐determines if the flight model message type belongs to messages sent by the host􏷏
+􏶠􏵱 if the message type is used when sending from the host
+􏵰 if the message type is used when sending from the flight model􏶡
+􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀the message type used in J2 communication􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼from flight model􏶻􏶺whether the message type is sent from the host or not􏶹
+􏶴
+    BOOL bHost = 􏵰;
+    
+    switch(􏵶message type􏵷){
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_HIGH_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_LOW_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_REPOSITION:
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_VERSION:
+        bHost = 􏵱;
+    }
+    
+    return bHost;
+􏶳
