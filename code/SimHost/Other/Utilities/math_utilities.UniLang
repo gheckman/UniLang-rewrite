@@ -240,7 +240,8 @@
 
 􏷘+􏷗􏷒between closed interval􏷑
 􏷐checks to see if a number is in between an inclusive range􏷏
-􏶠uses float approximation to avoid precision errors􏶡
+􏶠uses float approximation to avoid precision errors
+returns 􏵱 if it is, 􏵰 if it is not􏶡
 􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to be checked with an interval􏶿
 􏶜􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
 􏶜􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
@@ -255,7 +256,7 @@
 
 􏷘+􏷗􏷒between open interval􏷑
 􏷐checks to see if a number is in between an exclusive range􏷏
-􏶠􏶡
+􏶠returns 􏵱 if it is, 􏵰 if it is not􏶡
 􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to be checked with an interval􏶿
 􏶜􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
 􏶜􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
