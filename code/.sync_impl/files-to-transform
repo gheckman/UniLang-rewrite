@@ -26,6 +26,7 @@ function Transfer_Utilities(){ :
   Transfer-Global "udp_connection_utilities" "Shared/ffs"
   Transfer-Global "math_utilities" "Shared/ffs"
   Transfer-Global "bit_utilities" "Shared/ffs"
+  Transfer-Global "constraint_utilities" "Shared/ffs"
 }
 function Transfer_Time(){ :
   Transfer-Global "month" "Components/Time"

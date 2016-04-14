@@ -111,6 +111,7 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
 
 
 
+
 􏷘-􏷗􏷒print constraint error􏷑
 􏷐prints in error assuming the constraint failed􏷏
 􏶠􏶡
@@ -133,7 +134,8 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
 􏶜􏶝􏷆IntervalTypeE􏷅􏷄interval type􏷃􏷀the type of interval to test against􏶿
 􏶜􏶝􏷆char[]􏷅􏷄var name􏷃􏷀string representation of the variable being tested􏶿
 􏶴
-    fprintf(stderr, "%s is not in interval %c%f, %f%c with value %f\n", 􏵶var name􏵷,call,􏵶begin􏵷,􏵶end􏵷,call,􏵶var name􏵷);
+    fprintf(stderr, "%s is not in the interval %c%f, %f%c with value %f\n",
+    􏵶var name􏵷,􏵲get begin interval􏵳􏵶interval type􏵷),􏵶begin􏵷,􏵶end􏵷,􏵲get end interval􏵳􏵶interval type􏵷),􏵶var name􏵷);
 􏶳
 
 􏷘-􏷗􏷒print operator􏷑
@@ -152,4 +154,26 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
         case COMPARISON_OPERATOR_LESS_EQUAL:        fprintf(stderr,"<="); break;
         default:;
     }
+􏶳
+
+􏷘-􏷗􏷒get begin interval􏷑
+􏶜􏶝􏷆IntervalTypeE􏷅􏷄interval type􏷃􏷀the type of interval to get notation of􏶿
+􏶚m􏶛􏶾char􏶽􏶼interval point notation􏶻􏶺notation for a particular interval endpoint􏶹
+􏶴
+    if (􏵶interval type􏵷 == INTERVAL_TYPE_CLOSED){
+        return '[';
+    }
+    
+    return '(';
+􏶳
+
+􏷘-􏷗􏷒get end interval􏷑
+􏶜􏶝􏷆IntervalTypeE􏷅􏷄interval type􏷃􏷀the type of interval to get notation of􏶿
+􏶚m􏶛􏶾char􏶽􏶼interval point notation􏶻􏶺notation for a particular interval endpoint􏶹
+􏶴
+    if (􏵶interval type􏵷 == INTERVAL_TYPE_CLOSED){
+        return ']';
+    }
+    
+    return ')';
 􏶳
