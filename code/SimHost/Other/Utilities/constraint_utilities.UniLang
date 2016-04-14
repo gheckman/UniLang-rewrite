@@ -9,7 +9,7 @@
 􏶊enumerated set of comparison operators􏶉
 􏶈an alternative C solution for the unavailable std function objects
 http://en.cppreference.com/w/cpp/utility/functional􏶇
-􏵮+􏵯􏶀comparison operator􏶋
+􏶀comparison operator􏶋
 􏶆equal to􏶅􏶂==􏶁
 􏶆not equal to􏶅􏶂!=􏶁
 􏶆greater􏶅􏶂>􏶁
@@ -19,7 +19,7 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
 
 􏶊enumerated set for interval types􏶉
 􏶈used for checking that values are within a specified interval type􏶇
-􏵮+􏵯􏶀interval type􏶋
+􏶀interval type􏶋
 􏶆open􏶅􏶂(x,y) intervals􏶁
 􏶆closed􏶅􏶂[x,y] intervals􏶁
 
@@ -135,7 +135,7 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
 􏶜􏶝􏷆char[]􏷅􏷄var name􏷃􏷀string representation of the variable being tested􏶿
 􏶴
     fprintf(stderr, "%s is not in the interval %c%f, %f%c with value %f\n",
-    􏵶var name􏵷,􏵲get begin interval􏵳􏵶interval type􏵷),􏵶begin􏵷,􏵶end􏵷,􏵲get end interval􏵳􏵶interval type􏵷),􏵶var name􏵷);
+    􏵶var name􏵷,􏵲get begin interval􏵳􏵶interval type􏵷),􏵶begin􏵷,􏵶end􏵷,􏵲get end interval􏵳􏵶interval type􏵷),􏵶value􏵷);
 􏶳
 
 􏷘-􏷗􏷒print operator􏷑
