@@ -38,384 +38,89 @@
 *    @{
 */
 
-#include "J2SendConstraints.h"  //implements decelerations
-#include <stdioLib.h>           //USES: fprintf
+#include "J2SendConstraints.h"    //implements decelerations
+#include "ConstraintUtilities.h"  //USES: CheckValueConstraint(), CheckIntervalConstraint(), ComparisonOperatorE, IntervalTypeE
 
 
 /**
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptSendHighSpeedMessage the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnSendHighSpeedMessage(const SendHighSpeedMessageT *const ptSendHighSpeedMessage)
+BOOL CheckConstraintsOnSendHighSpeedMessage(const SendHighSpeedMessageT *const ptSendHighSpeedMessage)
 {
+//a flag returned to the caller to signify whether constraints have passed
+BOOL bPassed = TRUE;
+
 //used for indexing over array data members
 size_t uIndex = 0u;
 
+
 //check value constraints for pitch flight control
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fPitchFlightControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fPitchFlightControl",">= -1.0f",ptSendHighSpeedMessage->m_fPitchFlightControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fPitchFlightControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fPitchFlightControl","<= 1.0f",ptSendHighSpeedMessage->m_fPitchFlightControl);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fPitchFlightControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fPitchFlightControl", &bPassed);
 //check value constraints for roll flight control
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRollFlightControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRollFlightControl",">= -1.0f",ptSendHighSpeedMessage->m_fRollFlightControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRollFlightControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRollFlightControl","<= 1.0f",ptSendHighSpeedMessage->m_fRollFlightControl);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fRollFlightControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fRollFlightControl", &bPassed);
 //check value constraints for yaw flight control
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fYawFlightControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fYawFlightControl",">= -1.0f",ptSendHighSpeedMessage->m_fYawFlightControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fYawFlightControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fYawFlightControl","<= 1.0f",ptSendHighSpeedMessage->m_fYawFlightControl);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fYawFlightControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fYawFlightControl", &bPassed);
 //check value constraints for collective flight control
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fCollectiveFlightControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fCollectiveFlightControl",">= -1.0f",ptSendHighSpeedMessage->m_fCollectiveFlightControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fCollectiveFlightControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fCollectiveFlightControl","<= 1.0f",ptSendHighSpeedMessage->m_fCollectiveFlightControl);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fCollectiveFlightControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fCollectiveFlightControl", &bPassed);
 //check value constraints for pitch trim position
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fPitchTrimPosition >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fPitchTrimPosition",">= -1.0f",ptSendHighSpeedMessage->m_fPitchTrimPosition);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fPitchTrimPosition <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fPitchTrimPosition","<= 1.0f",ptSendHighSpeedMessage->m_fPitchTrimPosition);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fPitchTrimPosition, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fPitchTrimPosition", &bPassed);
 //check value constraints for roll trim position
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRollTrimPosition >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRollTrimPosition",">= -1.0f",ptSendHighSpeedMessage->m_fRollTrimPosition);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRollTrimPosition <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRollTrimPosition","<= 1.0f",ptSendHighSpeedMessage->m_fRollTrimPosition);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fRollTrimPosition, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fRollTrimPosition", &bPassed);
 //check value constraints for yaw trim position
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fYawTrimPosition >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fYawTrimPosition",">= -1.0f",ptSendHighSpeedMessage->m_fYawTrimPosition);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fYawTrimPosition <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fYawTrimPosition","<= 1.0f",ptSendHighSpeedMessage->m_fYawTrimPosition);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fYawTrimPosition, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fYawTrimPosition", &bPassed);
 //check value constraints for yaw serial actuators
-
 uIndex = 0;
 for(; uIndex < 2; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfYawSerialActuators[uIndex] >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfYawSerialActuators",uIndex,">= -1.0f",ptSendHighSpeedMessage->m_pfYawSerialActuators[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendHighSpeedMessage->m_pfYawSerialActuators[uIndex], uIndex, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_pfYawSerialActuators", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfYawSerialActuators[uIndex] <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfYawSerialActuators",uIndex,"<= 1.0f",ptSendHighSpeedMessage->m_pfYawSerialActuators[uIndex]);
-}
-
-}
 //check value constraints for yaw trim actuators
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fYawTrimActuators >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fYawTrimActuators",">= -1.0f",ptSendHighSpeedMessage->m_fYawTrimActuators);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fYawTrimActuators <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fYawTrimActuators","<= 1.0f",ptSendHighSpeedMessage->m_fYawTrimActuators);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fYawTrimActuators, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fYawTrimActuators", &bPassed);
 //check value constraints for roll serial actuators
-
 uIndex = 0;
 for(; uIndex < 2; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfRollSerialActuators[uIndex] >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfRollSerialActuators",uIndex,">= -1.0f",ptSendHighSpeedMessage->m_pfRollSerialActuators[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendHighSpeedMessage->m_pfRollSerialActuators[uIndex], uIndex, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_pfRollSerialActuators", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfRollSerialActuators[uIndex] <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfRollSerialActuators",uIndex,"<= 1.0f",ptSendHighSpeedMessage->m_pfRollSerialActuators[uIndex]);
-}
-
-}
 //check value constraints for roll trim actuators
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRollTrimActuators >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRollTrimActuators",">= -1.0f",ptSendHighSpeedMessage->m_fRollTrimActuators);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRollTrimActuators <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRollTrimActuators","<= 1.0f",ptSendHighSpeedMessage->m_fRollTrimActuators);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fRollTrimActuators, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fRollTrimActuators", &bPassed);
 //check value constraints for pitch serial actuators
-
 uIndex = 0;
 for(; uIndex < 2; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfPitchSerialActuators[uIndex] >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfPitchSerialActuators",uIndex,">= -1.0f",ptSendHighSpeedMessage->m_pfPitchSerialActuators[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendHighSpeedMessage->m_pfPitchSerialActuators[uIndex], uIndex, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_pfPitchSerialActuators", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfPitchSerialActuators[uIndex] <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfPitchSerialActuators",uIndex,"<= 1.0f",ptSendHighSpeedMessage->m_pfPitchSerialActuators[uIndex]);
-}
-
-}
 //check value constraints for pitch trim actuators
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fPitchTrimActuators >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fPitchTrimActuators",">= -1.0f",ptSendHighSpeedMessage->m_fPitchTrimActuators);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fPitchTrimActuators <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fPitchTrimActuators","<= 1.0f",ptSendHighSpeedMessage->m_fPitchTrimActuators);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fPitchTrimActuators, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fPitchTrimActuators", &bPassed);
 //check value constraints for collective serial actuators
-
 uIndex = 0;
 for(; uIndex < 2; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfCollectiveSerialActuators[uIndex] >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfCollectiveSerialActuators",uIndex,">= -1.0f",ptSendHighSpeedMessage->m_pfCollectiveSerialActuators[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendHighSpeedMessage->m_pfCollectiveSerialActuators[uIndex], uIndex, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_pfCollectiveSerialActuators", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfCollectiveSerialActuators[uIndex] <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfCollectiveSerialActuators",uIndex,"<= 1.0f",ptSendHighSpeedMessage->m_pfCollectiveSerialActuators[uIndex]);
-}
-
-}
 //check value constraints for collective trim actuators
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fCollectiveTrimActuators >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fCollectiveTrimActuators",">= -1.0f",ptSendHighSpeedMessage->m_fCollectiveTrimActuators);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fCollectiveTrimActuators <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fCollectiveTrimActuators","<= 1.0f",ptSendHighSpeedMessage->m_fCollectiveTrimActuators);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fCollectiveTrimActuators, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fCollectiveTrimActuators", &bPassed);
 //check value constraints for yaw control override flag
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nYawControlOverrideFlag >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nYawControlOverrideFlag",">= 0",ptSendHighSpeedMessage->m_nYawControlOverrideFlag);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nYawControlOverrideFlag <= 7)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nYawControlOverrideFlag","<= 7",ptSendHighSpeedMessage->m_nYawControlOverrideFlag);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nYawControlOverrideFlag, 0, 7, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nYawControlOverrideFlag", &bPassed);
 //check value constraints for pitch control override flag
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nPitchControlOverrideFlag >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nPitchControlOverrideFlag",">= 0",ptSendHighSpeedMessage->m_nPitchControlOverrideFlag);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nPitchControlOverrideFlag <= 7)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nPitchControlOverrideFlag","<= 7",ptSendHighSpeedMessage->m_nPitchControlOverrideFlag);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nPitchControlOverrideFlag, 0, 7, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nPitchControlOverrideFlag", &bPassed);
 //check value constraints for roll control override flag
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nRollControlOverrideFlag >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nRollControlOverrideFlag",">= 0",ptSendHighSpeedMessage->m_nRollControlOverrideFlag);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nRollControlOverrideFlag <= 7)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nRollControlOverrideFlag","<= 7",ptSendHighSpeedMessage->m_nRollControlOverrideFlag);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nRollControlOverrideFlag, 0, 7, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nRollControlOverrideFlag", &bPassed);
 //check value constraints for collective control override flag
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nCollectiveControlOverrideFlag >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nCollectiveControlOverrideFlag",">= 0",ptSendHighSpeedMessage->m_nCollectiveControlOverrideFlag);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nCollectiveControlOverrideFlag <= 7)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nCollectiveControlOverrideFlag","<= 7",ptSendHighSpeedMessage->m_nCollectiveControlOverrideFlag);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nCollectiveControlOverrideFlag, 0, 7, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nCollectiveControlOverrideFlag", &bPassed);
 //check value constraints for right brake
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRightBrake >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRightBrake",">= 0.0f",ptSendHighSpeedMessage->m_fRightBrake);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRightBrake <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRightBrake","<= 1.0f",ptSendHighSpeedMessage->m_fRightBrake);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fRightBrake, 0.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fRightBrake", &bPassed);
 //check value constraints for left brake
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fLeftBrake >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fLeftBrake",">= 0.0f",ptSendHighSpeedMessage->m_fLeftBrake);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fLeftBrake <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fLeftBrake","<= 1.0f",ptSendHighSpeedMessage->m_fLeftBrake);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fLeftBrake, 0.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fLeftBrake", &bPassed);
 //check value constraints for nose wheel control
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fNoseWheelControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fNoseWheelControl",">= -1.0f",ptSendHighSpeedMessage->m_fNoseWheelControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fNoseWheelControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fNoseWheelControl","<= 1.0f",ptSendHighSpeedMessage->m_fNoseWheelControl);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fNoseWheelControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fNoseWheelControl", &bPassed);
 //check value constraints for rotor brake
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRotorBrake >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRotorBrake",">= 0.0f",ptSendHighSpeedMessage->m_fRotorBrake);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fRotorBrake <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fRotorBrake","<= 1.0f",ptSendHighSpeedMessage->m_fRotorBrake);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_fRotorBrake, 0.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_fRotorBrake", &bPassed);
 //check value constraints for winch flag
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nWinchFlag >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nWinchFlag",">= 0",ptSendHighSpeedMessage->m_nWinchFlag);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nWinchFlag <= 4)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nWinchFlag","<= 4",ptSendHighSpeedMessage->m_nWinchFlag);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nWinchFlag, 0, 4, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nWinchFlag", &bPassed);
 //check value constraints for winch length
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fWinchLength_m >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fWinchLength_m",">= 0.0f",ptSendHighSpeedMessage->m_fWinchLength_m);
-}
-
+CheckValueConstraint(ptSendHighSpeedMessage->m_fWinchLength_m, 0.0f, , "SendHighSpeedMessage->m_fWinchLength_m", &bPassed);
 //check value constraints for winch payload mass
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_fWinchPayloadMass_kg >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->m_fWinchPayloadMass_kg",">= 0.0f",ptSendHighSpeedMessage->m_fWinchPayloadMass_kg);
-}
-
+CheckValueConstraint(ptSendHighSpeedMessage->m_fWinchPayloadMass_kg, 0.0f, , "SendHighSpeedMessage->m_fWinchPayloadMass_kg", &bPassed);
 //check value constraints for winch payload x
 
 //check value constraints for winch payload y
@@ -423,19 +128,7 @@ fprintf(stderr, "%s fails constraint (%s) with value %f","SendHighSpeedMessage->
 //check value constraints for winch payload z
 
 //check value constraints for hook flag
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nHookFlag >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nHookFlag",">= 0",ptSendHighSpeedMessage->m_nHookFlag);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nHookFlag <= 4)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nHookFlag","<= 4",ptSendHighSpeedMessage->m_nHookFlag);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nHookFlag, 0, 4, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nHookFlag", &bPassed);
 //check value constraints for hook length
 
 //check value constraints for hook payload mass
@@ -447,163 +140,47 @@ fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->
 //check value constraints for hook payload z
 
 //check value constraints for SAS Mode
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nSASMode >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nSASMode",">= 0",ptSendHighSpeedMessage->m_nSASMode);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nSASMode <= 7)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nSASMode","<= 7",ptSendHighSpeedMessage->m_nSASMode);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nSASMode, 0, 7, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nSASMode", &bPassed);
 //check value constraints for height of terrain
 
 //check value constraints for number of contact points
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nNumberOfContactPoints >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nNumberOfContactPoints",">= 0",ptSendHighSpeedMessage->m_nNumberOfContactPoints);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nNumberOfContactPoints <= MAX_NUMBER_OF_CONTACT_LOCATIONS)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nNumberOfContactPoints","<= MAX_NUMBER_OF_CONTACT_LOCATIONS",ptSendHighSpeedMessage->m_nNumberOfContactPoints);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nNumberOfContactPoints, 0, MAX_NUMBER_OF_CONTACT_LOCATIONS, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nNumberOfContactPoints", &bPassed);
 //check value constraints for ground contact location
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_CONTACT_LOCATIONS; ++uIndex){
 }
+
 //check value constraints for number of engines
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nNumberOfEngines >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nNumberOfEngines",">= 0",ptSendHighSpeedMessage->m_nNumberOfEngines);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nNumberOfEngines <= MAX_NUMBER_OF_ENGINES)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nNumberOfEngines","<= MAX_NUMBER_OF_ENGINES",ptSendHighSpeedMessage->m_nNumberOfEngines);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nNumberOfEngines, 0, MAX_NUMBER_OF_ENGINES, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nNumberOfEngines", &bPassed);
 //check value constraints for throttle
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfThrottle[uIndex] >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfThrottle",uIndex,">= 0.0f",ptSendHighSpeedMessage->m_pfThrottle[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendHighSpeedMessage->m_pfThrottle[uIndex], uIndex, 0.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_pfThrottle", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfThrottle[uIndex] <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfThrottle",uIndex,"<= 1.0f",ptSendHighSpeedMessage->m_pfThrottle[uIndex]);
-}
-
-}
 //check value constraints for mixture
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfMixture[uIndex] >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfMixture",uIndex,">= 0.0f",ptSendHighSpeedMessage->m_pfMixture[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendHighSpeedMessage->m_pfMixture[uIndex], uIndex, 0.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_pfMixture", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfMixture[uIndex] <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfMixture",uIndex,"<= 1.0f",ptSendHighSpeedMessage->m_pfMixture[uIndex]);
-}
-
-}
 //check value constraints for number of propellers
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nNumberOfPropellers >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nNumberOfPropellers",">= 0",ptSendHighSpeedMessage->m_nNumberOfPropellers);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nNumberOfPropellers <= MAX_NUMBER_OF_PROPELLERS)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nNumberOfPropellers","<= MAX_NUMBER_OF_PROPELLERS",ptSendHighSpeedMessage->m_nNumberOfPropellers);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nNumberOfPropellers, 0, MAX_NUMBER_OF_PROPELLERS, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nNumberOfPropellers", &bPassed);
 //check value constraints for prop pitch
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_PROPELLERS; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfPropPitch_deg[uIndex] >= -180.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfPropPitch_deg",uIndex,">= -180.0f",ptSendHighSpeedMessage->m_pfPropPitch_deg[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendHighSpeedMessage->m_pfPropPitch_deg[uIndex], uIndex, -180.0f, 180.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_pfPropPitch_deg", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfPropPitch_deg[uIndex] <= 180.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfPropPitch_deg",uIndex,"<= 180.0f",ptSendHighSpeedMessage->m_pfPropPitch_deg[uIndex]);
-}
-
-}
 //check value constraints for number of tanks
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nNumberOfTanks >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nNumberOfTanks",">= 0",ptSendHighSpeedMessage->m_nNumberOfTanks);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nNumberOfTanks <= MAX_NUMBER_OF_FUEL_TANKS)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nNumberOfTanks","<= MAX_NUMBER_OF_FUEL_TANKS",ptSendHighSpeedMessage->m_nNumberOfTanks);
-}
-
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nNumberOfTanks, 0, MAX_NUMBER_OF_FUEL_TANKS, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nNumberOfTanks", &bPassed);
 //check value constraints for fuel weight
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_FUEL_TANKS; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfFuelWeight_lbs[uIndex] >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfFuelWeight_lbs",uIndex,">= 0.0f",ptSendHighSpeedMessage->m_pfFuelWeight_lbs[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendHighSpeedMessage->m_pfFuelWeight_lbs[uIndex], uIndex, 0.0f, 4000.0f, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_pfFuelWeight_lbs", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_pfFuelWeight_lbs[uIndex] <= 4000.0f)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %f","SendHighSpeedMessage->m_pfFuelWeight_lbs",uIndex,"<= 4000.0f",ptSendHighSpeedMessage->m_pfFuelWeight_lbs[uIndex]);
-}
-
-}
 //check value constraints for flag1
+CheckIntervalConstraint(ptSendHighSpeedMessage->m_nFlag1, 0, 7, INTERVAL_TYPE_CLOSED, "SendHighSpeedMessage->m_nFlag1", &bPassed);
 
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nFlag1 >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nFlag1",">= 0",ptSendHighSpeedMessage->m_nFlag1);
-}
-
-//if the value constraint is not met
-if (!(ptSendHighSpeedMessage->m_nFlag1 <= 7)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->m_nFlag1","<= 7",ptSendHighSpeedMessage->m_nFlag1);
-}
+//returns the flag to the caller to signify whether constraints have passed
+return bPassed;
 
 
 }
@@ -612,211 +189,54 @@ fprintf(stderr, "%s fails constraint (%s) with value %d","SendHighSpeedMessage->
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptSendLowSpeedMessage the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnSendLowSpeedMessage(const SendLowSpeedMessageT *const ptSendLowSpeedMessage)
+BOOL CheckConstraintsOnSendLowSpeedMessage(const SendLowSpeedMessageT *const ptSendLowSpeedMessage)
 {
+//a flag returned to the caller to signify whether constraints have passed
+BOOL bPassed = TRUE;
+
 //used for indexing over array data members
 size_t uIndex = 0u;
 
+
 //check value constraints for number of gears
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfGears >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfGears",">= 0",ptSendLowSpeedMessage->m_nNumberOfGears);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfGears <= MAX_NUMBER_OF_LANDING_GEARS)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfGears","<= MAX_NUMBER_OF_LANDING_GEARS",ptSendLowSpeedMessage->m_nNumberOfGears);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_nNumberOfGears, 0, MAX_NUMBER_OF_LANDING_GEARS, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_nNumberOfGears", &bPassed);
 //check value constraints for gear requested position
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_LANDING_GEARS; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnGearRequestedPosition_pct[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnGearRequestedPosition_pct",uIndex,">= 0",ptSendLowSpeedMessage->m_pnGearRequestedPosition_pct[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnGearRequestedPosition_pct[uIndex], uIndex, 0, 100, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnGearRequestedPosition_pct", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnGearRequestedPosition_pct[uIndex] <= 100)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnGearRequestedPosition_pct",uIndex,"<= 100",ptSendLowSpeedMessage->m_pnGearRequestedPosition_pct[uIndex]);
-}
-
-}
 //check value constraints for number of flaps
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfFlaps >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfFlaps",">= 0",ptSendLowSpeedMessage->m_nNumberOfFlaps);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfFlaps <= MAX_NUMBER_OF_FLAPS)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfFlaps","<= MAX_NUMBER_OF_FLAPS",ptSendLowSpeedMessage->m_nNumberOfFlaps);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_nNumberOfFlaps, 0, MAX_NUMBER_OF_FLAPS, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_nNumberOfFlaps", &bPassed);
 //check value constraints for flap requested position
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_FLAPS; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnFlapRequestedPosition_pct[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnFlapRequestedPosition_pct",uIndex,">= 0",ptSendLowSpeedMessage->m_pnFlapRequestedPosition_pct[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnFlapRequestedPosition_pct[uIndex], uIndex, 0, 100, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnFlapRequestedPosition_pct", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnFlapRequestedPosition_pct[uIndex] <= 100)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnFlapRequestedPosition_pct",uIndex,"<= 100",ptSendLowSpeedMessage->m_pnFlapRequestedPosition_pct[uIndex]);
-}
-
-}
 //check value constraints for number of speed brakes
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfSpeedBrakes >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfSpeedBrakes",">= 0",ptSendLowSpeedMessage->m_nNumberOfSpeedBrakes);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfSpeedBrakes <= MAX_NUMBER_OF_SPEED_BRAKES)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfSpeedBrakes","<= MAX_NUMBER_OF_SPEED_BRAKES",ptSendLowSpeedMessage->m_nNumberOfSpeedBrakes);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_nNumberOfSpeedBrakes, 0, MAX_NUMBER_OF_SPEED_BRAKES, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_nNumberOfSpeedBrakes", &bPassed);
 //check value constraints for speed brake requested position
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_SPEED_BRAKES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnSpeedBrakeRequestedPosition_pct[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnSpeedBrakeRequestedPosition_pct",uIndex,">= 0",ptSendLowSpeedMessage->m_pnSpeedBrakeRequestedPosition_pct[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnSpeedBrakeRequestedPosition_pct[uIndex], uIndex, 0, 100, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnSpeedBrakeRequestedPosition_pct", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnSpeedBrakeRequestedPosition_pct[uIndex] <= 100)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnSpeedBrakeRequestedPosition_pct",uIndex,"<= 100",ptSendLowSpeedMessage->m_pnSpeedBrakeRequestedPosition_pct[uIndex]);
-}
-
-}
 //check value constraints for sea level pressure
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fSeaLevelPressure_inHg >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fSeaLevelPressure_inHg",">= 0.0f",ptSendLowSpeedMessage->m_fSeaLevelPressure_inHg);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fSeaLevelPressure_inHg <= 35.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fSeaLevelPressure_inHg","<= 35.0f",ptSendLowSpeedMessage->m_fSeaLevelPressure_inHg);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_fSeaLevelPressure_inHg, 0.0f, 35.0f, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_fSeaLevelPressure_inHg", &bPassed);
 //check value constraints for sea level temperature
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fSeaLevelTemperature_degf >= -148.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fSeaLevelTemperature_degf",">= -148.0f",ptSendLowSpeedMessage->m_fSeaLevelTemperature_degf);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fSeaLevelTemperature_degf <= 302.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fSeaLevelTemperature_degf","<= 302.0f",ptSendLowSpeedMessage->m_fSeaLevelTemperature_degf);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_fSeaLevelTemperature_degf, -148.0f, 302.0f, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_fSeaLevelTemperature_degf", &bPassed);
 //check value constraints for runway roughness
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fRunwayRoughness >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fRunwayRoughness",">= 0.0f",ptSendLowSpeedMessage->m_fRunwayRoughness);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fRunwayRoughness <= 10.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fRunwayRoughness","<= 10.0f",ptSendLowSpeedMessage->m_fRunwayRoughness);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_fRunwayRoughness, 0.0f, 10.0f, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_fRunwayRoughness", &bPassed);
 //check value constraints for wind magnitude
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fWindMagnitude_kts >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fWindMagnitude_kts",">= 0.0f",ptSendLowSpeedMessage->m_fWindMagnitude_kts);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fWindMagnitude_kts <= 200.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fWindMagnitude_kts","<= 200.0f",ptSendLowSpeedMessage->m_fWindMagnitude_kts);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_fWindMagnitude_kts, 0.0f, 200.0f, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_fWindMagnitude_kts", &bPassed);
 //check value constraints for wind heading
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fWindHeading_deg >= -360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fWindHeading_deg",">= -360.0f",ptSendLowSpeedMessage->m_fWindHeading_deg);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fWindHeading_deg <= 360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fWindHeading_deg","<= 360.0f",ptSendLowSpeedMessage->m_fWindHeading_deg);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_fWindHeading_deg, -360.0f, 360.0f, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_fWindHeading_deg", &bPassed);
 //check value constraints for wind inclination
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fWindInclination_deg >= -360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fWindInclination_deg",">= -360.0f",ptSendLowSpeedMessage->m_fWindInclination_deg);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fWindInclination_deg <= 360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fWindInclination_deg","<= 360.0f",ptSendLowSpeedMessage->m_fWindInclination_deg);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_fWindInclination_deg, -360.0f, 360.0f, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_fWindInclination_deg", &bPassed);
 //check value constraints for turbulence
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fTurbulence >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fTurbulence",">= 0.0f",ptSendLowSpeedMessage->m_fTurbulence);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fTurbulence <= 10.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fTurbulence","<= 10.0f",ptSendLowSpeedMessage->m_fTurbulence);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_fTurbulence, 0.0f, 10.0f, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_fTurbulence", &bPassed);
 //check value constraints for payload weight
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fPayloadWeight_lbs >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fPayloadWeight_lbs",">= 0.0f",ptSendLowSpeedMessage->m_fPayloadWeight_lbs);
-}
-
+CheckValueConstraint(ptSendLowSpeedMessage->m_fPayloadWeight_lbs, 0.0f, , "SendLowSpeedMessage->m_fPayloadWeight_lbs", &bPassed);
 //check value constraints for CG offset x
 
 //check value constraints for CG offset y
@@ -824,198 +244,64 @@ fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m
 //check value constraints for CG offset z
 
 //check value constraints for number of engines
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfEngines >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfEngines",">= 0",ptSendLowSpeedMessage->m_nNumberOfEngines);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfEngines <= MAX_NUMBER_OF_ENGINES)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfEngines","<= MAX_NUMBER_OF_ENGINES",ptSendLowSpeedMessage->m_nNumberOfEngines);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_nNumberOfEngines, 0, MAX_NUMBER_OF_ENGINES, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_nNumberOfEngines", &bPassed);
 //check value constraints for engine starter running
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnEngineStarterRunning[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnEngineStarterRunning",uIndex,">= 0",ptSendLowSpeedMessage->m_pnEngineStarterRunning[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnEngineStarterRunning[uIndex], uIndex, 0, 1, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnEngineStarterRunning", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnEngineStarterRunning[uIndex] <= 1)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnEngineStarterRunning",uIndex,"<= 1",ptSendLowSpeedMessage->m_pnEngineStarterRunning[uIndex]);
-}
-
-}
 //check value constraints for bleed air
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnBleedAir[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnBleedAir",uIndex,">= 0",ptSendLowSpeedMessage->m_pnBleedAir[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnBleedAir[uIndex], uIndex, 0, 2, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnBleedAir", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnBleedAir[uIndex] <= 2)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnBleedAir",uIndex,"<= 2",ptSendLowSpeedMessage->m_pnBleedAir[uIndex]);
-}
-
-}
 //check value constraints for ignition
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnIgnition[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnIgnition",uIndex,">= 0",ptSendLowSpeedMessage->m_pnIgnition[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnIgnition[uIndex], uIndex, 0, 1, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnIgnition", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnIgnition[uIndex] <= 1)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnIgnition",uIndex,"<= 1",ptSendLowSpeedMessage->m_pnIgnition[uIndex]);
-}
-
-}
 //check value constraints for engine flags 1
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnEngineFlags1[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnEngineFlags1",uIndex,">= 0",ptSendLowSpeedMessage->m_pnEngineFlags1[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnEngineFlags1[uIndex], uIndex, 0, 31, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnEngineFlags1", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnEngineFlags1[uIndex] <= 31)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnEngineFlags1",uIndex,"<= 31",ptSendLowSpeedMessage->m_pnEngineFlags1[uIndex]);
-}
-
-}
 //check value constraints for engine inlet state
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnEngineInletState[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnEngineInletState",uIndex,">= 0",ptSendLowSpeedMessage->m_pnEngineInletState[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnEngineInletState[uIndex], uIndex, 0, 5, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnEngineInletState", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnEngineInletState[uIndex] <= 5)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnEngineInletState",uIndex,"<= 5",ptSendLowSpeedMessage->m_pnEngineInletState[uIndex]);
-}
-
-}
 //check value constraints for ice state engine
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
 }
+
 //check value constraints for engine failure flags
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnEngineFailureFlags[uIndex] >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnEngineFailureFlags",uIndex,">= 0",ptSendLowSpeedMessage->m_pnEngineFailureFlags[uIndex]);
-}
+CheckIntervalConstraintFromArrayIndex(ptSendLowSpeedMessage->m_pnEngineFailureFlags[uIndex], uIndex, 0, 65535, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_pnEngineFailureFlags", &bPassed);}
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_pnEngineFailureFlags[uIndex] <= 65535)){
-//report the failed constraint
-fprintf(stderr, "%s[%d] fails constraint (%s) with value %d","SendLowSpeedMessage->m_pnEngineFailureFlags",uIndex,"<= 65535",ptSendLowSpeedMessage->m_pnEngineFailureFlags[uIndex]);
-}
-
-}
 //check value constraints for number of propellers
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfPropellers >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfPropellers",">= 0",ptSendLowSpeedMessage->m_nNumberOfPropellers);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nNumberOfPropellers <= MAX_NUMBER_OF_PROPELLERS)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nNumberOfPropellers","<= MAX_NUMBER_OF_PROPELLERS",ptSendLowSpeedMessage->m_nNumberOfPropellers);
-}
-
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_nNumberOfPropellers, 0, MAX_NUMBER_OF_PROPELLERS, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_nNumberOfPropellers", &bPassed);
 //check value constraints for ice states prop
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_PROPELLERS; ++uIndex){
 }
+
 //check value constraints for ice state right wing
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fIceStateRightWing_in >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fIceStateRightWing_in",">= 0.0f",ptSendLowSpeedMessage->m_fIceStateRightWing_in);
-}
-
+CheckValueConstraint(ptSendLowSpeedMessage->m_fIceStateRightWing_in, 0.0f, , "SendLowSpeedMessage->m_fIceStateRightWing_in", &bPassed);
 //check value constraints for ice state left wing
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fIceStateLeftWing_in >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fIceStateLeftWing_in",">= 0.0f",ptSendLowSpeedMessage->m_fIceStateLeftWing_in);
-}
-
+CheckValueConstraint(ptSendLowSpeedMessage->m_fIceStateLeftWing_in, 0.0f, , "SendLowSpeedMessage->m_fIceStateLeftWing_in", &bPassed);
 //check value constraints for ice state fuselage
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fIceStateFuselage_in >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fIceStateFuselage_in",">= 0.0f",ptSendLowSpeedMessage->m_fIceStateFuselage_in);
-}
-
+CheckValueConstraint(ptSendLowSpeedMessage->m_fIceStateFuselage_in, 0.0f, , "SendLowSpeedMessage->m_fIceStateFuselage_in", &bPassed);
 //check value constraints for ice state tail
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_fIceStateTail_in >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendLowSpeedMessage->m_fIceStateTail_in",">= 0.0f",ptSendLowSpeedMessage->m_fIceStateTail_in);
-}
-
+CheckValueConstraint(ptSendLowSpeedMessage->m_fIceStateTail_in, 0.0f, , "SendLowSpeedMessage->m_fIceStateTail_in", &bPassed);
 //check value constraints for time multiplier
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nTimeMultiplier >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nTimeMultiplier",">= 0",ptSendLowSpeedMessage->m_nTimeMultiplier);
-}
-
+CheckValueConstraint(ptSendLowSpeedMessage->m_nTimeMultiplier, 0, , "SendLowSpeedMessage->m_nTimeMultiplier", &bPassed);
 //check value constraints for failure flags 1
+CheckIntervalConstraint(ptSendLowSpeedMessage->m_nFailureFlags1, 0, 16383, INTERVAL_TYPE_CLOSED, "SendLowSpeedMessage->m_nFailureFlags1", &bPassed);
 
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nFailureFlags1 >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nFailureFlags1",">= 0",ptSendLowSpeedMessage->m_nFailureFlags1);
-}
-
-//if the value constraint is not met
-if (!(ptSendLowSpeedMessage->m_nFailureFlags1 <= 16383)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m_nFailureFlags1","<= 16383",ptSendLowSpeedMessage->m_nFailureFlags1);
-}
+//returns the flag to the caller to signify whether constraints have passed
+return bPassed;
 
 
 }
@@ -1024,52 +310,25 @@ fprintf(stderr, "%s fails constraint (%s) with value %d","SendLowSpeedMessage->m
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptEngineReposition the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnEngineReposition(const EngineRepositionT *const ptEngineReposition)
+BOOL CheckConstraintsOnEngineReposition(const EngineRepositionT *const ptEngineReposition)
 {
+//a flag returned to the caller to signify whether constraints have passed
+BOOL bPassed = TRUE;
+
+
 //check value constraints for running
 
 //check value constraints for piston
-
-//if the value constraint is not met
-if (!(ptEngineReposition->m_fPiston_rpm >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","EngineReposition->m_fPiston_rpm",">= 0.0f",ptEngineReposition->m_fPiston_rpm);
-}
-
-//if the value constraint is not met
-if (!(ptEngineReposition->m_fPiston_rpm <= 100000.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","EngineReposition->m_fPiston_rpm","<= 100000.0f",ptEngineReposition->m_fPiston_rpm);
-}
-
+CheckIntervalConstraint(ptEngineReposition->m_fPiston_rpm, 0.0f, 100000.0f, INTERVAL_TYPE_CLOSED, "EngineReposition->m_fPiston_rpm", &bPassed);
 //check value constraints for n1
-
-//if the value constraint is not met
-if (!(ptEngineReposition->m_fN1_pct >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","EngineReposition->m_fN1_pct",">= 0.0f",ptEngineReposition->m_fN1_pct);
-}
-
-//if the value constraint is not met
-if (!(ptEngineReposition->m_fN1_pct <= 100.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","EngineReposition->m_fN1_pct","<= 100.0f",ptEngineReposition->m_fN1_pct);
-}
-
+CheckIntervalConstraint(ptEngineReposition->m_fN1_pct, 0.0f, 100.0f, INTERVAL_TYPE_CLOSED, "EngineReposition->m_fN1_pct", &bPassed);
 //check value constraints for n2
+CheckIntervalConstraint(ptEngineReposition->m_fN2_pct, 0.0f, 100.0f, INTERVAL_TYPE_CLOSED, "EngineReposition->m_fN2_pct", &bPassed);
 
-//if the value constraint is not met
-if (!(ptEngineReposition->m_fN2_pct >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","EngineReposition->m_fN2_pct",">= 0.0f",ptEngineReposition->m_fN2_pct);
-}
-
-//if the value constraint is not met
-if (!(ptEngineReposition->m_fN2_pct <= 100.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","EngineReposition->m_fN2_pct","<= 100.0f",ptEngineReposition->m_fN2_pct);
-}
+//returns the flag to the caller to signify whether constraints have passed
+return bPassed;
 
 
 }
@@ -1078,22 +337,19 @@ fprintf(stderr, "%s fails constraint (%s) with value %f","EngineReposition->m_fN
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptPropellerReposition the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnPropellerReposition(const PropellerRepositionT *const ptPropellerReposition)
+BOOL CheckConstraintsOnPropellerReposition(const PropellerRepositionT *const ptPropellerReposition)
 {
+//a flag returned to the caller to signify whether constraints have passed
+BOOL bPassed = TRUE;
+
+
 //check value constraints for piston
+CheckIntervalConstraint(ptPropellerReposition->m_fPiston_rpm, 0.0f, 10000.0f, INTERVAL_TYPE_CLOSED, "PropellerReposition->m_fPiston_rpm", &bPassed);
 
-//if the value constraint is not met
-if (!(ptPropellerReposition->m_fPiston_rpm >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","PropellerReposition->m_fPiston_rpm",">= 0.0f",ptPropellerReposition->m_fPiston_rpm);
-}
-
-//if the value constraint is not met
-if (!(ptPropellerReposition->m_fPiston_rpm <= 10000.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","PropellerReposition->m_fPiston_rpm","<= 10000.0f",ptPropellerReposition->m_fPiston_rpm);
-}
+//returns the flag to the caller to signify whether constraints have passed
+return bPassed;
 
 
 }
@@ -1102,209 +358,62 @@ fprintf(stderr, "%s fails constraint (%s) with value %f","PropellerReposition->m
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptSendRepositionMessage the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnSendRepositionMessage(const SendRepositionMessageT *const ptSendRepositionMessage)
+BOOL CheckConstraintsOnSendRepositionMessage(const SendRepositionMessageT *const ptSendRepositionMessage)
 {
+//a flag returned to the caller to signify whether constraints have passed
+BOOL bPassed = TRUE;
+
 //used for indexing over array data members
 size_t uIndex = 0u;
 
+
 //check value constraints for reposition type
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_nRepositionType >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendRepositionMessage->m_nRepositionType",">= 0",ptSendRepositionMessage->m_nRepositionType);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_nRepositionType <= 1)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendRepositionMessage->m_nRepositionType","<= 1",ptSendRepositionMessage->m_nRepositionType);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_nRepositionType, 0, 1, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_nRepositionType", &bPassed);
 //check value constraints for latitude
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_dLatitude_deg >= -90.0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_dLatitude_deg",">= -90.0",ptSendRepositionMessage->m_dLatitude_deg);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_dLatitude_deg <= 90.0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_dLatitude_deg","<= 90.0",ptSendRepositionMessage->m_dLatitude_deg);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_dLatitude_deg, -90.0, 90.0, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_dLatitude_deg", &bPassed);
 //check value constraints for longitude
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_dLongitude_deg >= -180.0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_dLongitude_deg",">= -180.0",ptSendRepositionMessage->m_dLongitude_deg);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_dLongitude_deg <= 180.0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_dLongitude_deg","<= 180.0",ptSendRepositionMessage->m_dLongitude_deg);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_dLongitude_deg, -180.0, 180.0, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_dLongitude_deg", &bPassed);
 //check value constraints for MSL altitude
 
 //check value constraints for magnetic heading
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fMagneticHeading_deg >= 0.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fMagneticHeading_deg",">= 0.0f",ptSendRepositionMessage->m_fMagneticHeading_deg);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fMagneticHeading_deg <= 360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fMagneticHeading_deg","<= 360.0f",ptSendRepositionMessage->m_fMagneticHeading_deg);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_fMagneticHeading_deg, 0.0f, 360.0f, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_fMagneticHeading_deg", &bPassed);
 //check value constraints for indicated airspeed
 
 //check value constraints for aircraft pitch
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fAircraftPitch_deg >= -360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fAircraftPitch_deg",">= -360.0f",ptSendRepositionMessage->m_fAircraftPitch_deg);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fAircraftPitch_deg <= 360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fAircraftPitch_deg","<= 360.0f",ptSendRepositionMessage->m_fAircraftPitch_deg);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_fAircraftPitch_deg, -360.0f, 360.0f, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_fAircraftPitch_deg", &bPassed);
 //check value constraints for aircraft roll
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fAircraftRoll_deg >= -360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fAircraftRoll_deg",">= -360.0f",ptSendRepositionMessage->m_fAircraftRoll_deg);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fAircraftRoll_deg <= 360.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fAircraftRoll_deg","<= 360.0f",ptSendRepositionMessage->m_fAircraftRoll_deg);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_fAircraftRoll_deg, -360.0f, 360.0f, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_fAircraftRoll_deg", &bPassed);
 //check value constraints for vertical speed
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fVerticalSpeed_fpm >= -100000.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fVerticalSpeed_fpm",">= -100000.0f",ptSendRepositionMessage->m_fVerticalSpeed_fpm);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fVerticalSpeed_fpm <= 100000.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fVerticalSpeed_fpm","<= 100000.0f",ptSendRepositionMessage->m_fVerticalSpeed_fpm);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_fVerticalSpeed_fpm, -100000.0f, 100000.0f, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_fVerticalSpeed_fpm", &bPassed);
 //check value constraints for number of engines
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_nNumberOfEngines >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendRepositionMessage->m_nNumberOfEngines",">= 0",ptSendRepositionMessage->m_nNumberOfEngines);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_nNumberOfEngines <= MAX_NUMBER_OF_ENGINES)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendRepositionMessage->m_nNumberOfEngines","<= MAX_NUMBER_OF_ENGINES",ptSendRepositionMessage->m_nNumberOfEngines);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_nNumberOfEngines, 0, MAX_NUMBER_OF_ENGINES, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_nNumberOfEngines", &bPassed);
 //check value constraints for engine
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_ENGINES; ++uIndex){
 CheckConstraintsOnEngineReposition(&ptSendRepositionMessage->m_ptEngine[uIndex]);
 }
+
 //check value constraints for number of propellers
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_nNumberOfPropellers >= 0)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendRepositionMessage->m_nNumberOfPropellers",">= 0",ptSendRepositionMessage->m_nNumberOfPropellers);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_nNumberOfPropellers <= MAX_NUMBER_OF_PROPELLERS)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %d","SendRepositionMessage->m_nNumberOfPropellers","<= MAX_NUMBER_OF_PROPELLERS",ptSendRepositionMessage->m_nNumberOfPropellers);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_nNumberOfPropellers, 0, MAX_NUMBER_OF_PROPELLERS, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_nNumberOfPropellers", &bPassed);
 //check value constraints for propeller
-
 uIndex = 0;
 for(; uIndex < MAX_NUMBER_OF_PROPELLERS; ++uIndex){
 CheckConstraintsOnPropellerReposition(&ptSendRepositionMessage->m_ptPropeller[uIndex]);
 }
+
 //check value constraints for pitch flight control
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fPitchFlightControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fPitchFlightControl",">= -1.0f",ptSendRepositionMessage->m_fPitchFlightControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fPitchFlightControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fPitchFlightControl","<= 1.0f",ptSendRepositionMessage->m_fPitchFlightControl);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_fPitchFlightControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_fPitchFlightControl", &bPassed);
 //check value constraints for roll flight control
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fRollFlightControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fRollFlightControl",">= -1.0f",ptSendRepositionMessage->m_fRollFlightControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fRollFlightControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fRollFlightControl","<= 1.0f",ptSendRepositionMessage->m_fRollFlightControl);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_fRollFlightControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_fRollFlightControl", &bPassed);
 //check value constraints for yaw flight control
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fYawFlightControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fYawFlightControl",">= -1.0f",ptSendRepositionMessage->m_fYawFlightControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fYawFlightControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fYawFlightControl","<= 1.0f",ptSendRepositionMessage->m_fYawFlightControl);
-}
-
+CheckIntervalConstraint(ptSendRepositionMessage->m_fYawFlightControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_fYawFlightControl", &bPassed);
 //check value constraints for collective flight control
+CheckIntervalConstraint(ptSendRepositionMessage->m_fCollectiveFlightControl, -1.0f, 1.0f, INTERVAL_TYPE_CLOSED, "SendRepositionMessage->m_fCollectiveFlightControl", &bPassed);
 
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fCollectiveFlightControl >= -1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fCollectiveFlightControl",">= -1.0f",ptSendRepositionMessage->m_fCollectiveFlightControl);
-}
-
-//if the value constraint is not met
-if (!(ptSendRepositionMessage->m_fCollectiveFlightControl <= 1.0f)){
-//report the failed constraint
-fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage->m_fCollectiveFlightControl","<= 1.0f",ptSendRepositionMessage->m_fCollectiveFlightControl);
-}
+//returns the flag to the caller to signify whether constraints have passed
+return bPassed;
 
 
 }
@@ -1313,10 +422,19 @@ fprintf(stderr, "%s fails constraint (%s) with value %f","SendRepositionMessage-
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptSendVersionRequestMessage the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnSendVersionRequestMessage(const SendVersionRequestMessageT *const ptSendVersionRequestMessage)
+BOOL CheckConstraintsOnSendVersionRequestMessage(const SendVersionRequestMessageT *const ptSendVersionRequestMessage)
 {
+//a flag returned to the caller to signify whether constraints have passed
+BOOL bPassed = TRUE;
+
+
 //check value constraints for empty
+
+
+//returns the flag to the caller to signify whether constraints have passed
+return bPassed;
 
 
 }

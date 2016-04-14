@@ -46,6 +46,30 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
     }
 􏶳
 
+􏷘+􏷗􏷒check value constraint from array index􏷑
+􏷐checks a runtime constraint on the value of a data member􏷏
+􏶠used for debugging and testing various assertions􏶡
+􏶜􏶝􏷆float􏷅􏷄lhs􏷃􏷀the value to test a constraint on􏶿
+􏶜􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the array whose value is being tested􏶿
+􏶜􏶝􏷆ComparisonOperatorE􏷅􏷄operator􏷃􏷀the comparison operator used on the value constraint􏶿
+􏶜􏶝􏷆float􏷅􏷄rhs􏷃􏷀the value used to constrain the tested value􏶿
+􏶜􏶝􏷆char[]􏷅􏷄var name􏷃􏷀string representation of the variable being tested􏶿
+􏶜rm􏶝􏷆BOOL􏷅􏷄fail􏷃􏷀set to false if the constraint fails􏶿
+􏶴
+    􏶲test whether the expression passes based on the comparison􏶱
+    BOOL bPassed = 􏵲test constraint􏵳􏵶lhs􏵷,􏵶operator􏵷,􏵶rhs􏵷);
+    
+    􏶲if the constraint failed􏶱
+    if (!bPassed){
+    
+        􏶲print an error􏶱
+        􏵲print constraint error for array element􏵳􏵶lhs􏵷,􏵶operator􏵷,􏵶rhs􏵷,􏵶var name􏵷,􏵶index􏵷);
+        
+        􏶲signal failure to the caller􏶱
+        *􏵶fail􏵷 = 􏵰;
+    }
+􏶳
+
 􏷘+􏷗􏷒check interval constraint􏷑
 􏷐checks a runtime constraint on the value of a data member􏷏
 􏶠used for debugging and testing various assertions􏶡
@@ -64,6 +88,31 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
     
         􏶲print an error􏶱
         􏵲print interval error􏵳􏵶value􏵷,􏵶begin􏵷,􏵶end􏵷,􏵶interval type􏵷,􏵶var name􏵷);
+    
+        􏶲signal failure to the caller􏶱
+        *􏵶fail􏵷 = 􏵰;
+    }
+􏶳
+
+􏷘+􏷗􏷒check interval constraint from array index􏷑
+􏷐checks a runtime constraint on the value of a data member􏷏
+􏶠used for debugging and testing various assertions􏶡
+􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to test against an interval􏶿
+􏶜􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the array whose value is being tested􏶿
+􏶜􏶝􏷆float􏷅􏷄begin􏷃􏷀begin portion of interval􏶿
+􏶜􏶝􏷆float􏷅􏷄end􏷃􏷀end portion of interval􏶿
+􏶜􏶝􏷆IntervalTypeE􏷅􏷄interval type􏷃􏷀the type of interval to test against􏶿
+􏶜􏶝􏷆char[]􏷅􏷄var name􏷃􏷀string representation of the variable being tested􏶿
+􏶜rm􏶝􏷆BOOL􏷅􏷄fail􏷃􏷀set to false if the constraint fails􏶿
+􏶴
+    􏶲test whether the expression passes based on the interval􏶱
+    BOOL bPassed = 􏵲test interval􏵳􏵶value􏵷,􏵶begin􏵷,􏵶end􏵷,􏵶interval type􏵷);
+    
+    􏶲if the constraint failed􏶱
+    if (!bPassed){
+    
+        􏶲print an error􏶱
+        􏵲print interval error for array element􏵳􏵶value􏵷,􏵶begin􏵷,􏵶end􏵷,􏵶interval type􏵷,􏵶var name􏵷,􏵶index􏵷);
     
         􏶲signal failure to the caller􏶱
         *􏵶fail􏵷 = 􏵰;
@@ -125,6 +174,20 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
     fprintf(stderr, " %f) with value %f\n",􏵶rhs􏵷,􏵶lhs􏵷);
 􏶳
 
+􏷘-􏷗􏷒print constraint error for array element􏷑
+􏷐prints in error assuming the constraint failed􏷏
+􏶠􏶡
+􏶜􏶝􏷆float􏷅􏷄lhs􏷃􏷀the value to test a constraint on􏶿
+􏶜􏶝􏷆ComparisonOperatorE􏷅􏷄operator􏷃􏷀the comparison operator used on the value constraint􏶿
+􏶜􏶝􏷆float􏷅􏷄rhs􏷃􏷀the value used to constrain the tested value􏶿
+􏶜􏶝􏷆char[]􏷅􏷄var name􏷃􏷀string representation of the variable being tested􏶿
+􏶜􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the array that the value came from􏶿
+􏶴
+    fprintf(stderr, "%s[%i] fails constraint (", 􏵶var name􏵷,􏵶index􏵷);
+    􏵲print operator􏵳􏵶operator􏵷);
+    fprintf(stderr, " %f) with value %f\n",􏵶rhs􏵷,􏵶lhs􏵷);
+􏶳
+
 􏷘-􏷗􏷒print interval error􏷑
 􏷐prints in error assuming the constraint failed􏷏
 􏶠􏶡
@@ -136,6 +199,20 @@ http://en.cppreference.com/w/cpp/utility/functional􏶇
 􏶴
     fprintf(stderr, "%s is not in the interval %c%f, %f%c with value %f\n",
     􏵶var name􏵷,􏵲get begin interval􏵳􏵶interval type􏵷),􏵶begin􏵷,􏵶end􏵷,􏵲get end interval􏵳􏵶interval type􏵷),􏵶value􏵷);
+􏶳
+
+􏷘-􏷗􏷒print interval error for array element􏷑
+􏷐prints in error assuming the constraint failed􏷏
+􏶠􏶡
+􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to test against an interval􏶿
+􏶜􏶝􏷆float􏷅􏷄begin􏷃􏷀begin portion of interval􏶿
+􏶜􏶝􏷆float􏷅􏷄end􏷃􏷀end portion of interval􏶿
+􏶜􏶝􏷆IntervalTypeE􏷅􏷄interval type􏷃􏷀the type of interval to test against􏶿
+􏶜􏶝􏷆char[]􏷅􏷄var name􏷃􏷀string representation of the variable being tested􏶿
+􏶜􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the array that the value came from􏶿
+􏶴
+    fprintf(stderr, "%s[%i] is not in the interval %c%f, %f%c with value %f\n",
+    􏵶var name􏵷,􏵶index􏵷,􏵲get begin interval􏵳􏵶interval type􏵷),􏵶begin􏵷,􏵶end􏵷,􏵲get end interval􏵳􏵶interval type􏵷),􏵶value􏵷);
 􏶳
 
 􏷘-􏷗􏷒print operator􏷑

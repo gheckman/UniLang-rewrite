@@ -56,43 +56,49 @@ extern "C"
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptSendHighSpeedMessage the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnSendHighSpeedMessage(const SendHighSpeedMessageT *const ptSendHighSpeedMessage);
+BOOL CheckConstraintsOnSendHighSpeedMessage(const SendHighSpeedMessageT *const ptSendHighSpeedMessage);
 
 /**
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptSendLowSpeedMessage the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnSendLowSpeedMessage(const SendLowSpeedMessageT *const ptSendLowSpeedMessage);
+BOOL CheckConstraintsOnSendLowSpeedMessage(const SendLowSpeedMessageT *const ptSendLowSpeedMessage);
 
 /**
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptEngineReposition the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnEngineReposition(const EngineRepositionT *const ptEngineReposition);
+BOOL CheckConstraintsOnEngineReposition(const EngineRepositionT *const ptEngineReposition);
 
 /**
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptPropellerReposition the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnPropellerReposition(const PropellerRepositionT *const ptPropellerReposition);
+BOOL CheckConstraintsOnPropellerReposition(const PropellerRepositionT *const ptPropellerReposition);
 
 /**
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptSendRepositionMessage the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnSendRepositionMessage(const SendRepositionMessageT *const ptSendRepositionMessage);
+BOOL CheckConstraintsOnSendRepositionMessage(const SendRepositionMessageT *const ptSendRepositionMessage);
 
 /**
  * @brief if a broken value constraint is triggered, the data is most likely in a state that does not make sense according to the ICD.
  *         The value should either be adjusted, or the constraint should be modified
  * @param[in] ptSendVersionRequestMessage the data type whose member variables will be checked against value constraints
+ * @return whether the constraints have passed or not
  */
-void CheckConstraintsOnSendVersionRequestMessage(const SendVersionRequestMessageT *const ptSendVersionRequestMessage);
+BOOL CheckConstraintsOnSendVersionRequestMessage(const SendVersionRequestMessageT *const ptSendVersionRequestMessage);
 
 
 #ifdef __cplusplus
