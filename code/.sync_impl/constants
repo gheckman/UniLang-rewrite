@@ -8,7 +8,7 @@ TRANSCOMPILER_TOOL='unilang-transcompiler';
 
 #I'd like to transition to clang-3.9
 #clang-3.8 is broken in terms of brackets
-CLANG_FORMAT_TOOL='clang-format-3.6';
+CLANG_FORMAT_TOOL='clang-format-3.9';
 
 
 #The expected file extension of our UniLang code

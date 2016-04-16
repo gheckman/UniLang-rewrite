@@ -243,8 +243,8 @@
 􏶠uses float approximation to avoid precision errors
 returns 􏵱 if it is, 􏵰 if it is not􏶡
 􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to be checked with an interval􏶿
-􏶜􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
-􏶜􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
+􏶜m􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
+􏶜m􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
 􏶚m􏶛􏶾BOOL􏶽􏶼between interval􏶻􏶺whether the number passed in, is in between the specified interval􏶹
 􏶴
     
@@ -258,8 +258,8 @@ returns 􏵱 if it is, 􏵰 if it is not􏶡
 􏷐checks to see if a number is in between an exclusive range􏷏
 􏶠returns 􏵱 if it is, 􏵰 if it is not􏶡
 􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to be checked with an interval􏶿
-􏶜􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
-􏶜􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
+􏶜m􏶝􏷆float􏷅􏷄begin interval􏷃􏷀the first value of the interval􏶿
+􏶜m􏶝􏷆float􏷅􏷄end interval􏷃􏷀the last value of the interval􏶿
 􏶚m􏶛􏶾BOOL􏶽􏶼between interval􏶻􏶺whether the number passed in, is in between the specified interval􏶹
 􏶴
     􏶲potentially swap the interval end points to ensure we compare the value properly􏶱

@@ -3,6 +3,9 @@
 􏷰an enumerated type representing the type of message and how it should be parsed􏷯
 􏷮J2_Message_Types􏷭
 􏷬Trevor Hickey􏷫
+􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
+􏷤􏷣􏷦J2Const􏷥􏷢USES: SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE, FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE􏷡
 
 􏶀flight model message type􏶋
 􏶊Message Types for messages between Flight Model to Sim Host􏶉
@@ -57,4 +60,34 @@
     }
     
     return bHost;
+􏶳
+
+􏷘+􏷗􏷒get expected header size of message􏷑
+􏷐gets the expected header size of a particular message type􏷏
+􏶠􏶡
+􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀the message type used in J2 communication􏶿
+􏶚m􏶛􏶾size_t􏶽􏶼expected header size􏶻􏶺the expected header size of the message type􏶹
+􏶴
+    size_t uExpectedHeaderSize = 0u;
+    
+    switch(􏵶message type􏵷){
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_HIGH_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_LOW_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_REPOSITION:
+        case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_VERSION:
+        uExpectedHeaderSize = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
+        break;
+        
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY:
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION:
+        uExpectedHeaderSize = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
+        break;
+        
+        default:;
+    }
+    
+    return uExpectedHeaderSize;
 􏶳

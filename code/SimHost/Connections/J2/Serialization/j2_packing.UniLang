@@ -41,31 +41,31 @@ Message sent from Sim Host to Flight Model
 􏶔􏶕􏶒stdio.h􏶓􏶖USES: fprintf()􏶗
 
 􏵺method for packing regular variables according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_PACK_VAR(X)􏵿􏵖􏵗􏵼PackBigEndian4ByteInvariance(pucBuffer, puBufferIterator, &X, sizeof(X))􏵽
 
 􏵺method for fully packing arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_Pack_Full_Array(X)􏵿􏵖􏵗􏵼PackBigEndian4ByteInvariance(pucBuffer, puBufferIterator, X, sizeof(X))􏵽
 
 􏵺method for partially packing arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_Pack_Partial_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PackFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, MAX)􏵽
 
 􏵺method for partially packing engine arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_PACK_PARTIAL_ENGINE_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyPackEngineArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 􏵺method for partially packing propeller arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_Pack_Partial_Propeller_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyPackPropellerArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 􏵺method for partially packing engine reposition arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_PACK_PARTIAL_ENGINE_REPOSITION_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyPackEngineRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 􏵺method for partially packing propeller reposition arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_Pack_Partial_Propeller_Reposition_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyPackPropellerRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 􏷘+􏷗􏷒pack j2 high speed send message􏷑
@@ -666,7 +666,7 @@ From SimHost to Flight Model􏷏
 􏶠The byte count portion is filled based on the iterated payload􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message in􏶿
 􏶜m􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀The message to pack􏶿
+􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀The message header to pack􏶿
 􏶴
     􏶲the header of the message is 4 bytes􏶱
     
@@ -674,7 +674,11 @@ From SimHost to Flight Model􏷏
     BYTE pucHeader[4];
     size_t uIndex = 0;
     short sSpecifiedSize = 0;
-    unsigned int uFrameCounter = 123;
+    
+    􏶲we aren't the flight model, but we'll increment this each time we pack a flight model header for testing􏶱
+    static unsigned int uFrameCounter = 0;
+    
+    
     switch (􏵶message type􏵷){
         case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_HIGH_SPEED: pucHeader[0] = 1; break;
         case FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_LOW_SPEED: pucHeader[0] = 2; break;
@@ -702,7 +706,11 @@ From SimHost to Flight Model􏷏
     􏶲conditionally pack frame counter􏶱
     􏶲we only pack the frame counter if the message type is from J2􏶱
     if (MessageTypeSentFromFlightModel(􏵶message type􏵷)){
-        PackBigEndian4ByteInvariance(􏵶buffer􏵷,&uIndex, &uFrameCounter, sizeof(uFrameCounter)); break;
+    
+        􏶲only the flight model enters this if statement􏶱
+        􏶲we'll increment the frame counter for testing purposes􏶱
+        ++uFrameCounter;
+        PackBigEndian4ByteInvariance(􏵶buffer􏵷,&uIndex, &uFrameCounter, sizeof(uFrameCounter));
     }
     
 􏶳

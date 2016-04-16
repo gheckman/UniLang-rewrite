@@ -39,33 +39,34 @@ Message sent from Sim Host to Flight Model
 􏶔􏶕􏶒J2MessageHeader.h􏶓􏶖USES: J2MessageHeaderT􏶗
 􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
 􏶔􏶕􏶒stdio.h􏶓􏶖USES: fprintf()􏶗
+􏶔􏶕􏶒J2SizeChecks􏶓􏶖USES: BufferSizeSufficientForUnpackingHeader(), MessageSizeMatchesHeaderClaim()􏶗
 
 􏵺method for unpacking regular variables according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UNPACK_VAR(X)􏵿􏵖􏵗􏵼UnpackBigEndian4ByteInvariance(pucBuffer, puBufferIterator, &X, sizeof(X))􏵽
 
 􏵺method for fully unpacking arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UnPack_Full_Array(X)􏵿􏵖􏵗􏵼UnpackBigEndian4ByteInvariance(pucBuffer, puBufferIterator, X, sizeof(X))􏵽
 
 􏵺method for partially unpacking arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UnPack_Partial_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼UnpackFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, MAX)􏵽
 
 􏵺method for partially unpacking engine arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UNPACK_PARTIAL_ENGINE_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackEngineArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 􏵺method for partially upacking propeller arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UnPack_Partial_Propeller_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackPropellerArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 􏵺method for partially unpacking engine reposition arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_UNPACK_PARTIAL_ENGINE_REPOSITION_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackEngineRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 􏵺method for partially unpacking propeller reposition arrays according to J2 ICD􏵻
-􏵸macro uses local local buffer data implicitly􏵹
+􏵸macro uses local buffer data implicitly􏵹
 􏵐-􏵑􏵾J2_Unpack_Partial_Propeller_Reposition_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallyUnpackPropellerRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX)􏵽
 
 
@@ -79,13 +80,21 @@ From SimHost to Flight Model􏷏
 􏶜rm􏶝􏷆SendHighSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"high speed")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+  􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+  if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_HIGH_SPEED,"high speed")){
+    
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 high speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
-    }
-    return 0;
+  }
+  
+  􏶲return the amount of bytes unpacked􏶱
+  return uByteIterator;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 low speed send message􏷑
@@ -97,13 +106,21 @@ From SimHost to Flight Model􏷏
 􏶜rm􏶝􏷆SendLowSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"low speed")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+  􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+  if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_LOW_SPEED,"low speed")){
+    
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 low speed send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
     }
-    return 0;
+    
+    􏶲return the amount of bytes unpacked􏶱
+    return uByteIterator;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 reposition send message􏷑
@@ -115,13 +132,21 @@ From SimHost to Flight Model􏷏
 􏶜rm􏶝􏷆SendRepositionMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"reposition")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+    􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+    if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_REPOSITION,"reposition")){
+      
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 reposition send message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
     }
-    return 0;
+    
+    􏶲return the amount of bytes unpacked􏶱
+    return uByteIterator;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 version request message􏷑
@@ -133,13 +158,21 @@ From SimHost to Flight Model􏷏
 􏶜rm􏶝􏷆SendVersionRequestMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = SIMHOST_TO_FLIGHT_MODEL_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,FALSE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"version")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+    􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+    if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_SIMHOST_VERSION,"version")){
+      
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 version request message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
     }
-    return 0;
+    
+    􏶲return the amount of bytes unpacked􏶱
+    return uByteIterator;
 􏶳
 
 
@@ -150,15 +183,28 @@ From Flight Model to SimHost􏷏
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
 􏶜􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
 􏶜rm􏶝􏷆RcvHighSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
+􏶜rm􏶝􏷆unsigned int􏷅􏷄frame counter􏷃􏷀The frame counter received in the flight model message􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    //if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"high speed")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+    􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+    if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_J2_HIGH_SPEED,"high speed")){
+      
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 high speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
-    //}
-    return 0;
+      
+      􏶲give back the frame counter from the header􏶱
+      *􏵶frame counter􏵷 = tHeader.m_uFrameCounter;
+      
+    }
+    
+    􏶲return the amount of bytes unpacked􏶱
+    return uByteIterator;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 low speed received message􏷑
@@ -170,13 +216,21 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RcvLowSpeedMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"low speed")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+    􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+    if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_J2_LOW_SPEED,"low speed")){
+      
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 low speed received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
     }
-    return 0;
+    
+    􏶲return the amount of bytes unpacked􏶱
+    return uByteIterator;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 engine received message􏷑
@@ -188,13 +242,21 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RcvEngineDataMessageT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"engine")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+    􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+    if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_J2_ENGINE,"engine")){
+      
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 engine received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
     }
-    return 0;
+    
+    􏶲return the amount of bytes unpacked􏶱
+    return uByteIterator;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 reposition received message􏷑
@@ -206,13 +268,21 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆RepositionMessageReplyT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"reposition")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+    􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+    if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY,"reposition")){
+      
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 reposition received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
     }
-    return 0;
+    
+    􏶲return the amount of bytes unpacked􏶱
+    return uByteIterator;
 􏶳
 
 􏷘+􏷗􏷒unpack j2 version received message􏷑
@@ -224,16 +294,75 @@ From Flight Model to SimHost􏷏
 􏶜rm􏶝􏷆VersionMessageReplyT􏷅􏷄message􏷃􏷀The message to unpack􏶿
 􏶚m􏶛􏶾size_t􏶽􏶼byte count􏶻􏶺The byte count of the filled buffer; 0 indicates an unsuccessful unpack􏶹
 􏶴
-    size_t uByteIterator = FLIGHT_MODEL_TO_SIMHOST_HEADER_SIZE;
-    J2MessageHeaderT tHeader = 􏵲unpack header􏵳􏵶buffer􏵷,TRUE);
-    if (􏵲message size matches header claim􏵳tHeader,􏵶buffer size􏵷,"version")){
+  􏶲an iterator through the buffer; incremented as we unpack􏶱
+  size_t uByteIterator = 0;
+  
+  􏶲the header of the message􏶱
+  J2MessageHeaderT tHeader;
+  
+    􏶲attempt to unpack the header, and only continue if the payload is safe to unpack􏶱
+    if (􏵲payload safe to unpack􏵳􏵶buffer􏵷,􏵶buffer size􏵷, &uByteIterator, &tHeader,FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION,"version")){
+      
+      􏶲now that we know the buffer is same the size as the header claims, let's unpack it􏶱
       􏵲unpack j2 version received message payload􏵳􏵶buffer􏵷,&uByteIterator,􏵶message􏵷);
-      return uByteIterator;
     }
-    return 0;
+    
+    􏶲return the amount of bytes unpacked􏶱
+    return uByteIterator;
 􏶳
 
+􏷘-􏷗􏷒payload safe to unpack􏷑
+􏷐Unpacks the header and decides if the payload is safe to unpack􏷏
+􏶠reports any errors while attempting to unpack the header, and validating the payload is safe to unpack􏶡
+􏶚m􏶛􏶾BOOL􏶽􏶼payload safe to unpack􏶻􏶺whether the payload is safe to unpack􏶹
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
+􏶜rm􏶝􏷆size_t􏷅􏷄iterator􏷃􏷀The iterator through the buffer while unpacking􏶿
+􏶜rm􏶝􏷆J2MessageHeaderT􏷅􏷄header􏷃􏷀the header that will be filled during unpack􏶿
+􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀the type of message used between the host and the flight model􏶿
+􏶜􏶝􏷆char[]􏷅􏷄packet name􏷃􏷀A descriptive name for the packet.  Used for printing a descriptive error􏶿
+􏶴
+  􏶲unpack the header, and only continue if it was successful􏶱
+  if (􏵲attempt to unpack header􏵳􏵶buffer􏵷,􏵶buffer size􏵷, 􏵶iterator􏵷, 􏵶header􏵷,􏵶message type􏵷,􏵶packet name􏵷)){
+  
+    􏶲assuming we have now successfully unpacked the header, make sure the header claim matches the received network buffer􏶱
+    if (MessageSizeMatchesHeaderClaim(*􏵶header􏵷,􏵶buffer size􏵷,􏵶packet name􏵷)){
+    
+      􏶲the payload is safe to unpack􏶱
+      return 􏵱;
+    }
+  }
+  
+  􏶲the payload is NOT safe to unpack􏶱
+  return 􏵰;
+􏶳
 
+􏷘-􏷗􏷒attempt to unpack header􏷑
+􏷐attempts to unpack the message header based of the incoming stream􏷏
+􏶠unpacking the header may fail if the network buffer is not large enough􏶡
+􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to unpack the message from􏶿
+􏶜􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The size of the buffer in bytes􏶿
+􏶜rm􏶝􏷆size_t􏷅􏷄iterator􏷃􏷀The iterator through the buffer while unpacking􏶿
+􏶜rm􏶝􏷆J2MessageHeaderT􏷅􏷄header􏷃􏷀the header that will be filled during unpack􏶿
+􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀the type of message used between the host and the flight model􏶿
+􏶜􏶝􏷆char[]􏷅􏷄packet name􏷃􏷀A descriptive name for the packet.  Used for printing a descriptive error􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼pack successful􏶻􏶺whether or not unpacking the header was successful􏶹
+􏶴
+  􏶲derive the expected size of the header (known via the ICD)􏶱
+  size_t uExpectedHeaderSize = GetExpectedHeaderSizeOfMessage(􏵶message type􏵷);
+  
+  􏶲check whether the header can be successfully unpacked based on the current buffer size and expected header size􏶱
+  BOOL bSuccessfulUnpack = BufferSizeSufficientForUnpackingHeader(􏵶buffer size􏵷,uExpectedHeaderSize,􏵶packet name􏵷);
+  
+  􏶲if the size is valid for unpacking, unpack the header, and increment the buffer iterator􏶱
+  if (bSuccessfulUnpack){
+    *􏵶iterator􏵷 = uExpectedHeaderSize;
+    *􏵶header􏵷 = 􏵲unpack header􏵳􏵶buffer􏵷,􏵶message type􏵷);
+  }
+  
+  􏶲return whether or not we have successfully unpacked the header􏶱
+  return bSuccessfulUnpack;
+􏶳
 
 
 
@@ -687,41 +816,11 @@ From SimHost to Flight Model􏷏
 􏶳
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-􏷘-􏷗􏷒message size matches header claim􏷑
-􏷐verify the message size􏷏
-􏶠check that the message size in the header matches the amount of data unpacked􏶡
-􏶜􏶝􏷆J2MessageHeaderT􏷅􏷄header􏷃􏷀The unpacked header􏶿
-􏶜􏶝􏷆int􏷅􏷄buffer size􏷃􏷀The state of the iterator after an unpack􏶿
-􏶜􏶝􏷆char[]􏷅􏷄packet name􏷃􏷀A descriptive name for the packet.  Used for printing a descriptive error􏶿
-􏶚m􏶛􏶾BOOL􏶽􏶼sizes match􏶻􏶺whether or not the buffer size matches the size advertised in the header􏶹
-􏶴
-  􏶲A sanity check to see that their header indicates the correct size of the entire message􏶱
-  if (􏵶header􏵷.m_uByteCount != 􏵶buffer size􏵷){
-    fprintf(stderr, "J2 %s message size does not match what was indicated in the header. Expected: %i, but got: %u\n",􏵶packet name􏵷,􏵶buffer size􏵷,􏵶header􏵷.m_uByteCount);
-    return 􏵰;
-  }
-  return 􏵱;
-􏶳
-
 􏷘-􏷗􏷒unpack header􏷑
 􏷐Used to unpack the buffer header that comes before the payload.􏷏
 􏶠returns the header which is a known size􏶡
 􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀The data buffer to pack the message in􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄from flight model􏷃􏷀whether the header has come from the flight model􏶿
+􏶜􏶝􏷆FlightModelMessageTypeE􏷅􏷄message type􏷃􏷀The message header to unpack􏶿
 􏶚m􏶛􏶾J2MessageHeaderT􏶽􏶼header􏶻􏶺The header of the message􏶹
 􏶴
     􏶲the header portion before the payload􏶱
@@ -735,13 +834,14 @@ From SimHost to Flight Model􏷏
     􏶲store the byte count to verify at the end of unpacking􏶱
     memcpy(&sSpecifiedSize,&􏵶buffer􏵷[uByteIterator],2);
     tHeader.m_uByteCount = sSpecifiedSize;
+    uByteIterator+=2;
     
     􏶲the message version􏶱
     tHeader.m_ucMessageVersion = 􏵶buffer􏵷[uByteIterator];
     ++uByteIterator;
     
     􏶲conditionally unpack frame counter􏶱
-    if (􏵶from flight model􏵷){
+    if (MessageTypeSentFromFlightModel(􏵶message type􏵷)){
       UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,&uByteIterator, &tHeader.m_uFrameCounter, sizeof(tHeader.m_uFrameCounter));
     }
 

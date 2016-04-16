@@ -43,6 +43,7 @@
 
 
 #include "SendToJ2Messages.h"  //all structs
+#include <stdioLib.h>          //USES: BOOL
 
 
 #ifdef __cplusplus
