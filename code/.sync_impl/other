@@ -131,6 +131,7 @@ function Style-It(){
   $CLANG_FORMAT_TOOL -style=file -i "$PossibleHeaderName" > /dev/null 2>&1;
   
   #agreed upon
+  #the top every file will never start with any whitepsace lines
   remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   remove-top-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
@@ -138,6 +139,8 @@ function Style-It(){
   remove-top-empty-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   
   #agreed upon
+  # before: content <whitespace>
+  # after: content
   rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   rtrim-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
@@ -145,6 +148,14 @@ function Style-It(){
   rtrim-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   
   #agreed upon
+  # before:
+  # 1. <space><space><tab><space>
+  # 2. <space><tab><space><tab>
+  # 3. <tab><tab>
+  #after:
+  # 1.
+  # 2.
+  # 3.
   whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   whitespace-lines-to-empty-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
@@ -152,6 +163,14 @@ function Style-It(){
   whitespace-lines-to-empty-lines -i "$PossibleHeaderName" > /dev/null 2>&1;
   
   #agreed upon
+  # before:
+  # 1. <space><space><tab><space>
+  # 2. <space><tab><space><tab>
+  # 3. <tab><tab>
+  # 4. blah blah
+  #after:
+  # 1. <space><space><tab><space>
+  # 2. blah blah
   squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
   squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
   squeeze-whitespace-lines -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
@@ -165,6 +184,19 @@ function Style-It(){
   macro-value-aligner -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
   macro-value-aligner -i "$PossibleHeaderName" > /dev/null 2>&1;
   
+  #clang-format-3.7 had some kind of regression.
+  #until the bug is patched, I'll path over it with this quick hack program.
+  #the problem has to do with missing line breaks on typedef'd enums.
+  #https://llvm.org/bugs/show_bug.cgi?id=26626
+  #https://llvm.org/bugs/show_bug.cgi?id=26626
+  #I think this problem came about in clang-format-3.7, and I wrote this program for clang-format-3.9.
+  #the problem still exists in 3.9.
+  brace_breaker_for_typedefed_enums -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
+  brace_breaker_for_typedefed_enums -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.c > /dev/null 2>&1;
+  brace_breaker_for_typedefed_enums -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
+  brace_breaker_for_typedefed_enums -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
+  brace_breaker_for_typedefed_enums -i "$PossibleHeaderName" > /dev/null 2>&1;
+  
   #Add the empty newline back to the files after formatting (removed by clang format)
   #Both diab compiler and Tom complain about this
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.h > /dev/null 2>&1;
@@ -172,6 +204,7 @@ function Style-It(){
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.hpp > /dev/null 2>&1;
   set-a-single-blank-line-to-the-end-of-file -i "$FULL_PATH_TO_CODE_ROOT""$2"/"$f2siName"/*.cpp > /dev/null 2>&1;
   set-a-single-blank-line-to-the-end-of-file -i "$PossibleHeaderName" > /dev/null 2>&1;
+  
   
   #warn about it:
   #- header related
