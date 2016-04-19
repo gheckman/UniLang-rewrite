@@ -1,0 +1,42 @@
+􏶞g􏶟
+􏷲All states of the MCU􏷱
+􏷰The available sates that the MCU can be in􏷯
+􏷬Trevor Hickey􏷫
+􏷮MEP􏷭
+􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+
+􏶊MCU states􏶉
+􏶈all of the commands of the MCU
+order is important􏶇
+􏵮􏵯􏶀mcu command􏶋
+􏶆evt􏶅
+􏶆src􏶅
+􏶆menu􏶅
+􏶆escape􏶅
+􏶆enter􏶅
+􏶆west􏶅
+􏶆north􏶅
+􏶆none􏶅
+􏶆south􏶅
+􏶆east􏶅
+􏶆minus􏶅
+􏶆plus􏶅
+􏶆emg􏶅
+􏶆ar􏶅
+􏶆map􏶅
+
+􏷘+􏷗􏷒actionable mcu command􏷑
+􏷐determines whether the current mcu state is one that should be acted upon􏷏
+􏶠Used to avoid sending network traffic when there is no command to send􏶡
+􏶜􏶝􏷆McuCommandE􏷅􏷄command􏷃􏷀the current command of the MCU􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼actionable􏶻􏶺whether or not the command is actionable􏶹
+􏶴
+    if (􏵶command􏵷 == MCU_COMMAND_NONE){
+        return 􏵰;
+    }
+    return 􏵱;
+􏶳
+
+􏷘+􏷗􏷒bool array to mcu command􏷑
+􏷐converts an array of bools to the appropriate mcu command􏷏
+􏶠helpful conversion from PLC DIs􏶡

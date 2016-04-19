@@ -5,10 +5,11 @@
 􏷬Dave Corapi􏷫
 􏷬Trevor Hickey􏷫
 􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
-􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
-􏷤􏷣􏷦stdioLib.h􏷥􏷢USES: BOOL, UINT16􏷡
+􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
+􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL, UINT16􏷡
 􏶔􏶕􏶒FfsCommon.h􏶓􏶖USES: DwordReverseByteOrder􏶗
 􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
+􏶔􏶕􏶒limits􏶓􏶖USES: CHAR_BIT􏶗
 
 
 􏷘-􏷗􏷒on big endian architecture􏷑
@@ -333,10 +334,39 @@ becomes: 01111111􏶡
 􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
 􏶜􏶝􏷆BOOL[]􏷅􏷄pack bools􏷃􏷀an array of 8 bools to pack into a byte􏶿
 􏶚m􏶛􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
+􏵪􏵫􏵨size of bool array must be == 8􏵩
 􏶴
     *􏵶data buffer􏵷 = (BYTE)(((􏵶pack bools􏵷[7] << 7) & 0xFF) + ((􏵶pack bools􏵷[6] << 6) & 0xFF) + ((􏵶pack bools􏵷[5] << 5) & 0xFF)
                           + ((􏵶pack bools􏵷[4] << 4) & 0xFF) + ((􏵶pack bools􏵷[3] << 3) & 0xFF) + ((􏵶pack bools􏵷[2] << 2) & 0xFF) 
                           + ((􏵶pack bools􏵷[1] << 1) & 0xFF) + (􏵶pack bools􏵷[0] & 0xFF));
     return sizeof(BYTE);
 􏶳
+
+􏷘+􏷗􏷒pack n bools into a byte􏷑
+􏷐Packs n number of bools into a byte􏷏
+􏶠uses bit shifts on each index of the bool array
+accounts for indexes less than byte size.
+example: {􏵱,􏵱,􏵱,􏵰}
+becomes: 00000111􏶡
+􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆BOOL[]􏷅􏷄pack bools􏷃􏷀an array of n bools􏶿
+􏶜􏶝􏷆size_t􏷅􏷄bool array size􏷃􏷀the size of the bool array􏶿
+􏶚m􏶛􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
+􏵪􏵫􏵨size of bool array must be <= 8 && > 0􏵩
+􏶴
+    􏶲create an 8 element bool array of falses􏶱
+    BOOL pbAllBools[sizeof(BYTE)*CHAR_BIT];
+    memset(pbAllBools,0,sizeof(pbAllBools));
+    
+    􏶲lay the partial bool array in the full bool array􏶱
+    memcpy(pbAllBools, 􏵶pack bools􏵷, 􏵶bool array size􏵷*sizeof(BOOL));
+    
+    􏶲leverage 8 bools to byte function􏶱
+    return 􏵲pack 8 bools into a byte􏵳􏵶data buffer􏵷,pbAllBools);
+􏶳
+
+
+
+
+
 

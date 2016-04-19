@@ -27,7 +27,13 @@ function Transfer_Utilities(){ :
   Transfer-Global "math_utilities" "Shared/ffs"
   Transfer-Global "bit_utilities" "Shared/ffs"
   Transfer-Global "constraint_utilities" "Shared/ffs"
+  Step_In_Call_Function_Step_Out "Math" Transfer_SubMath;
 }
+
+function Transfer_SubMath(){ :
+  Transfer-Global "float_approximation" "Shared/ffs/MathUtilities"
+}
+
 function Transfer_Time(){ :
   Transfer-Global "month" "Components/Time"
   Transfer-Object-Bad-Bools "date_time" "Components/Time" "Components/Time"
@@ -126,12 +132,18 @@ function Transfer_Dynamic_Debug(){ :
   Transfer-Global "dynamic_debug_message" "Connections/UDP/DynamicDebug";
   Transfer-Global "dynamic_debug_sender" "Connections/UDP/DynamicDebug";
 }
-function Transform-And_Transfer-SimHost-Files(){ :
+function Transfer_MEP(){ :
+  Transfer-Global "mcu_commands" "Components/MissionEquipmentPackage";
+}
+
+function SimHost-Files(){ :
 
   #Step into a Unilang directory.  Compile and transfer code into the real codebase.
   #                              PATH                            FUNCTION
   #Step_In_Call_Function_Step_Out "Data_Structures"               Transfer_Data_Structures;
   Step_In_Call_Function_Step_Out "Other/Utilities"               Transfer_Utilities;
+  Step_In_Call_Function_Step_Out "Systems/MEP"                   Transfer_MEP;
+  
   #Step_In_Call_Function_Step_Out "Systems/Time"                  Transfer_Time;
   
     #Step_In_Call_Function_Step_Out "Systems/Electrical/generic"    Transfer_Electrical_Generic;
@@ -148,9 +160,12 @@ function Transform-And_Transfer-SimHost-Files(){ :
   #Step_In_Call_Function_Step_Out "Other/DynamicDebug"            Transfer_Dynamic_Debug;
 }
 
+function SEP-Files(){ :
+}
 
 function UniLang-Transform(){ :
   
-  Step_In_Call_Function_Step_Out "SimHost" Transform-And_Transfer-SimHost-Files;
+  Step_In_Call_Function_Step_Out "SimHost" SimHost-Files;
+  Step_In_Call_Function_Step_Out "SEP" SEP-Files;
   
 }

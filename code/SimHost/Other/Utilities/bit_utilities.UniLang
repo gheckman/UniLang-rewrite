@@ -8,6 +8,7 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏷮Bit Utilities􏷭􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
 􏷤􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
 􏶔􏶕􏶒limits􏶓􏶖USES: CHAR_BIT􏶗
 
 􏷘+􏷗􏷒set all bits􏷑
@@ -66,4 +67,18 @@ They can cause other unintended side effects on parameters; they can't be used a
     if (􏵶index􏵷 < sizeof(int) * CHAR_BIT){
         *􏵶number􏵷 ^= (-􏵶bool value􏵷 ^ *􏵶number􏵷) & (1 << 􏵶index􏵷);
     }
+􏶳
+
+􏷘+􏷗􏷒convert bool array to int􏷑
+􏶜􏶝􏷆BOOL[]􏷅􏷄bool array􏷃􏷀an array of n bools􏶿
+􏶜􏶝􏷆size_t􏷅􏷄bool array size􏷃􏷀the size of the bool array􏶿
+􏶚m􏶛􏶾int􏶽􏶼integer representation􏶻􏶺the integer representation of the bools􏶹
+􏶴
+    size_t uIndex = 0u;
+    int nResult = 0;
+    for (; uIndex < 􏵶bool array size􏵷; ++uIndex){
+        􏵲apply bool to bit􏵳&nResult,􏵶bool array size􏵷-1-uIndex,􏵶bool array􏵷[uIndex]);
+    }
+    
+    return nResult;
 􏶳

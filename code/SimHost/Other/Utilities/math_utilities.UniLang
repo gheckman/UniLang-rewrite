@@ -5,8 +5,8 @@
 􏷬Trevor Hickey􏷫
 􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
 􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
-􏶔s􏶕􏶒math􏶓􏶖USES: sqrt(), fabs()􏶗
-􏶔s􏶕􏶒float.h􏶓􏶖USES: FLT_EPSILON, DBL_EPSILON􏶗
+􏶔s􏶕􏶒math􏶓􏶖USES: sqrt()􏶗
+􏶔􏶕􏶒FloatApproximation􏶓􏶖USES: Approximate functions􏶗
 
 􏷘+􏷗􏷒f min f􏷑
 􏷐Calculates the minimum of two floating point numbers􏷏
@@ -47,72 +47,6 @@
 􏶴
     return (􏵶x􏵷 > 􏵶y􏵷) ? 􏵶x􏵷 : 􏵶y􏵷;
 􏶳
-
-
-􏷘+􏷗􏷒approximately equal f􏷑
-􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
-􏶠approximates the equality of two floating point numbers using the std float epsilon􏶡
-􏶜􏶝􏷆float􏷅􏷄x􏷃􏷀one of the numbers used to test equality􏶿
-􏶜􏶝􏷆float􏷅􏷄y􏷃􏷀one of the numbers used to test equality􏶿
-􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the two numbers are approximately equal􏶹
-􏶴
-    return fabs(􏵶x􏵷 - 􏵶y􏵷) <= 􏵲f max f􏵳fabs(􏵶x􏵷),fabs(􏵶y􏵷)) * FLT_EPSILON;
-􏶳
-
-􏷘+􏷗􏷒approximately greater equal f􏷑
-􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
-􏶠approximates if one float is >= to another using the std float epsilon􏶡
-􏶜􏶝􏷆float􏷅􏷄left􏷃􏷀left operand􏶿
-􏶜􏶝􏷆float􏷅􏷄right􏷃􏷀right operand􏶿
-􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the left operand is approximately >= to the right operand􏶹
-􏶴
-    return 􏵲approximately equal f􏵳􏵶left􏵷,􏵶right􏵷) || 􏵶left􏵷 > 􏵶right􏵷;
-􏶳
-
-􏷘+􏷗􏷒approximately less equal f􏷑
-􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
-􏶠approximates if one float is <= to another using the std float epsilon􏶡
-􏶜􏶝􏷆float􏷅􏷄left􏷃􏷀left operand􏶿
-􏶜􏶝􏷆float􏷅􏷄right􏷃􏷀right operand􏶿
-􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the left operand is approximately <= to the right operand􏶹
-􏶴
-    return 􏵲approximately equal f􏵳􏵶left􏵷,􏵶right􏵷) || 􏵶left􏵷 < 􏵶right􏵷;
-􏶳
-
-􏷘+􏷗􏷒approximately equal d􏷑
-􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
-􏶠approximates the equality of two floating point numbers using the std double epsilon􏶡
-􏶜􏶝􏷆double􏷅􏷄x􏷃􏷀one of the numbers used to test equality􏶿
-􏶜􏶝􏷆double􏷅􏷄y􏷃􏷀one of the numbers used to test equality􏶿
-􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the two numbers are approximately equal􏶹
-􏶴
-    return fabs(􏵶x􏵷 - 􏵶y􏵷) <= 􏵲f max􏵳fabs(􏵶x􏵷),fabs(􏵶y􏵷)) * DBL_EPSILON;
-􏶳
-
-􏷘+􏷗􏷒approximately greater equal d􏷑
-􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
-􏶠approximates if one double is >= to another using the std double epsilon􏶡
-􏶜􏶝􏷆float􏷅􏷄left􏷃􏷀left operand􏶿
-􏶜􏶝􏷆float􏷅􏷄right􏷃􏷀right operand􏶿
-􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the left operand is approximately >= to the right operand􏶹
-􏶴
-    return 􏵲approximately equal d􏵳􏵶left􏵷,􏵶right􏵷) || 􏵶left􏵷 > 􏵶right􏵷;
-􏶳
-
-􏷘+􏷗􏷒approximately less equal d􏷑
-􏷐Since floating point math is imprecise, checking for float equality after operations, will often leads to unexpected results􏷏
-􏶠approximates if one double is <= to another using the std double epsilon􏶡
-􏶜􏶝􏷆float􏷅􏷄left􏷃􏷀left operand􏶿
-􏶜􏶝􏷆float􏷅􏷄right􏷃􏷀right operand􏶿
-􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺whether the left operand is approximately <= to the right operand􏶹
-􏶴
-    return 􏵲approximately equal d􏵳􏵶left􏵷,􏵶right􏵷) || 􏵶left􏵷 < 􏵶right􏵷;
-􏶳
-
-
-
-
-
 
 
 􏷘+􏷗􏷒float array average􏷑
@@ -161,8 +95,73 @@
     return nTotal / 􏵶size􏵷;
 􏶳
 
+􏷘+􏷗􏷒int arrays equal􏷑
+􏷐checks each arrays for equality, by comparing each element􏷏
+􏶠begins at element 0, and compares elements up to a specified size􏶡
+􏶜􏶝􏷆int[]􏷅􏷄array1􏷃􏷀array whose elements will be compared for equality􏶿
+􏶜􏶝􏷆int[]􏷅􏷄array2􏷃􏷀array whose elements will be compared for equality􏶿
+􏶜􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺each element of the array is equal to the elements of the other array􏶹
+􏵪􏵫􏵨size must be <= the size of the array1􏵩
+􏵪􏵫􏵨size must be <= the size of the array2􏵩
+􏶴
+    size_t uIndex = 0u;
+    for(; uIndex < 􏵶size􏵷; ++uIndex){
+        if (􏵶array1􏵷[uIndex] != 􏵶array2􏵷[uIndex]){
+            return 􏵰;
+        }
+    }
+    return 􏵱;
+􏶳
+􏷘+􏷗􏷒float arrays equal􏷑
+􏷐checks each arrays for equality, by comparing each element􏷏
+􏶠begins at element 0, and compares elements up to a specified size􏶡
+􏶜􏶝􏷆float[]􏷅􏷄array1􏷃􏷀array whose elements will be compared for equality􏶿
+􏶜􏶝􏷆float[]􏷅􏷄array2􏷃􏷀array whose elements will be compared for equality􏶿
+􏶜􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺each element of the array is approximately equal to the elements of the other array􏶹
+􏵪􏵫􏵨size must be <= the size of the array1􏵩
+􏵪􏵫􏵨size must be <= the size of the array2􏵩
+􏶴
+    size_t uIndex = 0u;
+    for(; uIndex < 􏵶size􏵷; ++uIndex){
+        if (!ApproximatelyEqualF(􏵶array1􏵷[uIndex],􏵶array2􏵷[uIndex])){
+            return 􏵰;
+        }
+    }
+    return 􏵱;
+􏶳
+􏷘+􏷗􏷒double arrays equal􏷑
+􏷐checks each arrays for equality, by comparing each element􏷏
+􏶠begins at element 0, and compares elements up to a specified size􏶡
+􏶜􏶝􏷆double[]􏷅􏷄array1􏷃􏷀array whose elements will be compared for equality􏶿
+􏶜􏶝􏷆double[]􏷅􏷄array2􏷃􏷀array whose elements will be compared for equality􏶿
+􏶜􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when calculating the average􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼equal􏶻􏶺each element of the array is approximately equal to the elements of the other array􏶹
+􏵪􏵫􏵨size must be <= the size of the array1􏵩
+􏵪􏵫􏵨size must be <= the size of the array2􏵩
+􏶴
+    size_t uIndex = 0u;
+    for(; uIndex < 􏵶size􏵷; ++uIndex){
+        if (!ApproximatelyEqualD(􏵶array1􏵷[uIndex],􏵶array2􏵷[uIndex])){
+            return 􏵰;
+        }
+    }
+    return 􏵱;
+􏶳
 
-
+􏷘+􏷗􏷒assign arrays􏷑
+􏷐assigns elements from one array to another array􏷏
+􏶠begins at element 0, and assigns elements up to a specified size􏶡
+􏶜m􏶝􏷆int[]􏷅􏷄lhs􏷃􏷀the array that will be assigned to􏶿
+􏶜􏶝􏷆int[]􏷅􏷄rhs􏷃􏷀whose elements will be assigned to the lhs􏶿
+􏶜􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when doing assignments􏶿
+􏶴
+    size_t uIndex = 0u;
+    for(; uIndex < 􏵶size􏵷; ++uIndex){
+        􏵶lhs􏵷[uIndex] = 􏵶rhs􏵷[uIndex];
+    }
+􏶳
 
 􏷘+􏷗􏷒square􏷑
 􏷐squares a number􏷏
@@ -214,7 +213,17 @@
     }
 􏶳
 
-􏷘-􏷗􏷒swap f􏷑
+􏷘+􏷗􏷒swap􏷑
+􏷐swaps two values􏷏
+􏶠􏶡
+􏶜rm􏶝􏷆int􏷅􏷄x􏷃􏷀one of the values to swap􏶿
+􏶜rm􏶝􏷆int􏷅􏷄y􏷃􏷀one of the values to swap􏶿
+􏶴
+    int nTemp = *􏵶x􏵷;
+    *􏵶x􏵷 = *􏵶y􏵷;
+    *􏵶y􏵷 = nTemp;
+􏶳
+􏷘+􏷗􏷒swap f􏷑
 􏷐swaps two values􏷏
 􏶠􏶡
 􏶜rm􏶝􏷆float􏷅􏷄x􏷃􏷀one of the values to swap􏶿
@@ -223,6 +232,16 @@
     float fTemp = *􏵶x􏵷;
     *􏵶x􏵷 = *􏵶y􏵷;
     *􏵶y􏵷 = fTemp;
+􏶳
+􏷘+􏷗􏷒swap d􏷑
+􏷐swaps two values􏷏
+􏶠􏶡
+􏶜rm􏶝􏷆double􏷅􏷄x􏷃􏷀one of the values to swap􏶿
+􏶜rm􏶝􏷆double􏷅􏷄y􏷃􏷀one of the values to swap􏶿
+􏶴
+    double dTemp = *􏵶x􏵷;
+    *􏵶x􏵷 = *􏵶y􏵷;
+    *􏵶y􏵷 = dTemp;
 􏶳
 
 􏷘-􏷗􏷒order interval end points􏷑
@@ -251,7 +270,7 @@ returns 􏵱 if it is, 􏵰 if it is not􏶡
     􏶲potentially swap the interval end points to ensure we compare the value properly􏶱
     􏵲order interval end points􏵳&􏵶begin interval􏵷,&􏵶end interval􏵷);
     
-    return 􏵲approximately greater equal f􏵳􏵶value􏵷,􏵶begin interval􏵷) && 􏵲approximately less equal f􏵳􏵶value􏵷,􏵶end interval􏵷);
+    return ApproximatelyGreaterEqualF(􏵶value􏵷,􏵶begin interval􏵷) && ApproximatelyLessEqualF(􏵶value􏵷,􏵶end interval􏵷);
 􏶳
 
 􏷘+􏷗􏷒between open interval􏷑

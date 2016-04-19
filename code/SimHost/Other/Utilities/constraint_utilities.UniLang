@@ -4,7 +4,8 @@
 􏷮Constraint Utilities􏷭􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
 􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
-􏶔􏶕􏶒MathUtilities􏶓􏶖USES: ApproximatelyEqualF(), ApproximatelyGreaterEqualF(), ApproximatelyLessEqualF(), BetweenClosedInterval(), BetweenOpenInterval()􏶗
+􏶔􏶕􏶒FloatApproximation􏶓􏶖USES: ApproximatelyEqualF(), ApproximatelyGreaterEqualF(), ApproximatelyLessEqualF()􏶗
+􏶔􏶕􏶒MathUtilities􏶓􏶖USES: BetweenClosedInterval(), BetweenOpenInterval()􏶗
 
 􏶊enumerated set of comparison operators􏶉
 􏶈an alternative C solution for the unavailable std function objects
