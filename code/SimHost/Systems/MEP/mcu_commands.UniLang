@@ -4,6 +4,8 @@
 􏷬Trevor Hickey􏷫
 􏷮MEP􏷭
 􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏶔􏶕􏶒BitUtilities􏶓􏶖USES: ConvertBoolArrayToInt()􏶗
+􏶔􏶕􏶒MapControlUnitData􏶓􏶖USES: MCU_NUM_CONTROL_BITS􏶗
 
 􏶊MCU states􏶉
 􏶈all of the commands of the MCU
@@ -26,7 +28,7 @@ order is important􏶇
 􏶆map􏶅
 
 􏷘+􏷗􏷒actionable mcu command􏷑
-􏷐determines whether the current mcu state is one that should be acted upon􏷏
+􏷐determines whether the current MCU state is one that should be acted upon􏷏
 􏶠Used to avoid sending network traffic when there is no command to send􏶡
 􏶜􏶝􏷆McuCommandE􏷅􏷄command􏷃􏷀the current command of the MCU􏶿
 􏶚m􏶛􏶾BOOL􏶽􏶼actionable􏶻􏶺whether or not the command is actionable􏶹
@@ -38,5 +40,10 @@ order is important􏶇
 􏶳
 
 􏷘+􏷗􏷒bool array to mcu command􏷑
-􏷐converts an array of bools to the appropriate mcu command􏷏
+􏷐converts an array of bools to the appropriate MCU command􏷏
 􏶠helpful conversion from PLC DIs􏶡
+􏶜􏶝􏷆BOOL[]􏷅􏷄bool array􏷃􏷀a bool array representing the state of the MCU􏶿
+􏶚m􏶛􏶾McuCommandE􏶽􏶼command􏶻􏶺the MCU command derived from the bool array􏶹
+􏶴
+    return (McuCommandE)ConvertBoolArrayToInt(􏵶bool array􏵷,MCU_NUM_CONTROL_BITS);
+􏶳

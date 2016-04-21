@@ -70,6 +70,8 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏶳
 
 􏷘+􏷗􏷒convert bool array to int􏷑
+􏷐converts n number of bools to the integer value it represents􏷏
+􏶠example: TRUE,FALSE would equal 2􏶡
 􏶜􏶝􏷆BOOL[]􏷅􏷄bool array􏷃􏷀an array of n bools􏶿
 􏶜􏶝􏷆size_t􏷅􏷄bool array size􏷃􏷀the size of the bool array􏶿
 􏶚m􏶛􏶾int􏶽􏶼integer representation􏶻􏶺the integer representation of the bools􏶹

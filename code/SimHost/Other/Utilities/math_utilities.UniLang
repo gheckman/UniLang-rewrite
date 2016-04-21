@@ -163,6 +163,19 @@
     }
 􏶳
 
+􏷘+􏷗􏷒assign float arrays􏷑
+􏷐assigns elements from one array to another array􏷏
+􏶠begins at element 0, and assigns elements up to a specified size􏶡
+􏶜m􏶝􏷆float[]􏷅􏷄lhs􏷃􏷀the array that will be assigned to􏶿
+􏶜􏶝􏷆float[]􏷅􏷄rhs􏷃􏷀whose elements will be assigned to the lhs􏶿
+􏶜􏶝􏷆size_t􏷅􏷄size􏷃􏷀the amount of elements to use when doing assignments􏶿
+􏶴
+    size_t uIndex = 0u;
+    for(; uIndex < 􏵶size􏵷; ++uIndex){
+        􏵶lhs􏵷[uIndex] = 􏵶rhs􏵷[uIndex];
+    }
+􏶳
+
 􏷘+􏷗􏷒square􏷑
 􏷐squares a number􏷏
 􏶠n*n􏶡
