@@ -6,31 +6,19 @@
 􏷬Trevor Hickey􏷫
 􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
 􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
-􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL, UINT16􏷡
+􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
+􏷤􏷣􏷦EndianUtilities􏷥􏷢USES: MachineEndianE, OnBigEndianArchitecture(), OnLittleEndianArchitecture()􏷡
 􏶔􏶕􏶒FfsCommon.h􏶓􏶖USES: DwordReverseByteOrder􏶗
 􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
 􏶔􏶕􏶒limits􏶓􏶖USES: CHAR_BIT􏶗
 
 
-􏷘-􏷗􏷒on big endian architecture􏷑
-􏷐determines if the machine is big endian􏷏
-􏶠returns 􏵱 if it is big endian.  􏵰 if it is little endian􏶡
-􏶚m􏶛􏶾BOOL􏶽􏶼is on big endian􏶻􏵜􏵝􏶺whether the machine is on big endian or not􏶹
-􏶴
-    union U { UINT16 m_u16; unsigned char m_ucC; };
-    union U u;
-    u.m_u16 = 1;
-    u.m_ucC = 0;
-    return !u.m_ucC;
-􏶳
 
-􏷘-􏷗􏷒on little endian architecture􏷑
-􏷐determines if the machine is little endian􏷏
-􏶠returns 􏵱 if it is little endian.  􏵰 if it is big endian􏶡
-􏶚m􏶛􏶾BOOL􏶽􏶼is on big endian􏶻􏵜􏵝􏶺whether the machine is on big endian or not􏶹
-􏶴
-    return !􏵲on big endian architecture􏵳);
-􏶳
+􏵮􏵯􏵬􏵭􏶀serialization action􏶋
+􏶊a value to distinguish the data conversion needed on a set of network related data􏶉
+􏶈used for dispatching during generic serialization steps􏶇
+􏶆pack􏶅􏶄􏶃􏶂any type -> byte array􏶁
+􏶆unpack􏶅􏶄􏶃􏶂byte array -> any type􏶁
 
 
 􏷘-􏷗􏷒reverse endian by 4 bytes when on little endian machine􏷑
@@ -103,7 +91,6 @@
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
-    
 􏶳
 
 􏷘+􏷗􏷒unpack big endian 4 byte invariance􏷑
@@ -124,6 +111,26 @@
     
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
+􏶳
+
+
+􏷘+􏷗􏷒serialize big endian 4 byte invariance􏷑
+􏷐serializes network data using a big endian data buffer􏷏
+􏶠decides whether to unpack or pack the buffer based on the serialization action􏶡
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to serialize the next set of data􏵥
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start serializing the data at􏶿
+􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be serialized for the buffer􏶿
+􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be serialized for the buffer􏶿
+􏶜􏶝􏷆SerializationActionE􏷅􏷄action􏷃􏷀the serialization action to perform on the data􏶿
+􏶴
+    􏶲either pack or unpack based on the action sent in􏶱
+    switch(􏵶action􏵷){
+        case SERIALIZATION_ACTION_PACK:    􏵲pack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        default:;
+    }
 􏶳
 
 􏷘+􏷗􏷒pack little endian 4 byte invariance􏷑
@@ -164,6 +171,25 @@
 
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
+􏶳
+
+􏷘+􏷗􏷒serialize little endian 4 byte invariance􏷑
+􏷐serializes network data using a little endian data buffer􏷏
+􏶠decides whether to unpack or pack the buffer based on the serialization action􏶡
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to serialize the next set of data􏵥
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start serializing the data at􏶿
+􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be serialized for the buffer􏶿
+􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be serialized for the buffer􏶿
+􏶜􏶝􏷆SerializationActionE􏷅􏷄action􏷃􏷀the serialization action to perform on the data􏶿
+􏶴
+    􏶲either pack or unpack based on the action sent in􏶱
+    switch(􏵶action􏵷){
+        case SERIALIZATION_ACTION_PACK:    􏵲pack little endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack little endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        default:;
+    }
 􏶳
 
 

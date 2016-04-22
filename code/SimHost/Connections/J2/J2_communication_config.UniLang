@@ -19,3 +19,5 @@
 
 􏵐+􏵑􏵺The delay at which SimHost will wait between sending high speed data messages􏵻􏵸􏵹􏵾SimHost high speed transmission delay ms􏵿􏵼10􏵽
 􏵐+􏵑􏵺The delay at which SimHost will wait between sending low speed data messages􏵻􏵸every 6 frames􏵹􏵾SimHost low speed transmission delay ms􏵿􏵼60􏵽
+
+􏵐+􏵑􏵺The timeout period for which SimHost will resend a reposition message to J2􏵻􏵸30 seconds􏵹􏵾SIMHOST_REPOSITION_TIMEOUT_MS􏵿􏵖milliseconds􏵗􏵼30000􏵽

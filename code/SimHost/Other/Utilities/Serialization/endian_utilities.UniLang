@@ -1,0 +1,38 @@
+􏵮􏵯􏵬􏵭􏶀machine endian􏶋
+􏶊the different endians of a machine's memory layout􏶉
+􏶈what about middle endian? left out, and deemed unimportant􏶇
+􏶆big􏶅􏶄􏶃􏶂most significant byte in the smallest address􏶁
+􏶆small􏶅􏶄􏶃􏶂least significant byte in the smallest address􏶁
+
+􏷘+􏷗􏷒on big endian architecture􏷑
+􏷐determines if the machine is big endian􏷏
+􏶠returns 􏵱 if it is big endian.  􏵰 if it is little endian􏶡
+􏶚m􏶛􏶾BOOL􏶽􏶼is on big endian􏶻􏵜􏵝􏶺whether the machine is on big endian or not􏶹
+􏶴
+    union U { UINT16 m_u16; unsigned char m_ucC; };
+    union U u;
+    u.m_u16 = 1;
+    u.m_ucC = 0;
+    return !u.m_ucC;
+􏶳
+
+􏷘+􏷗􏷒on little endian architecture􏷑
+􏷐determines if the machine is little endian􏷏
+􏶠returns 􏵱 if it is little endian.  􏵰 if it is big endian􏶡
+􏶚m􏶛􏶾BOOL􏶽􏶼is on big endian􏶻􏵜􏵝􏶺whether the machine is on big endian or not􏶹
+􏶴
+    return !􏵲on big endian architecture􏵳);
+􏶳
+
+􏷘+􏷗􏷒get machine endian􏷑
+􏷐determines and returns the machine's endian􏷏
+􏶠run time (not compile time) determination􏶡
+􏶚m􏶛􏶾MachineEndianE􏶽􏶼the endian of the machine􏶻􏵜􏵝􏶺the endian of the machine that code is running on􏶹
+􏶴
+    􏶲determine and return the appropriate endian of the machine􏶱
+    if (􏵲on big endian architecture􏵳)){
+        return MACHINE_ENDIAN_BIG;
+    }
+    
+    return MACHINE_ENDIAN_LITTLE;
+􏶳
