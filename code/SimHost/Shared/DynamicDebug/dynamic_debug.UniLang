@@ -29,8 +29,8 @@ Watch out for implicit casts and truncation.􏶡
 􏶴
     􏶲Create debug message struct based on parameter data.􏶱
     􏶲Send it over the network so it can be seen in the dynamic debugger.􏶱
-    DynamicDebugMessageT tDebugMessage = 􏵲construct dynamic debug message from int􏵳􏵶debug value􏵷,􏵶value path name􏵷);
-    􏵲send message to the dynamic debugger􏵳tDebugMessage);
+    DynamicDebugMessageT tDebugMessage = ConstructDynamicDebugMessageFromInt(􏵶debug value􏵷,􏵶value path name􏵷);
+    SendMessageToTheDynamicDebugger(tDebugMessage);
 􏶳
 
 􏷘+􏷗􏷒send debug real􏷑
@@ -41,8 +41,8 @@ Watch out for implicit casts and truncation.􏶡
 􏶴
     􏶲Create debug message struct based on parameter data.􏶱
     􏶲Send it over the network so it can be seen in the dynamic debugger.􏶱
-    DynamicDebugMessageT tDebugMessage = 􏵲construct dynamic debug message from real􏵳􏵶debug value􏵷,􏵶value path name􏵷);
-    􏵲send message to the dynamic debugger􏵳tDebugMessage);
+    DynamicDebugMessageT tDebugMessage = ConstructDynamicDebugMessageFromReal(􏵶debug value􏵷,􏵶value path name􏵷);
+    SendMessageToTheDynamicDebugger(tDebugMessage);
 􏶳
 
 􏷘+􏷗􏷒send debug bool􏷑
@@ -54,8 +54,8 @@ BYTEs can be used as well.  Ensure the value is only 1 or 0.􏶡
 􏶴
     􏶲Create debug message struct based on parameter data.􏶱
     􏶲Send it over the network so it can be seen in the dynamic debugger.􏶱
-    DynamicDebugMessageT tDebugMessage = 􏵲construct dynamic debug message from bool􏵳􏵶debug value􏵷,􏵶value path name􏵷);
-    􏵲send message to the dynamic debugger􏵳tDebugMessage);
+    DynamicDebugMessageT tDebugMessage = ConstructDynamicDebugMessageFromBool(􏵶debug value􏵷,􏵶value path name􏵷);
+    SendMessageToTheDynamicDebugger(tDebugMessage);
 􏶳
 
 􏷘+􏷗􏷒send debug string􏷑
@@ -67,7 +67,7 @@ Must be null terminated.  Do not exceed the array size.􏶡
 􏶴
     􏶲Create debug message struct based on parameter data.􏶱
     􏶲Send it over the network so it can be seen in the dynamic debugger.􏶱
-    DynamicDebugMessageT tDebugMessage = 􏵲construct dynamic debug message from string􏵳􏵶debug value􏵷,􏵶value path name􏵷);
-    􏵲send message to the dynamic debugger􏵳tDebugMessage);
+    DynamicDebugMessageT tDebugMessage = ConstructDynamicDebugMessageFromString(􏵶debug value􏵷,􏵶value path name􏵷);
+    SendMessageToTheDynamicDebugger(tDebugMessage);
 􏶳
 

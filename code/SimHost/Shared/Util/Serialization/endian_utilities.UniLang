@@ -1,8 +1,15 @@
+􏶞g􏶟
+􏷲Utilities for detecting endian􏷱
+􏷰Runtime checks for endian􏷯
+􏷮Endian Utilities􏷭 􏷮Network􏷭 􏷮Utilities􏷭
+􏷬Trevor Hickey􏷫
+􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL, UINT16􏷡
+
 􏵮􏵯􏵬􏵭􏶀machine endian􏶋
 􏶊the different endians of a machine's memory layout􏶉
 􏶈what about middle endian? left out, and deemed unimportant􏶇
 􏶆big􏶅􏶄􏶃􏶂most significant byte in the smallest address􏶁
-􏶆small􏶅􏶄􏶃􏶂least significant byte in the smallest address􏶁
+􏶆little􏶅􏶄􏶃􏶂least significant byte in the smallest address􏶁
 
 􏷘+􏷗􏷒on big endian architecture􏷑
 􏷐determines if the machine is big endian􏷏

@@ -1,0 +1,65 @@
+􏶞g􏶟
+􏷲conversion functions for different measurements􏷱
+􏷰uses conversion factors􏷯
+􏷮Shared􏷭 􏷮Utilities􏷭 􏷮Measurement_Conversion􏷭
+􏷬Trevor Hickey􏷫
+
+􏶔􏶕􏶒FfsConst􏶓􏶖USES: Conversion factor constants􏶗
+
+
+􏷘+􏷗􏷒feet per minute to meters per second􏷑
+􏷐converts feet per minute to meters per second􏷏􏶠uses conversion factor􏶡
+􏶜􏶝 􏷆float􏷅􏷄measurement􏷃          􏵘feet / minute􏵙    􏷀the measurement to be converted􏶿
+􏶚m􏶛􏶾float􏶽􏶼converted measurement􏶻􏵜meters / second􏵝􏶺the converted measurement􏶹
+􏶴
+    return 􏵶measurement􏵷 * FPM_TO_MPS;
+􏶳
+􏷘+􏷗􏷒meters per second to feet per minute􏷑
+􏷐converts meters per second to feet per minute􏷏􏶠uses conversion factor􏶡
+􏶜􏶝 􏷆float􏷅􏷄measurement􏷃          􏵘meters / second􏵙    􏷀the measurement to be converted􏶿
+􏶚m􏶛􏶾float􏶽􏶼converted measurement􏶻􏵜feet / minute􏵝􏶺the converted measurement􏶹
+􏶴
+    return 􏵶measurement􏵷 / FPM_TO_MPS;
+􏶳
+􏷘+􏷗􏷒knots to feet per minute􏷑
+􏷐converts knots to feet per minute􏷏􏶠uses conversion factor􏶡
+􏶜􏶝 􏷆float􏷅􏷄measurement􏷃          􏵘knots􏵙    􏷀the measurement to be converted􏶿
+􏶚m􏶛􏶾float􏶽􏶼converted measurement􏶻􏵜feet / minute􏵝􏶺the converted measurement􏶹
+􏶴
+    return 􏵶measurement􏵷 * KTS_TO_FPM;
+􏶳
+􏷘+􏷗􏷒feet per minute to knots􏷑
+􏷐converts feet per minute to knots􏷏􏶠uses conversion factor􏶡
+􏶜􏶝 􏷆float􏷅􏷄measurement􏷃          􏵘feet / minute􏵙    􏷀the measurement to be converted􏶿
+􏶚m􏶛􏶾float􏶽􏶼converted measurement􏶻􏵜knots􏵝􏶺the converted measurement􏶹
+􏶴
+    return 􏵶measurement􏵷 / KTS_TO_FPM;
+􏶳
+􏷘+􏷗􏷒kilohertz to hertz􏷑
+􏷐converts kilohertz to hertz􏷏􏶠uses conversion factor􏶡
+􏶜􏶝 􏷆float􏷅􏷄measurement􏷃          􏵘kilohertz􏵙    􏷀the measurement to be converted􏶿
+􏶚m􏶛􏶾float􏶽􏶼converted measurement􏶻􏵜hertz􏵝􏶺the converted measurement􏶹
+􏶴
+    return 􏵶measurement􏵷 * KHZ_TO_HZ;
+􏶳
+􏷘+􏷗􏷒hertz to kilohertz􏷑
+􏷐converts hertz to kilohertz􏷏􏶠uses conversion factor􏶡
+􏶜􏶝 􏷆float􏷅􏷄measurement􏷃          􏵘hertz􏵙    􏷀the measurement to be converted􏶿
+􏶚m􏶛􏶾float􏶽􏶼converted measurement􏶻􏵜kilohertz􏵝􏶺the converted measurement􏶹
+􏶴
+    return 􏵶measurement􏵷 / KHZ_TO_HZ;
+􏶳
+􏷘+􏷗􏷒feet to meters􏷑
+􏷐converts feet to meters􏷏􏶠uses conversion factor􏶡
+􏶜􏶝 􏷆float􏷅􏷄measurement􏷃          􏵘feet􏵙    􏷀the measurement to be converted􏶿
+􏶚m􏶛􏶾float􏶽􏶼converted measurement􏶻􏵜meters􏵝􏶺the converted measurement􏶹
+􏶴
+    return 􏵶measurement􏵷 * FEET_TO_METERS;
+􏶳
+􏷘+􏷗􏷒meters to feet􏷑
+􏷐converts meters to feet􏷏􏶠uses conversion factor􏶡
+􏶜􏶝 􏷆float􏷅􏷄measurement􏷃          􏵘meters􏵙    􏷀the measurement to be converted􏶿
+􏶚m􏶛􏶾float􏶽􏶼converted measurement􏶻􏵜feet􏵝􏶺the converted measurement􏶹
+􏶴
+    return 􏵶measurement􏵷 / FEET_TO_METERS;
+􏶳
