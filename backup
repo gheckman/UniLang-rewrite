@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-#transfer and run tests
-clear;cd CodeLang-rewrite/code; ./sync; cd ../../; cd work-related/fresh/SimHost/Tests; ./unit-tests --run; cd ../../../../;
-
-#transfer and sync
-#clear;cd CodeLang-rewrite/code; ./sync; cd ../../;cd work-related/fresh/SimHost/Tests; ./unit-tests --sync; cd ../../../../;
