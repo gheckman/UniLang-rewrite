@@ -1,0 +1,58 @@
+􏶞g􏶟
+􏷲swaps endian by particular byte invariance based  on current machine architecture􏷱
+􏷰Deals with endianness and address invariance. not padding/offsets􏷯
+􏷮Endian Swapping􏷭 􏷮Network􏷭 􏷮Utilities􏷭
+􏷬Trevor Hickey􏷫
+
+􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
+􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
+􏷤􏷣􏷦EndianUtilities􏷥􏷢USES: MachineEndianE, OnBigEndianArchitecture(), OnLittleEndianArchitecture()􏷡
+􏶔􏶕􏶒FfsCommon.h􏶓􏶖USES: DwordReverseByteOrder􏶗
+
+􏷘+􏷗􏷒reverse endian by 4 bytes when on little endian machine􏷑
+􏷐reverses endian for little endian machines only􏷏 
+􏶠only performs transformations on a little endian machine􏶡 
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏶴
+    if (OnLittleEndianArchitecture()){
+        DwordReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
+    }
+􏶳
+
+􏷘+􏷗􏷒reverse endian by 4 bytes when on big endian machine􏷑
+􏷐reverses endian for big endian machines only􏷏 
+􏶠only performs transformations on a big endian machine􏶡 
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏶴
+    if (OnBigEndianArchitecture()){
+        DwordReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
+    }
+􏶳
+
+􏷘+􏷗􏷒reverse endian by 2 bytes when on little endian machine􏷑
+􏷐reverses endian for little endian machines only􏷏 
+􏶠only performs transformations on a little endian machine􏶡 
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏶴
+    if (OnLittleEndianArchitecture()){
+        ReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
+    }
+􏶳
+
+􏷘+􏷗􏷒reverse endian by 2 bytes when on big endian machine􏷑
+􏷐reverses endian for big endian machines only􏷏 
+􏶠only performs transformations on a big endian machine􏶡 
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏶴
+    if (OnBigEndianArchitecture()){
+        ReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
+    }
+􏶳

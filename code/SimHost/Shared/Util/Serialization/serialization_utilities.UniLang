@@ -7,111 +7,14 @@
 􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
 􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
 􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
-􏷤􏷣􏷦EndianUtilities􏷥􏷢USES: MachineEndianE, OnBigEndianArchitecture(), OnLittleEndianArchitecture()􏷡
-􏶔􏶕􏶒FfsCommon.h􏶓􏶖USES: DwordReverseByteOrder􏶗
 􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
 􏶔􏶕􏶒limits􏶓􏶖USES: CHAR_BIT􏶗
-
-
 
 􏵮􏵯􏵬􏵭􏶀serialization action􏶋
 􏶊a value to distinguish the data conversion needed on a set of network related data􏶉
 􏶈used for dispatching during generic serialization steps􏶇
 􏶆pack􏶅􏶄􏶃􏶂any type -> byte array􏶁
 􏶆unpack􏶅􏶄􏶃􏶂byte array -> any type􏶁
-
-
-􏷘-􏷗􏷒reverse endian by 4 bytes when on little endian machine􏷑
-􏷐reverses endian for little endian machines only􏷏 
-􏶠only performs transformations on a little endian machine􏶡 
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
-􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
-􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
-􏶴
-    if (OnLittleEndianArchitecture()){
-        DwordReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
-    }
-􏶳
-
-􏷘-􏷗􏷒reverse endian by 4 bytes when on big endian machine􏷑
-􏷐reverses endian for big endian machines only􏷏 
-􏶠only performs transformations on a big endian machine􏶡 
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
-􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
-􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
-􏶴
-    if (OnBigEndianArchitecture()){
-        DwordReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
-    }
-􏶳
-
-􏷘-􏷗􏷒reverse endian by 2 bytes when on little endian machine􏷑
-􏷐reverses endian for little endian machines only􏷏 
-􏶠only performs transformations on a little endian machine􏶡 
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
-􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
-􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
-􏶴
-    if (OnLittleEndianArchitecture()){
-        ReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
-    }
-􏶳
-
-􏷘-􏷗􏷒reverse endian by 2 bytes when on big endian machine􏷑
-􏷐reverses endian for big endian machines only􏷏 
-􏶠only performs transformations on a big endian machine􏶡 
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer whose endian will potentially be reversed􏶿
-􏶜􏶝􏷆size_t􏷅􏷄buffer size􏷃􏷀the size of the buffer􏶿
-􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
-􏶴
-    if (OnBigEndianArchitecture()){
-        ReverseByteOrder(􏵶buffer􏵷,􏵶buffer size􏵷);
-    }
-􏶳
-
-
-
-
-
-􏷘+􏷗􏷒pack big endian 4 byte invariance􏷑
-􏷐Packs a type into a big endian data buffer􏷏
-􏶠the bytes of the type are converted to big endian with a 4 byte invariance􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜r􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
-􏶴
-    􏶲pack data into the byte array􏶱
-    memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
-    
-    􏶲potentially reverse the packed data so that it is in big endian􏶱
-    􏵲reverse endian by 4 bytes when on little endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    
-    􏶲increment our buffer iterator for the next pack􏶱
-    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
-􏶳
-
-􏷘+􏷗􏷒unpack big endian 4 byte invariance􏷑
-􏷐Unpacks a type stored as big endian from a data buffer􏷏
-􏶠the bytes of the type are converted to big endian with a 4 byte invariance􏶡
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
-􏶴
-    􏶲unpack data from byte array􏶱
-    memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    
-    􏶲potentially reverse the unpacked data so that it is back to little endian􏶱
-    􏵲reverse endian by 4 bytes when on little endian machine􏵳􏵶data􏵷,􏵶data size􏵷);
-    
-    􏶲increment our buffer iterator for the next unpack􏶱
-    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
-􏶳
 
 
 􏷘+􏷗􏷒serialize big endian 4 byte invariance􏷑
@@ -131,46 +34,6 @@
         case SERIALIZATION_ACTION_UNPACK:  􏵲unpack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         default:;
     }
-􏶳
-
-􏷘+􏷗􏷒pack little endian 4 byte invariance􏷑
-􏷐Packs a type into a little endian data buffer􏷏
-􏶠the bytes of the type are converted to little endian with a 4 byte invariance􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜r􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
-􏶴
-    􏶲pack data into the byte array􏶱
-    memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
-    
-    􏶲potentially reverse the packed data so that it is in little endian􏶱
-    􏵲reverse endian by 4 bytes when on big endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    
-    􏶲increment our buffer iterator for the next pack􏶱
-    *􏵶buffer iterator􏵷 += 􏵶data size􏵷;
-􏶳
-
-􏷘+􏷗􏷒unpack little endian 4 byte invariance􏷑
-􏷐Unpacks a type stored as little endian from a data buffer􏷏
-􏶠the bytes of the type are converted to little endian with a 4 byte invariance􏶡
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
-􏶴
-    􏶲unpack data from byte array􏶱
-    memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    
-    􏶲potentially reverse the unpacked data so that it is back to big endian􏶱
-    􏵲reverse endian by 4 bytes when on big endian machine􏵳􏵶data􏵷,􏵶data size􏵷);
-
-    􏶲increment our buffer iterator for the next unpack􏶱
-    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
 
 􏷘+􏷗􏷒serialize little endian 4 byte invariance􏷑
@@ -193,72 +56,6 @@
 􏶳
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-􏷘+􏷗􏷒pack big endian 2 byte invariance􏷑
-􏷐Packs a type into a big endian data buffer􏷏
-􏶠the bytes of the type are converted to big endian with a 2 byte invariance􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜r􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
-􏶴
-    􏶲pack data into the byte array􏶱
-    memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
-    
-    􏶲potentially reverse the packed data so that it is in big endian􏶱
-    􏵲reverse endian by 2 bytes when on little endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    
-    􏶲increment our buffer iterator for the next pack􏶱
-    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
-    
-􏶳
-
-􏷘+􏷗􏷒unpack big endian 2 byte invariance􏷑
-􏷐Unpacks a type stored as big endian from a data buffer􏷏
-􏶠the bytes of the type are converted to big endian with a 2 byte invariance􏶡
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
-􏶴
-    􏶲unpack data from byte array􏶱
-    memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    
-    􏶲potentially reverse the unpacked data so that it is back to little endian􏶱
-    􏵲reverse endian by 2 bytes when on little endian machine􏵳􏵶data􏵷,􏵶data size􏵷);
-    
-    􏶲increment our buffer iterator for the next unpack􏶱
-    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
-􏶳
-
 􏷘+􏷗􏷒serialize big endian 2 byte invariance􏷑
 􏷐serializes network data using a big endian data buffer􏷏
 􏶠decides whether to unpack or pack the buffer based on the serialization action􏶡
@@ -278,46 +75,6 @@
     }
 􏶳
 
-􏷘+􏷗􏷒pack little endian 2 byte invariance􏷑
-􏷐Packs a type into a little endian data buffer􏷏
-􏶠the bytes of the type are converted to little endian with a 2 byte invariance􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜r􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
-􏶴
-    􏶲pack data into the byte array􏶱
-    memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
-    
-    􏶲potentially reverse the packed data so that it is in little endian􏶱
-    􏵲reverse endian by 2 bytes when on big endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    
-    􏶲increment our buffer iterator for the next pack􏶱
-    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
-􏶳
-
-􏷘+􏷗􏷒unpack little endian 2 byte invariance􏷑
-􏷐Unpacks a type stored as little endian from a data buffer􏷏
-􏶠the bytes of the type are converted to little endian with a 2 byte invariance􏶡 
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be copied into buffer􏶿
-􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be copied into buffer􏶿
-􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
-􏶴
-    􏶲unpack data from byte array􏶱
-    memcpy(􏵶data􏵷,&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
-    
-    􏶲potentially reverse the unpacked data so that it is back to big endian􏶱
-    􏵲reverse endian by 2 bytes when on big endian machine􏵳􏵶data􏵷,􏵶data size􏵷);
-
-    􏶲increment our buffer iterator for the next unpack􏶱
-    *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
-􏶳
-
 􏷘+􏷗􏷒serialize little endian 2 byte invariance􏷑
 􏷐serializes network data using a little endian data buffer􏷏
 􏶠decides whether to unpack or pack the buffer based on the serialization action􏶡
@@ -334,55 +91,6 @@
         case SERIALIZATION_ACTION_PACK:    􏵲pack little endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         case SERIALIZATION_ACTION_UNPACK:  􏵲unpack little endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         default:;
-    }
-􏶳
-
-
-
-
-
-
-
-
-􏷘+􏷗􏷒pack first n array elements􏷑
-􏷐Packs only the first number of array elements specified into a data buffer􏷏
-􏶠􏶡 
-􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜􏶝􏷆void[]􏷅􏷄array􏷃􏷀the array to be packed􏶿
-􏶜􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
-􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
-􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
-􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
-􏵪uNumberOfElements <= uArraySize􏵫􏵨the number of elements must not exceed the array size􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
-􏶴
-    size_t uIndex = 0;
-    for (; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
-    
-        􏶲increment void pointer the number of appropriate bytes based on element size during each iteration􏶱
-        􏵲pack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(const char *const)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
-    }
-􏶳
-
-􏷘+􏷗􏷒unpack first n array elements􏷑
-􏷐Unpacks only the first number of array elements specified into a data buffer􏷏
-􏶠􏶡 
-􏶜􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
-􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
-􏶜m􏶝􏷆void[]􏷅􏷄array􏷃􏷀the array to be packed􏶿
-􏶜􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
-􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to unpack from the start of the array􏶿
-􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
-􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
-􏵪uNumberOfElements <= uArraySize􏵫􏵨the number of elements must not exceed the array size􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
-􏶴
-    size_t uIndex = 0;
-    for (; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
-    
-        􏶲increment void pointer the number of appropriate bytes based on element size during each iteration􏶱
-        􏵲unpack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(char*const)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
     }
 􏶳
 
@@ -409,6 +117,31 @@
 􏶳
 
 
+
+
+􏷘+􏷗􏷒pack 8 bool params into a byte􏷑
+􏷐Packs eight BOOLs into a single BYTE of a buffer􏷏
+􏶠uses bit shifts on each index of the bool array
+note: the bits will be in reverse order of the bools passed in
+example: {􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵰}
+becomes: 01111111􏶡
+􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool 1􏷃􏷀bool 1􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool 2􏷃􏷀bool 2􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool 3􏷃􏷀bool 3􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool 4􏷃􏷀bool 4􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool 5􏷃􏷀bool 5􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool 6􏷃􏷀bool 6􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool 7􏷃􏷀bool 7􏶿
+􏶜􏶝􏷆BOOL􏷅􏷄bool 8􏷃􏷀bool 8􏶿
+􏶚m􏶛􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
+􏵪􏵫􏵨size of bool array must be == 8􏵩
+􏶴
+    *􏵶data buffer􏵷 = (BYTE)(((􏵶bool 8􏵷 << 7) & 0xFF) + ((􏵶bool 7􏵷 << 6) & 0xFF) + ((􏵶bool 6􏵷 << 5) & 0xFF)
+                          + ((􏵶bool 5􏵷 << 4) & 0xFF) + ((􏵶bool 4􏵷 << 3) & 0xFF) + ((􏵶bool 3􏵷 << 2) & 0xFF) 
+                          + ((􏵶bool 2􏵷 << 1) & 0xFF) + (􏵶bool 1􏵷 & 0xFF));
+    return sizeof(BYTE);
+􏶳
 
 
 􏷘+􏷗􏷒pack 8 bools into a byte􏷑
