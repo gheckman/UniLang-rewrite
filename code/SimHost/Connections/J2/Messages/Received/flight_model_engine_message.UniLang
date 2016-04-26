@@ -27,7 +27,7 @@
 􏶨􏶧􏶦􏶥
 􏵁Piston􏵂􏴿􏵱􏵀
 􏵁Turbine􏵂􏴿􏵱􏵀
-􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Oil Temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Oil Temperature􏶫􏵚farenheit􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Piston􏵂􏴿􏵱􏵀
@@ -37,12 +37,12 @@
 􏶨􏶧􏶦􏶥
 􏵁Piston􏵂􏴿􏵱􏵀
 􏵁Turbine􏵂􏴿􏵰􏵀
-􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Exhaust Gas Temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Exhaust Gas Temperature􏶫􏵚farenheit􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Piston􏵂􏴿􏵱􏵀
 􏵁Turbine􏵂􏴿􏵰􏵀
-􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Cylinder Head Temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬Cylinder Head Temperature􏶫􏵚farenheit􏵛􏶪􏶩
 
 􏶨􏶧􏶦􏶥
 􏵁Piston􏵂􏴿􏵱􏵀

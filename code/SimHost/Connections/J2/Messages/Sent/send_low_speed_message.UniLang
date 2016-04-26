@@ -71,8 +71,8 @@
 􏵁Fixed Wing􏵂􏴿􏵱􏵀
 􏵁Helicopter􏵂􏴿􏵱􏵀
 􏴻59􏴼􏴹standard􏴺
-􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level temperature􏶫􏵚degree farenheit􏵛􏶪􏶩
-
+􏶘+i􏶙􏶰􏶯􏶮float􏶭􏶬sea level temperature􏶫􏵚fahrenheit􏵛􏶪􏶩
+ 
 􏶨􏶧􏶦general measurement of friction on the ground􏶥
 􏴽>=􏴾􏴵0􏴶
 􏴽<=􏴾􏴵10􏴶

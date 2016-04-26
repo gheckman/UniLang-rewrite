@@ -259,6 +259,25 @@
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
 
+􏷘+􏷗􏷒serialize big endian 2 byte invariance􏷑
+􏷐serializes network data using a big endian data buffer􏷏
+􏶠decides whether to unpack or pack the buffer based on the serialization action􏶡
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to serialize the next set of data􏵥
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start serializing the data at􏶿
+􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be serialized for the buffer􏶿
+􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be serialized for the buffer􏶿
+􏶜􏶝􏷆SerializationActionE􏷅􏷄action􏷃􏷀the serialization action to perform on the data􏶿
+􏶴
+    􏶲either pack or unpack based on the action sent in􏶱
+    switch(􏵶action􏵷){
+        case SERIALIZATION_ACTION_PACK:    􏵲pack big endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack big endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        default:;
+    }
+􏶳
+
 􏷘+􏷗􏷒pack little endian 2 byte invariance􏷑
 􏷐Packs a type into a little endian data buffer􏷏
 􏶠the bytes of the type are converted to little endian with a 2 byte invariance􏶡
@@ -299,6 +318,25 @@
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
 􏶳
 
+􏷘+􏷗􏷒serialize little endian 2 byte invariance􏷑
+􏷐serializes network data using a little endian data buffer􏷏
+􏶠decides whether to unpack or pack the buffer based on the serialization action􏶡
+􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to serialize the next set of data􏵥
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start serializing the data at􏶿
+􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be serialized for the buffer􏶿
+􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be serialized for the buffer􏶿
+􏶜􏶝􏷆SerializationActionE􏷅􏷄action􏷃􏷀the serialization action to perform on the data􏶿
+􏶴
+    􏶲either pack or unpack based on the action sent in􏶱
+    switch(􏵶action􏵷){
+        case SERIALIZATION_ACTION_PACK:    􏵲pack little endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack little endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        default:;
+    }
+􏶳
+
 
 
 
@@ -315,9 +353,9 @@
 􏶜􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
 􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
 􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
-􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
 􏵪uNumberOfElements <= uArraySize􏵫􏵨the number of elements must not exceed the array size􏵩
-􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to pack the next set of data􏵥
 􏶴
     size_t uIndex = 0;
     for (; uIndex < 􏵶number of elements􏵷 && uIndex < 􏵶array size􏵷; ++uIndex){
@@ -336,7 +374,7 @@
 􏶜􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
 􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to unpack from the start of the array􏶿
 􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
-􏵪uDataSize % 2 == 0􏵫􏵨data size should be divisible by 2􏵩
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
 􏵪uNumberOfElements <= uArraySize􏵫􏵨the number of elements must not exceed the array size􏵩
 􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to unpack the next set of data􏵥
 􏶴
@@ -345,6 +383,28 @@
     
         􏶲increment void pointer the number of appropriate bytes based on element size during each iteration􏶱
         􏵲unpack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,(char*const)􏵶array􏵷 + (uIndex*􏵶element size􏵷),􏵶element size􏵷);
+    }
+􏶳
+
+􏷘+􏷗􏷒serialize first n array elements􏷑
+􏷐Serializes only the first number of array elements specified into a data buffer􏷏
+􏶠􏶡 
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
+􏶜m􏶝􏷆void[]􏷅􏷄array􏷃􏷀the array to be packed􏶿
+􏶜􏶝􏷆size_t􏷅􏷄element size􏷃􏷀size of a data element in the array􏶿
+􏶜􏶝􏷆size_t􏷅􏷄number of elements􏷃􏷀the number of elements to pack from the start of the array􏶿
+􏶜􏶝􏷆size_t􏷅􏷄array size􏷃􏷀the maximum size of the array􏶿
+􏶜􏶝􏷆SerializationActionE􏷅􏷄action􏷃􏷀the serialization action to perform on the data􏶿
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵪uNumberOfElements <= uArraySize􏵫􏵨the number of elements must not exceed the array size􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to serialize the next set of data􏵥
+􏶴
+    􏶲either pack or unpack based on the action sent in􏶱
+    switch(􏵶action􏵷){
+        case SERIALIZATION_ACTION_PACK:    􏵲pack first n array elements􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶array􏵷,􏵶element size􏵷,􏵶number of elements􏵷,􏵶array size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack first n array elements􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶array􏵷,􏵶element size􏵷,􏵶number of elements􏵷,􏵶array size􏵷); break;
+        default:;
     }
 􏶳
 

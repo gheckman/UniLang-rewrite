@@ -1,0 +1,21 @@
+􏶞g􏶟
+􏷲Common serialization wrappers for networked communication.
+These routines are expected to be shared among different connections that send and receive a similar way􏷱
+􏷰Due to the inefficiencies of C, we use macros for brevity.  
+These serialization routines are cross-platform, and work on any basic type.􏷯
+􏷮Connection􏷭􏷮Serialization􏷭􏷮Network􏷭
+􏷬Trevor Hickey􏷫
+
+􏷤􏷣􏷦SerializationUtilities􏷥􏷢USES: UnpackBigEndian4ByteInvariance(), UnpackFirstNArrayElements(), SerializationActionE􏷡
+
+􏵺method for serializing regular variables to and from a network buffer􏵻
+􏵸macro uses local buffer data implicitly􏵹
+􏵐+􏵑􏵾SERIALIZE_VAR(X)􏵿􏵖􏵗􏵼SerializeBigEndian4ByteInvariance(pucBuffer, puBufferIterator, &X, sizeof(X), eAction)􏵽
+
+􏵺method for fully serializing arrays to and from a network buffer􏵻
+􏵸macro uses local buffer data implicitly􏵹
+􏵐+􏵑􏵾SERIALIZE_Full_Array(X)􏵿􏵖􏵗􏵼SerializeBigEndian4ByteInvariance(pucBuffer, puBufferIterator, X, sizeof(X), eAction)􏵽
+
+􏵺method for partially serializing arrays to and from a network buffer􏵻
+􏵸macro uses local buffer data implicitly􏵹
+􏵐+􏵑􏵾SERIALIZE_Partial_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼SerializeFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, MAX, eAction)􏵽
