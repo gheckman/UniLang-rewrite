@@ -1,21 +1,53 @@
 􏶞g􏶟
-􏷲Utilities for packing / unpacking on network data buffers􏷱
-􏷰Deals with endianness and address invariance. not padding/offsets􏷯
-􏷮Pack Utilities􏷭 􏷮Network􏷭 􏷮Utilities􏷭
-􏷬Dave Corapi􏷫
+􏷲generic serialization functions for different endians􏷱
+􏷰Deals with endianness and address invariance. not padding/offsets.  
+The same functions can be used for both packing and unpacking􏷯
+􏷮Byte Serialization􏷭 􏷮Network􏷭 􏷮Utilities􏷭
 􏷬Trevor Hickey􏷫
+
 􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
 􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
-􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
-􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
-􏶔􏶕􏶒limits􏶓􏶖USES: CHAR_BIT􏶗
+􏷤􏷣􏷦Defs.h􏷥􏷢USES: SerializationActionE􏷡
+􏶔􏶕􏶒ByteUnpacking􏶓􏶖USES: unpacking calls􏶗
+􏶔􏶕􏶒BytePacking􏶓􏶖USES: packing calls􏶗
 
-􏵮􏵯􏵬􏵭􏶀serialization action􏶋
-􏶊a value to distinguish the data conversion needed on a set of network related data􏶉
-􏶈used for dispatching during generic serialization steps􏶇
-􏶆pack􏶅􏶄􏶃􏶂any type -> byte array􏶁
-􏶆unpack􏶅􏶄􏶃􏶂byte array -> any type􏶁
+􏷘+􏷗􏷒serialize big endian􏷑
+􏷐serializes network data using a big endian data buffer􏷏
+􏶠decides whether to unpack or pack the buffer based on the serialization action􏶡
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to serialize the next set of data􏵥
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start serializing the data at􏶿
+􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be serialized for the buffer􏶿
+􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be serialized for the buffer􏶿
+􏶜􏶝􏷆SerializationActionE􏷅􏷄action􏷃􏷀the serialization action to perform on the data􏶿
+􏶴
+    􏶲either pack or unpack based on the action sent in􏶱
+    switch(􏵶action􏵷){
+        case SERIALIZATION_ACTION_PACK:    􏵲pack big endian􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack big endian􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        default:;
+    }
+􏶳
 
+􏷘+􏷗􏷒serialize little endian􏷑
+􏷐serializes network data using a little endian data buffer􏷏
+􏶠decides whether to unpack or pack the buffer based on the serialization action􏶡
+􏵪uDataSize % 4 == 0􏵫􏵨data size should be divisible by 4􏵩
+􏵦uBufferIterator != 0􏵧􏵤the buffer iterator will increment so that it can be used to serialize the next set of data􏵥
+􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
+􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start serializing the data at􏶿
+􏶜mr􏶝􏷆void􏷅􏷄data􏷃􏷀Data to be serialized for the buffer􏶿
+􏶜􏶝􏷆size_t􏷅􏷄data size􏷃􏷀size of the data to be serialized for the buffer􏶿
+􏶜􏶝􏷆SerializationActionE􏷅􏷄action􏷃􏷀the serialization action to perform on the data􏶿
+􏶴
+    􏶲either pack or unpack based on the action sent in􏶱
+    switch(􏵶action􏵷){
+        case SERIALIZATION_ACTION_PACK:    􏵲pack little endian􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack little endian􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        default:;
+    }
+􏶳
 
 􏷘+􏷗􏷒serialize big endian 4 byte invariance􏷑
 􏷐serializes network data using a big endian data buffer􏷏
@@ -96,7 +128,7 @@
 
 􏷘+􏷗􏷒serialize first n array elements􏷑
 􏷐Serializes only the first number of array elements specified into a data buffer􏷏
-􏶠􏶡 
+􏶠Useful for partial serializing based on some other serialized value value􏶡 
 􏶜m􏶝􏷆BYTE[]􏷅􏷄buffer􏷃􏷀Reference to data buffer􏶿
 􏶜mr􏶝􏷆size_t􏷅􏷄buffer iterator􏷃􏷀the index of the buffer to start packing the data at􏶿
 􏶜m􏶝􏷆void[]􏷅􏷄array􏷃􏷀the array to be packed􏶿
@@ -115,77 +147,3 @@
         default:;
     }
 􏶳
-
-
-
-
-􏷘+􏷗􏷒pack 8 bool params into a byte􏷑
-􏷐Packs eight BOOLs into a single BYTE of a buffer􏷏
-􏶠uses bit shifts on each index of the bool array
-note: the bits will be in reverse order of the bools passed in
-example: {􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵰}
-becomes: 01111111􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄bool 1􏷃􏷀bool 1􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄bool 2􏷃􏷀bool 2􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄bool 3􏷃􏷀bool 3􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄bool 4􏷃􏷀bool 4􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄bool 5􏷃􏷀bool 5􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄bool 6􏷃􏷀bool 6􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄bool 7􏷃􏷀bool 7􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄bool 8􏷃􏷀bool 8􏶿
-􏶚m􏶛􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏵪􏵫􏵨size of bool array must be == 8􏵩
-􏶴
-    *􏵶data buffer􏵷 = (BYTE)(((􏵶bool 8􏵷 << 7) & 0xFF) + ((􏵶bool 7􏵷 << 6) & 0xFF) + ((􏵶bool 6􏵷 << 5) & 0xFF)
-                          + ((􏵶bool 5􏵷 << 4) & 0xFF) + ((􏵶bool 4􏵷 << 3) & 0xFF) + ((􏵶bool 3􏵷 << 2) & 0xFF) 
-                          + ((􏵶bool 2􏵷 << 1) & 0xFF) + (􏵶bool 1􏵷 & 0xFF));
-    return sizeof(BYTE);
-􏶳
-
-
-􏷘+􏷗􏷒pack 8 bools into a byte􏷑
-􏷐Packs eight BOOLs into a single BYTE of a buffer􏷏
-􏶠uses bit shifts on each index of the bool array
-note: the bits will be in reverse order of the bools passed in
-example: {􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵰}
-becomes: 01111111􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆BOOL[]􏷅􏷄pack bools􏷃􏷀an array of 8 bools to pack into a byte􏶿
-􏶚m􏶛􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏵪􏵫􏵨size of bool array must be == 8􏵩
-􏶴
-    *􏵶data buffer􏵷 = (BYTE)(((􏵶pack bools􏵷[7] << 7) & 0xFF) + ((􏵶pack bools􏵷[6] << 6) & 0xFF) + ((􏵶pack bools􏵷[5] << 5) & 0xFF)
-                          + ((􏵶pack bools􏵷[4] << 4) & 0xFF) + ((􏵶pack bools􏵷[3] << 3) & 0xFF) + ((􏵶pack bools􏵷[2] << 2) & 0xFF) 
-                          + ((􏵶pack bools􏵷[1] << 1) & 0xFF) + (􏵶pack bools􏵷[0] & 0xFF));
-    return sizeof(BYTE);
-􏶳
-
-􏷘+􏷗􏷒pack n bools into a byte􏷑
-􏷐Packs n number of bools into a byte􏷏
-􏶠uses bit shifts on each index of the bool array
-accounts for indexes less than byte size.
-example: {􏵱,􏵱,􏵱,􏵰}
-becomes: 00000111􏶡
-􏶜m􏶝􏷆BYTE[]􏷅􏷄data buffer􏷃􏷀Reference to data buffer􏶿
-􏶜􏶝􏷆BOOL[]􏷅􏷄pack bools􏷃􏷀an array of n bools􏶿
-􏶜􏶝􏷆size_t􏷅􏷄bool array size􏷃􏷀the size of the bool array􏶿
-􏶚m􏶛􏶾int􏶽􏶼number of bytes􏶻􏶺Number of bytes packed􏶹
-􏵪􏵫􏵨size of bool array must be <= 8 && > 0􏵩
-􏶴
-    􏶲create an 8 element bool array of falses􏶱
-    BOOL pbAllBools[sizeof(BYTE)*CHAR_BIT];
-    memset(pbAllBools,0,sizeof(pbAllBools));
-    
-    􏶲lay the partial bool array in the full bool array􏶱
-    memcpy(pbAllBools, 􏵶pack bools􏵷, 􏵶bool array size􏵷*sizeof(BOOL));
-    
-    􏶲leverage 8 bools to byte function􏶱
-    return 􏵲pack 8 bools into a byte􏵳􏵶data buffer􏵷,pbAllBools);
-􏶳
-
-
-
-
-
-

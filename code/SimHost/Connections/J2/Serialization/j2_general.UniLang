@@ -13,19 +13,19 @@
 
 􏵺method for partially serializing engine arrays according to J2 ICD􏵻
 􏵸macro uses local buffer data implicitly􏵹
-􏵐-􏵑􏵾SERIALIZE_PARTIAL_ENGINE_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallySerializeEngineArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX, eAction)􏵽
+􏵐-􏵑􏵾SERIALIZE_PARTIAL_ENGINE_ARRAY(X,AMOUNT)􏵿􏵖􏵗􏵼PartiallySerializeEngineArray(pucBuffer, puBufferIterator, X, AMOUNT, sizeof(X)/sizeof(X[0]), eAction)􏵽
 
 􏵺method for partially upacking propeller arrays according to J2 ICD􏵻
 􏵸macro uses local buffer data implicitly􏵹
-􏵐-􏵑􏵾SERIALIZE_Partial_Propeller_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallySerializePropellerArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX, eAction)􏵽
+􏵐-􏵑􏵾SERIALIZE_Partial_Propeller_Array(X,AMOUNT)􏵿􏵖􏵗􏵼PartiallySerializePropellerArray(pucBuffer, puBufferIterator, X, AMOUNT, sizeof(X)/sizeof(X[0]), eAction)􏵽
 
 􏵺method for partially serializing engine reposition arrays according to J2 ICD􏵻
 􏵸macro uses local buffer data implicitly􏵹
-􏵐-􏵑􏵾SERIALIZE_PARTIAL_ENGINE_REPOSITION_ARRAY(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallySerializeEngineRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX, eAction)􏵽
+􏵐-􏵑􏵾SERIALIZE_PARTIAL_ENGINE_REPOSITION_ARRAY(X,AMOUNT)􏵿􏵖􏵗􏵼PartiallySerializeEngineRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, sizeof(X)/sizeof(X[0]), eAction)􏵽
 
 􏵺method for partially serializing propeller reposition arrays according to J2 ICD􏵻
 􏵸macro uses local buffer data implicitly􏵹
-􏵐-􏵑􏵾SERIALIZE_Partial_Propeller_Reposition_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼PartiallySerializePropellerRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, MAX, eAction)􏵽
+􏵐-􏵑􏵾SERIALIZE_Partial_Propeller_Reposition_Array(X,AMOUNT)􏵿􏵖􏵗􏵼PartiallySerializePropellerRepositionArray(pucBuffer, puBufferIterator, X, AMOUNT, sizeof(X)/sizeof(X[0]), eAction)􏵽
 
 􏷘+􏷗􏷒serialize j2 high speed send message payload􏷑
 􏷐pack the relevant data into the buffer
@@ -76,20 +76,20 @@ From SimHost to Flight Model􏷏
     
   􏶲contact point serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfContactPoints);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfGroundContactLocation_ft,􏵶message􏵷->m_nNumberOfContactPoints,NUM_CONTACT_LOCATION);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfGroundContactLocation_ft,􏵶message􏵷->m_nNumberOfContactPoints);
   
   􏶲engine related serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfEngines);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfThrottle,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfMixture,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfThrottle,􏵶message􏵷->m_nNumberOfEngines);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfMixture,􏵶message􏵷->m_nNumberOfEngines);
   
   􏶲propeller serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfPropPitch_deg,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfPropPitch_deg,􏵶message􏵷->m_nNumberOfPropellers);
   
   􏶲fuel tank serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfTanks);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfFuelWeight_lbs,􏵶message􏵷->m_nNumberOfTanks,MAX_NUMBER_OF_FUEL_TANKS);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfFuelWeight_lbs,􏵶message􏵷->m_nNumberOfTanks);
   
   SERIALIZE_VAR(􏵶message􏵷->m_nFlag1);
 􏶳
@@ -105,15 +105,15 @@ From SimHost to Flight Model􏷏
 􏶴
   􏶲gear related serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfGears);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnGearRequestedPosition_pct,􏵶message􏵷->m_nNumberOfGears,MAX_NUMBER_OF_LANDING_GEARS);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnGearRequestedPosition_pct,􏵶message􏵷->m_nNumberOfGears);
     
   􏶲flap related serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfFlaps);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnFlapRequestedPosition_pct,􏵶message􏵷->m_nNumberOfFlaps,MAX_NUMBER_OF_FLAPS);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnFlapRequestedPosition_pct,􏵶message􏵷->m_nNumberOfFlaps);
     
   􏶲speed brake related serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfSpeedBrakes);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct,􏵶message􏵷->m_nNumberOfSpeedBrakes,MAX_NUMBER_OF_SPEED_BRAKES);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnSpeedBrakeRequestedPosition_pct,􏵶message􏵷->m_nNumberOfSpeedBrakes);
     
   SERIALIZE_VAR(􏵶message􏵷->m_fSeaLevelPressure_inHg);
   SERIALIZE_VAR(􏵶message􏵷->m_fSeaLevelTemperature_degf);
@@ -129,17 +129,17 @@ From SimHost to Flight Model􏷏
     
   􏶲engine related serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfEngines);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineStarterRunning,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnBleedAir,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnIgnition,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineFlags1,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineInletState,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStateEngine_in,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineFailureFlags,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineStarterRunning,􏵶message􏵷->m_nNumberOfEngines);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnBleedAir,􏵶message􏵷->m_nNumberOfEngines);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnIgnition,􏵶message􏵷->m_nNumberOfEngines);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineFlags1,􏵶message􏵷->m_nNumberOfEngines);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineInletState,􏵶message􏵷->m_nNumberOfEngines);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStateEngine_in,􏵶message􏵷->m_nNumberOfEngines);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pnEngineFailureFlags,􏵶message􏵷->m_nNumberOfEngines);
   
   􏶲propeller related serializing􏶱
   SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStatesProp_in,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+  SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfIceStatesProp_in,􏵶message􏵷->m_nNumberOfPropellers);
     
   SERIALIZE_VAR(􏵶message􏵷->m_fIceStateRightWing_in);
   SERIALIZE_VAR(􏵶message􏵷->m_fIceStateLeftWing_in);
@@ -170,11 +170,11 @@ From SimHost to Flight Model􏷏
 
     􏶲engine related serializing􏶱
     SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfEngines);
-    SERIALIZE_PARTIAL_ENGINE_REPOSITION_ARRAY(􏵶message􏵷->m_ptEngine,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    SERIALIZE_PARTIAL_ENGINE_REPOSITION_ARRAY(􏵶message􏵷->m_ptEngine,􏵶message􏵷->m_nNumberOfEngines);
 
     􏶲propeller related serializing􏶱
     SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-    SERIALIZE_PARTIAL_PROPELLER_REPOSITION_ARRAY(􏵶message􏵷->m_ptPropeller,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    SERIALIZE_PARTIAL_PROPELLER_REPOSITION_ARRAY(􏵶message􏵷->m_ptPropeller,􏵶message􏵷->m_nNumberOfPropellers);
     
     SERIALIZE_VAR(􏵶message􏵷->m_fPitchFlightControl);
     SERIALIZE_VAR(􏵶message􏵷->m_fRollFlightControl);
@@ -245,7 +245,7 @@ From Flight Model to SimHost􏷏
     
     􏶲landing gear serializing􏶱
     SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfLandingGears);
-    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfWeightOnLandingGear_lbs,􏵶message􏵷->m_nNumberOfLandingGears,MAX_NUMBER_OF_LANDING_GEARS);
+    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfWeightOnLandingGear_lbs,􏵶message􏵷->m_nNumberOfLandingGears);
     
     
     SERIALIZE_VAR(􏵶message􏵷->m_nFlag1);
@@ -266,15 +266,15 @@ From Flight Model to SimHost􏷏
     
     􏶲surface serializing􏶱
     SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfSurfaces);
-    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceQ,􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
-    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceAngleOfIncidence,􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
-    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceTorque,􏵶message􏵷->m_nNumberOfSurfaces,MAX_NUMBER_OF_SURFACES);
+    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceQ,􏵶message􏵷->m_nNumberOfSurfaces);
+    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceAngleOfIncidence,􏵶message􏵷->m_nNumberOfSurfaces);
+    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfSurfaceTorque,􏵶message􏵷->m_nNumberOfSurfaces);
     
     SERIALIZE_VAR(􏵶message􏵷->m_fBuffetMagnitude);
     
     􏶲spare bucket serializing􏶱
     SERIALIZE_VAR(􏵶message􏵷->m_nSpareBucketSize);
-    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfSpareBucket,􏵶message􏵷->m_nSpareBucketSize,MAX_SPARE_BUCKET_SIZE);
+    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_pfSpareBucket,􏵶message􏵷->m_nSpareBucketSize);
 􏶳
 
 􏷘+􏷗􏷒serialize j2 low speed received message payload􏷑
@@ -302,10 +302,10 @@ From Flight Model to SimHost􏷏
 􏶜􏶝􏷆SerializationActionE􏷅􏷄action􏷃􏷀the serialization action to perform on the data􏶿
 􏶴
     SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfEngines);
-    SERIALIZE_PARTIAL_ENGINE_ARRAY(􏵶message􏵷->m_ptEngine,􏵶message􏵷->m_nNumberOfEngines,MAX_NUMBER_OF_ENGINES);
+    SERIALIZE_PARTIAL_ENGINE_ARRAY(􏵶message􏵷->m_ptEngine,􏵶message􏵷->m_nNumberOfEngines);
 
     SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfPropellers);
-    SERIALIZE_PARTIAL_PROPELLER_ARRAY(􏵶message􏵷->m_ptPropeller,􏵶message􏵷->m_nNumberOfPropellers,MAX_NUMBER_OF_PROPELLERS);
+    SERIALIZE_PARTIAL_PROPELLER_ARRAY(􏵶message􏵷->m_ptPropeller,􏵶message􏵷->m_nNumberOfPropellers);
 􏶳
 
 􏷘+􏷗􏷒serialize j2 reposition received message payload􏷑
@@ -337,7 +337,7 @@ From Flight Model to SimHost􏷏
     
     􏶲dev item serializing􏶱
     SERIALIZE_VAR(􏵶message􏵷->m_nNumberOfDeveloperItems);
-    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_szDevItem,􏵶message􏵷->m_nNumberOfDeveloperItems,MAX_DEV_ITEMS);
+    SERIALIZE_PARTIAL_ARRAY(􏵶message􏵷->m_szDevItem,􏵶message􏵷->m_nNumberOfDeveloperItems);
 􏶳
 
 

@@ -6,16 +6,16 @@ These serialization routines are cross-platform, and work on any basic type.􏷯
 􏷮Connection􏷭􏷮Serialization􏷭􏷮Network􏷭
 􏷬Trevor Hickey􏷫
 
-􏷤􏷣􏷦SerializationUtilities􏷥􏷢USES: UnpackBigEndian4ByteInvariance(), UnpackFirstNArrayElements(), SerializationActionE􏷡
+􏷤􏷣􏷦SerializationUtilities􏷥􏷢USES: SerializeBigEndian(), SerializeFirstNArrayElements(), SerializationActionE􏷡
 
 􏵺method for serializing regular variables to and from a network buffer􏵻
 􏵸macro uses local buffer data implicitly􏵹
-􏵐+􏵑􏵾SERIALIZE_VAR(X)􏵿􏵖􏵗􏵼SerializeBigEndian4ByteInvariance(pucBuffer, puBufferIterator, &X, sizeof(X), eAction)􏵽
+􏵐+􏵑􏵾SERIALIZE_VAR(X)􏵿􏵖􏵗􏵼SerializeBigEndian(pucBuffer, puBufferIterator, &X, sizeof(X), eAction)􏵽
 
 􏵺method for fully serializing arrays to and from a network buffer􏵻
 􏵸macro uses local buffer data implicitly􏵹
-􏵐+􏵑􏵾SERIALIZE_Full_Array(X)􏵿􏵖􏵗􏵼SerializeBigEndian4ByteInvariance(pucBuffer, puBufferIterator, X, sizeof(X), eAction)􏵽
+􏵐+􏵑􏵾SERIALIZE_Full_Array(X)􏵿􏵖􏵗􏵼SerializeFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), sizeof(X)/sizeof(X[0]), sizeof(X)/sizeof(X[0]), eAction)􏵽
 
 􏵺method for partially serializing arrays to and from a network buffer􏵻
 􏵸macro uses local buffer data implicitly􏵹
-􏵐+􏵑􏵾SERIALIZE_Partial_Array(X,AMOUNT,MAX)􏵿􏵖􏵗􏵼SerializeFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, MAX, eAction)􏵽
+􏵐+􏵑􏵾SERIALIZE_Partial_Array(X,AMOUNT)􏵿􏵖􏵗􏵼SerializeFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, sizeof(X)/sizeof(X[0]), eAction)􏵽
