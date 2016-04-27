@@ -6,16 +6,21 @@ These serialization routines are cross-platform, and work on any basic type.􏷯
 􏷮Connection􏷭􏷮Serialization􏷭􏷮Network􏷭
 􏷬Trevor Hickey􏷫
 
-􏷤􏷣􏷦SerializationUtilities􏷥􏷢USES: SerializeBigEndian(), SerializeFirstNArrayElements(), SerializationActionE􏷡
+􏷤􏷣􏷦ByteSerialization􏷥􏷢USES: SerializeBigEndian(), SerializeFirstNArrayElements(), SerializationActionE􏷡
+􏷤􏷣􏷦SerializationAction􏷥􏷢USES: SerializationActionE􏷡
 
-􏵺method for serializing regular variables to and from a network buffer􏵻
-􏵸macro uses local buffer data implicitly􏵹
+􏵺macro for serializing regular variables to and from a network buffer􏵻
+􏵸macro uses local buffer data, and serialization action implicitly􏵹
 􏵐+􏵑􏵾SERIALIZE_VAR(X)􏵿􏵖􏵗􏵼SerializeBigEndian(pucBuffer, puBufferIterator, &X, sizeof(X), eAction)􏵽
 
-􏵺method for fully serializing arrays to and from a network buffer􏵻
-􏵸macro uses local buffer data implicitly􏵹
+􏵺macro for fully serializing arrays to and from a network buffer􏵻
+􏵸macro uses local buffer data, and serialization action implicitly􏵹
 􏵐+􏵑􏵾SERIALIZE_Full_Array(X)􏵿􏵖􏵗􏵼SerializeFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), sizeof(X)/sizeof(X[0]), sizeof(X)/sizeof(X[0]), eAction)􏵽
 
-􏵺method for partially serializing arrays to and from a network buffer􏵻
-􏵸macro uses local buffer data implicitly􏵹
+􏵺macro for partially serializing arrays to and from a network buffer􏵻
+􏵸macro uses local buffer data, and serialization action implicitly􏵹
 􏵐+􏵑􏵾SERIALIZE_Partial_Array(X,AMOUNT)􏵿􏵖􏵗􏵼SerializeFirstNArrayElements(pucBuffer, puBufferIterator, X, sizeof(X[0]), AMOUNT, sizeof(X)/sizeof(X[0]), eAction)􏵽
+
+􏵺macro for bit packing 8 bools into a byte􏵻
+􏵸macro uses local buffer data, and serialization action implicitly􏵹
+􏵐+􏵑􏵾SERIALIZE 8 BOOLS(B1,B2,B3,B4,B5,B6,B7,B8)􏵿􏵖􏵗􏵼􏵽

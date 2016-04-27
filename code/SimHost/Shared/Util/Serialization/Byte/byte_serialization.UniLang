@@ -7,7 +7,7 @@ The same functions can be used for both packing and unpacking􏷯
 
 􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
 􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
-􏷤􏷣􏷦Defs.h􏷥􏷢USES: SerializationActionE􏷡
+􏷤􏷣􏷦SerializationAction.h􏷥􏷢USES: SerializationActionE􏷡
 􏶔􏶕􏶒ByteUnpacking􏶓􏶖USES: unpacking calls􏶗
 􏶔􏶕􏶒BytePacking􏶓􏶖USES: packing calls􏶗
 

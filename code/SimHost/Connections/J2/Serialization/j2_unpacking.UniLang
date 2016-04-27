@@ -34,7 +34,7 @@ Message sent from Sim Host to Flight Model
 􏷤􏷣􏷦ReceiveFromJ2Messages.h􏷥􏷢USES: RcvHighSpeedMessageT, RcvLowSpeedMessageT, RcvEngineDataMessageT, FlightModelEngineMessageT, FlightModelPropellerMessageT, RepositionMessageReplyT, VersionMessageReplyT􏷡
 􏷤􏷣􏷦stddef.h􏷥􏷢USES: size_t􏷡
 􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
-􏶔􏶕􏶒SerializationUtilities􏶓􏶖USES: UnpackBigEndian4ByteInvariance(), UnpackFirstNArrayElements()􏶗
+􏶔􏶕􏶒ByteUnpacking􏶓􏶖USES: UnpackBigEndian4ByteInvariance(), UnpackFirstNArrayElements()􏶗
 􏶔􏶕􏶒J2MessageHeader.h􏶓􏶖USES: J2MessageHeaderT􏶗
 􏶔􏶕􏶒strLib.h􏶓􏶖USES: memcpy()􏶗
 􏶔􏶕􏶒stdio.h􏶓􏶖USES: fprintf()􏶗

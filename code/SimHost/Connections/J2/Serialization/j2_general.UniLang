@@ -8,7 +8,7 @@
 􏷤􏷣􏷦ReceiveFromJ2Messages􏷥􏷢USES: RcvHighSpeedMessageT, RcvLowSpeedMessageT, RcvEngineDataMessageT, FlightModelEngineMessageT, FlightModelPropellerMessageT, RepositionMessageReplyT, VersionMessageReplyT􏷡
 􏷤􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
 􏷤􏷣􏷦Defs􏷥􏷢USES: BYTE􏷡
-􏷤􏷣􏷦SerializationUtilities􏷥􏷢USES: SerializationActionE􏷡
+􏷤􏷣􏷦SerializationAction􏷥􏷢USES: SerializationActionE􏷡
 􏶔􏶕􏶒SerializationMacroWrappers􏶓􏶖USES: SERIALIZE_VAR(), SERIALIZE_FULL_ARRAY(), SERIALIZE_PARTIAL_ARRAY()􏶗
 
 􏵺method for partially serializing engine arrays according to J2 ICD􏵻
