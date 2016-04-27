@@ -24,8 +24,8 @@ The same functions can be used for both packing and unpacking􏷯
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-        case SERIALIZATION_ACTION_PACK:    􏵲pack big endian􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
-        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack big endian􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    PackBigEndian(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  UnpackBigEndian(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         default:;
     }
 􏶳
@@ -43,8 +43,8 @@ The same functions can be used for both packing and unpacking􏷯
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-        case SERIALIZATION_ACTION_PACK:    􏵲pack little endian􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
-        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack little endian􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    PackLittleEndian(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  UnpackLittleEndian(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         default:;
     }
 􏶳
@@ -62,8 +62,8 @@ The same functions can be used for both packing and unpacking􏷯
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-        case SERIALIZATION_ACTION_PACK:    􏵲pack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
-        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack big endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    PackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  UnpackBigEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         default:;
     }
 􏶳
@@ -81,8 +81,8 @@ The same functions can be used for both packing and unpacking􏷯
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-        case SERIALIZATION_ACTION_PACK:    􏵲pack little endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
-        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack little endian 4 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    PackLittleEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  UnpackLittleEndian4ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         default:;
     }
 􏶳
@@ -101,8 +101,8 @@ The same functions can be used for both packing and unpacking􏷯
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-        case SERIALIZATION_ACTION_PACK:    􏵲pack big endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
-        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack big endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    PackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  UnpackBigEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         default:;
     }
 􏶳
@@ -120,8 +120,8 @@ The same functions can be used for both packing and unpacking􏷯
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-        case SERIALIZATION_ACTION_PACK:    􏵲pack little endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
-        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack little endian 2 byte invariance􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    PackLittleEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  UnpackLittleEndian2ByteInvariance(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶data􏵷,􏵶data size􏵷); break;
         default:;
     }
 􏶳
@@ -142,8 +142,8 @@ The same functions can be used for both packing and unpacking􏷯
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-        case SERIALIZATION_ACTION_PACK:    􏵲pack first n array elements􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶array􏵷,􏵶element size􏵷,􏵶number of elements􏵷,􏵶array size􏵷); break;
-        case SERIALIZATION_ACTION_UNPACK:  􏵲unpack first n array elements􏵳􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶array􏵷,􏵶element size􏵷,􏵶number of elements􏵷,􏵶array size􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    PackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶array􏵷,􏵶element size􏵷,􏵶number of elements􏵷,􏵶array size􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  UnpackFirstNArrayElements(􏵶buffer􏵷,􏵶buffer iterator􏵷,􏵶array􏵷,􏵶element size􏵷,􏵶number of elements􏵷,􏵶array size􏵷); break;
         default:;
     }
 􏶳

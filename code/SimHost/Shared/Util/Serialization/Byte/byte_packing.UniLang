@@ -22,7 +22,7 @@
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
     􏶲potentially reverse the packed data so that it is in big endian􏶱
-    􏵲reverse endian when on little endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    ReverseEndianWhenOnLittleEndianMachine(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -42,7 +42,7 @@
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
     􏶲potentially reverse the packed data so that it is in little endian􏶱
-    􏵲reverse endian when on big endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    ReverseEndianWhenOnBigEndianMachine(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -62,7 +62,7 @@
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
     􏶲potentially reverse the packed data so that it is in big endian􏶱
-    􏵲reverse endian by 4 bytes when on little endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    ReverseEndianBy4BytesWhenOnLittleEndianMachine(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -82,7 +82,7 @@
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
     􏶲potentially reverse the packed data so that it is in little endian􏶱
-    􏵲reverse endian by 4 bytes when on big endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    ReverseEndianBy4BytesWhenOnBigEndianMachine(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷 += 􏵶data size􏵷;
@@ -102,7 +102,7 @@
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
     􏶲potentially reverse the packed data so that it is in big endian􏶱
-    􏵲reverse endian by 2 bytes when on little endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    ReverseEndianBy2BytesWhenOnLittleEndianMachine(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
@@ -122,7 +122,7 @@
     memcpy(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data􏵷,􏵶data size􏵷);
     
     􏶲potentially reverse the packed data so that it is in little endian􏶱
-    􏵲reverse endian by 2 bytes when on big endian machine􏵳&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
+    ReverseEndianBy2BytesWhenOnBigEndianMachine(&􏵶buffer􏵷[*􏵶buffer iterator􏵷],􏵶data size􏵷);
     
     􏶲increment our buffer iterator for the next pack􏶱
     *􏵶buffer iterator􏵷+= 􏵶data size􏵷;
