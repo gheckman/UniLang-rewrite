@@ -30,8 +30,8 @@ The same functions can be used for both packing and unpacking􏷯
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-case SERIALIZATION_ACTION_PACK:    Pack8BoolParamsIntoAByte(􏵶data buffer􏵷,􏵶buffer iterator􏵷); break;
-case SERIALIZATION_ACTION_UNPACK:  Unpack8BoolParamsFromAByte(􏵶data buffer􏵷,􏵶buffer iterator􏵷,􏵶bool 0􏵷,􏵶bool 1􏵷,􏵶bool 2􏵷,􏵶bool 3􏵷,􏵶bool 4􏵷,􏵶bool 5􏵷,􏵶bool 6􏵷,􏵶bool 7􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    Pack8BoolParamsIntoAByte(􏵶data buffer􏵷,􏵶buffer iterator􏵷,*􏵶bool 0􏵷,*􏵶bool 1􏵷,*􏵶bool 2􏵷,*􏵶bool 3􏵷,*􏵶bool 4􏵷,*􏵶bool 5􏵷,*􏵶bool 6􏵷,*􏵶bool 7􏵷); break;
+        case SERIALIZATION_ACTION_UNPACK:  Unpack8BoolParamsFromAByte(􏵶data buffer􏵷,􏵶buffer iterator􏵷,􏵶bool 0􏵷,􏵶bool 1􏵷,􏵶bool 2􏵷,􏵶bool 3􏵷,􏵶bool 4􏵷,􏵶bool 5􏵷,􏵶bool 6􏵷,􏵶bool 7􏵷); break;
         default:;
     }
 􏶳
@@ -49,7 +49,7 @@ case SERIALIZATION_ACTION_UNPACK:  Unpack8BoolParamsFromAByte(􏵶data buffer�
 􏶴
     􏶲either pack or unpack based on the action sent in􏶱
     switch(􏵶action􏵷){
-        //case SERIALIZATION_ACTION_PACK:    Pack8BoolsIntoAByte(􏵶data buffer􏵷,􏵶buffer iterator􏵷,􏵶bools􏵷); break;
+        case SERIALIZATION_ACTION_PACK:    Pack8BoolsIntoAByte(􏵶data buffer􏵷,􏵶buffer iterator􏵷,􏵶bools􏵷); break;
         case SERIALIZATION_ACTION_UNPACK:  Unpack8BoolsFromAByte(􏵶data buffer􏵷,􏵶buffer iterator􏵷,􏵶bools􏵷); break;
         default:;
     }

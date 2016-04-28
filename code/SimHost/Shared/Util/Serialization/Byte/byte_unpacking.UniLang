@@ -7,6 +7,7 @@
 􏷤􏷣􏷦Defs.h􏷥􏷢USES: BYTE􏷡
 􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
 􏶔􏶕􏶒EndianSwapping􏶓􏶖USES: reverse calls􏶗
+􏶔s􏶕􏶒strLib􏶓􏶖USES: memcpy()􏶗
 
 􏷘+􏷗􏷒unpack big endian􏷑
 􏷐Unpacks a type stored as big endian from a data buffer􏷏

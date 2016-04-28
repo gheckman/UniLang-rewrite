@@ -25,7 +25,7 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏶠sets byte to its max value􏶡
 􏶜mr􏶝􏷆BYTE􏷅􏷄byte􏷃􏷀the byte that the bit manipulation will occur on􏶿
 􏶴
-    *􏵶byte􏵷 = ~(*􏵶byte􏵷 & 0);
+    *􏵶byte􏵷 = (BYTE)~(*􏵶byte􏵷 & 0);
 􏶳
 
 􏷘+􏷗􏷒set nth bit􏷑
@@ -34,6 +34,7 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏶜mr􏶝􏷆int􏷅􏷄number􏷃􏷀the number that the bit manipulation will occur on􏶿
 􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the number to set (indexing starts at zero)􏶿
 􏶴
+    􏶲NOTE: would prefer a static assertion as sizeof is a compile-time operator􏶱
     if (􏵶index􏵷 < sizeof(int) * CHAR_BIT){
         *􏵶number􏵷 |= 1 << 􏵶index􏵷;
     }
@@ -44,7 +45,8 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏶜mr􏶝􏷆BYTE􏷅􏷄byte􏷃􏷀the byte that the bit manipulation will occur on􏶿
 􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the byte to set (indexing starts at zero)􏶿
 􏶴
-    if (􏵶index􏵷 < sizeof(int) * CHAR_BIT){
+    􏶲NOTE: would prefer a static assertion as sizeof is a compile-time operator􏶱
+    if (􏵶index􏵷 < sizeof(BYTE) * CHAR_BIT){
         *􏵶byte􏵷 |= 1 << 􏵶index􏵷;
     }
 􏶳
@@ -71,6 +73,7 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏶜mr􏶝􏷆int􏷅􏷄number􏷃􏷀the number that the bit manipulation will occur on􏶿
 􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the number to set (indexing starts at zero)􏶿
 􏶴
+    􏶲NOTE: would prefer a static assertion as sizeof is a compile-time operator􏶱
     if (􏵶index􏵷 < sizeof(int) * CHAR_BIT){
         *􏵶number􏵷 &= ~(1 << 􏵶index􏵷);
     }
@@ -82,7 +85,8 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏶜mr􏶝􏷆BYTE􏷅􏷄byte􏷃􏷀the byte that the bit manipulation will occur on􏶿
 􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the byte to set (indexing starts at zero)􏶿
 􏶴
-    if (􏵶index􏵷 < sizeof(int) * CHAR_BIT){
+    􏶲NOTE: would prefer a static assertion as sizeof is a compile-time operator􏶱
+    if (􏵶index􏵷 < sizeof(BYTE) * CHAR_BIT){
         *􏵶byte􏵷 &= ~(1 << 􏵶index􏵷);
     }
 􏶳
@@ -114,6 +118,7 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the number to set (indexing starts at zero)􏶿
 􏶜􏶝􏷆BOOL􏷅􏷄bool value􏷃􏷀the boolean value to apply to the bit􏶿
 􏶴
+    􏶲NOTE: would prefer a static assertion as sizeof is a compile-time operator􏶱
     if (􏵶index􏵷 < sizeof(int) * CHAR_BIT){
         *􏵶number􏵷 ^= (-􏵶bool value􏵷 ^ *􏵶number􏵷) & (1 << 􏵶index􏵷);
     }
@@ -126,7 +131,8 @@ They can cause other unintended side effects on parameters; they can't be used a
 􏶜􏶝􏷆unsigned int􏷅􏷄index􏷃􏷀the bit index of the byte to set (indexing starts at zero)􏶿
 􏶜􏶝􏷆BOOL􏷅􏷄bool value􏷃􏷀the boolean value to apply to the bit􏶿
 􏶴
-    if (􏵶index􏵷 < sizeof(int) * CHAR_BIT){
+    􏶲NOTE: would prefer a static assertion as sizeof is a compile-time operator􏶱
+    if (􏵶index􏵷 < sizeof(BYTE) * CHAR_BIT){
         *􏵶byte􏵷 ^= (-􏵶bool value􏵷 ^ *􏵶byte􏵷) & (1 << 􏵶index􏵷);
     }
 􏶳

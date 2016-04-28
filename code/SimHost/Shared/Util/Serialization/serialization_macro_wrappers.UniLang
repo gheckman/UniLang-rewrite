@@ -24,4 +24,4 @@ These serialization routines are cross-platform, and work on any basic type.􏷯
 
 􏵺macro for bit packing 8 bools into a byte􏵻
 􏵸macro uses local buffer data, and serialization action implicitly􏵹
-􏵐+􏵑􏵾SERIALIZE 8 BOOLS(B1,B2,B3,B4,B5,B6,B7,B8)􏵿􏵖􏵗􏵼Serialize8BoolParamsToAByte(pucBuffer, puBufferIterator, B1, B2, B3, B4, B5, B6, B7, B8, eAction)􏵽
+􏵐+􏵑􏵾SERIALIZE 8 BOOLS(B1,B2,B3,B4,B5,B6,B7,B8)􏵿􏵖􏵗􏵼Serialize8BoolParamsToAByte(pucBuffer, puBufferIterator, &B1, &B2, &B3, &B4, &B5, &B6, &B7, &B8, eAction)􏵽

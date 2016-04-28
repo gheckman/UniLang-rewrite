@@ -8,6 +8,7 @@
 􏷤s􏷣􏷦stdioLib􏷥􏷢USES: BOOL􏷡
 􏷤s􏷣􏷦stddef􏷥􏷢USES: size_t􏷡
 􏶔􏶕􏶒limits􏶓􏶖USES: CHAR_BIT􏶗
+􏶔􏶕􏶒BitUtilities􏶓􏶖USES: BitOfByteIsSet􏶗
 
 􏷘+􏷗􏷒unpack 8 bool params from a byte􏷑
 􏷐Unpacks eight BOOLs from a single BYTE of a buffer􏷏
@@ -24,14 +25,14 @@ becomes: {􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵰}􏶡
 􏶜rm􏶝􏷆BOOL􏷅􏷄bool 6􏷃􏷀bool 6 to map to bit 6 of the byte􏶿
 􏶜rm􏶝􏷆BOOL􏷅􏷄bool 7􏷃􏷀bool 7 to map to bit 7 of the byte􏶿
 􏶴
-    *􏵶bool 7􏵷 = BitIsSet(􏵶data buffer􏵷,0);
-    *􏵶bool 6􏵷 = BitIsSet(􏵶data buffer􏵷,1);
-    *􏵶bool 5􏵷 = BitIsSet(􏵶data buffer􏵷,2);
-    *􏵶bool 4􏵷 = BitIsSet(􏵶data buffer􏵷,3);
-    *􏵶bool 3􏵷 = BitIsSet(􏵶data buffer􏵷,4);
-    *􏵶bool 2􏵷 = BitIsSet(􏵶data buffer􏵷,5);
-    *􏵶bool 1􏵷 = BitIsSet(􏵶data buffer􏵷,6);
-    *􏵶bool 0􏵷 = BitIsSet(􏵶data buffer􏵷,7);
+    *􏵶bool 7􏵷 = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],7);
+    *􏵶bool 6􏵷 = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],6);
+    *􏵶bool 5􏵷 = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],5);
+    *􏵶bool 4􏵷 = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],4);
+    *􏵶bool 3􏵷 = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],3);
+    *􏵶bool 2􏵷 = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],2);
+    *􏵶bool 1􏵷 = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],1);
+    *􏵶bool 0􏵷 = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],0);
     
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= sizeof(BYTE);
@@ -47,14 +48,14 @@ becomes: {􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵱,􏵰}􏶡
 􏶜m􏶝􏷆BOOL[]􏷅􏷄bools􏷃􏷀an array of 8 bools to unpack from a byte􏶿
 􏵪􏵫􏵨size of bool array must be == 8􏵩
 􏶴
-    􏵶bools􏵷[7] = BitIsSet(􏵶data buffer􏵷,0);
-    􏵶bools􏵷[6] = BitIsSet(􏵶data buffer􏵷,1);
-    􏵶bools􏵷[5] = BitIsSet(􏵶data buffer􏵷,2);
-    􏵶bools􏵷[4] = BitIsSet(􏵶data buffer􏵷,3);
-    􏵶bools􏵷[3] = BitIsSet(􏵶data buffer􏵷,4);
-    􏵶bools􏵷[2] = BitIsSet(􏵶data buffer􏵷,5);
-    􏵶bools􏵷[1] = BitIsSet(􏵶data buffer􏵷,6);
-    􏵶bools􏵷[0] = BitIsSet(􏵶data buffer􏵷,7);
+    􏵶bools􏵷[7] = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],7);
+    􏵶bools􏵷[6] = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],6);
+    􏵶bools􏵷[5] = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],5);
+    􏵶bools􏵷[4] = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],4);
+    􏵶bools􏵷[3] = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],3);
+    􏵶bools􏵷[2] = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],2);
+    􏵶bools􏵷[1] = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],1);
+    􏵶bools􏵷[0] = BitOfByteIsSet(􏵶data buffer􏵷[*􏵶buffer iterator􏵷],0);
     
     􏶲increment our buffer iterator for the next unpack􏶱
     *􏵶buffer iterator􏵷+= sizeof(BYTE);
