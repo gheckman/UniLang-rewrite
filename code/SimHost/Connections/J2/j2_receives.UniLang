@@ -126,14 +126,9 @@
     􏶲process message and parse data received into the input communication data􏶱
     􏶲decide what data message was received, and receive it􏶱
     switch(pucDataBuffer[0]){
-        case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY:
-            UnpackJ2RepositionReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tRepositionReply);
-            break;
-        case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION:
-            UnpackJ2VersionReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tVersion);
-            break;
-        default:
-            ;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_REPOSITION_REPLY: UnpackJ2RepositionReceivedMessage(pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tRepositionReply); break;
+        case FLIGHT_MODEL_MESSAGE_TYPE_J2_VERSION:          UnpackJ2VersionReceivedMessage   (pucDataBuffer,nBytesReceived,&􏵶J2Data􏵷->m_tVersion);         break;
+        default:;
     }
 􏶳
 

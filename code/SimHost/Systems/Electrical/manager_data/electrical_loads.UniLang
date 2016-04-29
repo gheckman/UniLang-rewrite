@@ -1,0 +1,31 @@
+􏶞o􏶟
+􏷲electrical loads􏷱
+􏷰Various electrical loads found across the electrical system
+They are to be used by other systems􏷯
+􏷮electrical􏷭􏷮electrical loads􏷭
+􏷬Trevor Hickey􏷫
+
+􏶨􏶧
+􏶦the loads of each generator􏶥
+􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬generator loads􏶫􏵚amps􏵛􏶪􏶩
+􏴽>=􏴾􏴵0􏴶
+
+􏶨􏶧
+􏶦the loads of each battery􏶥
+􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬battery loads􏶫􏵚amps􏵛􏶪􏶩
+􏴽>=􏴾􏴵0􏴶
+
+􏶨􏶧
+􏶦the voltage load across the entire DC power system􏶥
+􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬dc loads􏶫􏵚volts􏵛􏶪􏶩
+􏴽>=􏴾􏴵0􏴶
+
+􏶨􏶧
+􏶦the voltage across the essential busses􏶥
+􏶘+􏶙􏶰􏶯􏶮float[2]􏶭􏶬essential busses􏶫􏵚volts􏵛􏶪􏶩
+􏴽>=􏴾􏴵0􏴶
+
+􏶨􏶧
+􏶦the voltage of the battery􏶥
+􏶘+􏶙􏶰􏶯􏶮float􏶭􏶬battery􏶫􏵚volts􏵛􏶪􏶩
+􏴽>=􏴾􏴵0􏴶
