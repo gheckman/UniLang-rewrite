@@ -27,14 +27,12 @@ of the overall path list returned to the user.􏷯
     the total count is used as an index, 
     so this will prepare the node for the next insertion.
     We also have a safety check to avoid out-of-bounds indexing􏶱
-    if (􏵴size􏵵 < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND)
-    {
-    􏵴path􏵵[􏵴size􏵵] = 􏵶node􏵷;
-    ++􏵴size􏵵;
+    if (􏵴size􏵵 < MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND){
+      􏵴path􏵵[􏵴size􏵵] = 􏵶node􏵷;
+      ++􏵴size􏵵;
     }
-    else
-    {
-    perror("Too many nodes added to path");
+    else{
+        perror("Too many nodes added to path");
     }
 􏶳
 

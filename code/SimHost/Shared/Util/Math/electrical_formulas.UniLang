@@ -4,13 +4,14 @@
 􏷮Shared􏷭 􏷮Utilities􏷭 􏷮Formulas􏷭
 􏷬Trevor Hickey􏷫
 􏶔s􏶕􏶒math􏶓􏶖USES: sqrt()􏶗
+􏶔􏶕􏶒math_utilities􏶓􏶖USES: MathUtilities()􏶗
 
 
 􏷐􏷏􏶠calculates electrical property off of two other electrical properties􏶡
 􏷘+􏷗􏷒resistance from voltage and current􏷑
 􏶜􏶝􏷆float􏷅􏷄voltage􏷃􏵘volts􏵙􏷀the voltage of a component􏶿
 􏶜􏶝􏷆float􏷅􏷄current􏷃􏵘amps􏵙􏷀the current of a component􏶿
-􏶚m􏶛􏶾float􏶽􏶼resistance􏶻􏵜ohm􏵝􏶺the calculated resistance􏶹
+􏶚m􏶛􏶾float􏶽􏶼resistance􏶻􏵜ohms􏵝􏶺the calculated resistance􏶹
 􏶴
     if (􏵶current􏵷 != 0.0f){
         return 􏵶voltage􏵷 / 􏵶current􏵷;
@@ -22,7 +23,7 @@
 􏷘+􏷗􏷒resistance from voltage and power􏷑
 􏶜􏶝􏷆float􏷅􏷄voltage􏷃􏵘volts􏵙􏷀the voltage of a component􏶿
 􏶜􏶝􏷆float􏷅􏷄power􏷃􏵘watts􏵙􏷀the power of a component􏶿
-􏶚m􏶛􏶾float􏶽􏶼resistance􏶻􏵜ohm􏵝􏶺the calculated resistance􏶹
+􏶚m􏶛􏶾float􏶽􏶼resistance􏶻􏵜ohms􏵝􏶺the calculated resistance􏶹
 􏶴
     if (􏵶power􏵷 != 0.0f){
         return Square(􏵶voltage􏵷) / 􏵶power􏵷;
@@ -34,7 +35,7 @@
 􏷘+􏷗􏷒resistance from power and current􏷑
 􏶜􏶝􏷆float􏷅􏷄power􏷃􏵘watts􏵙􏷀the power of a component􏶿
 􏶜􏶝􏷆float􏷅􏷄current􏷃􏵘amps􏵙􏷀the current of a component􏶿
-􏶚m􏶛􏶾float􏶽􏶼resistance􏶻􏵜ohm􏵝􏶺the calculated resistance􏶹
+􏶚m􏶛􏶾float􏶽􏶼resistance􏶻􏵜ohms􏵝􏶺the calculated resistance􏶹
 􏶴
     if (􏵶current􏵷 != 0.0f){
         return 􏵶power􏵷 / Square(􏵶current􏵷);
@@ -48,7 +49,7 @@
 􏷐􏷏􏶠calculates electrical property off of two other electrical properties􏶡
 􏷘+􏷗􏷒current from voltage and resistance􏷑
 􏶜􏶝􏷆float􏷅􏷄voltage􏷃􏵘volts􏵙􏷀the voltage of a component􏶿
-􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohm􏵙􏷀the resistance of a component􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohms􏵙􏷀the resistance of a component􏶿
 􏶚m􏶛􏶾float􏶽􏶼current􏶻􏵜amps􏵝􏶺the calculated current􏶹
 􏶴
     if (􏵶resistance􏵷 != 0.0f){
@@ -72,7 +73,7 @@
 􏷐􏷏􏶠calculates electrical property off of two other electrical properties􏶡
 􏷘+􏷗􏷒current from power and resistance􏷑
 􏶜􏶝􏷆float􏷅􏷄power􏷃􏵘watts􏵙􏷀the power of a component􏶿
-􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohm􏵙􏷀the resistance of a component􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohms􏵙􏷀the resistance of a component􏶿
 􏶚m􏶛􏶾float􏶽􏶼current􏶻􏵜amps􏵝􏶺the calculated current􏶹
 􏶴
     if (􏵶resistance􏵷 != 0.0f){
@@ -87,7 +88,7 @@
 􏷐􏷏􏶠calculates electrical property off of two other electrical properties􏶡
 􏷘+􏷗􏷒voltage from current and resistance􏷑
 􏶜􏶝􏷆float􏷅􏷄current􏷃􏵘amps􏵙􏷀the current of a component􏶿
-􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohm􏵙􏷀the resistance of a component􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohms􏵙􏷀the resistance of a component􏶿
 􏶚m􏶛􏶾float􏶽􏶼voltage􏶻􏵜volts􏵝􏶺the calculated voltage􏶹
 􏶴return 􏵶current􏵷 * 􏵶resistance􏵷;􏶳
 
@@ -107,7 +108,7 @@
 􏷐􏷏􏶠calculates electrical property off of two other electrical properties􏶡
 􏷘+􏷗􏷒voltage from power and resistance􏷑
 􏶜􏶝􏷆float􏷅􏷄power􏷃􏵘watts􏵙􏷀the power of a component􏶿
-􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohm􏵙􏷀the resistance of a component􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohms􏵙􏷀the resistance of a component􏶿
 􏶚m􏶛􏶾float􏶽􏶼voltage􏶻􏵜volts􏵝􏶺the calculated voltage􏶹
 􏶴return sqrt(􏵶power􏵷 * 􏵶resistance􏵷); 􏶳
 
@@ -123,7 +124,7 @@
 􏷐􏷏􏶠calculates electrical property off of two other electrical properties􏶡
 􏷘+􏷗􏷒power from voltage and resistance􏷑
 􏶜􏶝􏷆float􏷅􏷄voltage􏷃􏵘volts􏵙􏷀the voltage of a component􏶿
-􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohm􏵙􏷀the resistance of a component􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohms􏵙􏷀the resistance of a component􏶿
 􏶚m􏶛􏶾float􏶽􏶼power􏶻􏵜watts􏵝􏶺the calculated power􏶹
 􏶴
     if (􏵶resistance􏵷 != 0.0f){
@@ -136,7 +137,7 @@
 􏷐􏷏􏶠calculates electrical property off of two other electrical properties􏶡
 􏷘+􏷗􏷒power from current and resistance􏷑
 􏶜􏶝􏷆float􏷅􏷄current􏷃􏵘amps􏵙􏷀the current of a component􏶿
-􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohm􏵙􏷀the resistance of a component􏶿
+􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏵘ohms􏵙􏷀the resistance of a component􏶿
 􏶚m􏶛􏶾float􏶽􏶼power􏶻􏵜watts􏵝􏶺the calculated power􏶹
 􏶴return Square(􏵶current􏵷) * 􏵶resistance􏵷;􏶳
 
