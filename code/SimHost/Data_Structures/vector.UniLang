@@ -106,14 +106,13 @@ The added item will be the last item.􏶡
 􏶜􏶝􏷆size_t􏷅􏷄index􏷃􏷀the index of the item to get􏶿
 􏶚m􏶛􏶾void*􏶽􏶼selected element􏶻􏶺the selected element of the 􏶐 from the given index􏶹
 􏶴
+    􏶲if the index is valid, return it.􏶱
+    if (􏵲valid index􏵳􏵶index􏵷)){
+        return 􏵴elements􏵵[􏵶index􏵷];
+    }
 
-􏶲if the index is valid, return it.􏶱
-if (􏵲valid index􏵳􏵶index􏵷)){
-    return 􏵴elements􏵵[􏵶index􏵷];
-}
-
-􏶲if the index is NOT valid, return NULL.􏶱
-return NULL;
+    􏶲if the index is NOT valid, return NULL.􏶱
+    return NULL;
 􏶳
 
 􏷘-􏷗􏷒resize􏷑
@@ -197,16 +196,56 @@ return NULL;
     􏶲clear all of the dynamic memory from the internal array􏶱
     􏶲after this call, 􏶐 can safely fall out of scope.􏶱
     
-    􏶲loop over and delete each element pointed to by the void ptrs􏶱
-    size_t uIndex=0;
-    for (;uIndex < 􏵴size􏵵; ++uIndex){
-        free(􏵴elements􏵵[uIndex]);
-    }
+    􏶲iterate over the vector deleting each element􏶱
+    􏵲free all the elements􏵳);
     
     􏶲then delete the actual void* array􏶱
     free(􏵴elements􏵵);
     
     􏶲I think this is why c++ has the delete[] as a short hand􏶱
+􏶳
+
+􏷘-􏷗􏷒free all the elements􏷑
+􏷐deallocates all of the current elements in the vector􏷏
+􏶠The vector will then contain pointers to invalid memory􏶡
+􏶴
+    􏶲loop over and delete each element pointed to by the void ptrs􏶱
+    size_t uIndex=0;
+    for (;uIndex < 􏵴size􏵵; ++uIndex){
+        free(􏵴elements􏵵[uIndex]);
+    }
+􏶳
+
+􏷘+􏷗􏷒clear􏷑
+􏷐clears the vector􏷏
+􏶠Safely empties all the elements in the vector􏶡
+􏶴
+    􏶲iterate over the vector deleting each element􏶱
+    􏵲free all the elements􏵳);
+    
+    􏶲reset the vector size􏶱
+    􏵴size􏵵 = 0;
+    
+    􏶲we leave the the capacity alone for efficiency􏶱
+    􏶲granted, we've already sacrificed speed to obtain generic elements􏶱
+    􏶲an allocated array of allocated void pointers is much slower in C􏶱
+    􏶲than a normal templated vector would be in C++􏶱
+    􏶲I chose to use void pointers, because the only other route􏶱
+    􏶲would have been heavy macros to stamp out the typed vector􏶱
+􏶳
+
+􏷘-􏷗􏷒is empty􏷑
+􏷐checks whether the vector is empty or not􏷏
+􏶠􏵱 if the vector is empty(size == 0), 􏵰 if it is not(size > 0)􏶡
+􏶚m􏶛􏶾BOOL􏶽􏶼is empty􏶻􏶺whether or not the vector is empty􏶹
+􏶴
+    􏶲returns true if vector is empty􏶱
+    if(􏵴size􏵵 == 0){
+        return 􏵱;
+    }
+    
+    􏶲returns false if vector is NOT empty􏶱
+    return 􏵰;
 􏶳
 
 􏶨the number of elements currently in the 􏶐􏶧

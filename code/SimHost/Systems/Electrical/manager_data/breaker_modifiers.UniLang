@@ -1,0 +1,28 @@
+􏶞o􏶟
+􏷲incoming data that can affect the current state of a breaker􏷱
+􏷰The IOS holds an idea of what the breakers should be,
+The PLC holds an idea of what the breakers should be,
+The electrical graph holds an idea of what the breakers should be.
+Store all the information that can affect a breaker's state in a single place􏷯
+􏷮electrical􏷭􏷮breaker modifiers􏷭
+􏷬Trevor Hickey􏷫
+
+􏷤􏷣􏷦CircuitBreaker􏷥􏷢HASA: CircuitBreakerT􏷡
+􏷤s􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
+
+􏶨ios trigger􏶧
+􏶦the state of the breaker according to the IOS􏶥
+􏶘+􏶙􏶰􏶯􏶮CircuitBreakerT􏶭􏶬ios􏶫􏵚􏵛􏶪􏶩
+
+􏶨plc state􏶧
+􏶦the physical state of the breaker according to the PLC􏶥
+􏶘+􏶙􏶰􏶯􏶮CircuitBreakerT􏶭􏶬plc􏶫􏵚􏵛􏶪􏶩
+
+􏶨graph breaker id􏶧
+􏶦a unique id that points to the breaker in the graph􏶥
+􏶘+􏶙􏶰􏶯􏶮size_t􏶭􏶬id􏶫􏵚􏵛􏶪􏶩
+
+􏶨the resulting state of the PLC breaker􏶧
+􏶦based on the modifiers, this will the result
+It points to a breaker in the output􏶥
+􏶘+􏶙􏶰􏶯􏶮CircuitBreakerT*􏶭􏶬result􏶫􏵚􏵛􏶪􏶩

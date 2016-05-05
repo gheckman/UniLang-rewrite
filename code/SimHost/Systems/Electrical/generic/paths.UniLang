@@ -5,7 +5,7 @@
 􏷬Trevor Hickey􏷫
 
 􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷤􏷣􏷦Path􏷥􏷢HASA: PathOutputsT􏷡
+􏷤􏷣􏷦Path􏷥􏷢HASA: PathT􏷡
 􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_VALID_PATHS_THROUGH_THE_CIRCUIT, MAX_LENGTH_OF_PATHS_THAT_LEAD_TO_GROUND􏷡
 
 
@@ -20,7 +20,7 @@
 􏷘+􏷗􏷒Add􏷑
 􏷐Adds a traversal path to the total list of paths􏷏
 􏶠If the list of lists is not full, this will add a path to the total list of paths and increment the size.􏶡
-􏶜􏶝􏷆PathOutputsT􏷅􏷄path􏷃􏷀The new path to add.􏶿
+􏶜􏶝􏷆PathT􏷅􏷄path􏷃􏷀The new path to add.􏶿
 􏶴
     􏶲add the new node and increment the total count.
     the total count is used as an index, 
@@ -37,7 +37,7 @@
 
 􏶨A list of nodes that complete a valid path to ground.􏶧
 􏶦statically allocated to max a size􏶥
-􏶘-g􏶙􏶮PathOutputsT[MAX_NUMBER_OF_VALID_PATHS_THROUGH_THE_CIRCUIT]􏶭􏶬paths􏶫
+􏶘-g􏶙􏶮PathT[MAX_NUMBER_OF_VALID_PATHS_THROUGH_THE_CIRCUIT]􏶭􏶬paths􏶫
 
 􏶨the size of the path being stored inside of the array.􏶧
 􏶦the size will increment each time a node is added to the list􏶥

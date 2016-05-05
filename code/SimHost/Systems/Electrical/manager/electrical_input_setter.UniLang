@@ -18,55 +18,51 @@ and put it into the electrical system's inputs.􏷯
 􏶠Reads from Ownship and fills the input struct
 based on the outputs of various systems and connections􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶜r􏶝􏷆ElectricalSystemOutputsT􏷅􏷄outputs􏷃􏷀the electrical outputs. Used to bind a pointer with some of the inputs􏶿
+􏶜r􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃􏷀The DC Power system which contains IDs to breakers􏶿
 􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
 􏶴
-    􏶲Turn all of the relevant outputs from other systems into the relevant inputs􏶱
-    􏵲set inputs from systems􏵳􏵶inputs􏵷);
+    􏶲get the IOS data􏶱
+    IOStoHostT tIOSOutput;
+    ReadIOSData(&tIOSOutput);
+    
+    􏶲Get all the "can be powered" flags to be later turned into "has power"􏶱
+    􏵲collect can be powered flags􏵳􏵶inputs􏵷);
+    
+    􏶲Get the breaker states (incoming from IOS, and current state via PLC􏶱
+    􏵲collect breaker states􏵳􏵶inputs􏵷,􏵶outputs􏵷,􏵶system􏵷,􏵶plc􏵷,&tIOSOutput);
+    
+    􏶲IOS triggered malfunctions to affect the graph􏶱
+    􏵲collect malfunctions􏵳􏵶inputs􏵷,&tIOSOutput);
 
-    􏶲Turn all of the relevant outputs from other connections into the relevant inputs􏶱
-    􏵲set inputs from connections􏵳􏵶inputs􏵷,􏵶plc􏵷);
+    􏶲switch states that affect the graph􏶱
+    􏵲collect switches􏵳􏵶inputs􏵷,􏵶plc􏵷);
 􏶳
 
-􏷘-􏷗􏷒set inputs from systems􏷑
+􏷘-􏷗􏷒collect can be powered flags􏷑
 􏷐Applies inputs from the outputs of various other systems􏷏
 􏶠Uses ownship to get the various outputs from systems􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲Set the inputs from the various systems􏶱
-    􏵲read from avionics􏵳􏵶inputs􏵷);
-    􏵲read from engine􏵳􏵶inputs􏵷);
-    􏵲read from fire􏵳􏵶inputs􏵷);
-    􏵲read from flight controls􏵳􏵶inputs􏵷);
-    􏵲read from flight guidance􏵳􏵶inputs􏵷);
-    􏵲read from fuel􏵳􏵶inputs􏵷);
-    􏵲read from hydraulic􏵳􏵶inputs􏵷);
-    􏵲read from lighting􏵳􏵶inputs􏵷);
-    􏵲read from master warning􏵳􏵶inputs􏵷);
-    􏵲read from radio􏵳􏵶inputs􏵷);
+    􏵲collect power flags avionics􏵳􏵶inputs􏵷);
+    􏵲collect power flags engine􏵳􏵶inputs􏵷);
+    􏵲collect power flags fire􏵳􏵶inputs􏵷);
+    􏵲collect power flags flight controls􏵳􏵶inputs􏵷);
+    􏵲collect power flags flight guidance􏵳􏵶inputs􏵷);
+    􏵲collect power flags fuel􏵳􏵶inputs􏵷);
+    􏵲collect power flags hydraulic􏵳􏵶inputs􏵷);
+    􏵲collect power flags lighting􏵳􏵶inputs􏵷);
+    􏵲collect power flags master warning􏵳􏵶inputs􏵷);
+    􏵲collect power flags pneumatics􏵳􏵶inputs􏵷);
+    􏵲collect power flags radio􏵳􏵶inputs􏵷);
+    􏵲collect power flags mission equipment package􏵳􏵶inputs􏵷);
     
     􏶲From Aircraft General, Environmental, and Time􏶱
     􏶲nothing needed from these systems...􏶱
 􏶳
 
-􏷘-􏷗􏷒set inputs from connections􏷑
-􏷐Applies inputs from the outputs of various other connections􏷏
-􏶠Uses ownship to get the various outputs from systems􏶡
-􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
-􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
-􏶴
-    􏶲Set the inputs from the various connections􏶱
-    􏵲read from IOS􏵳􏵶inputs􏵷);
-    􏵲read from plc􏵳􏵶inputs􏵷,􏵶plc􏵷);
-
-    􏶲From Aural, BugEye, Control Loader,􏶱
-    􏶲External Systems, Flight Engine, Garmin430,􏶱
-    􏶲Generic, GLInstruments, GLStudios,􏶱
-    􏶲MicroController, MontionBase,􏶱
-    􏶲SEP, SRNS, Wet Compass, Xplane􏶱
-    􏶲nothing needed from these connections...􏶱
-􏶳
-
-􏷘-􏷗􏷒read from avionics􏷑
+􏷘-􏷗􏷒collect power flags avionics􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -77,7 +73,7 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tAvionics = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from engine􏷑
+􏷘-􏷗􏷒collect power flags engine􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -88,7 +84,7 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tEngine = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from fire􏷑
+􏷘-􏷗􏷒collect power flags fire􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -99,7 +95,7 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tFire = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from flight controls􏷑
+􏷘-􏷗􏷒collect power flags flight controls􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -110,7 +106,7 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tFlightControls = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from flight guidance􏷑
+􏷘-􏷗􏷒collect power flags flight guidance􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -121,7 +117,7 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tFlightGuidance = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from fuel􏷑
+􏷘-􏷗􏷒collect power flags fuel􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -132,7 +128,7 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tFuel = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from hydraulic􏷑
+􏷘-􏷗􏷒collect power flags hydraulic􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -143,7 +139,7 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tHydraulic = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from lighting􏷑
+􏷘-􏷗􏷒collect power flags lighting􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -154,7 +150,7 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tLighting = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from master warning􏷑
+􏷘-􏷗􏷒collect power flags master warning􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -165,7 +161,18 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tMasterWarning = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from radio􏷑
+􏷘-􏷗􏷒collect power flags pneumatics􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
+􏶴
+    􏶲get the "can be powered" flags from the system's outputs􏶱
+    PneumaticSystemOutputT tOutputs;
+    ReadPneumaticSystemOutput(&tOutputs);
+    􏵶inputs􏵷->m_tPotentialPowerFlags.m_tPneumatic = tOutputs.m_tPowerFlags;
+􏶳
+
+􏷘-􏷗􏷒collect power flags radio􏷑
 􏷐Applies inputs from the outputs of the system􏷏
 􏶠Uses ownship to get the output of the system􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
@@ -176,227 +183,379 @@ based on the outputs of various systems and connections􏶡
     􏵶inputs􏵷->m_tPotentialPowerFlags.m_tRadio = tOutputs.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read from IOS􏷑
-􏷐Applies inputs given from the IOS􏷏
-􏶠Uses ownship to get the IOS data.  This data is primarily malfunction triggers,
-but it could be other information as well􏶡
-􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the IOS􏶿
+􏷘-􏷗􏷒collect power flags mission equipment package􏷑
+􏷐Applies inputs from the outputs of the system􏷏
+􏶠Uses ownship to get the output of the system􏶡
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from other outputs􏶿
 􏶴
     􏶲get the "can be powered" flags from the system's outputs􏶱
-    IOStoHostT tIOSOutput;
-    ReadIOSData(&tIOSOutput);
-    
-    􏵲read ios malfunctions􏵳􏵶inputs􏵷,&tIOSOutput);
-    􏵲read ios breaker flags􏵳􏵶inputs􏵷,&tIOSOutput);
+    MissionEquipmentPackageSystemOutputT tMEPOutput;
+    ReadMissionEquipmentPackageSystemOutput(&tMEPOutput);
+    􏵶inputs􏵷->m_tPotentialPowerFlags.m_tMissionEquipmentPackage = tMEPOutput.m_tPowerFlags;
 􏶳
 
-􏷘-􏷗􏷒read ios malfunctions􏷑
-􏷐Applies input malfunctions given from the IOS􏷏
-􏶠These malfunctions will be used to cause electrical failures􏶡
-􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the IOS􏶿
-􏶜r􏶝􏷆IOStoHostT􏷅􏷄ios􏷃􏷀data received from the IOS􏶿
-􏶴
-    􏶲read in the IOS malfunctions􏶱
-    􏵶inputs􏵷->m_tMalfunctions.m_bBatteryRelayFails = 􏵶ios􏵷->m_bBatteryRelayFails;
-    􏵶inputs􏵷->m_tMalfunctions.m_bBusTie1FailsOpen = 􏵶ios􏵷->m_bBusTie1FailsOpen;
-    􏵶inputs􏵷->m_tMalfunctions.m_bBusTie2FailsOpen = 􏵶ios􏵷->m_bBusTie2FailsOpen;
-    􏵶inputs􏵷->m_tMalfunctions.m_bCircuitBatteryBus = 􏵶ios􏵷->m_bCircuitBatteryBus;
-    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator1StarterGeneratorOverheat = 􏵶ios􏵷->m_nGen1StarterGeneratorOverheat;
-    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator2StarterGeneratorOverheat = 􏵶ios􏵷->m_nGen2StarterGeneratorOverheat;
-    􏵶inputs􏵷->m_tMalfunctions.m_bGenerator1StarterGeneratorFail = 􏵶ios􏵷->m_bGen1StarterGeneratorFail;
-    􏵶inputs􏵷->m_tMalfunctions.m_bGenerator2StarterGeneratorFail = 􏵶ios􏵷->m_bGen2StarterGeneratorFail;
-    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator1StarterGeneratorOvervoltage = 􏵶ios􏵷->m_nGen1StarterGeneratorOvervoltage;
-    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator2StarterGeneratorOvervoltage = 􏵶ios􏵷->m_nGen2StarterGeneratorOvervoltage;
-    􏵶inputs􏵷->m_tMalfunctions.m_bShortCircuitMainBus1 = 􏵶ios􏵷->m_bShortCircuitMainBus1;
-    􏵶inputs􏵷->m_tMalfunctions.m_bShortCircuitMainBus2 = 􏵶ios􏵷->m_bShortCircuitMainBus2;
-􏶳
-􏷘-􏷗􏷒read ios breaker flags􏷑
-􏷐Applies input breakers given from the IOS􏷏
-􏶠These breakers will be used to cause power failures and adjust electrical loads􏶡
-􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the IOS􏶿
-􏶜r􏶝􏷆IOStoHostT􏷅􏷄ios􏷃􏷀data received from the IOS􏶿
-􏶴
-    􏶲TODO:􏶱
-􏶳
-
-
-
-
-􏷘-􏷗􏷒read from plc􏷑
-􏷐Applies inputs signaled from the PLC􏷏
+􏷘-􏷗􏷒collect breaker states􏷑
+􏷐Collects circuit breakers sourced from the PLC and IOS􏷏
 􏶠􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
+􏶜r􏶝􏷆ElectricalSystemOutputsT􏷅􏷄outputs􏷃􏷀the electrical outputs. Used to bind a pointer with some of the inputs􏶿
+􏶜r􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃􏷀The DC Power system which contains IDs to breakers􏶿
 􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
+􏶜r􏶝􏷆IOStoHostT􏷅􏷄ios􏷃􏷀data received from the IOS􏶿
 􏶴
-    􏶲turn PLC inputs into system inputs􏶱
-    􏵲read plc circuit breakers􏵳􏵶inputs􏵷,􏵶plc􏵷);
-    􏵲read plc switches􏵳􏵶inputs􏵷,􏵶plc􏵷);
-􏶳
-
-􏷘-􏷗􏷒read plc circuit breakers􏷑
-􏷐Applies circuit breakers inputs signaled from the PLC􏷏
-􏶠􏶡
-􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿
-􏶜r􏶝􏷆PLCInConnectionDataT􏷅􏷄plc􏷃􏷀the plc used to set the input state of switches and circuit breakers􏶿
-􏶴
-    􏶲turn PLC circuit breaker inputs into the system's input􏶱
+/*
+    􏶲bind PLC, IOS, Graph, and Output circuit breakers together􏶱
+    BindBreakerModifiers(􏵶inputs􏵷)
     
-    􏶲Overhead Panel Circuit Breakers􏶱
-
-
-
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tStbyHorBat,􏵶plc􏵷->m_tOverhead.m_bStbyHorBatCB_DI);   //row 1 CB135
+    
+    CircuitBreakerT m_tStbyHorBat;   //row 1 CB135
                                      //row 1 CB136 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tIcAmp,􏵶plc􏵷->m_tOverhead.m_bEssBus1IcAmpCB_DI);        //row 1 CB137
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tIcsCab,􏵶plc􏵷->m_tOverhead.m_bEssBus1IcsCabCB_DI);       //row 1 CB138
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tDimmTest,􏵶plc􏵷->m_tOverhead.m_bEssBus1DimmTestCB_DI);     //row 1 CB139
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCom4Xcvr,􏵶plc􏵷->m_tOverhead.m_bAvShedBus1Com4XcvrCB_DI);     //row 1 CB140
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCom4Ctrl,􏵶plc􏵷->m_tOverhead.m_bAvShedBus1Com4CtrlCB_DI);     //row 1 CB141
+    CircuitBreakerT m_tIcAmp;        //row 1 CB137
+    CircuitBreakerT m_tIcsCab;       //row 1 CB138
+    CircuitBreakerT m_tDimmTest;     //row 1 CB139
+    CircuitBreakerT m_tCom4Xcvr;     //row 1 CB140
+    CircuitBreakerT m_tCom4Ctrl;     //row 1 CB141
                                      //row 1 CB142 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tVhfTx1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1VhfTx1CB_DI);       //row 2 CB113
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tNms1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1Nms1CB_DI);         //row 2 CB114
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tNmsBlw,􏵶plc􏵷->m_tOverhead.m_bAvShedBus1NmsBlwCB_DI);       //row 2 CB115
+    CircuitBreakerT m_tVhfTx1;       //row 2 CB113
+    CircuitBreakerT m_tNms1;         //row 2 CB114
+    CircuitBreakerT m_tNmsBlw;       //row 2 CB115
                                      //row 2 CB116 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tLhMon,􏵶plc􏵷->m_tOverhead.m_bAvShedBus1LHMonCB_DI);        //row 2 CB117
+    CircuitBreakerT m_tLhMon;        //row 2 CB117
                                      //row 2 CB118 (Inactive)
                                      //row 2 CB119 (Inactive)
                                      //row 2 CB120 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tBambiBucket,􏵶plc􏵷->m_tOverhead.m_bShedBus1BambiBucketCB_DI);  //row 2 CB121
+    CircuitBreakerT m_tBambiBucket;  //row 2 CB121
                                      //row 2 CB122 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAvioMain1,􏵶plc􏵷->m_tOverhead.m_bShedBus1AvioMainCB_DI);    //row 2 CB123
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFcds2Backup,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1FCDS2BackupCB_DI);  //row 3 CB093
+    CircuitBreakerT m_tAvioMain1;    //row 2 CB123
+    CircuitBreakerT m_tFcds2Backup;  //row 3 CB093
                                      //row 3 CB094 (Inactive)
                                      //row 3 CB095 (Inactive)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPtStCp,􏵶plc􏵷->m_tOverhead.m_bEssBus2PtStPltCB_DI);       //row 3 CB096
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAp2,􏵶plc􏵷->m_tOverhead.m_bShedBus1Ap2CB_DI);          //row 3 CB097
-    //􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tMir,􏵶plc􏵷->m_tOverhead.X);          row 3 CB098 (Missing)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPwr,􏵶plc􏵷->m_tOverhead.m_bShedBus1LoadHookPwrCB_DI);          //row 3 CB099
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCargoPaxLt,􏵶plc􏵷->m_tOverhead.m_bShedBus1CargoPaxLtCB_DI);   //row 3 CB100
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCont1LsLt,􏵶plc􏵷->m_tOverhead.m_bShedBus1Cont1LSLtCB_DI);    //row 3 CB101
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tXferaPump,􏵶plc􏵷->m_tOverhead.m_bShedBus1XferAPumpCB_DI);    //row 3 CB102
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFcdm1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1Fcdm1CB_DI);        //row 4 CB073
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tNd1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1Nd1CB_DI);          //row 4 CB074
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPfd1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1Pfd1CB_DI);         //row 4 CB075
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tBlwPel,􏵶plc􏵷->m_tOverhead.m_bEssBus1BlwPelCB_DI);       //row 4 CB076
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tNms12Relay,􏵶plc􏵷->m_tOverhead.m_bEssBus1Nms1Over2RelayCB_DI);   //row 4 CB077
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAhrs1,􏵶plc􏵷->m_tOverhead.m_bEssBus1Ahrs1CB_DI);        //row 4 CB078
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAhrs2,􏵶plc􏵷->m_tOverhead.m_bEssBus1Ahrs2CB_DI);        //row 4 CB079
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAdc,􏵶plc􏵷->m_tOverhead.m_bEssBus1AdcCB_DI);          //row 4 CB080
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAvioMstr,􏵶plc􏵷->m_tOverhead.m_bEssBus1AvioMasterCB_DI);     //row 4 CB081
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tEssAvioMain1,􏵶plc􏵷->m_tOverhead.m_bEssBus1AvioMainCB_DI); //row 4 CB082
+    CircuitBreakerT m_tPtStCp;       //row 3 CB096
+    CircuitBreakerT m_tAp2;          //row 3 CB097
+    //CircuitBreakerOutputsT m_tMir;          row 3 CB098 (Missing)
+    CircuitBreakerT m_tPwr;          //row 3 CB099
+    CircuitBreakerT m_tCargoPaxLt;   //row 3 CB100
+    CircuitBreakerT m_tCont1LsLt;    //row 3 CB101
+    CircuitBreakerT m_tXferaPump;    //row 3 CB102
+    CircuitBreakerT m_tFcdm1;        //row 4 CB073
+    CircuitBreakerT m_tNd1;          //row 4 CB074
+    CircuitBreakerT m_tPfd1;         //row 4 CB075
+    CircuitBreakerT m_tBlwPel;       //row 4 CB076
+    CircuitBreakerT m_tNms12Relay;   //row 4 CB077
+    CircuitBreakerT m_tAhrs1;        //row 4 CB078
+    CircuitBreakerT m_tAhrs2;        //row 4 CB079
+    CircuitBreakerT m_tAdc;          //row 4 CB080
+    CircuitBreakerT m_tAvioMstr;     //row 4 CB081
+    CircuitBreakerT m_tEssAvioMain1; //row 4 CB082
                                      //row 5 CB053 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tIcs,􏵶plc􏵷->m_tOverhead.m_bEssBus1IcsCB_DI);          //row 5 CB054
+    CircuitBreakerT m_tIcs;          //row 5 CB054
                                      //row 5 CB055 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tInstrLights,􏵶plc􏵷->m_tOverhead.m_bEssBus1InstrLightsCB_DI);  //row 5 CB056
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tP1Sas,􏵶plc􏵷->m_tOverhead.m_bEssBus1P1SasCB_DI);        //row 5 CB057
+    CircuitBreakerT m_tInstrLights;  //row 5 CB056
+    CircuitBreakerT m_tP1Sas;        //row 5 CB057
                                      //row 5 CB058 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tHtgCont,􏵶plc􏵷->m_tOverhead.m_bEssBus1HtgContCB_DI);      //row 5 CB059
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCkptVent,􏵶plc􏵷->m_tOverhead.m_bEssBus1CkptVentCB_DI);     //row 5 CB060
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFtr,􏵶plc􏵷->m_tOverhead.m_bEssBus1FtrCB_DI);          //row 5 CB061
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tRoll1Sas,􏵶plc􏵷->m_tOverhead.m_bEssBus1Roll1SasCB_DI);     //row 5 CB062
+    CircuitBreakerT m_tHtgCont;      //row 5 CB059
+    CircuitBreakerT m_tCkptVent;     //row 5 CB060
+    CircuitBreakerT m_tFtr;          //row 5 CB061
+    CircuitBreakerT m_tRoll1Sas;     //row 5 CB062
                                      //row 6 CB035 (Inactive)
-    //􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFloats,􏵶plc􏵷->m_tOverhead.X);       row 6 CB036 (Missing)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCont,􏵶plc􏵷->m_tOverhead.m_bEssBus1WinchContCB_DI);         //row 6 CB037 
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCcPil,􏵶plc􏵷->m_tOverhead.m_bEssBus1WinchCcPilCB_DI);        //row 6 CB038
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tBoom,􏵶plc􏵷->m_tOverhead.m_bEssBus1WinchBoomCB_DI);         //row 6 CB039
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPos,􏵶plc􏵷->m_tOverhead.m_bEssBus1LightsPosCB_DI);          //row 6 CB040
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tLdg,􏵶plc􏵷->m_tOverhead.m_bEssBus1LightsLdgCB_DI);          //row 6 CB041
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCkpt,􏵶plc􏵷->m_tOverhead.m_bEssBus1LightsCkptCB_DI);         //row 6 CB042
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tVarNr,􏵶plc􏵷->m_tOverhead.m_bEssBus1VarNrCB_DI);        //row 6 CB043
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tSandFilt,􏵶plc􏵷->m_tOverhead.m_bSandFiltCB_DI[0]);     //row 7 CB017
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tWiper,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngWiperCB_DI);        //row 7 CB018
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tTqN2,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngTqN2CB_DI);         //row 7 CB019
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tOvsp,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngOvspCB_DI);         //row 7 CB020
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPrimeP,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngPrimePCB_DI);       //row 7 CB021
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFireD,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngFireDCB_DI);        //row 7 CB022
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFuelV,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngFuelVCB_DI);        //row 7 CB023
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tIgn,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngIgnCB_DI);          //row 7 CB024
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tStart,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngStartCB_DI);        //row 7 CB025
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tGen,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysGenCB_DI);          //row 8 CB001
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tBt,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysBtCB_DI);           //row 8 CB002
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFireE,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysFireECB_DI);        //row 8 CB003
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFuelL,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysFuelLCB_DI);        //row 8 CB004
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tHydP,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysHydPCB_DI);         //row 8 CB005
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tWu,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysWuCB_DI);           //row 8 CB006
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCad,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysCadCB_DI);          //row 8 CB007
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tVemd,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysVemdCB_DI);         //row 8 CB008
+    //CircuitBreakerOutputsT m_tFloats;       row 6 CB036 (Missing)
+    CircuitBreakerT m_tCont;         //row 6 CB037 
+    CircuitBreakerT m_tCcPil;        //row 6 CB038
+    CircuitBreakerT m_tBoom;         //row 6 CB039
+    CircuitBreakerT m_tPos;          //row 6 CB040
+    CircuitBreakerT m_tLdg;          //row 6 CB041
+    CircuitBreakerT m_tCkpt;         //row 6 CB042
+    CircuitBreakerT m_tVarNr;        //row 6 CB043
+    CircuitBreakerT m_tSandFilt;     //row 7 CB017
+    CircuitBreakerT m_tWiper;        //row 7 CB018
+    CircuitBreakerT m_tTqN2;         //row 7 CB019
+    CircuitBreakerT m_tOvsp;         //row 7 CB020
+    CircuitBreakerT m_tPrimeP;       //row 7 CB021
+    CircuitBreakerT m_tFireD;        //row 7 CB022
+    CircuitBreakerT m_tFuelV;        //row 7 CB023
+    CircuitBreakerT m_tIgn;          //row 7 CB024
+    CircuitBreakerT m_tStart;        //row 7 CB025
+    CircuitBreakerT m_tGen;          //row 8 CB001
+    CircuitBreakerT m_tBt;           //row 8 CB002
+    CircuitBreakerT m_tFireE;        //row 8 CB003
+    CircuitBreakerT m_tFuelL;        //row 8 CB004
+    CircuitBreakerT m_tHydP;         //row 8 CB005
+    CircuitBreakerT m_tWu;           //row 8 CB006
+    CircuitBreakerT m_tCad;          //row 8 CB007
+    CircuitBreakerT m_tVemd;         //row 8 CB008
+} CoPilotBreakersT; //(left)
+
+typedef struct PilotBreakers_t
+{
+    //row 1 CB143 (Vacant)
+    //row 1 CB144 (Vacant)
+    //row 1 CB145 (Vacant)
+    CircuitBreakerT m_tDimmTest2;    //row 1 CB146
+    CircuitBreakerT m_tICSBackup;    //row 1 CB147
+    CircuitBreakerT m_tNms2;         //row 1 CB148
+    CircuitBreakerT m_tBatEmExLt;    //row 1 CB149
+    CircuitBreakerT m_tAvioMain2;    //row 2 CB124
+    CircuitBreakerT m_tEmerBat;      //row 2 CB125
+    CircuitBreakerT m_tVideoDist;    //row 2 CB126
+    CircuitBreakerT m_tRhMon;        //row 2 CB127
+    CircuitBreakerT m_tMovMap;       //row 2 CB128
+    CircuitBreakerT m_tRadAlt;       //row 2 CB129
+    CircuitBreakerT m_tDme;          //row 2 CB130
+    CircuitBreakerT m_tCm3Ant;       //row 2 CB131
+    CircuitBreakerT m_tCm3Rt;        //row 2 CB132
+    CircuitBreakerT m_tMkr;          //row 2 CB133
+    CircuitBreakerT m_tCom5Xcvr;     //row 2 CB134
+    CircuitBreakerT m_tHtgv;         //row 3 CB103
+    CircuitBreakerT m_tInstCool;     //row 3 CB104
+    CircuitBreakerT m_tPaxBlw;       //row 3 CB105
+    CircuitBreakerT m_tPwr;          //row 3 CB106
+    CircuitBreakerT m_tCont2;        //row 3 CB107
+                                     //row 3 CB108 (Vacant)
+                                     //row 3 CB109 (Inactive)
+    CircuitBreakerT m_tAtc;          //row 3 CB110
+    CircuitBreakerT m_tWaasRelay;    //row 3 CB111
+                                     //row 3 CB112 (Inactive)
+    CircuitBreakerT m_tEssAvioMain2; //row 4 CB083
+    CircuitBreakerT m_tAvioMast;     //row 4 CB084
+    CircuitBreakerT m_tAdc;          //row 4 CB085
+    CircuitBreakerT m_tAhrs1;        //row 4 CB086
+    CircuitBreakerT m_tAh2s2;        //row 4 CB087
+    CircuitBreakerT m_tRoll2Sema;    //row 4 CB088
+    CircuitBreakerT m_tBlwPel;       //row 4 CB089
+    CircuitBreakerT m_tPfd2;         //row 4 CB090
+    CircuitBreakerT m_tNd2;          //row 4 CB091
+    CircuitBreakerT m_tFcdm2;        //row 4 CB092
+    CircuitBreakerT m_tYawSas;       //row 5 CB063
+    CircuitBreakerT m_tBeepTrim;     //row 5 CB064
+    CircuitBreakerT m_tMastMom;      //row 5 CB065
+    CircuitBreakerT m_tXferfPump;    //row 5 CB066
+                                     //row 5 CB067 (Vacant)
+    CircuitBreakerT m_tP2Sema;       //row 5 CB068
+    CircuitBreakerT m_tAp1;          //row 5 CB069
+    CircuitBreakerT m_tAltmVibr;     //row 5 CB070
+    CircuitBreakerT m_tIcs;          //row 5 CB071
+    CircuitBreakerT m_tVhfTx2;       //row 5 CB072
+    CircuitBreakerT m_tN2Trim;       //row 6 CB044
+    CircuitBreakerT m_tInstr;        //row 6 CB045
+    CircuitBreakerT m_tAcol;         //row 6 CB046
+    CircuitBreakerT m_tEmEx;         //row 6 CB047
+    CircuitBreakerT m_tCcPedWinch;   //row 6 CB048
+    //CircuitBreakerOutputsT m_tAuxTank;      row 6 CB049 (Missing)
+    CircuitBreakerT m_tPtStPlt;      //row 6 CB050
+    //CircuitBreakerOutputsT m_tFloats;       row 6 CB051 (Missing)
+    CircuitBreakerT m_tDwnlnkAduB;   //row 6 CB052
+    CircuitBreakerT m_tStart;        //row 7 CB026
+    CircuitBreakerT m_tIgn;          //row 7 CB027
+    CircuitBreakerT m_tFuelV;        //row 7 CB028
+    CircuitBreakerT m_tFireD;        //row 7 CB029
+    CircuitBreakerT m_tPrimeP;       //row 7 CB030
+    CircuitBreakerT m_tOvsp;         //row 7 CB031
+    CircuitBreakerT m_tTqN2;         //row 7 CB032
+    CircuitBreakerT m_tRotorRpm;     //row 7 CB033
+    CircuitBreakerT m_tSandFilt;     //row 7 CB034
+    CircuitBreakerT m_tVemd;         //row 8 CB009
+    CircuitBreakerT m_tCad;          //row 8 CB010
+    CircuitBreakerT m_tWu;           //row 8 CB011
+    CircuitBreakerT m_tHydP;         //row 8 CB012
+    CircuitBreakerT m_tFuelL;        //row 8 CB013
+    CircuitBreakerT m_tFireE;        //row 8 CB014
+    CircuitBreakerT m_tBt;           //row 8 CB015
+    CircuitBreakerT m_tGen;          //row 8 CB016
+} PilotBreakersT; //(right)
+
+
+    m_tLowerPanel.m_tCabinMonitor;
+    m_tLowerPanel.m_tDvr;
+    m_tLowerPanel.m_tMx15Imager;
+    m_tLowerPanel.m_tLs16Cntl;
+    m_tLowerPanel.m_tDwnlnkCntl;
+    m_tLowerPanel.m_tDwnlnkAdu;
+    
+    
+    
+    
+        CoPilotBreakersT m_tCoPilot;
+    PilotBreakersT m_tPilot;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    􏶲Overhead Panel Circuit Breakers􏶱
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tStbyHorBat,􏵶plc􏵷->m_tOverhead.m_bStbyHorBatCB_DI);   //row 1 CB135
+                                     //row 1 CB136 (Vacant)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tIcAmp,􏵶plc􏵷->m_tOverhead.m_bEssBus1IcAmpCB_DI);        //row 1 CB137
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tIcsCab,􏵶plc􏵷->m_tOverhead.m_bEssBus1IcsCabCB_DI);       //row 1 CB138
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tDimmTest,􏵶plc􏵷->m_tOverhead.m_bEssBus1DimmTestCB_DI);     //row 1 CB139
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCom4Xcvr,􏵶plc􏵷->m_tOverhead.m_bAvShedBus1Com4XcvrCB_DI);     //row 1 CB140
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCom4Ctrl,􏵶plc􏵷->m_tOverhead.m_bAvShedBus1Com4CtrlCB_DI);     //row 1 CB141
+                                     //row 1 CB142 (Vacant)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tVhfTx1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1VhfTx1CB_DI);       //row 2 CB113
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tNms1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1Nms1CB_DI);         //row 2 CB114
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tNmsBlw,􏵶plc􏵷->m_tOverhead.m_bAvShedBus1NmsBlwCB_DI);       //row 2 CB115
+                                     //row 2 CB116 (Vacant)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tLhMon,􏵶plc􏵷->m_tOverhead.m_bAvShedBus1LHMonCB_DI);        //row 2 CB117
+                                     //row 2 CB118 (Inactive)
+                                     //row 2 CB119 (Inactive)
+                                     //row 2 CB120 (Vacant)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tBambiBucket,􏵶plc􏵷->m_tOverhead.m_bShedBus1BambiBucketCB_DI);  //row 2 CB121
+                                     //row 2 CB122 (Vacant)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAvioMain1,􏵶plc􏵷->m_tOverhead.m_bShedBus1AvioMainCB_DI);    //row 2 CB123
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFcds2Backup,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1FCDS2BackupCB_DI);  //row 3 CB093
+                                     //row 3 CB094 (Inactive)
+                                     //row 3 CB095 (Inactive)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPtStCp,􏵶plc􏵷->m_tOverhead.m_bEssBus2PtStPltCB_DI);       //row 3 CB096
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAp2,􏵶plc􏵷->m_tOverhead.m_bShedBus1Ap2CB_DI);          //row 3 CB097
+    //CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tMir,􏵶plc􏵷->m_tOverhead.X);          row 3 CB098 (Missing)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPwr,􏵶plc􏵷->m_tOverhead.m_bShedBus1LoadHookPwrCB_DI);          //row 3 CB099
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCargoPaxLt,􏵶plc􏵷->m_tOverhead.m_bShedBus1CargoPaxLtCB_DI);   //row 3 CB100
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCont1LsLt,􏵶plc􏵷->m_tOverhead.m_bShedBus1Cont1LSLtCB_DI);    //row 3 CB101
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tXferaPump,􏵶plc􏵷->m_tOverhead.m_bShedBus1XferAPumpCB_DI);    //row 3 CB102
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFcdm1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1Fcdm1CB_DI);        //row 4 CB073
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tNd1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1Nd1CB_DI);          //row 4 CB074
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPfd1,􏵶plc􏵷->m_tOverhead.m_bAvEssBus1Pfd1CB_DI);         //row 4 CB075
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tBlwPel,􏵶plc􏵷->m_tOverhead.m_bEssBus1BlwPelCB_DI);       //row 4 CB076
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tNms12Relay,􏵶plc􏵷->m_tOverhead.m_bEssBus1Nms1Over2RelayCB_DI);   //row 4 CB077
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAhrs1,􏵶plc􏵷->m_tOverhead.m_bEssBus1Ahrs1CB_DI);        //row 4 CB078
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAhrs2,􏵶plc􏵷->m_tOverhead.m_bEssBus1Ahrs2CB_DI);        //row 4 CB079
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAdc,􏵶plc􏵷->m_tOverhead.m_bEssBus1AdcCB_DI);          //row 4 CB080
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tAvioMstr,􏵶plc􏵷->m_tOverhead.m_bEssBus1AvioMasterCB_DI);     //row 4 CB081
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tEssAvioMain1,􏵶plc􏵷->m_tOverhead.m_bEssBus1AvioMainCB_DI); //row 4 CB082
+                                     //row 5 CB053 (Vacant)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tIcs,􏵶plc􏵷->m_tOverhead.m_bEssBus1IcsCB_DI);          //row 5 CB054
+                                     //row 5 CB055 (Vacant)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tInstrLights,􏵶plc􏵷->m_tOverhead.m_bEssBus1InstrLightsCB_DI);  //row 5 CB056
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tP1Sas,􏵶plc􏵷->m_tOverhead.m_bEssBus1P1SasCB_DI);        //row 5 CB057
+                                     //row 5 CB058 (Vacant)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tHtgCont,􏵶plc􏵷->m_tOverhead.m_bEssBus1HtgContCB_DI);      //row 5 CB059
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCkptVent,􏵶plc􏵷->m_tOverhead.m_bEssBus1CkptVentCB_DI);     //row 5 CB060
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFtr,􏵶plc􏵷->m_tOverhead.m_bEssBus1FtrCB_DI);          //row 5 CB061
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tRoll1Sas,􏵶plc􏵷->m_tOverhead.m_bEssBus1Roll1SasCB_DI);     //row 5 CB062
+                                     //row 6 CB035 (Inactive)
+    //CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFloats,􏵶plc􏵷->m_tOverhead.X);       row 6 CB036 (Missing)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCont,􏵶plc􏵷->m_tOverhead.m_bEssBus1WinchContCB_DI);         //row 6 CB037 
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCcPil,􏵶plc􏵷->m_tOverhead.m_bEssBus1WinchCcPilCB_DI);        //row 6 CB038
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tBoom,􏵶plc􏵷->m_tOverhead.m_bEssBus1WinchBoomCB_DI);         //row 6 CB039
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPos,􏵶plc􏵷->m_tOverhead.m_bEssBus1LightsPosCB_DI);          //row 6 CB040
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tLdg,􏵶plc􏵷->m_tOverhead.m_bEssBus1LightsLdgCB_DI);          //row 6 CB041
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCkpt,􏵶plc􏵷->m_tOverhead.m_bEssBus1LightsCkptCB_DI);         //row 6 CB042
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tVarNr,􏵶plc􏵷->m_tOverhead.m_bEssBus1VarNrCB_DI);        //row 6 CB043
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tSandFilt,􏵶plc􏵷->m_tOverhead.m_bSandFiltCB_DI[0]);     //row 7 CB017
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tWiper,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngWiperCB_DI);        //row 7 CB018
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tTqN2,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngTqN2CB_DI);         //row 7 CB019
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tOvsp,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngOvspCB_DI);         //row 7 CB020
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tPrimeP,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngPrimePCB_DI);       //row 7 CB021
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFireD,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngFireDCB_DI);        //row 7 CB022
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFuelV,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngFuelVCB_DI);        //row 7 CB023
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tIgn,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngIgnCB_DI);          //row 7 CB024
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tStart,􏵶plc􏵷->m_tOverhead.m_bEssBus1EngStartCB_DI);        //row 7 CB025
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tGen,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysGenCB_DI);          //row 8 CB001
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tBt,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysBtCB_DI);           //row 8 CB002
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFireE,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysFireECB_DI);        //row 8 CB003
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tFuelL,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysFuelLCB_DI);        //row 8 CB004
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tHydP,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysHydPCB_DI);         //row 8 CB005
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tWu,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysWuCB_DI);           //row 8 CB006
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tCad,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysCadCB_DI);          //row 8 CB007
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tCoPilot.m_tVemd,􏵶plc􏵷->m_tOverhead.m_bEssBus1SysVemdCB_DI);         //row 8 CB008
     
     
     
     //row 1 CB143 (Vacant)
     //row 1 CB144 (Vacant)
     //row 1 CB145 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tDimmTest2,􏵶plc􏵷->m_tOverhead.m_bEssBus2DimmTest2CB_DI);    //row 1 CB146
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tICSBackup,􏵶plc􏵷->m_tOverhead.m_bEssBus2IcsBackupCB_DI);    //row 1 CB147
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tNms2,􏵶plc􏵷->m_tOverhead.m_bEssBus2Nms2CB_DI);         //row 1 CB148
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tBatEmExLt,􏵶plc􏵷->m_tOverhead.m_bBatEmExltCB_DI);    //row 1 CB149
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAvioMain2,􏵶plc􏵷->m_tOverhead.m_bShedBus2AvioMainCB_DI);    //row 2 CB124
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tEmerBat,􏵶plc􏵷->m_tOverhead.m_bShedBus2EmerBatCB_DI);      //row 2 CB125
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tVideoDist,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2VideoDistCB_DI);    //row 2 CB126
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tRhMon,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2RHMonCB_DI);        //row 2 CB127
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tMovMap,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2MovMapCB_DI);       //row 2 CB128
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tRadAlt,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2RadAltCB_DI);       //row 2 CB129
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tDme,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2DmeCB_DI);          //row 2 CB130
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCm3Ant,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2Cm3AntCB_DI);       //row 2 CB131
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCm3Rt,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2Cm3RtCB_DI);        //row 2 CB132
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tMkr,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2MkrCB_DI);          //row 2 CB133
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCom5Xcvr,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2Com5XcvrCB_DI);     //row 2 CB134
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tHtgv,􏵶plc􏵷->m_tOverhead.m_bShedBus2HtgVCB_DI);         //row 3 CB103
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tInstCool,􏵶plc􏵷->m_tOverhead.m_bShedBus2InstCoolCB_DI);     //row 3 CB104
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPaxBlw,􏵶plc􏵷->m_tOverhead.m_bShedBus2PaxBlwCB_DI);       //row 3 CB105
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPwr,􏵶plc􏵷->m_tOverhead.m_bShedBus2LSLightPwrCB_DI);          //row 3 CB106
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCont2,􏵶plc􏵷->m_tOverhead.m_bShedBus2LSLightCont2CB_DI);        //row 3 CB107
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tDimmTest2,􏵶plc􏵷->m_tOverhead.m_bEssBus2DimmTest2CB_DI);    //row 1 CB146
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tICSBackup,􏵶plc􏵷->m_tOverhead.m_bEssBus2IcsBackupCB_DI);    //row 1 CB147
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tNms2,􏵶plc􏵷->m_tOverhead.m_bEssBus2Nms2CB_DI);         //row 1 CB148
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tBatEmExLt,􏵶plc􏵷->m_tOverhead.m_bBatEmExltCB_DI);    //row 1 CB149
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAvioMain2,􏵶plc􏵷->m_tOverhead.m_bShedBus2AvioMainCB_DI);    //row 2 CB124
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tEmerBat,􏵶plc􏵷->m_tOverhead.m_bShedBus2EmerBatCB_DI);      //row 2 CB125
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tVideoDist,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2VideoDistCB_DI);    //row 2 CB126
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tRhMon,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2RHMonCB_DI);        //row 2 CB127
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tMovMap,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2MovMapCB_DI);       //row 2 CB128
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tRadAlt,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2RadAltCB_DI);       //row 2 CB129
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tDme,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2DmeCB_DI);          //row 2 CB130
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCm3Ant,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2Cm3AntCB_DI);       //row 2 CB131
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCm3Rt,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2Cm3RtCB_DI);        //row 2 CB132
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tMkr,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2MkrCB_DI);          //row 2 CB133
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCom5Xcvr,􏵶plc􏵷->m_tOverhead.m_bAvShedBus2Com5XcvrCB_DI);     //row 2 CB134
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tHtgv,􏵶plc􏵷->m_tOverhead.m_bShedBus2HtgVCB_DI);         //row 3 CB103
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tInstCool,􏵶plc􏵷->m_tOverhead.m_bShedBus2InstCoolCB_DI);     //row 3 CB104
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPaxBlw,􏵶plc􏵷->m_tOverhead.m_bShedBus2PaxBlwCB_DI);       //row 3 CB105
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPwr,􏵶plc􏵷->m_tOverhead.m_bShedBus2LSLightPwrCB_DI);          //row 3 CB106
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCont2,􏵶plc􏵷->m_tOverhead.m_bShedBus2LSLightCont2CB_DI);        //row 3 CB107
                                      //row 3 CB108 (Vacant)
                                      //row 3 CB109 (Inactive)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAtc,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2AtcCB_DI);          //row 3 CB110
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tWaasRelay,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2WaasRelayCB_DI);    //row 3 CB111
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAtc,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2AtcCB_DI);          //row 3 CB110
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tWaasRelay,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2WaasRelayCB_DI);    //row 3 CB111
                                      //row 3 CB112 (Inactive)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tEssAvioMain2,􏵶plc􏵷->m_tOverhead.m_bEssBus2AvioMainCB_DI); //row 4 CB083
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAvioMast,􏵶plc􏵷->m_tOverhead.m_bEssBus2AvioMasterCB_DI);     //row 4 CB084
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAdc,􏵶plc􏵷->m_tOverhead.m_bEssBus2AdcCB_DI);          //row 4 CB085
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAhrs1,􏵶plc􏵷->m_tOverhead.m_bEssBus2Ahrs1CB_DI);        //row 4 CB086
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAh2s2,􏵶plc􏵷->m_tOverhead.m_bEssBus2Ahrs2CB_DI);        //row 4 CB087
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tRoll2Sema,􏵶plc􏵷->m_tOverhead.m_bEssBus2Roll2SemaCB_DI);    //row 4 CB088
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tBlwPel,􏵶plc􏵷->m_tOverhead.m_bEssBus2BlwPelCB_DI);       //row 4 CB089
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPfd2,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2Pfd2CB_DI);         //row 4 CB090
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tNd2,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2Nd2CB_DI);          //row 4 CB091
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFcdm2,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2Fcdm2CB_DI);        //row 4 CB092
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tYawSas,􏵶plc􏵷->m_tOverhead.m_bEssBus2YawSasCB_DI);       //row 5 CB063
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tBeepTrim,􏵶plc􏵷->m_tOverhead.m_bEssBus2BeepTrimCB_DI);     //row 5 CB064
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tMastMom,􏵶plc􏵷->m_tOverhead.m_bEssBus2MastMomCB_DI);      //row 5 CB065
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tXferfPump,􏵶plc􏵷->m_tOverhead.m_bEssBus2XferFPumpCB_DI);    //row 5 CB066
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tEssAvioMain2,􏵶plc􏵷->m_tOverhead.m_bEssBus2AvioMainCB_DI); //row 4 CB083
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAvioMast,􏵶plc􏵷->m_tOverhead.m_bEssBus2AvioMasterCB_DI);     //row 4 CB084
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAdc,􏵶plc􏵷->m_tOverhead.m_bEssBus2AdcCB_DI);          //row 4 CB085
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAhrs1,􏵶plc􏵷->m_tOverhead.m_bEssBus2Ahrs1CB_DI);        //row 4 CB086
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAh2s2,􏵶plc􏵷->m_tOverhead.m_bEssBus2Ahrs2CB_DI);        //row 4 CB087
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tRoll2Sema,􏵶plc􏵷->m_tOverhead.m_bEssBus2Roll2SemaCB_DI);    //row 4 CB088
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tBlwPel,􏵶plc􏵷->m_tOverhead.m_bEssBus2BlwPelCB_DI);       //row 4 CB089
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPfd2,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2Pfd2CB_DI);         //row 4 CB090
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tNd2,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2Nd2CB_DI);          //row 4 CB091
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFcdm2,􏵶plc􏵷->m_tOverhead.m_bAvEssBus2Fcdm2CB_DI);        //row 4 CB092
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tYawSas,􏵶plc􏵷->m_tOverhead.m_bEssBus2YawSasCB_DI);       //row 5 CB063
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tBeepTrim,􏵶plc􏵷->m_tOverhead.m_bEssBus2BeepTrimCB_DI);     //row 5 CB064
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tMastMom,􏵶plc􏵷->m_tOverhead.m_bEssBus2MastMomCB_DI);      //row 5 CB065
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tXferfPump,􏵶plc􏵷->m_tOverhead.m_bEssBus2XferFPumpCB_DI);    //row 5 CB066
                                      //row 5 CB067 (Vacant)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tP2Sema,􏵶plc􏵷->m_tOverhead.m_bEssBus2P2SemaCB_DI);       //row 5 CB068
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAp1,􏵶plc􏵷->m_tOverhead.m_bEssBus2Ap1CB_DI);          //row 5 CB069
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAltmVibr,􏵶plc􏵷->m_tOverhead.m_bEssBus2AltmVibrCB_DI);     //row 5 CB070
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tIcs,􏵶plc􏵷->m_tOverhead.m_bEssBus2IcsCB_DI);          //row 5 CB071
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tVhfTx2,􏵶plc􏵷->m_tOverhead.m_bEssBus2VhfTx2CB_DI);       //row 5 CB072
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tN2Trim,􏵶plc􏵷->m_tOverhead.m_bEssBus2N2TrimCB_DI);       //row 6 CB044
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tInstr,􏵶plc􏵷->m_tOverhead.m_bEssBus2LightsInstrCB_DI);        //row 6 CB045
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAcol,􏵶plc􏵷->m_tOverhead.m_bEssBus2LightsAcolCB_DI);         //row 6 CB046
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tEmEx,􏵶plc􏵷->m_tOverhead. m_bEssBus2LightsEmExCB_DI);         //row 6 CB047
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCcPedWinch,􏵶plc􏵷->m_tOverhead.m_bEssBus2CcPedWinchCB_DI);   //row 6 CB048
-    //􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAuxTank,􏵶plc􏵷->m_tOverhead.X);      row 6 CB049 (Missing)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPtStPlt,􏵶plc􏵷->m_tOverhead.m_bShedBus1PtStCpCB_DI);      //row 6 CB050
-    //􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFloats,􏵶plc􏵷->m_tOverhead.X);       row 6 CB051 (Missing)
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tDwnlnkAduB,􏵶plc􏵷->m_tOverhead.m_bEssBus2DwnlnkAduBCB_DI);   //row 6 CB052
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tStart,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngStartCB_DI);        //row 7 CB026
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tIgn,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngIgnCB_DI);          //row 7 CB027
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFuelV,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngFuelVCB_DI);        //row 7 CB028
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFireD,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngFireDCB_DI);        //row 7 CB029
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPrimeP,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngPrimePCB_DI);       //row 7 CB030
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tOvsp,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngOvspCB_DI);         //row 7 CB031
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tTqN2,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngTqN2CB_DI);         //row 7 CB032
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tRotorRpm,􏵶plc􏵷->m_tOverhead.m_bEssBus2RotorRpmCB_DI);     //row 7 CB033
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tSandFilt,􏵶plc􏵷->m_tOverhead.m_bSandFiltCB_DI[1]);     //row 7 CB034
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tVemd,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysVemdCB_DI);         //row 8 CB009
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCad,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysCadCB_DI);          //row 8 CB010
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tWu,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysWuCB_DI);           //row 8 CB011
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tHydP,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysHydPCB_DI);         //row 8 CB012
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFuelL,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysFuelLCB_DI);        //row 8 CB013
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFireE,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysFireECB_DI);        //row 8 CB014
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tBt,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysBtCB_DI);           //row 8 CB015
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tGen,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysGenCB_DI);          //row 8 CB016
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tP2Sema,􏵶plc􏵷->m_tOverhead.m_bEssBus2P2SemaCB_DI);       //row 5 CB068
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAp1,􏵶plc􏵷->m_tOverhead.m_bEssBus2Ap1CB_DI);          //row 5 CB069
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAltmVibr,􏵶plc􏵷->m_tOverhead.m_bEssBus2AltmVibrCB_DI);     //row 5 CB070
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tIcs,􏵶plc􏵷->m_tOverhead.m_bEssBus2IcsCB_DI);          //row 5 CB071
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tVhfTx2,􏵶plc􏵷->m_tOverhead.m_bEssBus2VhfTx2CB_DI);       //row 5 CB072
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tN2Trim,􏵶plc􏵷->m_tOverhead.m_bEssBus2N2TrimCB_DI);       //row 6 CB044
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tInstr,􏵶plc􏵷->m_tOverhead.m_bEssBus2LightsInstrCB_DI);        //row 6 CB045
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAcol,􏵶plc􏵷->m_tOverhead.m_bEssBus2LightsAcolCB_DI);         //row 6 CB046
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tEmEx,􏵶plc􏵷->m_tOverhead. m_bEssBus2LightsEmExCB_DI);         //row 6 CB047
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCcPedWinch,􏵶plc􏵷->m_tOverhead.m_bEssBus2CcPedWinchCB_DI);   //row 6 CB048
+    //CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tAuxTank,􏵶plc􏵷->m_tOverhead.X);      row 6 CB049 (Missing)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPtStPlt,􏵶plc􏵷->m_tOverhead.m_bShedBus1PtStCpCB_DI);      //row 6 CB050
+    //CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFloats,􏵶plc􏵷->m_tOverhead.X);       row 6 CB051 (Missing)
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tDwnlnkAduB,􏵶plc􏵷->m_tOverhead.m_bEssBus2DwnlnkAduBCB_DI);   //row 6 CB052
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tStart,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngStartCB_DI);        //row 7 CB026
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tIgn,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngIgnCB_DI);          //row 7 CB027
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFuelV,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngFuelVCB_DI);        //row 7 CB028
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFireD,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngFireDCB_DI);        //row 7 CB029
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tPrimeP,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngPrimePCB_DI);       //row 7 CB030
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tOvsp,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngOvspCB_DI);         //row 7 CB031
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tTqN2,􏵶plc􏵷->m_tOverhead.m_bEssBus2EngTqN2CB_DI);         //row 7 CB032
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tRotorRpm,􏵶plc􏵷->m_tOverhead.m_bEssBus2RotorRpmCB_DI);     //row 7 CB033
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tSandFilt,􏵶plc􏵷->m_tOverhead.m_bSandFiltCB_DI[1]);     //row 7 CB034
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tVemd,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysVemdCB_DI);         //row 8 CB009
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tCad,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysCadCB_DI);          //row 8 CB010
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tWu,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysWuCB_DI);           //row 8 CB011
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tHydP,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysHydPCB_DI);         //row 8 CB012
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFuelL,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysFuelLCB_DI);        //row 8 CB013
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tFireE,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysFireECB_DI);        //row 8 CB014
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tBt,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysBtCB_DI);           //row 8 CB015
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tPilot.m_tGen,􏵶plc􏵷->m_tOverhead.m_bEssBus2SysGenCB_DI);          //row 8 CB016
 
     
     
@@ -419,35 +578,49 @@ but it could be other information as well􏶡
     􏶲CB016 SHED BUS 2 (Spare)􏶱
     􏶲CB017 SHED BUS 2 (Vacant)􏶱
     􏶲CB018 SHED BUS 2 (Spare)􏶱
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tCabinMonitor,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus1CabinMonitorCB_DI); 􏶲CB019􏶱
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tDvr,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus1DvrCB_DI);          􏶲CB020􏶱
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tMx15Imager,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus1Mx15ImagerCB_DI);   􏶲CB021􏶱
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tLs16Cntl,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus2Ls16CntlCB_DI);     􏶲CB022􏶱
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tDwnlnkCntl,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus2DwnlnkCntlCB_DI);   􏶲CB023􏶱
-    􏵲set breaker􏵳&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tDwnlnkAdu,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus2DwnlnkAduCB_DI);    􏶲CB024􏶱
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tCabinMonitor,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus1CabinMonitorCB_DI); 􏶲CB019􏶱
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tDvr,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus1DvrCB_DI);          􏶲CB020􏶱
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tMx15Imager,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus1Mx15ImagerCB_DI);   􏶲CB021􏶱
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tLs16Cntl,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus2Ls16CntlCB_DI);     􏶲CB022􏶱
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tDwnlnkCntl,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus2DwnlnkCntlCB_DI);   􏶲CB023􏶱
+    CircuitBreakerChangeState(&􏵶inputs􏵷->m_tPanelBreakers.m_tLowerPanel.m_tDwnlnkAdu,􏵶plc􏵷->m_tMissionBusAssy.m_bNonEssBus2DwnlnkAduCB_DI);    􏶲CB024􏶱
     􏶲CB025 NON ESS BUS 1 (Spare)􏶱
     􏶲CB026 NON ESS BUS 1 (Vacant)􏶱
     􏶲CB027 NON ESS BUS 1 (Spare)􏶱
     􏶲CB028 NON ESS BUS 2 (Spare)􏶱
     􏶲CB029 NON ESS BUS 2 (Vacant)􏶱
     􏶲CB030 NON ESS BUS 2 (Spare)􏶱
-    
+*/
 􏶳
 
-􏷘-􏷗􏷒set breaker􏷑
-􏷐sets the state of the breaker􏷏
-􏶠􏶡
-􏶜mr􏶝􏷆CircuitBreakerOutputsT􏷅􏷄breaker􏷃􏷀a breaker to the set the value of􏶿
-􏶜􏶝􏷆BOOL􏷅􏷄popped􏷃􏷀the state to the set the breaker in.  TRUE = popped􏶿
+
+
+
+
+􏷘-􏷗􏷒collect malfunctions􏷑
+􏷐Applies input malfunctions given from the IOS􏷏
+􏶠These malfunctions will be used to cause electrical failures􏶡
+􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the IOS􏶿
+􏶜r􏶝􏷆IOStoHostT􏷅􏷄ios􏷃􏷀data received from the IOS􏶿
 􏶴
-    CircuitBreakerInputsT tInputs;
-    memset(&tInputs,0,sizeof(tInputs));
-    tInputs.m_bPopped = 􏵶popped􏵷;
-    UpdateCircuitBreaker(􏵶breaker􏵷,&tInputs);
+    
+    􏶲read in the IOS malfunctions􏶱
+    􏵶inputs􏵷->m_tMalfunctions.m_bBatteryRelayFails = 􏵶ios􏵷->m_bBatteryRelayFails;
+    􏵶inputs􏵷->m_tMalfunctions.m_bBusTie1FailsOpen = 􏵶ios􏵷->m_bBusTie1FailsOpen;
+    􏵶inputs􏵷->m_tMalfunctions.m_bBusTie2FailsOpen = 􏵶ios􏵷->m_bBusTie2FailsOpen;
+    􏵶inputs􏵷->m_tMalfunctions.m_bCircuitBatteryBus = 􏵶ios􏵷->m_bCircuitBatteryBus;
+    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator1StarterGeneratorOverheat = 􏵶ios􏵷->m_nGen1StarterGeneratorOverheat;
+    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator2StarterGeneratorOverheat = 􏵶ios􏵷->m_nGen2StarterGeneratorOverheat;
+    􏵶inputs􏵷->m_tMalfunctions.m_bGenerator1StarterGeneratorFail = 􏵶ios􏵷->m_bGen1StarterGeneratorFail;
+    􏵶inputs􏵷->m_tMalfunctions.m_bGenerator2StarterGeneratorFail = 􏵶ios􏵷->m_bGen2StarterGeneratorFail;
+    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator1StarterGeneratorOvervoltage = 􏵶ios􏵷->m_nGen1StarterGeneratorOvervoltage;
+    􏵶inputs􏵷->m_tMalfunctions.m_nGenerator2StarterGeneratorOvervoltage = 􏵶ios􏵷->m_nGen2StarterGeneratorOvervoltage;
+    􏵶inputs􏵷->m_tMalfunctions.m_bShortCircuitMainBus1 = 􏵶ios􏵷->m_bShortCircuitMainBus1;
+    􏵶inputs􏵷->m_tMalfunctions.m_bShortCircuitMainBus2 = 􏵶ios􏵷->m_bShortCircuitMainBus2;
 􏶳
 
 
-􏷘-􏷗􏷒read plc switches􏷑
+􏷘-􏷗􏷒collect switches􏷑
 􏷐Applies circuit breakers inputs signaled from the PLC􏷏
 􏶠􏶡
 􏶜mr􏶝􏷆ElectricalSystemInputsT􏷅􏷄inputs􏷃􏷀the electrical inputs to set from the PLC􏶿

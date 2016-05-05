@@ -6,8 +6,8 @@
 
 􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
 􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
-􏷤􏷣􏷦Node􏷥􏷢HASA: NodeOutputsT􏷡
-􏷤􏷣􏷦Paths􏷥􏷢HASA: PathsOutputsT􏷡
+􏷤􏷣􏷦Node􏷥􏷢HASA: NodeT􏷡
+􏷤􏷣􏷦Paths􏷥􏷢HASA: PathsT􏷡
 􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME􏷡
 􏷤􏷣􏷦vector􏷥􏷢USES: VectorT􏷡
 􏶔􏶕􏶒NodeType􏶓􏶖USES: NodeTypeE􏶗
@@ -18,16 +18,16 @@
 􏶠􏶐 will be in an invalid state until initialized􏶡
 􏶴
   􏶲the graph starts with zero nodes, and nothing connected􏶱
-  InitializeVector(&􏵴nodes􏵵,sizeof(NodeOutputsT),0);
+  InitializeVector(&􏵴nodes􏵵,sizeof(NodeT),0);
   
   􏶲establish a common ground􏶱
-  􏵴common ground􏵵 = 􏵲add node􏵳"common ground",NODE_TYPE_GROUND,0,0.0f,􏵱);
+  􏵴common ground􏵵 = 􏵲add node􏵳"common ground",NODE_TYPE_GROUND,0.0f,0.0f,􏵱);
 􏶳
 
 􏷘+􏷗􏷒^􏶐􏷑
 􏷐Copy constructor for 􏶐􏷏
 􏶠Performs the necessary deep copy􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄􏶐 copy􏷃􏷀the 􏶐 to copy construct􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄􏶐 copy􏷃􏷀the 􏶐 to copy construct􏶿
 􏶴
     􏶲perform deep copy􏶱
     􏵶􏶐 copy􏵷->m_tLocals.m_uCommonGround = 􏵴common ground􏵵;
@@ -56,7 +56,7 @@
   size_t uId = 􏵴nodes􏵵.m_uSize;
   
   􏶲create the new node with a unique id􏶱
-  NodeOutputsT tNode;
+  NodeT tNode;
   InitializeNode(&tNode,􏵶name􏵷,uId,􏵶type􏵷,􏵶resistance􏵷,􏵶expected amperage􏵷,􏵶has flow􏵷);
   
   􏶲add the new node and increment the total count.
@@ -129,8 +129,8 @@ This will clear all the previous calculated electrical data.􏶡
   size_t unIndex = 0;
   for (; unIndex < 􏵴nodes􏵵.m_uSize; ++unIndex)
   {
-    ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_fVoltage = 0;
-    ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_fResistance = 0;
+    ((NodeT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_fVoltage = 0;
+    ((NodeT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_fResistance = 0;
   }
 􏶳
 
@@ -143,7 +143,7 @@ This will clear all the previous calculated electrical data.􏶡
   size_t unIndex = 0;
   for (; unIndex < 􏵴nodes􏵵.m_uSize; ++unIndex)
   {
-    ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_bHasFlow = 􏵱;
+    ((NodeT*)VectorGet(&􏵴nodes􏵵,unIndex))->m_bHasFlow = 􏵱;
   }
 􏶳
 
@@ -151,10 +151,10 @@ This will clear all the previous calculated electrical data.􏶡
 􏷐Query the graph with a node id to get back the actual node.􏷏
 􏶠Node ids are given to the client when they tell the graph to create nodes for them.􏶡
 􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node id associated with the actual node in the graph􏶿
-􏶚m􏶛􏶾NodeOutputsT*􏶽􏶼circuit component􏶻􏶺the id of the newly added node􏶹
+􏶚m􏶛􏶾NodeT*􏶽􏶼circuit component􏶻􏶺the id of the newly added node􏶹
 􏶴
     􏶲query the entire list of nodes to get the one that matches the id passed in􏶱
-    return ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷));
+    return ((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷));
 􏶳
 
 􏷘+􏷗􏷒get paths to ground􏷑
@@ -164,13 +164,13 @@ Elements of the matrix can be used to query the graph for the actual nodes.
 see: GetCircuitComponent(size_t nNode);
 􏶡
 􏶜􏶝􏷆size_t􏷅􏷄start node􏷃􏷀The starting node in which to start the traversal from.􏶿
-􏶚m􏶛􏶾PathsOutputsT􏶽􏶼paths to ground􏶻􏶺All of the valid electrical paths from starting node to common ground.􏶹
+􏶚m􏶛􏶾PathsT􏶽􏶼paths to ground􏶻􏶺All of the valid electrical paths from starting node to common ground.􏶹
 􏶴 
   􏶲create a pathlist to store all of the paths􏶱
   􏶲a path to slowly build up as we traverse,􏶱
   􏶲and a list of already seen nodes(to avoid cycles)􏶱
-  PathsOutputsT tPathList;
-  PathOutputsT tList, tSeen;
+  PathsT tPathList;
+  PathT tList, tSeen;
   InitializePaths(&tPathList);
   InitializePath(&tList);
   InitializePath(&tSeen);
@@ -210,14 +210,12 @@ see: GetCircuitComponent(size_t nNode);
 􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀one of the nodes used in the connection process􏶿
 􏶴
   􏶲add the bidirectional junctions for the nodes􏶱
-  JunctionOutputsT tJunction;
-  NodeInputsT tInputs = {0};
+  JunctionT tJunction;
   InitializeJunction(&tJunction,􏵶wire id􏵷,􏵱);
   
   􏶲add the junction to the nodes􏶱
-  tInputs.m_tJunction = tJunction;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node x􏵷),&tInputs);
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node y􏵷),&tInputs);
+  NodeAddJunction((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node x􏵷),tJunction);
+  NodeAddJunction((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node y􏵷),tJunction);
 􏶳
 
 􏷘-􏷗􏷒allow current flow of nodes to wire unidirectionally􏷑
@@ -228,16 +226,13 @@ see: GetCircuitComponent(size_t nNode);
 􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀The node that will allow electricity to flow both ways.􏶿
 􏶴
   􏶲add the uidirectional junctions for the nodes􏶱
-  JunctionOutputsT tJunctionX, tJunctionY;
-  NodeInputsT tInputs = {0};
+  JunctionT tJunctionX, tJunctionY;
   InitializeJunction(&tJunctionX,􏵶wire id􏵷,􏵱);
   InitializeJunction(&tJunctionY,􏵶wire id􏵷,􏵰);
   
   􏶲add the junctions to the nodes􏶱
-  tInputs.m_tJunction = tJunctionX;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node x􏵷),&tInputs);
-  tInputs.m_tJunction = tJunctionY;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node y􏵷),&tInputs);
+  NodeAddJunction((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node x􏵷),tJunctionX);
+  NodeAddJunction((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node y􏵷),tJunctionY);
 􏶳
 
 􏷘-􏷗􏷒allow current flow out of wire to nodes􏷑
@@ -249,48 +244,34 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏶜􏶝􏷆size_t􏷅􏷄node y􏷃􏷀one of the nodes used in the connection process􏶿
 􏶴
   􏶲add the bidirectional junctions for the nodes􏶱
-  JunctionOutputsT tJunctionX, tJunctionY;
-  NodeInputsT tInputs = {0};
+  JunctionT tJunctionX, tJunctionY;
   InitializeJunction(&tJunctionX,􏵶node x􏵷,􏵱);
   InitializeJunction(&tJunctionY,􏵶node y􏵷,􏵱);
   
   􏶲add the junctions to the nodes􏶱
-  tInputs.m_tJunction = tJunctionX;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶wire id􏵷),&tInputs);
-  tInputs.m_tJunction = tJunctionY;
-  UpdateNode((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶wire id􏵷),&tInputs);
+  NodeAddJunction((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶wire id􏵷),tJunctionX);
+  NodeAddJunction((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶wire id􏵷),tJunctionY);
 􏶳
 
 􏷘-􏷗􏷒recursive gather of paths􏷑
 􏷐Recursively builds up lists of complete paths to ground while exploring all depth first paths.􏷏
 􏶠Complete paths to ground represent paths that electricity is guaranteed to flow through.􏶡
 􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that the traversal is currently on.􏶿
-􏶜mr􏶝􏷆PathOutputsT􏷅􏷄seen􏷃􏷀A list of nodes that have already been seen(used to avoid cycles)􏶿
-􏶜mr􏶝􏷆PathOutputsT􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
-􏶜mr􏶝􏷆PathsOutputsT􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
+􏶜mr􏶝􏷆PathT􏷅􏷄seen􏷃􏷀A list of nodes that have already been seen(used to avoid cycles)􏶿
+􏶜mr􏶝􏷆PathT􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
+􏶜mr􏶝􏷆PathsT􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
 􏶴
-  􏶲used for input parameters to API methods􏶱
-  PathInputsT tPathInputs = {0};
-  PathsInputsT tPathsInputs = {0};
-  
   􏶲check if node already exists in path􏶱
-  BOOL bAlreadyExistsInPath;
-  tPathInputs.m_bExists = 􏵱;
-  tPathInputs.m_uNode = 􏵶node􏵷;
-  UpdatePath(􏵶seen􏵷,&tPathInputs);
-  bAlreadyExistsInPath = 􏵶seen􏵷->m_bExists;
-  tPathInputs.m_bExists = 􏵰;
-  
+  BOOL bAlreadyExistsInPath = PathExists(􏵶seen􏵷,􏵶node􏵷);
   
   if (!bAlreadyExistsInPath && 􏵲can be traveled through􏵳􏵶node􏵷))
   {
     􏶲add the node to the list, and mark it as seen􏶱
-    tPathInputs.m_bAdd = 􏵱;
-    UpdatePath(􏵶seen􏵷,&tPathInputs);
-    UpdatePath(􏵶list􏵷,&tPathInputs);
+    PathAdd(􏵶seen􏵷,􏵶node􏵷);
+    PathAdd(􏵶list􏵷,􏵶node􏵷);
     
     􏶲continue traversing if the node is not the common ground􏶱
-    if (((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_eType != NODE_TYPE_GROUND)
+    if (((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_eType != NODE_TYPE_GROUND)
     {
       􏵲traverse neighbors􏵳􏵶node􏵷,􏵶seen􏵷,􏵶list􏵷,􏵶path list􏵷);
     }
@@ -300,8 +281,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
     else
     {
       􏶲add the path to the list of paths􏶱
-      tPathsInputs.m_tPath = *􏵶list􏵷;
-      UpdatePaths(􏵶path list􏵷,&tPathsInputs);
+      PathsAdd(􏵶path list􏵷,*􏵶list􏵷);
     }
     
     􏶲when we arrive at a leaf node, or better put:
@@ -318,13 +298,13 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏷐Gathers all of the appropriate neighbors and traverses them.􏷏
 􏶠Avoids neighbors that would cause cycles.􏶡
 􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that the traversal is currently on.􏶿
-􏶜mr􏶝􏷆PathOutputsT􏷅􏷄seen􏷃􏷀A list of nodes that have already been seen(used to avoid cycles)􏶿
-􏶜mr􏶝􏷆PathOutputsT􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
-􏶜mr􏶝􏷆PathsOutputsT􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
+􏶜mr􏶝􏷆PathT􏷅􏷄seen􏷃􏷀A list of nodes that have already been seen(used to avoid cycles)􏶿
+􏶜mr􏶝􏷆PathT􏷅􏷄list􏷃􏷀The current list of the current depth traversal.􏶿
+􏶜mr􏶝􏷆PathsT􏷅􏷄path list􏷃􏷀A list of paths to ground. This function may or may not add additional paths to the list.􏶿
 􏶴
   􏶲recurse down all of the neighbors that we haven't seen before,􏶱
   􏶲and that we have the ability to flow through􏶱
-  PathOutputsT tUnseenNeighbors = 􏵲get unseen neighbors􏵳􏵶node􏵷,􏵶seen􏵷);
+  PathT tUnseenNeighbors = 􏵲get unseen neighbors􏵳􏵶node􏵷,􏵶seen􏵷);
   size_t unIndex = 0;
   
   for (;unIndex < tUnseenNeighbors.m_uSize; ++unIndex)
@@ -337,31 +317,26 @@ The order of NodeX and NodeY IS NOT important.􏶡
 􏷐Gets a list of a node's neighbors that have not yet been visited.􏷏
 􏶠Used to avoid cycles while traversing.􏶡
 􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node that whose unseen neighbors are being gathered.􏶿
-􏶜mr􏶝􏷆PathOutputsT􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen(unseen to filter out unseen neighbors)􏶿
-􏶚m􏶛􏶾PathOutputsT􏶽􏶼unseen neighbors􏶻􏶺􏵱 if current can flow through the given node of the given graph; 􏵰 if it cannot.􏶹
+􏶜mr􏶝􏷆PathT􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen(unseen to filter out unseen neighbors)􏶿
+􏶚m􏶛􏶾PathT􏶽􏶼unseen neighbors􏶻􏶺􏵱 if current can flow through the given node of the given graph; 􏵰 if it cannot.􏶹
 􏶴
 
   􏶲the list of unseen paths that will be built and returned􏶱
-  PathOutputsT tUnseenNodes;
+  PathT tUnseenNodes;
   size_t unIndex = 0;
-  
-  􏶲set the 'Add' method trigger􏶱
-  PathInputsT tPathInputs = {0};
-  tPathInputs.m_bAdd = 􏵱;
   
   􏶲create a list of unseen neighbors that we will build up as we discover them􏶱
   InitializePath(&tUnseenNodes);
   
   􏶲loop over all of the junctions for a particular node􏶱
-  for (;unIndex < ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_uNumberOfJunctions; ++unIndex)
+  for (;unIndex < ((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_uNumberOfJunctions; ++unIndex)
   {
     
     􏶲decide whether we have an unseen neighbor worth traversing􏶱
     if(􏵲is traversable unseen neighbor􏵳􏵶node􏵷,unIndex,􏵶seen􏵷))
     {
       􏶲add the node as it can be flowed through, and has not been visited yet􏶱
-      tPathInputs.m_uNode = ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[unIndex].m_uConnectionId;
-      UpdatePath(&tUnseenNodes,&tPathInputs);
+      PathAdd(&tUnseenNodes,((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[unIndex].m_uConnectionId);
     }
     
   }
@@ -375,7 +350,7 @@ The order of NodeX and NodeY IS NOT important.􏶡
 and whether or not the junction between them is 'flowable'.􏶡
 􏶜􏶝􏷆size_t􏷅􏷄node􏷃􏷀The node whose neighbors are being checked against.􏶿
 􏶜􏶝􏷆size_t􏷅􏷄junction index􏷃􏷀The neighbor of the first node (represented by the the junction's index).􏶿
-􏶜mr􏶝􏷆PathOutputsT􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen.􏶿
+􏶜mr􏶝􏷆PathT􏷅􏷄seen􏷃􏷀a list of nodes that have already been seen.􏶿
 􏶚m􏶛􏶾BOOL􏶽􏶼is traversable unseen neighbor􏶻􏶺􏵱 if the node has not been seen yet, and due to it's properties, is also traversable; 􏵰 if one or both of these stipulations are 􏵰.􏶹
 􏶴
   􏶲assume the neighbor is not worth traversing down until proven otherwise􏶱
@@ -385,16 +360,13 @@ and whether or not the junction between them is 'flowable'.􏶡
   􏶲and if the junction that points to the neighbor node id allows flow.􏶱
   
   􏶲check if node already exists in path􏶱
-  PathInputsT tPathInputs = {0};
-  tPathInputs.m_bExists = 􏵱;
-  tPathInputs.m_uNode = ((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[􏵶junction index􏵷].m_uConnectionId;
-  UpdatePath(􏵶seen􏵷,&tPathInputs);
+  BOOL bExists = PathExists(􏵶seen􏵷,((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[􏵶junction index􏵷].m_uConnectionId);
 
   􏶲if we haven't seen the node before􏶱
-  if (!􏵶seen􏵷->m_bExists){
+  if (!bExists){
     
     􏶲and if the junction allows flow􏶱
-    if(((NodeOutputsT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[􏵶junction index􏵷].m_bHasFlow){
+    if(((NodeT*)VectorGet(&􏵴nodes􏵵,􏵶node􏵷))->m_ptJunctions[􏵶junction index􏵷].m_bHasFlow){
       bValidNeighborToTraverse = 􏵱;
     }
   }

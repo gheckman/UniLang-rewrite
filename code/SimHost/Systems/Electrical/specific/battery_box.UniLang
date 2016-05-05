@@ -5,7 +5,7 @@
 􏷬Trevor Hickey􏷫
 
 􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphT􏷡
 􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
@@ -13,205 +13,64 @@
 􏶠􏶐 will be in an invalid state until initialized.
 Initializing a 􏶐 will construct all of its nodes into the generic electrical graph.
 It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create all the internal nodes inside the graph data structure􏶱
-  CreateNodes(ptOutputs,􏵶graph􏵷);
+  􏵲create nodes􏵳􏵶graph􏵷);
   
   􏶲connect these newly created nodes􏶱
-  CreateWires(ptOutputs,􏵶graph􏵷);
+  􏵲create wires􏵳􏵶graph􏵷);
   
   􏶲apply any nodes to ground that should be􏶱
-  ApplyNodesToGround(ptOutputs,􏵶graph􏵷);
+  􏵲apply nodes to ground􏵳􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create nodes􏷑
 􏷐Constructs all of the electrical components into the generic electrical graph data structure.􏷏
 􏶠This will give all of the node a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create all of the vertexes that are part of the 􏶐
   the essential bus is technically outside the 􏶐,
   but we include it here for conceptual organization􏶱
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddNode = 􏵱;
   
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery");
-  tInputs.m_eType = NODE_TYPE_BATTERY;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴battery􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery hot bus");
-  tInputs.m_eType = NODE_TYPE_BUS;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴hot bus􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery relay");
-  tInputs.m_eType = NODE_TYPE_RELAY;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵰;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴relay􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery bus");
-  tInputs.m_eType = NODE_TYPE_BUS;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴bus􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery bus fuse 1");
-  tInputs.m_eType = NODE_TYPE_FUSE;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴fuse 1􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery bus fuse 2");
-  tInputs.m_eType = NODE_TYPE_FUSE;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴fuse 2􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "battery bus fuse 3");
-  tInputs.m_eType = NODE_TYPE_FUSE;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴fuse 3􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "external power relay");
-  tInputs.m_eType = NODE_TYPE_RELAY;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵰;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴external power relay􏵵= 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "external power unit");
-  tInputs.m_eType = NODE_TYPE_EPU;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴external power unit􏵵 = 􏵶graph􏵷->m_uId;
+  􏶲add nodes to graph􏶱
+  􏵴battery􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"battery",NODE_TYPE_BATTERY,0.0f,0.0f,􏵱);
+  􏵴hot bus􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"battery hot bus",NODE_TYPE_BUS,0.0f,0.0f,􏵱);
+  􏵴relay􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"battery relay",NODE_TYPE_RELAY,0.0f,0.0f,􏵰);
+  􏵴bus􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"battery bus",NODE_TYPE_BUS,0.0f,0.0f,􏵱);
+  􏵴fuse 1􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"battery bus fuse 1",NODE_TYPE_FUSE,0.0f,0.0f,􏵱);
+  􏵴fuse 2􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"battery bus fuse 2",NODE_TYPE_FUSE,0.0f,0.0f,􏵱);
+  􏵴fuse 3􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"battery bus fuse 3",NODE_TYPE_FUSE,0.0f,0.0f,􏵱);
+  􏵴external power relay􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"external power relay",NODE_TYPE_RELAY,0.0f,0.0f,􏵰);
+  􏵴external power unit􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"external power unit",NODE_TYPE_EPU,0.0f,0.0f,􏵱);
 􏶳
 
 􏷘-􏷗􏷒create wires􏷑
 􏷐Connects all of the necessary 􏶐 nodes together.􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
 􏶴
-  􏶲connect the related components􏶱
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddWire = 􏵱;
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴battery􏵵;
-  tInputs.m_uNodeY = 􏵴hot bus􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴hot bus􏵵;
-  tInputs.m_uNodeY = 􏵴relay􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴relay􏵵;
-  tInputs.m_uNodeY = 􏵴bus􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴bus􏵵;
-  tInputs.m_uNodeY = 􏵴external power relay􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴external power relay􏵵;
-  tInputs.m_uNodeY = 􏵴external power unit􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴bus􏵵;
-  tInputs.m_uNodeY = 􏵴fuse 1􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴bus􏵵;
-  tInputs.m_uNodeY = 􏵴fuse 2􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect two nodes together􏶱
-  tInputs.m_uNodeX = 􏵴bus􏵵;
-  tInputs.m_uNodeY = 􏵴fuse 3􏵵;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏶲connect nodes together􏶱
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵴battery􏵵,􏵴hot bus􏵵,0.0f,0.0f,􏵱);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵴hot bus􏵵,􏵴relay􏵵,0.0f,0.0f,􏵱);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵴relay􏵵,􏵴bus􏵵,0.0f,0.0f,􏵱);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵴bus􏵵,􏵴external power relay􏵵,0.0f,0.0f,􏵱);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵴external power relay􏵵,􏵴external power unit􏵵,0.0f,0.0f,􏵱);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵴bus􏵵,􏵴fuse 1􏵵,0.0f,0.0f,􏵱);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵴bus􏵵,􏵴fuse 2􏵵,0.0f,0.0f,􏵱);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵴bus􏵵,􏵴fuse 3􏵵,0.0f,0.0f,􏵱);
 􏶳
 
 􏷘-􏷗􏷒apply nodes to ground􏷑
 􏷐Attach particular 􏶐 nodes to common ground.􏷏
 􏶠The nodes being connected to ground will need to be created first.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
 􏶴
-  􏶲apply any nodes to ground that should be􏶱
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bConnectNodeToCommonGround = 􏵱;
-  
-  􏶲connect node to common ground􏶱
-  tInputs.m_uNode = 􏵴battery􏵵;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect node to common ground􏶱
-  tInputs.m_uNode = 􏵴hot bus􏵵;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  
-  􏶲connect node to common ground􏶱
-  tInputs.m_uNode = 􏵴bus􏵵;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  􏶲connect nodes to common ground􏶱
+  ElectricalGraphConnectNodeToCommonGround(􏵶graph􏵷,􏵴battery􏵵);
+  ElectricalGraphConnectNodeToCommonGround(􏵶graph􏵷,􏵴hot bus􏵵);
+  ElectricalGraphConnectNodeToCommonGround(􏵶graph􏵷,􏵴bus􏵵);
 􏶳
 
 􏶨The ID of a node that is conceptually stored in a 􏶏􏶧

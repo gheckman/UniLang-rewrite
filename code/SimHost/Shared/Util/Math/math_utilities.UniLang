@@ -299,3 +299,11 @@ returns 􏵱 if it is, 􏵰 if it is not􏶡
     
     return 􏵶value􏵷 > 􏵶begin interval􏵷 && 􏵶value􏵷 < 􏵶end interval􏵷;
 􏶳
+
+􏷘+􏷗􏷒is nan􏷑
+􏷐checks to see if float is Not A Number􏷏􏶠􏶡
+􏶜􏶝􏷆float􏷅􏷄value􏷃􏷀the value to be checked􏶿
+􏶚m􏶛􏶾BOOL􏶽􏶼is nan􏶻􏶺􏵱 if the value is NAN, 􏵰 if it is not􏶹
+􏶴
+    return (􏵶value􏵷 != 􏵶value􏵷);
+􏶳

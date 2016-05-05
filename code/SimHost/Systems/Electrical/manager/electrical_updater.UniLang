@@ -10,7 +10,7 @@
 􏷐Update the electrical system logic􏷏
 􏶠Updates the electrical system using its inputs and setting its output􏶡
 􏶜mr􏶝􏷆ElectricalSystemT􏷅􏷄system􏷃􏷀The entire electrical system with all of its inputs and outputs.􏶿
-􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄dc system􏷃􏷀The entire electrical system with all of its inputs and outputs.􏶿
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄dc system􏷃􏷀The entire electrical system with all of its inputs and outputs.􏶿
 􏶜􏶝􏷆float􏷅􏷄time delta􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏶴
     􏶲there may be a need to simulate a spike when the generator or battery is turned on.
@@ -49,7 +49,7 @@
 􏷘-􏷗􏷒change electrical graph state􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
 􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃
 􏶴
     􏶲In order to change the state of the power system, we will
@@ -72,21 +72,21 @@
 􏷘-􏷗􏷒update electrical data across graph􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
 􏶴
 􏶳
 
 􏷘-􏷗􏷒stop power on disconnected components􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
 􏶴
 􏶳
 
 􏷘-􏷗􏷒set power flags for other systems􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
 􏶜r􏶝􏷆SystemPowerFlagsT􏷅􏷄can be powered􏷃
 􏶜mr􏶝􏷆SystemPowerFlagsT􏷅􏷄is powered􏷃
 􏶴
@@ -98,24 +98,25 @@
 􏷐sets the electrical loads based of the updated graph􏷏
 􏶠picks nodes on the graph that other systems will be interested in,
 and provides the necessary electrical loads as an output to the system􏶡
-􏶜r􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
-􏶜mr􏶝􏷆ElectricalLoadsDataT􏷅􏷄loads􏷃
+􏶜r􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆ElectricalLoadsT􏷅􏷄loads􏷃
 􏶴
   􏶲for now􏶱
-  􏵶loads􏵷->pfGeneratorLoads_amps[0] = 20.0f;
-  􏵶loads􏵷->pfGeneratorLoads_amps[1] = 20.0f;
-  􏵶loads􏵷->pfBatteryLoads_amps[0] = 20.0f;
-  􏵶loads􏵷->pfBatteryLoads_amps[1] = 20.0f;
-  􏵶loads􏵷->pfDcVoltageLoads_amps[0] = 20.0f;
-  􏵶loads􏵷->pfDcVoltageLoads_amps[1] = 20.0f;
-  􏵶loads􏵷->pfEssentialBus_volts[0] = 20.0f;
-  􏵶loads􏵷->pfEssentialBus_volts[1] = 20.0f;
+  􏵶loads􏵷->m_pfGeneratorLoads_amp[0] = 20.0f;
+  􏵶loads􏵷->m_pfGeneratorLoads_amp[1] = 20.0f;
+  􏵶loads􏵷->m_pfBatteryLoads_amp[0]   = 20.0f;
+  􏵶loads􏵷->m_pfBatteryLoads_amp[1]   = 20.0f;
+  􏵶loads􏵷->m_pfDcLoads_v[0] = 20.0f;
+  􏵶loads􏵷->m_pfDcLoads_v[1] = 20.0f;
+  􏵶loads􏵷->m_pfEssentialBusses_v[0]  = 20.0f;
+  􏵶loads􏵷->m_pfEssentialBusses_v[1]  = 20.0f;
+  􏵶loads􏵷->m_fBattery_v  = 20.0f;
 􏶳
 
 􏷘-􏷗􏷒change circuitry based on switch state􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
 􏶜r􏶝􏷆ElectricalSwitchesT􏷅􏷄switches􏷃
 􏶴
 􏶳
@@ -123,7 +124,7 @@ and provides the necessary electrical loads as an output to the system􏶡
 􏷘-􏷗􏷒pop breakers􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemOutputsT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
 􏶜r􏶝􏷆PanelBreakersT􏷅􏷄breakers􏷃
 􏶴
 􏶳

@@ -5,7 +5,7 @@
 􏷬Trevor Hickey􏷫
 
 􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphT􏷡
 􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
 
 􏷘+􏷗􏷒􏶐􏷑
@@ -13,66 +13,42 @@
 􏶠􏶐 will be in an invalid state until initialized.
 Initializing a 􏶐 will construct all of its nodes into the generic electrical graph.
 It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create all the internal nodes inside the graph data structure􏶱
-  CreateNodes(ptOutputs,􏵶graph􏵷);
+  􏵲create nodes􏵳􏵶graph􏵷);
   
   􏶲connect these newly created nodes􏶱
-  CreateWires(ptOutputs,􏵶graph􏵷);
+  􏵲create wires􏵳􏵶graph􏵷);
   
   􏶲apply any nodes to ground that should be􏶱
-  ApplyNodesToGround(ptOutputs,􏵶graph􏵷);
+  􏵲apply nodes to ground􏵳􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create nodes􏷑
 􏷐Constructs all of the electrical components into the generic electrical graph data structure.􏷏
 􏶠This will give all of the node a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create all of the vertexes that are part of the 􏶐􏶱
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddNode = 􏵱;
   
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "diode 1");
-  tInputs.m_eType = NODE_TYPE_DIODE;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 1􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "diode 2");
-  tInputs.m_eType = NODE_TYPE_DIODE;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 2􏵵 = 􏵶graph􏵷->m_uId;
-  
-  􏶲add node to graph􏶱
-  strcpy(tInputs.m_szName, "diode 3");
-  tInputs.m_eType = NODE_TYPE_DIODE;
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  􏵴diode 3􏵵 = 􏵶graph􏵷->m_uId;
+  􏶲add nodes to graph􏶱
+  􏵴diode 1􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"diode 1",NODE_TYPE_DIODE,0.0f,0.0f,􏵱);
+  􏵴diode 2􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"diode 2",NODE_TYPE_DIODE,0.0f,0.0f,􏵱);
+  􏵴diode 3􏵵 = ElectricalGraphAddNode(􏵶graph􏵷,"diode 3",NODE_TYPE_DIODE,0.0f,0.0f,􏵱);
 􏶳
 
 􏷘-􏷗􏷒create wires􏷑
 􏷐Connects all of the necessary 􏶐 nodes together.􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its wires into.􏶿
 􏶴
 􏶳
 
 􏷘-􏷗􏷒apply nodes to ground􏷑
 􏷐Attach particular 􏶐 nodes to common ground.􏷏
 􏶠The nodes being connected to ground will need to be created first.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will use to connect its existing nodes to common ground.􏶿
 􏶴
 􏶳
 

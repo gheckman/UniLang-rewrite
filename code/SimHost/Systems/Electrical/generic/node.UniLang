@@ -44,7 +44,7 @@ Behaves like this when traversing:
 􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
 􏷤􏷣􏷦stdioLib􏷥􏷢HASA: BOOL􏷡
 􏷤􏷣􏷦NodeType􏷥􏷢HASA: NodeTypeE􏷡
-􏷤􏷣􏷦Junction􏷥􏷢HASA: JunctionOutputsT􏷡
+􏷤􏷣􏷦Junction􏷥􏷢HASA: JunctionT􏷡
 􏷤􏷣􏷦ElectricalConfig􏷥􏷢USES: MAX_NUMBER_OF_CHARACTERS_IN_NODE_NAME, MAX_NUMBER_OF_JUNCTIONS_IN_NODE􏷡
 􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
 
@@ -84,7 +84,7 @@ A junction is not the node itself, but contains an id to the other node.
 The reason we use a node and junction instead of two nodes is to handle flow direction between the two nodes.
 The graph will most likely add a junction to the two different nodes on behalf of the user.
 􏶡
-􏶜􏶝􏷆JunctionOutputsT􏷅􏷄junction􏷃􏷀the junction to add to the node􏶿
+􏶜􏶝􏷆JunctionT􏷅􏷄junction􏷃􏷀the junction to add to the node􏶿
 􏶴
   􏶲add the new junction and increment the total count.
   the total count is used as an index, 
@@ -158,7 +158,7 @@ It is the junctions whose flow properties determine current direction.
 
 􏶨Describes the routes in which electricity can flow out of this node and into another node.􏶧
 􏶦For the most part, all of these junctions will point to connected wires.􏶥
-􏶘-g􏶙􏶮JunctionOutputsT[MAX_NUMBER_OF_JUNCTIONS_IN_NODE]􏶭􏶬junctions􏶫􏶪0􏶩
+􏶘-g􏶙􏶮JunctionT[MAX_NUMBER_OF_JUNCTIONS_IN_NODE]􏶭􏶬junctions􏶫􏶪0􏶩
 
 􏶨􏶧
 􏶦􏶥

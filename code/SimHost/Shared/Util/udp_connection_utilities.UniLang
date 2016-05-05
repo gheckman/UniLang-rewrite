@@ -5,7 +5,7 @@
 􏷬Trevor Hickey􏷫
 
 􏷤􏷣􏷦Defs􏷥􏷢USES: BYTE􏷡
-􏶔􏶕􏶒SocketManager􏶓􏶖USES: SocketSend(), SocketReceive()􏶗
+􏶔􏶕􏶒SocketManager􏶓􏶖USES: SocketSendTo(), SocketReceive()􏶗
 
 􏷘+􏷗􏷒send and handle Udp errors􏷑
 􏷐sends a byte array through a socket, and handles any errors that occur in the process􏷏
@@ -25,12 +25,11 @@
     􏶲if packing succeeded, send data over the socket􏶱
     else
     {
-        nBytesSent = SocketSend(􏵶socket number􏵷, (char *)􏵶buffer􏵷, 􏵶bytes packed􏵷);
+        nBytesSent = SocketSendTo(􏵶socket number􏵷, (char *)􏵶buffer􏵷, 􏵶bytes packed􏵷);
         
         􏶲if the data did not reach its destination􏶱
         if (nBytesSent == ERROR){
             􏵲report send failure to watchdog􏵳􏵶what sent􏵷);
-            ReestablishSocket(􏵶socket number􏵷);
         }
     }
 􏶳

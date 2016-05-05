@@ -36,9 +36,6 @@ Pause and reset functions will also update the total elapsed time.􏶡
     􏶲Set whether the 􏶏 is paused or unpaused.􏶱
     􏵶pause􏵷 ? 􏵲pause􏵳)
             : 􏵲un pause􏵳);
-
-    􏶲set the new elapsed time􏶱
-    􏵲adjust time􏵳);
 􏶳
 
 􏷘+􏷗􏷒reset􏷑
@@ -57,24 +54,30 @@ Resetting the timer will not affect the pause state.􏶡
     􏵲adjust time􏵳);
 􏶳
 
-􏷘-􏷗􏷒pause􏷑
+􏷘+􏷗􏷒pause􏷑
 􏷐pauses the timer􏷏
 􏶠This function is ok to call even if the timer is already paused.􏶡
 􏶴
     􏶲set the 􏶏 to be paused (even if it already was)􏶱
     􏵴paused􏵵 = 􏵱;
+    
+    􏶲set the new elapsed time􏶱
+    􏵲adjust time􏵳);
 􏶳
 
-􏷘-􏷗􏷒un pause􏷑
+􏷘+􏷗􏷒un pause􏷑
 􏷐unpauses the timer􏷏
 􏶠This function is ok to call even if the timer is already unpaused.􏶡
 􏶴
-􏶲It is important to set the last last tick amount to this moment before unpausing.  
-This way we don't calculate a gap of time when the 􏶏 was paused.􏶱
-if (􏵴paused􏵵){
-    􏵴last update tick amount􏵵 = tickGet();
-}
-􏵴paused􏵵 = 􏵰;
+    􏶲It is important to set the last last tick amount to this moment before unpausing.  
+    This way we don't calculate a gap of time when the 􏶏 was paused.􏶱
+    if (􏵴paused􏵵){
+        􏵴last update tick amount􏵵 = tickGet();
+    }
+    􏵴paused􏵵 = 􏵰;
+    
+    􏶲set the new elapsed time􏶱
+    􏵲adjust time􏵳);
 􏶳
 
 􏷘-􏷗􏷒adjust time􏷑

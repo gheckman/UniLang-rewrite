@@ -14,7 +14,7 @@ it is recommended you create the message using one of its constructor functions.
 􏶔􏶕􏶒Defs􏶓􏶖USES: BYTE, WORD􏶗
 􏶔􏶕􏶒SemaphoreManager􏶓􏶖USES: SemaphoreTake(), SemaphoreGive()􏶗
 􏶔􏶕􏶒SemaphoreList􏶓􏶖USES: SEMAPHORE_DEBUG_DATA􏶗
-􏶔􏶕􏶒SerializationUtilities􏶓􏶖USES: PackBigEndian2ByteInvariance()􏶗
+􏶔􏶕􏶒BytePacking􏶓􏶖USES: PackBigEndian2ByteInvariance()􏶗
 􏶔􏶕􏶒SocketManager􏶓􏶖USES: SocketSend()􏶗
 􏶔􏶕􏶒SocketList􏶓􏶖USES: SOCKET_GEN_DYNAMIC_DEBUG_SEND􏶗
 􏶔􏶕􏶒stdioLib.h􏶓􏶖USES: perror()􏶗

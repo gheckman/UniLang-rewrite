@@ -9,7 +9,7 @@ The center panel circuit breakers are derived from MEP Instrument Functionality 
 􏷬Trevor Hickey􏷫
 
 􏷤􏷣􏷦stddef􏷥􏷢HASA: size_t􏷡
-􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphOutputsT􏷡
+􏷤􏷣􏷦ElectricalGraph􏷥􏷢USES: ElectricalGraphT􏷡
 􏷤􏷣􏷦AircraftGeneralConst􏷥􏷢USES: ElectricalSystemSideE􏷡
 􏶔􏶕􏶒string􏶓􏶖USES: strcpy()􏶗
 
@@ -18,7 +18,7 @@ The center panel circuit breakers are derived from MEP Instrument Functionality 
 􏶠􏶐 will be in an invalid state until initialized.
 Initializing a 􏶐 will construct all of its nodes into the generic electrical graph.
 It will store the IDs given back by the graph so that they may be queried later by the user.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲create the buses on the 􏶏􏶱
   􏵲create buses􏵳􏵶graph􏵷);
@@ -33,7 +33,7 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷘-􏷗􏷒create buses􏷑
 􏷐Constructs all of the electrical components into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created nodes a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   size_t unIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
   for (; unIndex < NUM_ELECTRICAL_SYSTEM_SIDES; ++unIndex){
@@ -46,14 +46,14 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷘-􏷗􏷒create devices􏷑
 􏷐Constructs all of the electrical devices into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created nodes a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its nodes into.􏶿
 􏶴
   􏶲if you tilt the "Wiring Diagram Manual (WDM) MBB BK117 C-2" on its side, you will have the 􏶏
   portion of the schematic on top of he other DC boxes.  From this position, you will will be able to differentiate
   the left from the right portion of the 􏶏.  That file is the Eurocopter though, so don't rely on the actual names there.􏶱
   
   􏶲creates all of the left and right portions of the 􏶏
-  *buses do not need created here(they are created elesewhere).􏶱
+  *buses do not need created here(they are created elsewhere).􏶱
   􏵲create left panel devices􏵳􏵶graph􏵷);
   􏵲create right panel devices􏵳􏵶graph􏵷);
   
@@ -65,43 +65,43 @@ It will store the IDs given back by the graph so that they may be queried later 
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏,
 and puts them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel nodes into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel nodes into.􏶿
 􏶴
   //construct all the devices that are a part of 
   //the left portion of the 􏶏.
-  CreateLeftPanelDevicesForRow1(ptOutputs,􏵶graph􏵷);
-  CreateLeftPanelDevicesForRow2(ptOutputs,􏵶graph􏵷);
-  CreateLeftPanelDevicesForRow3(ptOutputs,􏵶graph􏵷);
-  CreateLeftPanelDevicesForRow4(ptOutputs,􏵶graph􏵷);
-  CreateLeftPanelDevicesForRow5(ptOutputs,􏵶graph􏵷);
-  CreateLeftPanelDevicesForRow6(ptOutputs,􏵶graph􏵷);
-  CreateLeftPanelDevicesForRow7(ptOutputs,􏵶graph􏵷);
-  CreateLeftPanelDevicesForRow8(ptOutputs,􏵶graph􏵷);
+  􏵲create left panel devices for row 1􏵳􏵶graph􏵷);
+  􏵲create left panel devices for row 2􏵳􏵶graph􏵷);
+  􏵲create left panel devices for row 3􏵳􏵶graph􏵷);
+  􏵲create left panel devices for row 4􏵳􏵶graph􏵷);
+  􏵲create left panel devices for row 5􏵳􏵶graph􏵷);
+  􏵲create left panel devices for row 6􏵳􏵶graph􏵷);
+  􏵲create left panel devices for row 7􏵳􏵶graph􏵷);
+  􏵲create left panel devices for row 8􏵳􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create right panel devices􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏,
 and puts them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
   //construct all the devices that are a part of 
   //the right portion of the 􏶏.
-  CreateRightPanelDevicesForRow1(ptOutputs,􏵶graph􏵷);
-  CreateRightPanelDevicesForRow2(ptOutputs,􏵶graph􏵷);
-  CreateRightPanelDevicesForRow3(ptOutputs,􏵶graph􏵷);
-  CreateRightPanelDevicesForRow4(ptOutputs,􏵶graph􏵷);
-  CreateRightPanelDevicesForRow5(ptOutputs,􏵶graph􏵷);
-  CreateRightPanelDevicesForRow6(ptOutputs,􏵶graph􏵷);
-  CreateRightPanelDevicesForRow7(ptOutputs,􏵶graph􏵷);
-  CreateRightPanelDevicesForRow8(ptOutputs,􏵶graph􏵷);
+  􏵲create right panel devices for row 1􏵳􏵶graph􏵷);
+  􏵲create right panel devices for row 2􏵳􏵶graph􏵷);
+  􏵲create right panel devices for row 3􏵳􏵶graph􏵷);
+  􏵲create right panel devices for row 4􏵳􏵶graph􏵷);
+  􏵲create right panel devices for row 5􏵳􏵶graph􏵷);
+  􏵲create right panel devices for row 6􏵳􏵶graph􏵷);
+  􏵲create right panel devices for row 7􏵳􏵶graph􏵷);
+  􏵲create right panel devices for row 8􏵳􏵶graph􏵷);
 􏶳
 
 􏷘-􏷗􏷒create center panel devices􏷑
 􏷐Constructs all of the electrical components that make up the center console portion of the 􏶏,
 and puts them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created panel devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its center panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its center panel devices into.􏶿
 􏶴
   //CB001 SHED BUS 1 (spare)
   //CB002 SHED BUS 1 (vacant)
@@ -121,12 +121,12 @@ and puts them into the generic electrical graph data structure.􏷏
   //CB016 SHED BUS 2 (spare)
   //CB017 SHED BUS 2 (vacant)
   //CB018 SHED BUS 2 (spare)
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴cabin monitor􏵵,"Cabin Monitor",0,7.5f,􏵱,􏵶graph􏵷); //CB019
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴dvr􏵵,"DVR",0,5.0f,􏵱,􏵶graph􏵷); //CB020
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴mx15 imager􏵵,"MX15 IMAGER",0,15.0f,􏵱,􏵶graph􏵷); //CB021
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴ls16 cntl􏵵,"LS16 CNTL",0,5.0f,􏵱,􏵶graph􏵷); //CB022
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴dwnlnk cntl􏵵,"DWNLNK CNTL",0,2.0f,􏵱,􏵶graph􏵷); //CB023
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴dwnlnk adu􏵵,"DWNLNK ADU",0,5.0f,􏵱,􏵶graph􏵷); //CB024
+  􏵲create device and apply to ground􏵳&􏵴cabin monitor􏵵,"Cabin Monitor",0,7.5f,􏵱,􏵶graph􏵷); //CB019
+  􏵲create device and apply to ground􏵳&􏵴dvr􏵵,"DVR",0,5.0f,􏵱,􏵶graph􏵷); //CB020
+  􏵲create device and apply to ground􏵳&􏵴mx15 imager􏵵,"MX15 IMAGER",0,15.0f,􏵱,􏵶graph􏵷); //CB021
+  􏵲create device and apply to ground􏵳&􏵴ls16 cntl􏵵,"LS16 CNTL",0,5.0f,􏵱,􏵶graph􏵷); //CB022
+  􏵲create device and apply to ground􏵳&􏵴dwnlnk cntl􏵵,"DWNLNK CNTL",0,2.0f,􏵱,􏵶graph􏵷); //CB023
+  􏵲create device and apply to ground􏵳&􏵴dwnlnk adu􏵵,"DWNLNK ADU",0,5.0f,􏵱,􏵶graph􏵷); //CB024
   //CB025 NON ESS BUS 1 (spare)
   //CB026 NON ESS BUS 1 (vacant)
   //CB027 NON ESS BUS 1 (spare)
@@ -143,26 +143,15 @@ and puts them into the generic electrical graph data structure.􏷏
 􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the device being added􏶿
 􏶜􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular device􏶿
 􏶜􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the device allows electricity to flow through it.􏶿
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
 􏶴
   //create node for part of the 􏶐
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddNode = 􏵱;
   
   //add node to graph
-  strcpy(tInputs.m_szName, 􏵶name􏵷);
-  tInputs.m_eType = NODE_TYPE_DEVICE;
-  tInputs.m_fResistance = 􏵶resistance􏵷;
-  tInputs.m_fExpectedAmperage = 􏵶expected amperage􏵷;
-  tInputs.m_bHasFlow = 􏵶has flow􏵷;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  *􏵶node id􏵷 = 􏵶graph􏵷->m_uId;
+  *􏵶node id􏵷 = ElectricalGraphAddNode(􏵶graph􏵷,􏵶name􏵷,NODE_TYPE_DEVICE,􏵶resistance􏵷,􏵶expected amperage􏵷,􏵶has flow􏵷);
   
   //add device to the ground.
-  tInputs.m_bAddNode = 􏵰;
-  tInputs.m_bConnectNodeToCommonGround = 􏵱;
-  tInputs.m_uNode = *􏵶node id􏵷;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  ElectricalGraphConnectNodeToCommonGround(􏵶graph􏵷,*􏵶node id􏵷);
 􏶳
 
 􏷘-􏷗􏷒create bus and apply to ground􏷑
@@ -173,41 +162,30 @@ and puts them into the generic electrical graph data structure.􏷏
 􏶜􏶝􏷆float􏷅􏷄resistance􏷃􏷀the resistance of the bus being added􏶿
 􏶜􏶝􏷆float􏷅􏷄expected amperage􏷃􏷀what we expect the amperage draw to be for the particular bus􏶿
 􏶜􏶝􏷆BOOL􏷅􏷄has flow􏷃􏷀whether or not the bus allows electricity to flow through it.􏶿
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct devices into.􏶿
 􏶴
   //create node for part of the 􏶐
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddNode = 􏵱;
   
   //add node to graph
-  strcpy(tInputs.m_szName, 􏵶name􏵷);
-  tInputs.m_eType = NODE_TYPE_BUS;
-  tInputs.m_fResistance = 􏵶resistance􏵷;
-  tInputs.m_fExpectedAmperage = 􏵶expected amperage􏵷;
-  tInputs.m_bHasFlow = 􏵶has flow􏵷;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
-  *􏵶node id􏵷 = 􏵶graph􏵷->m_uId;
+  *􏵶node id􏵷 = ElectricalGraphAddNode(􏵶graph􏵷,􏵶name􏵷,NODE_TYPE_BUS,􏵶resistance􏵷,􏵶expected amperage􏵷,􏵶has flow􏵷);
   
   //add device to the ground.
-  tInputs.m_bAddNode = 􏵰;
-  tInputs.m_bConnectNodeToCommonGround = 􏵱;
-  tInputs.m_uNode = *􏵶node id􏵷;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  ElectricalGraphConnectNodeToCommonGround(􏵶graph􏵷,*􏵶node id􏵷);
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 1􏷑
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 2,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴stby hor bat􏵵,"Stby Nor Bat",0,2.0f,􏵱,􏵶graph􏵷); //CB135
+    􏵲create device and apply to ground􏵳&􏵴stby hor bat􏵵,"Stby Nor Bat",0,2.0f,􏵱,􏵶graph􏵷); //CB135
                                                                                                              //CB136 (vacant)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ic amp􏵵,"IC-AMP",0,3.0f,􏵱,􏵶graph􏵷);             //CB137
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ics cab􏵵,"ICS-CAB",0,1.0f,􏵱,􏵶graph􏵷);           //CB138
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴dimm test􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"DIMM TEST",0,2.0f,􏵱,􏵶graph􏵷);       //CB139
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴com4 xcvr􏵵,"COM4 XCVR",0,10.0f,􏵱,􏵶graph􏵷);       //CB140
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴com4 ctrl􏵵,"COM4 CTRL",0,2.0f,􏵱,􏵶graph􏵷);       //CB141
+    􏵲create device and apply to ground􏵳&􏵴ic amp􏵵,"IC-AMP",0,3.0f,􏵱,􏵶graph􏵷);             //CB137
+    􏵲create device and apply to ground􏵳&􏵴ics cab􏵵,"ICS-CAB",0,1.0f,􏵱,􏵶graph􏵷);           //CB138
+    􏵲create device and apply to ground􏵳&􏵴dimm test􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"DIMM TEST",0,2.0f,􏵱,􏵶graph􏵷);       //CB139
+    􏵲create device and apply to ground􏵳&􏵴com4 xcvr􏵵,"COM4 XCVR",0,10.0f,􏵱,􏵶graph􏵷);       //CB140
+    􏵲create device and apply to ground􏵳&􏵴com4 ctrl􏵵,"COM4 CTRL",0,2.0f,􏵱,􏵶graph􏵷);       //CB141
                                                                                                              //CB142 (vacant)
 􏶳
 
@@ -215,175 +193,175 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 2,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴vhf tx1􏵵,"VHF TX1",0,5.0f,􏵱,􏵶graph􏵷);                 //CB113
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴nms1􏵵,"NMS1",0,5.0f,􏵱,􏵶graph􏵷);                       //CB114
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴nms blw􏵵,"NMS BLW",0,1.0f,􏵱,􏵶graph􏵷);                 //CB115
+  􏵲create device and apply to ground􏵳&􏵴vhf tx1􏵵,"VHF TX1",0,5.0f,􏵱,􏵶graph􏵷);                 //CB113
+  􏵲create device and apply to ground􏵳&􏵴nms1􏵵,"NMS1",0,5.0f,􏵱,􏵶graph􏵷);                       //CB114
+  􏵲create device and apply to ground􏵳&􏵴nms blw􏵵,"NMS BLW",0,1.0f,􏵱,􏵶graph􏵷);                 //CB115
                                                                                     //CB116 (vacant)
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴lh mon􏵵,"L/H MON",0,7.5f,􏵱,􏵶graph􏵷);                  //CB117
+  􏵲create device and apply to ground􏵳&􏵴lh mon􏵵,"L/H MON",0,7.5f,􏵱,􏵶graph􏵷);                  //CB117
                                                                                   //CB118 (inactive)
                                                                                   //CB119 (inactive)
                                                                                     //CB120 (vacant)
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴bambi bucket􏵵,"BAMBI BUCKET",0,15.0f,􏵱,􏵶graph􏵷);       //CB121
+  􏵲create device and apply to ground􏵳&􏵴bambi bucket􏵵,"BAMBI BUCKET",0,15.0f,􏵱,􏵶graph􏵷);       //CB121
                                                                                     //CB122 (vacant)
-  CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio main1􏵵,"AVIO MAIN 1",0,20.0f,􏵱,􏵶graph􏵷);          //CB123
+  􏵲create device and apply to ground􏵳&􏵴avio main1􏵵,"AVIO MAIN 1",0,20.0f,􏵱,􏵶graph􏵷);          //CB123
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 3􏷑
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 3,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fcds2 backup􏵵,"FCDS2 BACKUP",0,7.50f,􏵱,􏵶graph􏵷); //CB093
+    􏵲create device and apply to ground􏵳&􏵴fcds2 backup􏵵,"FCDS2 BACKUP",0,7.50f,􏵱,􏵶graph􏵷); //CB093
                                                                               //CB094 (inactive)
                                                                               //CB095 (inactive)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴pt st cp􏵵,"PT ST CP",0,7.50f,􏵱,􏵶graph􏵷);         //CB096
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ap2􏵵,"AP2",0,3.0f,􏵱,􏵶graph􏵷);                   //CB097
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴mir􏵵,"MIR",0,0.0f,􏵱,􏵶graph􏵷);                   //CB098
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴pwr􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PWR",0,15.0f,􏵱,􏵶graph􏵷);                   //CB099
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cargo pax lt􏵵,"CARGO PAX LT",0,5.0f,􏵱,􏵶graph􏵷); //CB100
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cont1 ls lt􏵵,"CONT1 LS LT",0,10.0f,􏵱,􏵶graph􏵷);   //CB101
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴xfera pump􏵵,"XFERA PUMP",0,5.0f,􏵱,􏵶graph􏵷);     //CB102
+    􏵲create device and apply to ground􏵳&􏵴pt st cp􏵵,"PT ST CP",0,7.50f,􏵱,􏵶graph􏵷);         //CB096
+    􏵲create device and apply to ground􏵳&􏵴ap2􏵵,"AP2",0,3.0f,􏵱,􏵶graph􏵷);                   //CB097
+    􏵲create device and apply to ground􏵳&􏵴mir􏵵,"MIR",0,0.0f,􏵱,􏵶graph􏵷);                   //CB098
+    􏵲create device and apply to ground􏵳&􏵴pwr􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PWR",0,15.0f,􏵱,􏵶graph􏵷);                   //CB099
+    􏵲create device and apply to ground􏵳&􏵴cargo pax lt􏵵,"CARGO PAX LT",0,5.0f,􏵱,􏵶graph􏵷); //CB100
+    􏵲create device and apply to ground􏵳&􏵴cont1 ls lt􏵵,"CONT1 LS LT",0,10.0f,􏵱,􏵶graph􏵷);   //CB101
+    􏵲create device and apply to ground􏵳&􏵴xfera pump􏵵,"XFERA PUMP",0,5.0f,􏵱,􏵶graph􏵷);     //CB102
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 4􏷑
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 4,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
   
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fcdm􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FCDM1",0,3.0f,􏵱,􏵶graph􏵷);                  //CB073
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴nd􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ND1",0,3.0f,􏵱,􏵶graph􏵷);                      //CB074
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴pfd􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PFD1",0,3.0f,􏵱,􏵶graph􏵷);                    //CB075
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴blw pel􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"BLW PEL",0,1.0f,􏵱,􏵶graph􏵷);              //CB076
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴nms12 relay􏵵,"NMS12 RELAY",0,1.0f,􏵱,􏵶graph􏵷);      //CB077
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ahrs1􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AHRS1",0,5.0f,􏵱,􏵶graph􏵷);                  //CB078
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ahrs2􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AHRS2",0,5.0f,􏵱,􏵶graph􏵷);                  //CB079
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴adc􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ADC",0,2.0f,􏵱,􏵶graph􏵷);                      //CB080
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AVIO MSTER",0,1.0f,􏵱,􏵶graph􏵷);         //CB081
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ESS AVIO MAIN",0,20.0f,􏵱,􏵶graph􏵷); //CB082
+    􏵲create device and apply to ground􏵳&􏵴fcdm􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FCDM1",0,3.0f,􏵱,􏵶graph􏵷);                  //CB073
+    􏵲create device and apply to ground􏵳&􏵴nd􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ND1",0,3.0f,􏵱,􏵶graph􏵷);                      //CB074
+    􏵲create device and apply to ground􏵳&􏵴pfd􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PFD1",0,3.0f,􏵱,􏵶graph􏵷);                    //CB075
+    􏵲create device and apply to ground􏵳&􏵴blw pel􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"BLW PEL",0,1.0f,􏵱,􏵶graph􏵷);              //CB076
+    􏵲create device and apply to ground􏵳&􏵴nms12 relay􏵵,"NMS12 RELAY",0,1.0f,􏵱,􏵶graph􏵷);      //CB077
+    􏵲create device and apply to ground􏵳&􏵴ahrs1􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AHRS1",0,5.0f,􏵱,􏵶graph􏵷);                  //CB078
+    􏵲create device and apply to ground􏵳&􏵴ahrs2􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AHRS2",0,5.0f,􏵱,􏵶graph􏵷);                  //CB079
+    􏵲create device and apply to ground􏵳&􏵴adc􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ADC",0,2.0f,􏵱,􏵶graph􏵷);                      //CB080
+    􏵲create device and apply to ground􏵳&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"AVIO MSTER",0,1.0f,􏵱,􏵶graph􏵷);         //CB081
+    􏵲create device and apply to ground􏵳&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ESS AVIO MAIN",0,20.0f,􏵱,􏵶graph􏵷); //CB082
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 5􏷑
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 5,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
     //CB053 (vacant)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ics􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ICS",0,5.0f,􏵱,􏵶graph􏵷);          //CB054
+    􏵲create device and apply to ground􏵳&􏵴ics􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"ICS",0,5.0f,􏵱,􏵶graph􏵷);          //CB054
     //CB055 (vacant)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴instr lights􏵵,"INSTR LIGHTS",0,7.5f,􏵱,􏵶graph􏵷);  //CB056
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴p1 sas􏵵,"P1 SAS",0,0.0f,􏵱,􏵶graph􏵷);        //CB057
+    􏵲create device and apply to ground􏵳&􏵴instr lights􏵵,"INSTR LIGHTS",0,7.5f,􏵱,􏵶graph􏵷);  //CB056
+    􏵲create device and apply to ground􏵳&􏵴p1 sas􏵵,"P1 SAS",0,0.0f,􏵱,􏵶graph􏵷);        //CB057
     //CB058 (vacant)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴htg cont􏵵,"HTG CONT",0,3.0f,􏵱,􏵶graph􏵷);      //CB059
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ckpt vent􏵵,"CKPT VENT",0,7.5f,􏵱,􏵶graph􏵷);     //CB060
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ftr􏵵,"FTR",0,1.0f,􏵱,􏵶graph􏵷);          //CB061
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴roll1 sas􏵵,"ROLL1 SAS",0,3.0f,􏵱,􏵶graph􏵷);     //CB062
+    􏵲create device and apply to ground􏵳&􏵴htg cont􏵵,"HTG CONT",0,3.0f,􏵱,􏵶graph􏵷);      //CB059
+    􏵲create device and apply to ground􏵳&􏵴ckpt vent􏵵,"CKPT VENT",0,7.5f,􏵱,􏵶graph􏵷);     //CB060
+    􏵲create device and apply to ground􏵳&􏵴ftr􏵵,"FTR",0,1.0f,􏵱,􏵶graph􏵷);          //CB061
+    􏵲create device and apply to ground􏵳&􏵴roll1 sas􏵵,"ROLL1 SAS",0,3.0f,􏵱,􏵶graph􏵷);     //CB062
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 6􏷑
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 6,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
     //CB035 (inactive)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FLOATS",0,0.0f,􏵱,􏵶graph􏵷);       //CB036
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cont􏵵,"CONT",0,2.0f,􏵱,􏵶graph􏵷);         //CB037
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cc pil􏵵,"CC PIL",0,7.5f,􏵱,􏵶graph􏵷);        //CB038
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴boom􏵵,"BOOM",0,10.0f,􏵱,􏵶graph􏵷);         //CB039
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴pos􏵵,"POS",0,5.0f,􏵱,􏵶graph􏵷);          //CB040
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ldg􏵵,"LDG",0,10.0f,􏵱,􏵶graph􏵷);          //CB041
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ckpt􏵵,"CKPT",0,1.0f,􏵱,􏵶graph􏵷);         //CB042
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴var nr􏵵,"VAR NR",0,1.0f,􏵱,􏵶graph􏵷);        //CB043
+    􏵲create device and apply to ground􏵳&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FLOATS",0,0.0f,􏵱,􏵶graph􏵷);       //CB036
+    􏵲create device and apply to ground􏵳&􏵴cont􏵵,"CONT",0,2.0f,􏵱,􏵶graph􏵷);         //CB037
+    􏵲create device and apply to ground􏵳&􏵴cc pil􏵵,"CC PIL",0,7.5f,􏵱,􏵶graph􏵷);        //CB038
+    􏵲create device and apply to ground􏵳&􏵴boom􏵵,"BOOM",0,10.0f,􏵱,􏵶graph􏵷);         //CB039
+    􏵲create device and apply to ground􏵳&􏵴pos􏵵,"POS",0,5.0f,􏵱,􏵶graph􏵷);          //CB040
+    􏵲create device and apply to ground􏵳&􏵴ldg􏵵,"LDG",0,10.0f,􏵱,􏵶graph􏵷);          //CB041
+    􏵲create device and apply to ground􏵳&􏵴ckpt􏵵,"CKPT",0,1.0f,􏵱,􏵶graph􏵷);         //CB042
+    􏵲create device and apply to ground􏵳&􏵴var nr􏵵,"VAR NR",0,1.0f,􏵱,􏵶graph􏵷);        //CB043
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 7􏷑
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 7,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴sand filt􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"SAND FILT",0,5.0f,􏵱,􏵶graph􏵷);     //CB017
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴wiper􏵵,"WIPER",0,15.0f,􏵱,􏵶graph􏵷);        //CB018
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴tq n2􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"TQ N2",0,3.0f,􏵱,􏵶graph􏵷);         //CB019
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ovsp􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"OVSP",0,5.0f,􏵱,􏵶graph􏵷);         //CB020
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴prime p􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PRIME P",0,5.0f,􏵱,􏵶graph􏵷);       //CB021
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fire d􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE D",0,1.0f,􏵱,􏵶graph􏵷);        //CB022
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel v􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE V",0,2.0f,􏵱,􏵶graph􏵷);        //CB023
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ign􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"IGN",0,7.5f,􏵱,􏵶graph􏵷);          //CB024
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴start􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"START",0,5.0f,􏵱,􏵶graph􏵷);        //CB025
+    􏵲create device and apply to ground􏵳&􏵴sand filt􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"SAND FILT",0,5.0f,􏵱,􏵶graph􏵷);     //CB017
+    􏵲create device and apply to ground􏵳&􏵴wiper􏵵,"WIPER",0,15.0f,􏵱,􏵶graph􏵷);        //CB018
+    􏵲create device and apply to ground􏵳&􏵴tq n2􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"TQ N2",0,3.0f,􏵱,􏵶graph􏵷);         //CB019
+    􏵲create device and apply to ground􏵳&􏵴ovsp􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"OVSP",0,5.0f,􏵱,􏵶graph􏵷);         //CB020
+    􏵲create device and apply to ground􏵳&􏵴prime p􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"PRIME P",0,5.0f,􏵱,􏵶graph􏵷);       //CB021
+    􏵲create device and apply to ground􏵳&􏵴fire d􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE D",0,1.0f,􏵱,􏵶graph􏵷);        //CB022
+    􏵲create device and apply to ground􏵳&􏵴fuel v􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE V",0,2.0f,􏵱,􏵶graph􏵷);        //CB023
+    􏵲create device and apply to ground􏵳&􏵴ign􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"IGN",0,7.5f,􏵱,􏵶graph􏵷);          //CB024
+    􏵲create device and apply to ground􏵳&􏵴start􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"START",0,5.0f,􏵱,􏵶graph􏵷);        //CB025
 􏶳
 
 􏷘-􏷗􏷒create left panel devices for row 8􏷑
 􏷐Constructs all of the electrical components that make up the left portion of the 􏶏 in row 8,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its left panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴gen􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"GEN",0,1.0f,􏵱,􏵶graph􏵷);          //CB001
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴bt􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"BT",0,1.0f,􏵱,􏵶graph􏵷);           //CB002
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fire e􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE E",0,5.0f,􏵱,􏵶graph􏵷);        //CB003
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel l􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FUEL L",0,1.0f,􏵱,􏵶graph􏵷);        //CB004
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴hyd p􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"HTD P",0,2.0f,􏵱,􏵶graph􏵷);         //CB005
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴wu􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"WU",0,2.0f,􏵱,􏵶graph􏵷);           //CB006
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cad􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"CAD",0,5.0f,􏵱,􏵶graph􏵷);          //CB007
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴vemd􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"VEMD",0,5.0f,􏵱,􏵶graph􏵷);         //CB008
+    􏵲create device and apply to ground􏵳&􏵴gen􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"GEN",0,1.0f,􏵱,􏵶graph􏵷);          //CB001
+    􏵲create device and apply to ground􏵳&􏵴bt􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"BT",0,1.0f,􏵱,􏵶graph􏵷);           //CB002
+    􏵲create device and apply to ground􏵳&􏵴fire e􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FIRE E",0,5.0f,􏵱,􏵶graph􏵷);        //CB003
+    􏵲create device and apply to ground􏵳&􏵴fuel l􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"FUEL L",0,1.0f,􏵱,􏵶graph􏵷);        //CB004
+    􏵲create device and apply to ground􏵳&􏵴hyd p􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"HTD P",0,2.0f,􏵱,􏵶graph􏵷);         //CB005
+    􏵲create device and apply to ground􏵳&􏵴wu􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"WU",0,2.0f,􏵱,􏵶graph􏵷);           //CB006
+    􏵲create device and apply to ground􏵳&􏵴cad􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"CAD",0,5.0f,􏵱,􏵶graph􏵷);          //CB007
+    􏵲create device and apply to ground􏵳&􏵴vemd􏵵[ELECTRICAL_SYSTEM_SIDE_LEFT],"VEMD",0,5.0f,􏵱,􏵶graph􏵷);         //CB008
 􏶳
 
 􏷘-􏷗􏷒create right panel devices for row 1􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 1,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
     //CB143 (vacant)
     //CB144 (vacant)
     //CB145 (vacant)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴dimm test􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"DIMM TEST 2",0,2.0f,􏵱,􏵶graph􏵷);    //CB146
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ics backup􏵵,"ICS BACKUP",0,1.0f,􏵱,􏵶graph􏵷);    //CB147
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴nms2􏵵,"NMS2",0,5.0f,􏵱,􏵶graph􏵷);         //CB148
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴bat em ex lt􏵵,"BAT EM EX LT",0,3.0f,􏵱,􏵶graph􏵷);    //CB149
+    􏵲create device and apply to ground􏵳&􏵴dimm test􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"DIMM TEST 2",0,2.0f,􏵱,􏵶graph􏵷);    //CB146
+    􏵲create device and apply to ground􏵳&􏵴ics backup􏵵,"ICS BACKUP",0,1.0f,􏵱,􏵶graph􏵷);    //CB147
+    􏵲create device and apply to ground􏵳&􏵴nms2􏵵,"NMS2",0,5.0f,􏵱,􏵶graph􏵷);         //CB148
+    􏵲create device and apply to ground􏵳&􏵴bat em ex lt􏵵,"BAT EM EX LT",0,3.0f,􏵱,􏵶graph􏵷);    //CB149
 􏶳
 
 􏷘-􏷗􏷒create right panel devices for row 2􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 2,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio main 2􏵵,"AVIO MAIN 2",0,20.0f,􏵱,􏵶graph􏵷);    //CB124
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴emer bat􏵵,"EMER BAT",0,15.0f,􏵱,􏵶graph􏵷);      //CB125
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴video dist􏵵,"VIDEO DIST",0,5.0f,􏵱,􏵶graph􏵷);    //CB126
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴rh mon􏵵,"RH MON",0,7.5f,􏵱,􏵶graph􏵷);        //CB127
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴mov map􏵵,"MOV MAP",0,5.0f,􏵱,􏵶graph􏵷);       //CB128
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴rad alt􏵵,"RAD ALT",0,3.0f,􏵱,􏵶graph􏵷);       //CB129
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴dme􏵵,"DME",0,2.0f,􏵱,􏵶graph􏵷);          //CB130
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cm3 ant􏵵,"CM3 ANT",0,1.0f,􏵱,􏵶graph􏵷);       //CB131
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cm3 rt􏵵,"CM3 RT",0,10.0f,􏵱,􏵶graph􏵷);        //CB132
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴mkr􏵵,"MKR",0,1.0f,􏵱,􏵶graph􏵷);          //CB133
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴com5 xcvr􏵵,"COM5 XCVR",0,10.0f,􏵱,􏵶graph􏵷);     //CB134
+    􏵲create device and apply to ground􏵳&􏵴avio main 2􏵵,"AVIO MAIN 2",0,20.0f,􏵱,􏵶graph􏵷);    //CB124
+    􏵲create device and apply to ground􏵳&􏵴emer bat􏵵,"EMER BAT",0,15.0f,􏵱,􏵶graph􏵷);      //CB125
+    􏵲create device and apply to ground􏵳&􏵴video dist􏵵,"VIDEO DIST",0,5.0f,􏵱,􏵶graph􏵷);    //CB126
+    􏵲create device and apply to ground􏵳&􏵴rh mon􏵵,"RH MON",0,7.5f,􏵱,􏵶graph􏵷);        //CB127
+    􏵲create device and apply to ground􏵳&􏵴mov map􏵵,"MOV MAP",0,5.0f,􏵱,􏵶graph􏵷);       //CB128
+    􏵲create device and apply to ground􏵳&􏵴rad alt􏵵,"RAD ALT",0,3.0f,􏵱,􏵶graph􏵷);       //CB129
+    􏵲create device and apply to ground􏵳&􏵴dme􏵵,"DME",0,2.0f,􏵱,􏵶graph􏵷);          //CB130
+    􏵲create device and apply to ground􏵳&􏵴cm3 ant􏵵,"CM3 ANT",0,1.0f,􏵱,􏵶graph􏵷);       //CB131
+    􏵲create device and apply to ground􏵳&􏵴cm3 rt􏵵,"CM3 RT",0,10.0f,􏵱,􏵶graph􏵷);        //CB132
+    􏵲create device and apply to ground􏵳&􏵴mkr􏵵,"MKR",0,1.0f,􏵱,􏵶graph􏵷);          //CB133
+    􏵲create device and apply to ground􏵳&􏵴com5 xcvr􏵵,"COM5 XCVR",0,10.0f,􏵱,􏵶graph􏵷);     //CB134
 􏶳
 
 􏷘-􏷗􏷒create right panel devices for row 3􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 3,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴htgv􏵵,"HTGV",0,3.0f,􏵱,􏵶graph􏵷);         //CB103
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴inst cool􏵵,"INST COOL",0,10.0f,􏵱,􏵶graph􏵷);     //CB104
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴pax blw􏵵,"PAX BLW",0,3.0f,􏵱,􏵶graph􏵷);       //CB105
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴pwr􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PWR",0,20.0f,􏵱,􏵶graph􏵷);          //CB106
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cont2􏵵,"CONT 2",0,2.0f,􏵱,􏵶graph􏵷);        //CB107
+    􏵲create device and apply to ground􏵳&􏵴htgv􏵵,"HTGV",0,3.0f,􏵱,􏵶graph􏵷);         //CB103
+    􏵲create device and apply to ground􏵳&􏵴inst cool􏵵,"INST COOL",0,10.0f,􏵱,􏵶graph􏵷);     //CB104
+    􏵲create device and apply to ground􏵳&􏵴pax blw􏵵,"PAX BLW",0,3.0f,􏵱,􏵶graph􏵷);       //CB105
+    􏵲create device and apply to ground􏵳&􏵴pwr􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PWR",0,20.0f,􏵱,􏵶graph􏵷);          //CB106
+    􏵲create device and apply to ground􏵳&􏵴cont2􏵵,"CONT 2",0,2.0f,􏵱,􏵶graph􏵷);        //CB107
                          //CB108 (vacant)
                        //CB109 (inactive)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴atc􏵵,"ATC",0,5.0f,􏵱,􏵶graph􏵷);          //CB110
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴waas relay􏵵,"WAAS RELAY",0,1.0f,􏵱,􏵶graph􏵷);    //CB111
+    􏵲create device and apply to ground􏵳&􏵴atc􏵵,"ATC",0,5.0f,􏵱,􏵶graph􏵷);          //CB110
+    􏵲create device and apply to ground􏵳&􏵴waas relay􏵵,"WAAS RELAY",0,1.0f,􏵱,􏵶graph􏵷);    //CB111
                        //CB112 (inactive)
 􏶳
 
@@ -391,18 +369,18 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 4,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS AVIO MAIN 2",0,20.0f,􏵱,􏵶graph􏵷); //CB083
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MAST",0,1.0f,􏵱,􏵶graph􏵷);     //CB084
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴adc􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ADC",0,2.0f,􏵱,􏵶graph􏵷);          //CB085
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ahrs1􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AHR S1",0,5.0f,􏵱,􏵶graph􏵷);        //CB086
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ahrs2􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AH2 S2",0,5.0f,􏵱,􏵶graph􏵷);        //CB087
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴roll2 sema􏵵,"ROLL2 SEMA",0,3.0f,􏵱,􏵶graph􏵷);    //CB088
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴blw pel􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"BLW PEL",0,1.0f,􏵱,􏵶graph􏵷);       //CB089
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴pfd􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PFD2",0,3.0f,􏵱,􏵶graph􏵷);         //CB090
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴nd􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ND2",0,3.0f,􏵱,􏵶graph􏵷);          //CB091
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fcdm􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FCDM2",0,3.0f,􏵱,􏵶graph􏵷);        //CB092
+    􏵲create device and apply to ground􏵳&􏵴ess avio main􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ESS AVIO MAIN 2",0,20.0f,􏵱,􏵶graph􏵷); //CB083
+    􏵲create device and apply to ground􏵳&􏵴avio mstr􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AVIO MAST",0,1.0f,􏵱,􏵶graph􏵷);     //CB084
+    􏵲create device and apply to ground􏵳&􏵴adc􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ADC",0,2.0f,􏵱,􏵶graph􏵷);          //CB085
+    􏵲create device and apply to ground􏵳&􏵴ahrs1􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AHR S1",0,5.0f,􏵱,􏵶graph􏵷);        //CB086
+    􏵲create device and apply to ground􏵳&􏵴ahrs2􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"AH2 S2",0,5.0f,􏵱,􏵶graph􏵷);        //CB087
+    􏵲create device and apply to ground􏵳&􏵴roll2 sema􏵵,"ROLL2 SEMA",0,3.0f,􏵱,􏵶graph􏵷);    //CB088
+    􏵲create device and apply to ground􏵳&􏵴blw pel􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"BLW PEL",0,1.0f,􏵱,􏵶graph􏵷);       //CB089
+    􏵲create device and apply to ground􏵳&􏵴pfd􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PFD2",0,3.0f,􏵱,􏵶graph􏵷);         //CB090
+    􏵲create device and apply to ground􏵳&􏵴nd􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ND2",0,3.0f,􏵱,􏵶graph􏵷);          //CB091
+    􏵲create device and apply to ground􏵳&􏵴fcdm􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FCDM2",0,3.0f,􏵱,􏵶graph􏵷);        //CB092
 
 􏶳
 
@@ -410,52 +388,52 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 5,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴yaw sas􏵵,"YAW SAS",0,3.0f,􏵱,􏵶graph􏵷);       //CB063
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴beep trim􏵵,"BEEP TRIM",0,2.0f,􏵱,􏵶graph􏵷);     //CB064
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴mast mom􏵵,"MAST MON",0,1.0f,􏵱,􏵶graph􏵷);      //CB065
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴xferf pump􏵵,"XFERF PUMP",0,5.0f,􏵱,􏵶graph􏵷);    //CB066
+    􏵲create device and apply to ground􏵳&􏵴yaw sas􏵵,"YAW SAS",0,3.0f,􏵱,􏵶graph􏵷);       //CB063
+    􏵲create device and apply to ground􏵳&􏵴beep trim􏵵,"BEEP TRIM",0,2.0f,􏵱,􏵶graph􏵷);     //CB064
+    􏵲create device and apply to ground􏵳&􏵴mast mom􏵵,"MAST MON",0,1.0f,􏵱,􏵶graph􏵷);      //CB065
+    􏵲create device and apply to ground􏵳&􏵴xferf pump􏵵,"XFERF PUMP",0,5.0f,􏵱,􏵶graph􏵷);    //CB066
                         //CB067 (vacant)
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴p2 sema􏵵,"P2 SEMA",0,3.0f,􏵱,􏵶graph􏵷);       //CB068
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ap1􏵵,"AP1",0,3.0f,􏵱,􏵶graph􏵷);          //CB069
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴altm vibr􏵵,"ALTM VIBR",0,1.0f,􏵱,􏵶graph􏵷);     //CB070
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ics􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ICS",0,5.0f,􏵱,􏵶graph􏵷);          //CB071
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴vhf tx2􏵵,"VHF TX2",0,5.0f,􏵱,􏵶graph􏵷);       //CB072
+    􏵲create device and apply to ground􏵳&􏵴p2 sema􏵵,"P2 SEMA",0,3.0f,􏵱,􏵶graph􏵷);       //CB068
+    􏵲create device and apply to ground􏵳&􏵴ap1􏵵,"AP1",0,3.0f,􏵱,􏵶graph􏵷);          //CB069
+    􏵲create device and apply to ground􏵳&􏵴altm vibr􏵵,"ALTM VIBR",0,1.0f,􏵱,􏵶graph􏵷);     //CB070
+    􏵲create device and apply to ground􏵳&􏵴ics􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"ICS",0,5.0f,􏵱,􏵶graph􏵷);          //CB071
+    􏵲create device and apply to ground􏵳&􏵴vhf tx2􏵵,"VHF TX2",0,5.0f,􏵱,􏵶graph􏵷);       //CB072
 􏶳
 
 􏷘-􏷗􏷒create right panel devices for row 6􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 6,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴n2 trim􏵵,"N2 TRIM",0,5.0f,􏵱,􏵶graph􏵷);       //CB044
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴instr􏵵,"INSTR",0,7.5f,􏵱,􏵶graph􏵷);        //CB045
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴acol􏵵,"ACOL",0,5.0f,􏵱,􏵶graph􏵷);         //CB046
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴em ex􏵵,"EM/EX",0,3.0f,􏵱,􏵶graph􏵷);         //CB047
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cc ped winch􏵵,"CC-PED WINCH",0,7.5f,􏵱,􏵶graph􏵷);   //CB048
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴aux tank􏵵,"AUX TANK",0,0.0f,􏵱,􏵶graph􏵷);      //CB049
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴pt st plt􏵵,"PT ST PLT",0,7.5f,􏵱,􏵶graph􏵷);      //CB050
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FLOATS",0,0.0f,􏵱,􏵶graph􏵷);       //CB051
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴dwnlnk adu b􏵵,"DWNLNK ADU B",0,5.0f,􏵱,􏵶graph􏵷);   //CB052
+    􏵲create device and apply to ground􏵳&􏵴n2 trim􏵵,"N2 TRIM",0,5.0f,􏵱,􏵶graph􏵷);       //CB044
+    􏵲create device and apply to ground􏵳&􏵴instr􏵵,"INSTR",0,7.5f,􏵱,􏵶graph􏵷);        //CB045
+    􏵲create device and apply to ground􏵳&􏵴acol􏵵,"ACOL",0,5.0f,􏵱,􏵶graph􏵷);         //CB046
+    􏵲create device and apply to ground􏵳&􏵴em ex􏵵,"EM/EX",0,3.0f,􏵱,􏵶graph􏵷);         //CB047
+    􏵲create device and apply to ground􏵳&􏵴cc ped winch􏵵,"CC-PED WINCH",0,7.5f,􏵱,􏵶graph􏵷);   //CB048
+    􏵲create device and apply to ground􏵳&􏵴aux tank􏵵,"AUX TANK",0,0.0f,􏵱,􏵶graph􏵷);      //CB049
+    􏵲create device and apply to ground􏵳&􏵴pt st plt􏵵,"PT ST PLT",0,7.5f,􏵱,􏵶graph􏵷);      //CB050
+    􏵲create device and apply to ground􏵳&􏵴floats􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FLOATS",0,0.0f,􏵱,􏵶graph􏵷);       //CB051
+    􏵲create device and apply to ground􏵳&􏵴dwnlnk adu b􏵵,"DWNLNK ADU B",0,5.0f,􏵱,􏵶graph􏵷);   //CB052
 􏶳
 
 􏷘-􏷗􏷒create right panel devices for row 7􏷑
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 7,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡  
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴start􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"START",0,5.0f,􏵱,􏵶graph􏵷);        //CB026
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ign􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"IGN",0,7.5f,􏵱,􏵶graph􏵷);          //CB027
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel v􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL V",0,2.0f,􏵱,􏵶graph􏵷);        //CB028
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fire d􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FIRE D",0,1.0f,􏵱,􏵶graph􏵷);        //CB029
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴prime p􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PRIME P",0,5.0f,􏵱,􏵶graph􏵷);       //CB030
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴ovsp􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"OVSP",0,5.0f,􏵱,􏵶graph􏵷);         //CB031
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴tq n2􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"TQ N2",0,3.0f,􏵱,􏵶graph􏵷);         //CB032
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴rotor rpm􏵵,"ROTOR RPM",0,1.0f,􏵱,􏵶graph􏵷);     //CB033
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴sand filt􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"SAND FILT",0,5.0f,􏵱,􏵶graph􏵷); //CB034
+    􏵲create device and apply to ground􏵳&􏵴start􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"START",0,5.0f,􏵱,􏵶graph􏵷);        //CB026
+    􏵲create device and apply to ground􏵳&􏵴ign􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"IGN",0,7.5f,􏵱,􏵶graph􏵷);          //CB027
+    􏵲create device and apply to ground􏵳&􏵴fuel v􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL V",0,2.0f,􏵱,􏵶graph􏵷);        //CB028
+    􏵲create device and apply to ground􏵳&􏵴fire d􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FIRE D",0,1.0f,􏵱,􏵶graph􏵷);        //CB029
+    􏵲create device and apply to ground􏵳&􏵴prime p􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"PRIME P",0,5.0f,􏵱,􏵶graph􏵷);       //CB030
+    􏵲create device and apply to ground􏵳&􏵴ovsp􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"OVSP",0,5.0f,􏵱,􏵶graph􏵷);         //CB031
+    􏵲create device and apply to ground􏵳&􏵴tq n2􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"TQ N2",0,3.0f,􏵱,􏵶graph􏵷);         //CB032
+    􏵲create device and apply to ground􏵳&􏵴rotor rpm􏵵,"ROTOR RPM",0,1.0f,􏵱,􏵶graph􏵷);     //CB033
+    􏵲create device and apply to ground􏵳&􏵴sand filt􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"SAND FILT",0,5.0f,􏵱,􏵶graph􏵷); //CB034
 􏶳
 
 
@@ -463,154 +441,154 @@ and put them into the generic electrical graph data structure.􏷏
 􏷐Constructs all of the electrical components that make up the right portion of the 􏶏 in row 8,
 and put them into the generic electrical graph data structure.􏷏
 􏶠This will give all of the created devices a valid id for querying the graph later.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will construct its right panel devices into.􏶿
 􏶴
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴vemd􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"VEMD",0,5.0f,􏵱,􏵶graph􏵷);         //CB009
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴cad􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"CAD",0,5.0f,􏵱,􏵶graph􏵷);          //CB010
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴wu􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"WU",0,2.0f,􏵱,􏵶graph􏵷);           //CB011
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴hyd p􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"HYD P",0,2.0f,􏵱,􏵶graph􏵷);         //CB012
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fuel l􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL L",0,1.0f,􏵱,􏵶graph􏵷);        //CB013
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴fire e􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL E",0,5.0f,􏵱,􏵶graph􏵷);        //CB014
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴bt􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"BT",0,1.0f,􏵱,􏵶graph􏵷);           //CB015
-    CreateDeviceAndApplyToGround(ptOutputs,&􏵴gen􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"GEN",0,1.0f,􏵱,􏵶graph􏵷);          //CB016
+    􏵲create device and apply to ground􏵳&􏵴vemd􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"VEMD",0,5.0f,􏵱,􏵶graph􏵷);         //CB009
+    􏵲create device and apply to ground􏵳&􏵴cad􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"CAD",0,5.0f,􏵱,􏵶graph􏵷);          //CB010
+    􏵲create device and apply to ground􏵳&􏵴wu􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"WU",0,2.0f,􏵱,􏵶graph􏵷);           //CB011
+    􏵲create device and apply to ground􏵳&􏵴hyd p􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"HYD P",0,2.0f,􏵱,􏵶graph􏵷);         //CB012
+    􏵲create device and apply to ground􏵳&􏵴fuel l􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL L",0,1.0f,􏵱,􏵶graph􏵷);        //CB013
+    􏵲create device and apply to ground􏵳&􏵴fire e􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"FUEL E",0,5.0f,􏵱,􏵶graph􏵷);        //CB014
+    􏵲create device and apply to ground􏵳&􏵴bt􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"BT",0,1.0f,􏵱,􏵶graph􏵷);           //CB015
+    􏵲create device and apply to ground􏵳&􏵴gen􏵵[ELECTRICAL_SYSTEM_SIDE_RIGHT],"GEN",0,1.0f,􏵱,􏵶graph􏵷);          //CB016
 􏶳
 
 􏷘-􏷗􏷒connect devices􏷑
 􏷐Connects all of the necessary 􏶐 devices and buses together.􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
 􏶴
   size_t unIndex = FIRST_ELECTRICAL_SYSTEM_SIDE;
   for (; unIndex < NUM_ELECTRICAL_SYSTEM_SIDES; ++unIndex){
     
       //row 1
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴dimm test􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴dimm test􏵵[unIndex]);
       
       //row 3
-      ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,unIndex,􏵴pwr􏵵[unIndex]);
+      􏵲connect device with shed􏵳􏵶graph􏵷,unIndex,􏵴pwr􏵵[unIndex]);
 
       //row 4
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fcdm􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴nd􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴pfd􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴blw pel􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ahrs1􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ahrs2􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴adc􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴avio mstr􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ess avio main􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴fcdm􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴nd􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴pfd􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴blw pel􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴ahrs1􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴ahrs2􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴adc􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴avio mstr􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴ess avio main􏵵[unIndex]);
 
       //row 5
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ics􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴ics􏵵[unIndex]);
       
       //row 6
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴floats􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴floats􏵵[unIndex]);
       
       //row 7
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ovsp􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴prime p􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fire d􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fuel v􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴ign􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴start􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴tq n2􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴sand filt􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴ovsp􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴prime p􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴fire d􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴fuel v􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴ign􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴start􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴tq n2􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴sand filt􏵵[unIndex]);
 
       //row 8
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴gen􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴bt􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fire e􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴fuel l􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴hyd p􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴wu􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴cad􏵵[unIndex]);
-      ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,unIndex,􏵴vemd􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴gen􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴bt􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴fire e􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴fuel l􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴hyd p􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴wu􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴cad􏵵[unIndex]);
+      􏵲connect device with essential􏵳􏵶graph􏵷,unIndex,􏵴vemd􏵵[unIndex]);
   }
   
   //row 1
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴stby hor bat􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ic amp􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ics cab􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴com4 xcvr􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴com4 ctrl􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ics backup􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴nms2􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴bat em ex lt􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴stby hor bat􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ic amp􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ics cab􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴com4 xcvr􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴com4 ctrl􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ics backup􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴nms2􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴bat em ex lt􏵵);
 
   //row 2
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴vhf tx1􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms1􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms blw􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴lh mon􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴bambi bucket􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴avio main1􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴avio main 2􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴emer bat􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴video dist􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rh mon􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mov map􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rad alt􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dme􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cm3 ant􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cm3 rt􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mkr􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴com5 xcvr􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴vhf tx1􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms1􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms blw􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴lh mon􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴bambi bucket􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴avio main1􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴avio main 2􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴emer bat􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴video dist􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rh mon􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mov map􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rad alt􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dme􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cm3 ant􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cm3 rt􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mkr􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴com5 xcvr􏵵);
 
   //row 3
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴fcds2 backup􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pt st cp􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ap2􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴mir􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cargo pax lt􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont1 ls lt􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴xfera pump􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴htgv􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴inst cool􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pax blw􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cont2􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴atc􏵵);
-  ConnectDeviceWithShed(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴waas relay􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴fcds2 backup􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pt st cp􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ap2􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴mir􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cargo pax lt􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont1 ls lt􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴xfera pump􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴htgv􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴inst cool􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pax blw􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cont2􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴atc􏵵);
+  􏵲connect device with shed􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴waas relay􏵵);
 
   //row 4
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms12 relay􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴roll2 sema􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴nms12 relay􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴roll2 sema􏵵);
 
   //row 5
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴instr lights􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴p1 sas􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴htg cont􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt vent􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ftr􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴roll1 sas􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴yaw sas􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴beep trim􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mast mom􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴xferf pump􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴p2 sema􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ap1􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴altm vibr􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴vhf tx2􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴instr lights􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴p1 sas􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴htg cont􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt vent􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ftr􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴roll1 sas􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴yaw sas􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴beep trim􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴mast mom􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴xferf pump􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴p2 sema􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴ap1􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴altm vibr􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴vhf tx2􏵵);
 
   //row 6
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cc pil􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴boom􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pos􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ldg􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴var nr􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴n2 trim􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴instr􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴acol􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴em ex􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cc ped winch􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴aux tank􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pt st plt􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dwnlnk adu b􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cont􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cc pil􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴boom􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴pos􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ldg􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴ckpt􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴var nr􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴n2 trim􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴instr􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴acol􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴em ex􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴cc ped winch􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴aux tank􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴pt st plt􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴dwnlnk adu b􏵵);
 
   //row 7
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴wiper􏵵);
-  ConnectDeviceWithEssential(ptOutputs,􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rotor rpm􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴wiper􏵵);
+  􏵲connect device with essential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_RIGHT,􏵴rotor rpm􏵵);
   
   //center console
   􏵲connect device with nonessential􏵳􏵶graph􏵷,ELECTRICAL_SYSTEM_SIDE_LEFT,􏵴cabin monitor􏵵);
@@ -626,60 +604,39 @@ and put them into the generic electrical graph data structure.􏷏
 􏷘-􏷗􏷒connect device with essential􏷑
 􏷐Connects all of the necessary 􏶐 devices to the essential bus􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
 􏶜􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
 􏶜􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
 􏶴
   //connect two nodes trigger
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddWire = 􏵱;
   
   //connect device and bus
-  tInputs.m_uNodeX = 􏵶device􏵷;
-  tInputs.m_uNodeY = 􏵴essential bus􏵵[􏵶side􏵷];
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵶device􏵷,􏵴essential bus􏵵[􏵶side􏵷],0.0f,0.0f,􏵱);
 􏶳
 
 􏷘-􏷗􏷒connect device with nonessential􏷑
 􏷐Connects all of the necessary 􏶐 devices to the nonessential bus􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
 􏶜􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
 􏶜􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
 􏶴
   //connect two nodes trigger
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddWire = 􏵱;
   
   //connect device and bus
-  tInputs.m_uNodeX = 􏵶device􏵷;
-  tInputs.m_uNodeY = 􏵴nonessential bus􏵵[􏵶side􏵷];
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵶device􏵷,􏵴nonessential bus􏵵[􏵶side􏵷],0.0f,0.0f,􏵱);
 􏶳
 􏷘-􏷗􏷒connect device with shed􏷑
 􏷐Connects all of the necessary 􏶐 devices to the essential bus􏷏
 􏶠The nodes being connected will need to be created first.􏶡
-􏶜mr􏶝􏷆ElectricalGraphOutputsT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
+􏶜mr􏶝􏷆ElectricalGraphT􏷅􏷄graph􏷃􏷀A generic electrical graph that the 􏶏 will set these connections into.􏶿
 􏶜􏶝􏷆ElectricalSystemSideE􏷅􏷄side􏷃􏷀Specify what side on the overhead panel.􏶿
 􏶜􏶝􏷆size_t􏷅􏷄device􏷃􏷀The device in which to connect to the bus.􏶿
 􏶴
   //connect two nodes trigger
-  ElectricalGraphInputsT tInputs = {0};
-  tInputs.m_bAddWire = 􏵱;
   
   //connect device and bus
-  tInputs.m_uNodeX = 􏵶device􏵷;
-  tInputs.m_uNodeY = 􏵴shed bus􏵵[􏵶side􏵷];
-  tInputs.m_fResistance = 0.0f;
-  tInputs.m_fExpectedAmperage = 0.0f;
-  tInputs.m_bHasFlow = 􏵱;
-  UpdateElectricalGraph(􏵶graph􏵷,&tInputs);
+  ElectricalGraphAddWire(􏵶graph􏵷,􏵶device􏵷,􏵴shed bus􏵵[􏵶side􏵷],0.0f,0.0f,􏵱);
 􏶳
 
 
