@@ -208,192 +208,273 @@ based on the outputs of various systems and connections􏶡
     BindBreakerModifiers(􏵶inputs􏵷)
     
     
-    CircuitBreakerT m_tStbyHorBat;   //row 1 CB135
-                                     //row 1 CB136 (Vacant)
-    CircuitBreakerT m_tIcAmp;        //row 1 CB137
-    CircuitBreakerT m_tIcsCab;       //row 1 CB138
-    CircuitBreakerT m_tDimmTest;     //row 1 CB139
-    CircuitBreakerT m_tCom4Xcvr;     //row 1 CB140
-    CircuitBreakerT m_tCom4Ctrl;     //row 1 CB141
-                                     //row 1 CB142 (Vacant)
-    CircuitBreakerT m_tVhfTx1;       //row 2 CB113
-    CircuitBreakerT m_tNms1;         //row 2 CB114
-    CircuitBreakerT m_tNmsBlw;       //row 2 CB115
-                                     //row 2 CB116 (Vacant)
-    CircuitBreakerT m_tLhMon;        //row 2 CB117
-                                     //row 2 CB118 (Inactive)
-                                     //row 2 CB119 (Inactive)
-                                     //row 2 CB120 (Vacant)
-    CircuitBreakerT m_tBambiBucket;  //row 2 CB121
-                                     //row 2 CB122 (Vacant)
-    CircuitBreakerT m_tAvioMain1;    //row 2 CB123
-    CircuitBreakerT m_tFcds2Backup;  //row 3 CB093
-                                     //row 3 CB094 (Inactive)
-                                     //row 3 CB095 (Inactive)
-    CircuitBreakerT m_tPtStCp;       //row 3 CB096
-    CircuitBreakerT m_tAp2;          //row 3 CB097
-    //CircuitBreakerOutputsT m_tMir;          row 3 CB098 (Missing)
-    CircuitBreakerT m_tPwr;          //row 3 CB099
-    CircuitBreakerT m_tCargoPaxLt;   //row 3 CB100
-    CircuitBreakerT m_tCont1LsLt;    //row 3 CB101
-    CircuitBreakerT m_tXferaPump;    //row 3 CB102
-    CircuitBreakerT m_tFcdm1;        //row 4 CB073
-    CircuitBreakerT m_tNd1;          //row 4 CB074
-    CircuitBreakerT m_tPfd1;         //row 4 CB075
-    CircuitBreakerT m_tBlwPel;       //row 4 CB076
-    CircuitBreakerT m_tNms12Relay;   //row 4 CB077
-    CircuitBreakerT m_tAhrs1;        //row 4 CB078
-    CircuitBreakerT m_tAhrs2;        //row 4 CB079
-    CircuitBreakerT m_tAdc;          //row 4 CB080
-    CircuitBreakerT m_tAvioMstr;     //row 4 CB081
-    CircuitBreakerT m_tEssAvioMain1; //row 4 CB082
-                                     //row 5 CB053 (Vacant)
-    CircuitBreakerT m_tIcs;          //row 5 CB054
-                                     //row 5 CB055 (Vacant)
-    CircuitBreakerT m_tInstrLights;  //row 5 CB056
-    CircuitBreakerT m_tP1Sas;        //row 5 CB057
-                                     //row 5 CB058 (Vacant)
-    CircuitBreakerT m_tHtgCont;      //row 5 CB059
-    CircuitBreakerT m_tCkptVent;     //row 5 CB060
-    CircuitBreakerT m_tFtr;          //row 5 CB061
-    CircuitBreakerT m_tRoll1Sas;     //row 5 CB062
-                                     //row 6 CB035 (Inactive)
-    //CircuitBreakerOutputsT m_tFloats;       row 6 CB036 (Missing)
-    CircuitBreakerT m_tCont;         //row 6 CB037 
-    CircuitBreakerT m_tCcPil;        //row 6 CB038
-    CircuitBreakerT m_tBoom;         //row 6 CB039
-    CircuitBreakerT m_tPos;          //row 6 CB040
-    CircuitBreakerT m_tLdg;          //row 6 CB041
-    CircuitBreakerT m_tCkpt;         //row 6 CB042
-    CircuitBreakerT m_tVarNr;        //row 6 CB043
-    CircuitBreakerT m_tSandFilt;     //row 7 CB017
-    CircuitBreakerT m_tWiper;        //row 7 CB018
-    CircuitBreakerT m_tTqN2;         //row 7 CB019
-    CircuitBreakerT m_tOvsp;         //row 7 CB020
-    CircuitBreakerT m_tPrimeP;       //row 7 CB021
-    CircuitBreakerT m_tFireD;        //row 7 CB022
-    CircuitBreakerT m_tFuelV;        //row 7 CB023
-    CircuitBreakerT m_tIgn;          //row 7 CB024
-    CircuitBreakerT m_tStart;        //row 7 CB025
-    CircuitBreakerT m_tGen;          //row 8 CB001
-    CircuitBreakerT m_tBt;           //row 8 CB002
-    CircuitBreakerT m_tFireE;        //row 8 CB003
-    CircuitBreakerT m_tFuelL;        //row 8 CB004
-    CircuitBreakerT m_tHydP;         //row 8 CB005
-    CircuitBreakerT m_tWu;           //row 8 CB006
-    CircuitBreakerT m_tCad;          //row 8 CB007
-    CircuitBreakerT m_tVemd;         //row 8 CB008
-} CoPilotBreakersT; //(left)
-
-typedef struct PilotBreakers_t
-{
-    //row 1 CB143 (Vacant)
-    //row 1 CB144 (Vacant)
-    //row 1 CB145 (Vacant)
-    CircuitBreakerT m_tDimmTest2;    //row 1 CB146
-    CircuitBreakerT m_tICSBackup;    //row 1 CB147
-    CircuitBreakerT m_tNms2;         //row 1 CB148
-    CircuitBreakerT m_tBatEmExLt;    //row 1 CB149
-    CircuitBreakerT m_tAvioMain2;    //row 2 CB124
-    CircuitBreakerT m_tEmerBat;      //row 2 CB125
-    CircuitBreakerT m_tVideoDist;    //row 2 CB126
-    CircuitBreakerT m_tRhMon;        //row 2 CB127
-    CircuitBreakerT m_tMovMap;       //row 2 CB128
-    CircuitBreakerT m_tRadAlt;       //row 2 CB129
-    CircuitBreakerT m_tDme;          //row 2 CB130
-    CircuitBreakerT m_tCm3Ant;       //row 2 CB131
-    CircuitBreakerT m_tCm3Rt;        //row 2 CB132
-    CircuitBreakerT m_tMkr;          //row 2 CB133
-    CircuitBreakerT m_tCom5Xcvr;     //row 2 CB134
-    CircuitBreakerT m_tHtgv;         //row 3 CB103
-    CircuitBreakerT m_tInstCool;     //row 3 CB104
-    CircuitBreakerT m_tPaxBlw;       //row 3 CB105
-    CircuitBreakerT m_tPwr;          //row 3 CB106
-    CircuitBreakerT m_tCont2;        //row 3 CB107
-                                     //row 3 CB108 (Vacant)
-                                     //row 3 CB109 (Inactive)
-    CircuitBreakerT m_tAtc;          //row 3 CB110
-    CircuitBreakerT m_tWaasRelay;    //row 3 CB111
-                                     //row 3 CB112 (Inactive)
-    CircuitBreakerT m_tEssAvioMain2; //row 4 CB083
-    CircuitBreakerT m_tAvioMast;     //row 4 CB084
-    CircuitBreakerT m_tAdc;          //row 4 CB085
-    CircuitBreakerT m_tAhrs1;        //row 4 CB086
-    CircuitBreakerT m_tAh2s2;        //row 4 CB087
-    CircuitBreakerT m_tRoll2Sema;    //row 4 CB088
-    CircuitBreakerT m_tBlwPel;       //row 4 CB089
-    CircuitBreakerT m_tPfd2;         //row 4 CB090
-    CircuitBreakerT m_tNd2;          //row 4 CB091
-    CircuitBreakerT m_tFcdm2;        //row 4 CB092
-    CircuitBreakerT m_tYawSas;       //row 5 CB063
-    CircuitBreakerT m_tBeepTrim;     //row 5 CB064
-    CircuitBreakerT m_tMastMom;      //row 5 CB065
-    CircuitBreakerT m_tXferfPump;    //row 5 CB066
-                                     //row 5 CB067 (Vacant)
-    CircuitBreakerT m_tP2Sema;       //row 5 CB068
-    CircuitBreakerT m_tAp1;          //row 5 CB069
-    CircuitBreakerT m_tAltmVibr;     //row 5 CB070
-    CircuitBreakerT m_tIcs;          //row 5 CB071
-    CircuitBreakerT m_tVhfTx2;       //row 5 CB072
-    CircuitBreakerT m_tN2Trim;       //row 6 CB044
-    CircuitBreakerT m_tInstr;        //row 6 CB045
-    CircuitBreakerT m_tAcol;         //row 6 CB046
-    CircuitBreakerT m_tEmEx;         //row 6 CB047
-    CircuitBreakerT m_tCcPedWinch;   //row 6 CB048
-    //CircuitBreakerOutputsT m_tAuxTank;      row 6 CB049 (Missing)
-    CircuitBreakerT m_tPtStPlt;      //row 6 CB050
-    //CircuitBreakerOutputsT m_tFloats;       row 6 CB051 (Missing)
-    CircuitBreakerT m_tDwnlnkAduB;   //row 6 CB052
-    CircuitBreakerT m_tStart;        //row 7 CB026
-    CircuitBreakerT m_tIgn;          //row 7 CB027
-    CircuitBreakerT m_tFuelV;        //row 7 CB028
-    CircuitBreakerT m_tFireD;        //row 7 CB029
-    CircuitBreakerT m_tPrimeP;       //row 7 CB030
-    CircuitBreakerT m_tOvsp;         //row 7 CB031
-    CircuitBreakerT m_tTqN2;         //row 7 CB032
-    CircuitBreakerT m_tRotorRpm;     //row 7 CB033
-    CircuitBreakerT m_tSandFilt;     //row 7 CB034
-    CircuitBreakerT m_tVemd;         //row 8 CB009
-    CircuitBreakerT m_tCad;          //row 8 CB010
-    CircuitBreakerT m_tWu;           //row 8 CB011
-    CircuitBreakerT m_tHydP;         //row 8 CB012
-    CircuitBreakerT m_tFuelL;        //row 8 CB013
-    CircuitBreakerT m_tFireE;        //row 8 CB014
-    CircuitBreakerT m_tBt;           //row 8 CB015
-    CircuitBreakerT m_tGen;          //row 8 CB016
-} PilotBreakersT; //(right)
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tStbyHorBat,􏵶system􏵷->m_tOverheadPanel   //row 1 CB135
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tIcAmp,􏵶system􏵷->m_tOverheadPanel        //row 1 CB137
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tIcsCab,􏵶system􏵷->m_tOverheadPanel       //row 1 CB138
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tDimmTest,􏵶system􏵷->m_tOverheadPanel     //row 1 CB139
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCom4Xcvr,􏵶system􏵷->m_tOverheadPanel     //row 1 CB140
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCom4Ctrl,􏵶system􏵷->m_tOverheadPanel     //row 1 CB141
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tVhfTx1,􏵶system􏵷->m_tOverheadPanel       //row 2 CB113
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tNms1,􏵶system􏵷->m_tOverheadPanel         //row 2 CB114
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tNmsBlw,􏵶system􏵷->m_tOverheadPanel       //row 2 CB115
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tLhMon,􏵶system􏵷->m_tOverheadPanel        //row 2 CB117
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tBambiBucket,􏵶system􏵷->m_tOverheadPanel  //row 2 CB121
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tAvioMain1,􏵶system􏵷->m_tOverheadPanel    //row 2 CB123
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tFcds2Backup,􏵶system􏵷->m_tOverheadPanel  //row 3 CB093
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tPtStCp,􏵶system􏵷->m_tOverheadPanel       //row 3 CB096
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tAp2,􏵶system􏵷->m_tOverheadPanel          //row 3 CB097
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tPwr,􏵶system􏵷->m_tOverheadPanel          //row 3 CB099
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCargoPaxLt,􏵶system􏵷->m_tOverheadPanel   //row 3 CB100
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCont1LsLt,􏵶system􏵷->m_tOverheadPanel    //row 3 CB101
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tXferaPump,􏵶system􏵷->m_tOverheadPanel    //row 3 CB102
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tFcdm1,􏵶system􏵷->m_tOverheadPanel        //row 4 CB073
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tNd1,􏵶system􏵷->m_tOverheadPanel          //row 4 CB074
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tPfd1,􏵶system􏵷->m_tOverheadPanel         //row 4 CB075
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tBlwPel,􏵶system􏵷->m_tOverheadPanel       //row 4 CB076
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tNms12Relay,􏵶system􏵷->m_tOverheadPanel   //row 4 CB077
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tAhrs1,􏵶system􏵷->m_tOverheadPanel        //row 4 CB078
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tAhrs2,􏵶system􏵷->m_tOverheadPanel        //row 4 CB079
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tAdc,􏵶system􏵷->m_tOverheadPanel          //row 4 CB080
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tAvioMstr,􏵶system􏵷->m_tOverheadPanel     //row 4 CB081
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tEssAvioMain1,􏵶system􏵷->m_tOverheadPanel //row 4 CB082
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tIcs,􏵶system􏵷->m_tOverheadPanel          //row 5 CB054
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tInstrLights,􏵶system􏵷->m_tOverheadPanel  //row 5 CB056
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tP1Sas,􏵶system􏵷->m_tOverheadPanel        //row 5 CB057
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tHtgCont,􏵶system􏵷->m_tOverheadPanel      //row 5 CB059
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCkptVent,􏵶system􏵷->m_tOverheadPanel     //row 5 CB060
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tFtr,􏵶system􏵷->m_tOverheadPanel          //row 5 CB061
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tRoll1Sas,􏵶system􏵷->m_tOverheadPanel     //row 5 CB062
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCont,􏵶system􏵷->m_tOverheadPanel         //row 6 CB037 
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCcPil,􏵶system􏵷->m_tOverheadPanel        //row 6 CB038
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tBoom,􏵶system􏵷->m_tOverheadPanel         //row 6 CB039
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tPos,􏵶system􏵷->m_tOverheadPanel          //row 6 CB040
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tLdg,􏵶system􏵷->m_tOverheadPanel          //row 6 CB041
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCkpt,􏵶system􏵷->m_tOverheadPanel         //row 6 CB042
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tVarNr,􏵶system􏵷->m_tOverheadPanel        //row 6 CB043
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tSandFilt,􏵶system􏵷->m_tOverheadPanel     //row 7 CB017
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tWiper,􏵶system􏵷->m_tOverheadPanel        //row 7 CB018
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tTqN2,􏵶system􏵷->m_tOverheadPanel         //row 7 CB019
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tOvsp,􏵶system􏵷->m_tOverheadPanel         //row 7 CB020
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tPrimeP,􏵶system􏵷->m_tOverheadPanel       //row 7 CB021
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tFireD,􏵶system􏵷->m_tOverheadPanel        //row 7 CB022
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tFuelV,􏵶system􏵷->m_tOverheadPanel        //row 7 CB023
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tIgn,􏵶system􏵷->m_tOverheadPanel          //row 7 CB024
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tStart,􏵶system􏵷->m_tOverheadPanel        //row 7 CB025
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tGen,􏵶system􏵷->m_tOverheadPanel          //row 8 CB001
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tBt,􏵶system􏵷->m_tOverheadPanel           //row 8 CB002
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tFireE,􏵶system􏵷->m_tOverheadPanel        //row 8 CB003
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tFuelL,􏵶system􏵷->m_tOverheadPanel        //row 8 CB004
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tHydP,􏵶system􏵷->m_tOverheadPanel         //row 8 CB005
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tWu,􏵶system􏵷->m_tOverheadPanel           //row 8 CB006
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tCad,􏵶system􏵷->m_tOverheadPanel          //row 8 CB007
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tCoPilot.m_tVemd,􏵶system􏵷->m_tOverheadPanel         //row 8 CB008
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tDimmTest2,􏵶system􏵷->m_tOverheadPanel    //row 1 CB146
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tICSBackup,􏵶system􏵷->m_tOverheadPanel    //row 1 CB147
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tNms2,􏵶system􏵷->m_tOverheadPanel         //row 1 CB148
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tBatEmExLt,􏵶system􏵷->m_tOverheadPanel    //row 1 CB149
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAvioMain2,􏵶system􏵷->m_tOverheadPanel    //row 2 CB124
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tEmerBat,􏵶system􏵷->m_tOverheadPanel      //row 2 CB125
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tVideoDist,􏵶system􏵷->m_tOverheadPanel    //row 2 CB126
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tRhMon,􏵶system􏵷->m_tOverheadPanel        //row 2 CB127
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tMovMap,􏵶system􏵷->m_tOverheadPanel       //row 2 CB128
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tRadAlt,􏵶system􏵷->m_tOverheadPanel       //row 2 CB129
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tDme,􏵶system􏵷->m_tOverheadPanel          //row 2 CB130
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tCm3Ant,􏵶system􏵷->m_tOverheadPanel       //row 2 CB131
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tCm3Rt,􏵶system􏵷->m_tOverheadPanel        //row 2 CB132
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tMkr,􏵶system􏵷->m_tOverheadPanel          //row 2 CB133
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tCom5Xcvr,􏵶system􏵷->m_tOverheadPanel     //row 2 CB134
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tHtgv,􏵶system􏵷->m_tOverheadPanel         //row 3 CB103
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tInstCool,􏵶system􏵷->m_tOverheadPanel     //row 3 CB104
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tPaxBlw,􏵶system􏵷->m_tOverheadPanel       //row 3 CB105
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tPwr,􏵶system􏵷->m_tOverheadPanel          //row 3 CB106
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tCont2,􏵶system􏵷->m_tOverheadPanel        //row 3 CB107
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAtc,􏵶system􏵷->m_tOverheadPanel          //row 3 CB110
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tWaasRelay,􏵶system􏵷->m_tOverheadPanel    //row 3 CB111
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tEssAvioMain2,􏵶system􏵷->m_tOverheadPanel //row 4 CB083
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAvioMast,􏵶system􏵷->m_tOverheadPanel     //row 4 CB084
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAdc,􏵶system􏵷->m_tOverheadPanel          //row 4 CB085
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAhrs1,􏵶system􏵷->m_tOverheadPanel        //row 4 CB086
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAh2s2,􏵶system􏵷->m_tOverheadPanel        //row 4 CB087
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tRoll2Sema,􏵶system􏵷->m_tOverheadPanel    //row 4 CB088
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tBlwPel,􏵶system􏵷->m_tOverheadPanel       //row 4 CB089
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tPfd2,􏵶system􏵷->m_tOverheadPanel         //row 4 CB090
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tNd2,􏵶system􏵷->m_tOverheadPanel          //row 4 CB091
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tFcdm2,􏵶system􏵷->m_tOverheadPanel        //row 4 CB092
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tYawSas,􏵶system􏵷->m_tOverheadPanel       //row 5 CB063
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tBeepTrim,􏵶system􏵷->m_tOverheadPanel     //row 5 CB064
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tMastMom,􏵶system􏵷->m_tOverheadPanel      //row 5 CB065
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tXferfPump,􏵶system􏵷->m_tOverheadPanel    //row 5 CB066
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tP2Sema,􏵶system􏵷->m_tOverheadPanel       //row 5 CB068
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAp1,􏵶system􏵷->m_tOverheadPanel          //row 5 CB069
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAltmVibr,􏵶system􏵷->m_tOverheadPanel     //row 5 CB070
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tIcs,􏵶system􏵷->m_tOverheadPanel          //row 5 CB071
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tVhfTx2,􏵶system􏵷->m_tOverheadPanel       //row 5 CB072
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tN2Trim,􏵶system􏵷->m_tOverheadPanel       //row 6 CB044
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tInstr,􏵶system􏵷->m_tOverheadPanel        //row 6 CB045
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tAcol,􏵶system􏵷->m_tOverheadPanel         //row 6 CB046
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tEmEx,􏵶system􏵷->m_tOverheadPanel         //row 6 CB047
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tCcPedWinch,􏵶system􏵷->m_tOverheadPanel   //row 6 CB048
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tPtStPlt,􏵶system􏵷->m_tOverheadPanel      //row 6 CB050
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tDwnlnkAduB,􏵶system􏵷->m_tOverheadPanel   //row 6 CB052
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tStart,􏵶system􏵷->m_tOverheadPanel        //row 7 CB026
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tIgn,􏵶system􏵷->m_tOverheadPanel          //row 7 CB027
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tFuelV,􏵶system􏵷->m_tOverheadPanel        //row 7 CB028
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tFireD,􏵶system􏵷->m_tOverheadPanel        //row 7 CB029
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tPrimeP,􏵶system􏵷->m_tOverheadPanel       //row 7 CB030
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tOvsp,􏵶system􏵷->m_tOverheadPanel         //row 7 CB031
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tTqN2,􏵶system􏵷->m_tOverheadPanel         //row 7 CB032
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tRotorRpm,􏵶system􏵷->m_tOverheadPanel     //row 7 CB033
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tSandFilt,􏵶system􏵷->m_tOverheadPanel     //row 7 CB034
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tVemd,􏵶system􏵷->m_tOverheadPanel         //row 8 CB009
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tCad,􏵶system􏵷->m_tOverheadPanel          //row 8 CB010
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tWu,􏵶system􏵷->m_tOverheadPanel           //row 8 CB011
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tHydP,􏵶system􏵷->m_tOverheadPanel         //row 8 CB012
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tFuelL,􏵶system􏵷->m_tOverheadPanel        //row 8 CB013
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tFireE,􏵶system􏵷->m_tOverheadPanel        //row 8 CB014
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tBt,􏵶system􏵷->m_tOverheadPanel           //row 8 CB015
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tPilot.m_tGen,􏵶system􏵷->m_tOverheadPanel          //row 8 CB016
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tLowerPanel.m_tCabinMonitor,􏵶system􏵷->m_tOverheadPanel //CB019
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tLowerPanel.m_tDvr,􏵶system􏵷->m_tOverheadPanel          //CB020
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tLowerPanel.m_tMx15Imager,􏵶system􏵷->m_tOverheadPanel   //CB021
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tLowerPanel.m_tLs16Cntl,􏵶system􏵷->m_tOverheadPanel     //CB022
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tLowerPanel.m_tDwnlnkCntl,􏵶system􏵷->m_tOverheadPanel   //CB023
+    BindBreakerModifiers(􏵶inputs􏵷,&􏵶outputs􏵷->m_tBreakers.m_tLowerPanel.m_tDwnlnkAdu,􏵶system􏵷->m_tOverheadPanel    //CB024
+    
+    
 
 
-    m_tLowerPanel.m_tCabinMonitor;
-    m_tLowerPanel.m_tDvr;
-    m_tLowerPanel.m_tMx15Imager;
-    m_tLowerPanel.m_tLs16Cntl;
-    m_tLowerPanel.m_tDwnlnkCntl;
-    m_tLowerPanel.m_tDwnlnkAdu;
-    
-    
-    
-    
-        CoPilotBreakersT m_tCoPilot;
-    PilotBreakersT m_tPilot;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+stby hor bat􏶫􏶪0􏶩
+ic amp􏶫􏶪0􏶩
+ics cab􏶫􏶪0􏶩
+com4 xcvr􏶫􏶪0􏶩
+com4 ctrl􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬dimm test􏶫􏶪0􏶩
+ics backup􏶫􏶪0􏶩
+nms2􏶫􏶪0􏶩
+bat em ex lt􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+
+vhf tx1􏶫􏶪0􏶩
+nms1􏶫􏶪0􏶩
+nms blw􏶫􏶪0􏶩
+lh mon􏶫􏶪0􏶩
+bambi bucket􏶫􏶪0􏶩
+avio main1􏶫􏶪0􏶩
+avio main 2􏶫􏶪0􏶩
+emer bat􏶫􏶪0􏶩
+video dist􏶫􏶪0􏶩
+rh mon􏶫􏶪0􏶩
+mov map􏶫􏶪0􏶩
+rad alt􏶫􏶪0􏶩
+dme􏶫􏶪0􏶩
+cm3 ant􏶫􏶪0􏶩
+cm3 rt􏶫􏶪0􏶩
+mkr􏶫􏶪0􏶩
+com5 xcvr􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+
+fcds2 backup􏶫􏶪0􏶩
+pt st cp􏶫􏶪0􏶩
+ap2􏶫􏶪0􏶩
+mir􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬pwr􏶫􏶪0􏶩
+cargo pax lt􏶫􏶪0􏶩
+cont1 ls lt􏶫􏶪0􏶩
+xfera pump􏶫􏶪0􏶩
+htgv􏶫􏶪0􏶩
+inst cool􏶫􏶪0􏶩
+pax blw􏶫􏶪0􏶩
+cont2􏶫􏶪0􏶩
+atc􏶫􏶪0􏶩
+waas relay􏶫􏶪0􏶩
+􏶨􏶧􏶦􏶥
+
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fcdm􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬nd􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬pfd􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬blw pel􏶫􏶪0􏶩
+nms12 relay􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ahrs1􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ahrs2􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬adc􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬avio mstr􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ess avio main􏶫􏶪0􏶩
+roll2 sema􏶫􏶪0􏶩
+􏶨􏶧􏶦􏶥
+
+
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ics􏶫􏶪0􏶩
+instr lights􏶫􏶪0􏶩
+p1 sas􏶫􏶪0􏶩
+htg cont􏶫􏶪0􏶩
+ckpt vent􏶫􏶪0􏶩
+ftr􏶫􏶪0􏶩
+roll1 sas􏶫􏶪0􏶩
+yaw sas􏶫􏶪0􏶩
+beep trim􏶫􏶪0􏶩
+mast mom􏶫􏶪0􏶩
+xferf pump􏶫􏶪0􏶩
+p2 sema􏶫􏶪0􏶩
+ap1􏶫􏶪0􏶩
+altm vibr􏶫􏶪0􏶩
+vhf tx2􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+
+􏶨Row 6 􏶏 devices􏶧
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬floats􏶫􏶪0􏶩
+cont􏶫􏶪0􏶩
+cc pil􏶫􏶪0􏶩
+boom􏶫􏶪0􏶩
+pos􏶫􏶪0􏶩
+ldg􏶫􏶪0􏶩
+ckpt􏶫􏶪0􏶩
+var nr􏶫􏶪0􏶩
+n2 trim􏶫􏶪0􏶩
+instr􏶫􏶪0􏶩
+acol􏶫􏶪0􏶩
+em ex􏶫􏶪0􏶩
+cc ped winch􏶫􏶪0􏶩
+aux tank􏶫􏶪0􏶩
+pt st plt􏶫􏶪0􏶩
+dwnlnk adu b􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+
+􏶨Row 7 􏶏 devices􏶧
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬sand filt􏶫􏶪0􏶩
+wiper􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ovsp􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬prime p􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fire d􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fuel v􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬ign􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬start􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬tq n2􏶫􏶪0􏶩
+rotor rpm􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+
+
+􏶨Row 8 􏶏 devices􏶧
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬gen􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬bt􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fire e􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬fuel l􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬hyd p􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬wu􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬cad􏶫􏶪0􏶩
+􏶘-g􏶙􏶰􏶯􏶮size_t[NUM_ELECTRICAL_SYSTEM_SIDES]􏶭􏶬vemd􏶫􏶪0􏶩􏶨􏶧􏶦􏶥
+
+􏶨The ID of a node that is conceptually stored on the control console􏶧
+􏶦This ID will be used to query the generic electrical graph and receive back the actual device node.􏶥
+cabin monitor􏶫􏶪0􏶩
+dvr􏶫􏶪0􏶩
+mx15 imager􏶫􏶪0􏶩
+ls16 cntl􏶫􏶪0􏶩
+dwnlnk cntl􏶫􏶪0􏶩
+dwnlnk adu􏶫􏶪0􏶩
+
+
+
     
     
     
