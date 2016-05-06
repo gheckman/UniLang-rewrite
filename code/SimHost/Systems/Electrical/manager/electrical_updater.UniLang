@@ -14,91 +14,147 @@
 􏶜􏶝􏷆float􏷅􏷄time delta􏷃􏷀Delta time since the last call in milliseconds.􏶿
 􏶴
     􏶲there may be a need to simulate a spike when the generator or battery is turned on.
-    I have no information on this, so for the time being, I'll leave a comment only.
-
-    1. Change the state of particular nodes of the graph based on the input data coming in.
-       This involves:
-       - turning off flow on nodes whose electrical components are signaled to be off.
-       - popping circuit breakers
-       - opening closing relays
-       - applying malfunctions
+    I have no information on this, so for the time being, I'll leave a comment only.􏶱
     
-       *These changes may come from other systems, from the IOS, or from the PLC􏶱
+    􏶲Steps taken during each update of the electrical system:
+    􏶲1. Change the state of particular nodes in the graph based on the input data coming in.
+    This involves:
+    Turning off flow on nodes whose electrical components are signaled to be off.
+        - popping circuit breakers
+        - opening/closing relays
+        - applying malfunctions
+     All of which are done by just setting the "flow" of the electrical node to TRUE/FALSE
+     The IOS dictates malfunctions
+     The PLC dictates breakers/relays
+    
+    Consider the following situation:  
+    - The IOS triggers a breaker to pop.  
+    - We tell the PLC to pop it via DO.
+    - Until we see this reflected in the DI, it will not affect the graph.
+    So one iteration of the update may tell the PLC to pop something,  
+    And its only on a following update that those changes are reflected throughout the system.􏶱
     􏵲change electrical graph state􏵳􏵶dc system􏵷, &􏵶system􏵷->m_tInputs);
 
     􏶲2. Run algorithm to compute new electrical data among the nodes.􏶱
+    􏶲We'll use the visitor pattern to keep the traversal and algorithm of change separated􏶱
     􏵲update electrical data across graph􏵳􏵶dc system􏵷);
 
-    􏶲3. Turn off power on all components that are no longer receiving electricity in the graph.􏶱
-    􏵲stop power on disconnected components􏵳􏵶dc system􏵷);
-
-    􏶲4. Potentially fudge data to match the documents on what should ACTUALLY be displayed on the screens.
+    􏶲3. Potentially fudge data to match the documents on what should ACTUALLY be displayed on the screens.
        - Hopefully this does not need to be done if the resistances are set appropriately on each of the nodes.
        - However, I suspect that we might end up checking to see if a node's amperage is between some range, and then set it to an exact value based on that.
          because documents such as the LUH-CUSTOMIZED-REV-11-VOL-1.pdf give exact values down to two decimal places.
          Deriving these perfectly seems unlikely without spending too much time tweaking resistances.􏶱
     
-    􏶲5. Provide power flags for other systems􏶱
-    􏵲set power flags for other systems􏵳􏵶dc system􏵷,&􏵶system􏵷->m_tInputs.m_tPotentialPowerFlags,&􏵶system􏵷->m_tOutputs.m_tSystemPower);
+    􏶲4. Provide power flags for other systems􏶱
+    SetPowerFlagsForOtherSystems(􏵶dc system􏵷,&􏵶system􏵷->m_tInputs.m_tPotentialPowerFlags,&􏵶system􏵷->m_tOutputs.m_tSystemPower);
     
-    􏶲6. Provide outputs for screens􏶱
+    􏶲5. Provide outputs for screens􏶱
     􏵲set electrical loads􏵳􏵶dc system􏵷,&􏵶system􏵷->m_tOutputs.m_tLoads);
+    
 􏶳
 
 
 􏷘-􏷗􏷒change electrical graph state􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄dc system􏷃
 􏶜􏶝􏷆ElectricalSystemInputsT *const􏷅􏷄inputs􏷃
 􏶴
-    􏶲In order to change the state of the power system, we will
+    􏶲In order to change the state of the DC power system, we will
     1. Apply malfunctions
     2. Change bus tie relays, and power sources based on physical switch states
     3. Pop any breakers􏶱
     
     􏶲We take in the DC Power system, and a list of failures.
     We apply the failures to the DC Power system.􏶱
-    ApplyElectricalMalfunctions(􏵶system􏵷, &􏵶inputs􏵷->m_tMalfunctions);
+    ApplyElectricalMalfunctions(􏵶dc system􏵷, &􏵶inputs􏵷->m_tMalfunctions);
     
     􏶲We observe the switch states from the PLC, 
     and apply changes to the circuitry based on the switch positions and internal state􏶱
-    􏵲change circuitry based on switch state􏵳􏵶system􏵷, &􏵶inputs􏵷->m_tSwitches);
+    􏵲change circuitry based on switch state􏵳􏵶dc system􏵷, &􏵶inputs􏵷->m_tSwitches);
+    
+    􏶲Pop breakers physically according to the IOS􏶱
+    􏵲apply plc breaker states􏵳&􏵶inputs􏵷->m_tBreakerModifiers);
 
-    􏶲We pop any breakers that need to be triggered to pop􏶱
-    //􏵲pop breakers􏵳􏵶system􏵷, &􏵶inputs􏵷->m_tPanelBreakers);
+    􏶲We pop any breakers on the graph that are popped according to the PLC􏶱
+    􏵲apply graph breaker states􏵳􏵶dc system􏵷, &􏵶inputs􏵷->m_tBreakerModifiers);
+    
 􏶳
+
+􏷘-􏷗􏷒change circuitry based on switch state􏷑
+􏷐􏷏
+􏶠􏶡
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄dc system􏷃
+􏶜r􏶝􏷆ElectricalSwitchesT􏷅􏷄switches􏷃
+􏶴
+􏶳
+
+􏷘-􏷗􏷒apply plc breaker states􏷑
+􏷐Tells the PLC the new breaker states according to the triggers from the IOS􏷏
+􏶠If the IOS has commanded the breaker to pop, we will inform the PLC of this through our outputs􏶡
+􏶜r􏶝􏷆VectorT􏷅􏷄breaker modifiers􏷃
+􏶴
+  􏶲iterate over all of our IOS breakers coming in, and apply them to our output so they can be later used by the PLC􏶱
+  size_t uIndex = 0;
+  
+  􏶲an element of the vector􏶱
+  BreakerModifiersT tElement;
+  
+  for (; uIndex < VectorSize(􏵶breaker modifiers􏵷); ++uIndex){
+  
+    􏶲pull out the element􏶱
+    tElement = *(BreakerModifiersT*)VectorGet(􏵶breaker modifiers􏵷,uIndex))
+  
+    􏶲set the output breaker equal to the IOS trigger􏶱
+    􏶲we do this, by setting the result breaker equal to the incoming IOS breaker􏶱
+    CircuitBreakerAssign(tElement.m_ptResult,tElement.m_tIos);
+  }
+􏶳
+
+􏷘-􏷗􏷒apply graph breaker states􏷑
+􏷐Adjust the state of the graph breakers based on the state of the PLC breakers􏷏
+􏶠Adjusts whether the nodes of the graph are "flow-able" according to the physical state of the breakers􏶡
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄dc system􏷃
+􏶜r􏶝􏷆VectorT􏷅􏷄breaker modifiers􏷃
+􏶴
+  􏶲iterate over all of our PLC breakers coming in, and apply that state to the graph breakers􏶱
+  size_t uIndex = 0;
+  
+  􏶲an element of the vector􏶱
+  BreakerModifiersT tElement;
+  
+  for (; uIndex < VectorSize(􏵶breaker modifiers􏵷); ++uIndex){
+  
+    􏶲pull out the element􏶱
+    tElement = *(BreakerModifiersT*)VectorGet(􏵶breaker modifiers􏵷,uIndex))
+  
+    􏶲set the graph breaker equal to the PLC breaker􏶱
+    􏶲we do this, by setting the flow of graph node based on whether the PLC breaker is popped or not􏶱
+    ElectricalGraphGetCircuitComponent(&􏵶dc system􏵷->m_tGraph,tElement.m_uId)->m_bHasFlow = !CircuitBreakerIsPopped(&tElement.m_tPlc);
+  }
+􏶳
+
+
 
 􏷘-􏷗􏷒update electrical data across graph􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄dc system􏷃
 􏶴
 􏶳
 
 􏷘-􏷗􏷒stop power on disconnected components􏷑
 􏷐􏷏
 􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄dc system􏷃
 􏶴
-􏶳
-
-􏷘-􏷗􏷒set power flags for other systems􏷑
-􏷐􏷏
-􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
-􏶜r􏶝􏷆SystemPowerFlagsT􏷅􏷄can be powered􏷃
-􏶜mr􏶝􏷆SystemPowerFlagsT􏷅􏷄is powered􏷃
-􏶴
-  􏶲for now. gets power flags through the electrical system􏶱
-  *􏵶is powered􏵷 = *􏵶can be powered􏵷;
 􏶳
 
 􏷘-􏷗􏷒set electrical loads􏷑
 􏷐sets the electrical loads based of the updated graph􏷏
 􏶠picks nodes on the graph that other systems will be interested in,
 and provides the necessary electrical loads as an output to the system􏶡
-􏶜r􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
+􏶜r􏶝􏷆DCPowerSystemT􏷅􏷄dc system􏷃
 􏶜mr􏶝􏷆ElectricalLoadsT􏷅􏷄loads􏷃
 􏶴
   􏶲for now􏶱
@@ -111,20 +167,4 @@ and provides the necessary electrical loads as an output to the system􏶡
   􏵶loads􏵷->m_pfEssentialBusses_v[0]  = 20.0f;
   􏵶loads􏵷->m_pfEssentialBusses_v[1]  = 20.0f;
   􏵶loads􏵷->m_fBattery_v  = 20.0f;
-􏶳
-
-􏷘-􏷗􏷒change circuitry based on switch state􏷑
-􏷐􏷏
-􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
-􏶜r􏶝􏷆ElectricalSwitchesT􏷅􏷄switches􏷃
-􏶴
-􏶳
-
-􏷘-􏷗􏷒pop breakers􏷑
-􏷐􏷏
-􏶠􏶡
-􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄system􏷃
-􏶜r􏶝􏷆PanelBreakersT􏷅􏷄breakers􏷃
-􏶴
 􏶳

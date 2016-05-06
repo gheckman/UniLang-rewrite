@@ -1,7 +1,14 @@
 􏶞o􏶟
 􏷲A basic generic vector type for adding and accessing a dynamic number of elements.􏷱
-􏷰Be sure to type cast the void* returned when accessing.
-This is the typical practice of void pointers.􏷯
+􏷰The implementation of this vector is modeled off of the interface of STL vector.
+It's obviously slower in C than it would be in C++, because we don't have templates to stamp out the type.
+It relies on the casting of void pointers.  Void pointers are a sacrifice made for generic types at the expense of speed.
+Templates are the best of both worlds.
+
+Usage note:  
+Be sure to type cast the void* returned when accessing.
+This is the typical practice of void pointers.
+See the unit tests for further examples and use of functionality.􏷯
 􏷮Vector􏷭 􏷮Data Structure􏷭
 􏷬Trevor Hickey􏷫
 
@@ -234,7 +241,7 @@ The added item will be the last item.􏶡
     􏶲would have been heavy macros to stamp out the typed vector􏶱
 􏶳
 
-􏷘-􏷗􏷒is empty􏷑
+􏷘+􏷗􏷒is empty􏷑
 􏷐checks whether the vector is empty or not􏷏
 􏶠􏵱 if the vector is empty(size == 0), 􏵰 if it is not(size > 0)􏶡
 􏶚m􏶛􏶾BOOL􏶽􏶼is empty􏶻􏶺whether or not the vector is empty􏶹
@@ -246,6 +253,22 @@ The added item will be the last item.􏶡
     
     􏶲returns false if vector is NOT empty􏶱
     return 􏵰;
+􏶳
+
+􏷘+􏷗􏷒size􏷑
+􏷐the current number of elements in the vector􏷏
+􏶠an empty vector would return 0􏶡
+􏶚m􏶛􏶾size_t􏶽􏶼size􏶻􏶺the size of the vector (i.e. the number of elements)􏶹
+􏶴
+    return 􏵴size􏵵;
+􏶳
+
+􏷘+􏷗􏷒capacity􏷑
+􏷐the current capcity of the vector􏷏
+􏶠returns the number of elements that the container has currently allocated space for (NOT how many elements the vector actually has)􏶡
+􏶚m􏶛􏶾size_t􏶽􏶼capacity􏶻􏶺the number of elements the container has currently allocated space for􏶹
+􏶴
+    return 􏵴capacity􏵵;
 􏶳
 
 􏶨the number of elements currently in the 􏶐􏶧

@@ -47,6 +47,15 @@
     􏵴popped􏵵 = 􏵶popped􏵷;
 􏶳
 
+􏷘+􏷗􏷒assign􏷑
+􏷐overloaded assignment operator (sort of)􏷏
+􏶠lhs = rhs􏶡
+􏶜􏶝􏷆CircuitBreakerT􏷅􏷄rhs􏷃􏷀the circuit breaker to assign to the lhs􏶿
+􏶴
+    􏶲assign over the data members􏶱
+    􏵴popped􏵵 = 􏵶rhs􏵷.m_bPopped;
+􏶳
+
 􏶨The state that the 􏶐 is currently in􏶧
 􏶦Can be opened(popped) or closed (unpopped)􏶥
 􏶘-g􏶙􏶮BOOL􏶭􏶬popped􏶫􏶪􏶩

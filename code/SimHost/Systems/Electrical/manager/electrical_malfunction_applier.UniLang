@@ -101,7 +101,7 @@
 􏶜􏶝􏷆size_t􏷅􏷄id􏷃􏷀The ID of the node to change flow state on􏶿
 􏶜􏶝􏷆BOOL􏷅􏷄malfunction􏷃􏷀whether or not the malfunction occurred.  True malfunctions stop flow.  False malfunctions give flow.􏶿
 􏶴
-    􏶲get the generic elecrical component􏶱
+    􏶲get the generic electrical component􏶱
     􏶲apply a possible malfunction to it
     You'll notice that we NOT(!) the malfunction.
     That's because the malfunction are true when they occur, but we're assigning it to

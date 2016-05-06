@@ -1,0 +1,1426 @@
+􏶞g􏶟
+􏷲Sets the "Is Powered" flags based off the "Can be powered" flags as well as graph state􏷱
+􏷰These flags are set and used by all of the other systems􏷯
+􏷮Electrical_System􏷭 􏷮Power_Decider􏷭
+􏷬Trevor Hickey􏷫
+
+􏷤􏷣􏷦ElectricalPowerFlags􏷥􏷢USES: SystemPowerFlagsT􏷡
+􏷤􏷣􏷦DCPowerSystem􏷥􏷢USES: DCPowerSystemT􏷡
+
+􏷘+􏷗􏷒set power flags for other systems􏷑
+􏷐Decides on "Can be powered flags" for all system flags􏷏
+􏶠The results of this function are the flags that get sent back to the other systems􏶡
+􏶜mr􏶝􏷆DCPowerSystemT􏷅􏷄dc system􏷃
+􏶜r􏶝􏷆SystemPowerFlagsT􏷅􏷄can be powered􏷃
+􏶜mr􏶝􏷆SystemPowerFlagsT􏷅􏷄is powered􏷃
+􏶴
+  􏶲start, by mirroring what the systems say􏶱
+  􏶲if the system says that something can be powered, start by assuming that is powered􏶱
+  􏶲if the system says that something CANNOT be powered, start by assuming that is NOT powered􏶱
+  *􏵶is powered􏵷 = *􏵶can be powered􏵷;
+  
+  􏶲now we just remove power based on exception􏶱
+􏶳
+
+
+
+
+
+
+
+
+
+
+// Local function declarations
+static void ChangeElectricalGraphState(DCPowerSystemOutputsT *const ptSystem, const ElectricalSystemInputsT *const ptInputs);
+static void UpdateElectricalDataAcrossGraph(DCPowerSystemOutputsT *const ptSystem);
+static void StopPowerOnDisconnectedComponents(DCPowerSystemOutputsT *const ptSystem);
+static void SetPowerFlagsForOtherSystems(DCPowerSystemOutputsT *const ptSystem, const SystemPowerFlagsT *const ptCanBePowered, SystemPowerFlagsT *const ptIsPowered);
+static void SetElectricalLoads(const DCPowerSystemOutputsT *const ptSystem, ElectricalLoadsDataT *const ptLoads);
+static void ChangeCircuitryBasedOnSwitchState(DCPowerSystemOutputsT *const ptSystem, const ElectricalSwitchesT *const ptSwitches);
+static void PopBreakers(DCPowerSystemOutputsT *const ptSystem, const PanelBreakersT *const ptBreakers);
+static void SetRadioSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, RadioPowerFlagsT *const ptRadioPowerFlags);
+static void SetFireSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, FirePowerFlagsT *const ptFirePowerFlags);
+static void SetHydraulicSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, HydraulicPowerFlagsT *const ptHydraulicPowerFlags);
+static void SetLightingSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, LightingPowerFlagsT *const ptLightingPowerFlags);
+static void SetMEPSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, MissionEquipmentPackagePowerFlagsT *const ptMEPPowerFlags);
+static void SetFlightControlsSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, FlightControlsPowerFlagsT *const ptFlightControlsPowerFlags);
+static void SetAvionicsSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, AvionicsPowerFlagsT *const ptAvionicsPowerFlags);
+static void SetFlightGuidanceSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, FlightGuidancePowerFlagsT *const ptFlightGuidancePowerFlags);
+static void SetEngineSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, EnginePowerFlagsT *const ptEnginePowerFlags);
+static void SetFuelSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, FuelPowerFlagsT *const ptFuelPowerFlags);
+
+
+
+
+static void SetPowerFlagsForOtherSystems(DCPowerSystemOutputsT *const ptSystem, const SystemPowerFlagsT *const ptCanBePowered, SystemPowerFlagsT *const ptIsPowered)
+{
+    ElectricalGraphInputsT tGraphInput;
+
+    // Initialize graph input (used here to send to the interface to query the electrical graph)
+    memset(&tGraphInput, 0, sizeof(ElectricalGraphInputsT));
+
+    // We will only be querying graph for node state 
+    tGraphInput.m_bGetCircuitComponent = TRUE;
+
+    // Begin with 'can-be-powered' states from systems
+    memcpy(ptIsPowered, ptCanBePowered, sizeof(SystemPowerFlagsT));
+
+    /*
+     *  Account for breakers/busses for power to systems' components
+     */
+
+    // Radio System
+    SetRadioSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tRadio));
+    
+    // Hydraulic System
+    SetHydraulicSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tHydraulic));
+
+    // Fire System
+    SetFireSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tFire));
+
+    // Lighting System
+    SetLightingSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tLighting));
+
+    // MEP System
+    SetMEPSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tMissionEquipmentPackage));
+
+    // Flight Controls System
+    SetFlightControlsSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tFlightControls));
+
+    // Avionics System
+    SetAvionicsSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tAvionics));
+
+    // Flight Guidance System
+    SetFlightGuidanceSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tFlightGuidance));
+
+    // Engine System
+    SetEngineSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tEngine));
+
+    // Fuel System
+    SetFuelSystemPowerFlags(ptSystem, &tGraphInput, &(ptIsPowered->m_tFuel));
+}
+
+/**
+ * @brief sets the electrical loads based of the updated graph
+ * @details picks nodes on the graph that other systems will be interested in,
+ *          and provides the necessary electrical loads as an output to the system
+ * @param[in] ptSystem
+ * @param[in,out] ptLoads
+ */
+static void SetElectricalLoads(const DCPowerSystemOutputsT *const ptSystem, ElectricalLoadsDataT *const ptLoads)
+{
+    //for now
+    ptLoads->m_pfGeneratorLoads_amps[0] = 20.0f;
+    ptLoads->m_pfGeneratorLoads_amps[1] = 20.0f;
+    ptLoads->m_pfBatteryLoads_amps[0]   = 20.0f;
+    ptLoads->m_pfBatteryLoads_amps[1]   = 20.0f;
+    ptLoads->m_pfDcVoltageLoads_amps[0] = 20.0f;
+    ptLoads->m_pfDcVoltageLoads_amps[1] = 20.0f;
+    ptLoads->m_pfEssentialBus_volts[0]  = 20.0f;
+    ptLoads->m_pfEssentialBus_volts[1]  = 20.0f;
+    ptLoads->m_fBatteryVoltage          = 20.0f;
+}
+
+static void ChangeCircuitryBasedOnSwitchState(DCPowerSystemOutputsT *const ptSystem, const ElectricalSwitchesT *const ptSwitches)
+{
+}
+
+static void PopBreakers(DCPowerSystemOutputsT *const ptSystem, const PanelBreakersT *const ptBreakers)
+{
+}
+
+/**
+ *  @brief  Set the power flags for the radio system.
+ *
+ *  @param[In, Out] ptSystem            Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput        Reference to the graph input used to query the system.
+ *  @param[Out]     ptRadioPowerFlags   Reference to the radio power flag struct.
+ */
+static void SetRadioSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, RadioPowerFlagsT *const ptRadioPowerFlags)
+{
+    // Radar altimeter
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uRadAlt;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_bRadioAltimeterPower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Wulfsberg C-5000
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCom4Ctrl;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_bWulfsbergC5000Power &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Garmin-430W (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uNms2;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptRadioPowerFlags->m_pbGarmin430WPower[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptRadioPowerFlags->m_pbNavReceiverPower[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Garmin-430W (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uNms1;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptRadioPowerFlags->m_pbGarmin430WPower[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptRadioPowerFlags->m_pbNavReceiverPower[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // GTX-330
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uAtc;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_bGTX330Power &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ARC-231 (Control Head)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCm3Rt;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_bArc231ControlPower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ACU-6100 (Backup)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uIcsBackup;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptRadioPowerFlags->m_pbAudioPanelBackupPower[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptRadioPowerFlags->m_pbAudioPanelBackupPower[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // ACU-6100 (Control Head - Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puIcs[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_bAudioPanelPower[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ACU-6100 (Control Head - CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puIcs[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_bAudioPanelPower[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ACU-6100 (To Cabin)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uIcsCab;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptRadioPowerFlags->m_pbAudioPanelICSCabinPower[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptRadioPowerFlags->m_pbAudioPanelICSCabinPower[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // ACU-6100 (To Speaker)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uIcAmp;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptRadioPowerFlags->m_pbAudioPanelICSpeakerPower[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptRadioPowerFlags->m_pbAudioPanelICSpeakerPower[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Marker Beacon
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uMkr;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_bMarkerBeaconPower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // DME Receivers
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDme;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptRadioPowerFlags->m_pbDmeReceiverPower[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptRadioPowerFlags->m_pbDmeReceiverPower[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // COM 1
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uVhfTx1;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_pbComReceiverPower[0] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // COM 2
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uVhfTx2;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_pbComReceiverPower[1] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // COM 3
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCm3Ant;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_pbComReceiverPower[2] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // COM 4
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCom4Xcvr;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_pbComReceiverPower[3] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // COM 5
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCom5Xcvr;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptRadioPowerFlags->m_pbComReceiverPower[4] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+}
+
+/**
+ *  @brief  Set the power flags for the fire system.
+ *
+ *  @param[In, Out] ptSystem            Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput        Reference to the graph input used to query the system.
+ *  @param[Out]     ptFirePowerFlags    Reference to the fire power flag struct.
+ */
+static void SetFireSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, FirePowerFlagsT *const ptFirePowerFlags)
+{
+    // Fire detection (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFireD[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFirePowerFlags->m_pbFireDetection[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Fire detection (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFireD[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFirePowerFlags->m_pbFireDetection[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Fire extinguish (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFireE[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFirePowerFlags->m_pbFireExtinguisher[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Fire extinguish (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFireE[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFirePowerFlags->m_pbFireExtinguisher[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+}
+
+/**
+ *  @brief  Set the power flags for the hydraulic system.
+ *
+ *  @param[In, Out] ptSystem                Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput            Reference to the graph input used to query the system.
+ *  @param[Out]     ptHydraulicPowerFlags   Reference to the hydrauilc power flag struct.
+ */
+static void SetHydraulicSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, HydraulicPowerFlagsT *const ptHydraulicPowerFlags)
+{
+    // Hydraulic indicators are on the CPDS
+    ptHydraulicPowerFlags->m_pbPressureIndicator[AVI_PILOT] &= TRUE;
+    ptHydraulicPowerFlags->m_pbPressureIndicator[AVI_COPILOT] &= TRUE;
+
+    // Hydraulic Solenoid valves (TODO: ??)
+    ptHydraulicPowerFlags->m_pbSolenoidValve[AVI_PILOT] &= TRUE;
+    ptHydraulicPowerFlags->m_pbSolenoidValve[AVI_COPILOT] &= TRUE;
+}
+
+/**
+ *  @brief  Set the power flags for the lighting system.
+ *
+ *  @param[In, Out] ptSystem                Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput            Reference to the graph input used to query the system.
+ *  @param[Out]     ptLightingPowerFlags    Reference to the lighting power flag struct.
+ */
+static void SetLightingSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, LightingPowerFlagsT *const ptLightingPowerFlags)
+{
+    BOOL bMultiplePower = FALSE;    // Used when looking at multiple sources to determine power
+
+    // Map light
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCkpt;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bMap &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Position light
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uPos;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bPosition &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Anti-collision light
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uAcol;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bAntiCollision &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Landing light
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uLdg;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bLanding &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Landing/Search light
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puPwr[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bLandingSearch &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Standby Horizon Gauge
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uStbyHorBat;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bStandbyHorizon &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // L/S controls (Pilot - both floor and overhead breakers)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uLs16Cntl;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCont2;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptLightingPowerFlags->m_bPilotLsControls &= bMultiplePower;
+
+    // L/S controls (CoPilot - both floor and overhead breakers)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uLs16Cntl;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCont1LsLt;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptLightingPowerFlags->m_bCopilotLsControls &= bMultiplePower;
+
+    // Instrument Backlighting
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uInstr;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptLightingPowerFlags->m_bInstrumentsOn &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptLightingPowerFlags->m_bInstrumentsNVG &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Backup gauge backlighting
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uInstrLights;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bBackupGauges &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Emergency Exit
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uEmEx;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uBatEmExLt;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptLightingPowerFlags->m_bEmergencyExit &= bMultiplePower;
+
+    // L/S 16 Searchlight (NOTE: this breaker is not being modeled)
+    ptLightingPowerFlags->m_bLs16Searchlight &= TRUE;
+    
+    // MX-15 Camera
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uMx15Imager;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bMx15Camera &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Battery Test light (Right - Green)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puBt[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bBatteryTestGreen &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Battery Test light (Left - Red)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puBt[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptLightingPowerFlags->m_bBatteryTestRed &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Laser Arm Panel (TODO: ??)
+    ptLightingPowerFlags->m_bLaserArmPanel &= TRUE;
+}
+
+/**
+ *  @brief  Set the power flags for the MEP system.
+ *
+ *  @param[In, Out] ptSystem            Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput        Reference to the graph input used to query the system.
+ *  @param[Out]     ptMEPPowerFlags     Reference to the MEP power flag struct.
+ */
+static void SetMEPSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, MissionEquipmentPackagePowerFlagsT *const ptMEPPowerFlags)
+{
+    BOOL bMultiplePower = FALSE;    // Used to determine power from multiple sources
+
+    // Map Control Unit
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uMovMap;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptMEPPowerFlags->m_bMapControlUnit &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Video Display Units
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uVideoDist;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptMEPPowerFlags->m_bVideoDisplayUnit[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptMEPPowerFlags->m_bVideoDisplayUnit[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // DVR Panel
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDvr;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptMEPPowerFlags->m_bDvrPanel &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ADU Primary
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDwnlnkAdu;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptMEPPowerFlags->m_bAntennaDeployUnitPrimary &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ADU Secondary
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDwnlnkAduB;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptMEPPowerFlags->m_bAntennaDeployUnitSecondary &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Mission Bus Panel (DVR AUD)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDvr;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptMEPPowerFlags->m_pbMissionBus[MISSION_BUS_DVR_AUD_REC] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Mission Bus Panel (SL PWR)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uLs16Cntl;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptMEPPowerFlags->m_pbMissionBus[MISSION_BUS_SEARCHLIGHT_POWER] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Mission Bus Panel (MSN BUS)
+    ptGraphInput->m_uNode = ptSystem->m_ptDistributionBox[AVI_PILOT].m_uNonessentialBus;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_ptDistributionBox[AVI_COPILOT].m_uNonessentialBus;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptMEPPowerFlags->m_pbMissionBus[MISSION_BUS_MSN_BUS_POWER] &= bMultiplePower;
+
+    // Mission Bus Panel (A. AUD / D. AUD)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDwnlnkAdu;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDwnlnkAduB;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDwnlnkCntl;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptMEPPowerFlags->m_pbMissionBus[MISSION_BUS_AAUD_LINK] &= bMultiplePower;
+    ptMEPPowerFlags->m_pbMissionBus[MISSION_BUS_DAUD_LINK] &= bMultiplePower;
+
+    // Mission Bus Panel (DL PWR)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uDwnlnkCntl;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptMEPPowerFlags->m_pbMissionBus[MISSION_BUS_DOWNLINK_POWER] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+}
+
+/**
+ *  @brief  Set the power flags for the flight controls system.
+ *
+ *  @param[In, Out] ptSystem                    Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput                Reference to the graph input used to query the system.
+ *  @param[Out]     ptFlightControlsPowerFlags  Reference to the flight controls power flag struct.
+ */
+static void SetFlightControlsSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, FlightControlsPowerFlagsT *const ptFlightControlsPowerFlags)
+{
+    BOOL bMultiplePower = FALSE;    // Used to determine power from multiple sources
+
+    // Trim Actuators
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uBeepTrim;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptFlightControlsPowerFlags->m_bPitchTrimActuator &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptFlightControlsPowerFlags->m_bRollTrimActuator &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptFlightControlsPowerFlags->m_bYawTrimActuator &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Winch Control
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCont;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uBoom;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptFlightControlsPowerFlags->m_bWinch &= bMultiplePower;
+
+    // Winch Mirror (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCcPil;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uCcPedWinch;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptFlightControlsPowerFlags->m_bWinchMirror &= bMultiplePower;
+
+    // Force Trim Release
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uFtr;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightControlsPowerFlags->m_bForceTrimReleaseAnnunciator &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+}
+
+/**
+ *  @brief  Set the power flags for the avionics system.
+ *
+ *  @param[In, Out] ptSystem                Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput            Reference to the graph input used to query the system.
+ *  @param[Out]     ptAvionicsPowerFlags    Reference to the avionics power flag struct.
+ */
+static void SetAvionicsSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, AvionicsPowerFlagsT *const ptAvionicsPowerFlags)
+{
+    BOOL bMultiplePower = FALSE;    // Used to determine power from multiple sources
+
+    // Avionics Essential Bus relay (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssAvioMain[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbAvionicsEssentialBusRelays[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Avionics Essential Bus relay (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssAvioMain[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbAvionicsEssentialBusRelays[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Avionics Shed Bus relay (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uAvioMain2;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbAvionicsShedBusRelays[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Avionics Shed Bus relay (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uAvioMain1;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbAvionicsShedBusRelays[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // PFD Bezel (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puPfd[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbPFDBezels[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // PFD Bezel (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puPfd[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbPFDBezels[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ND Bezel (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puNd[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbNDBezels[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ND Bezel (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puNd[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbNDBezels[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // CAD Bezel
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puCad[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puCad[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptAvionicsPowerFlags->m_bCADBezel &= bMultiplePower;
+
+    // VEMD Bezel
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puVemd[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puVemd[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptAvionicsPowerFlags->m_bVEMDBezel &= bMultiplePower;
+
+    // ICP Panel (Pilot) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbICPs[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ICP Panel (CoPilot) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbICPs[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // RCU Panel (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_bRCU &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Pitot/Static (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uPtStPlt;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptAvionicsPowerFlags->m_pbPitotDeicers[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_pbStaticDeicers[AVI_PILOT][AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_pbStaticDeicers[AVI_COPILOT][AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Pitot/Static (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uPtStCp;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptAvionicsPowerFlags->m_pbPitotDeicers[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_pbStaticDeicers[AVI_PILOT][AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_pbStaticDeicers[AVI_COPILOT][AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Avionics Equipment Fans (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uInstCool;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptAvionicsPowerFlags->m_bAvionicsDeckFan &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_bCenterInstrumentFan &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_bCADFan &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_bVEMDFan &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // RAM Air Temperature Sensor (Pilot) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbRamAirTemperatureSensor[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // RAM Air Temperature Sensor (CoPilot) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbRamAirTemperatureSensor[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Avionics Deck Temperature Sensor (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_bAvionicsDeckTemperatureSensor &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Center Instrument Temperature Sensor (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_bCenterInstrumentTemperatureSensor &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Temperature Microswitches (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uHtgCont;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptAvionicsPowerFlags->m_bCenterInstrumentCoolingFanOnMicroswitch &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_bCenterInstrumentOverheatMicroswitch &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_bAvionicsDeckCoolingFanOnMicroswitch &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptAvionicsPowerFlags->m_bAvionicsDeckOverheatMicroswitch &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Magnetometer (Pilot) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssAvioMain[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbMagnetometers[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Magnetometer (CoPilot) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssAvioMain[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbMagnetometers[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // AHRS (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puAhrs2[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puAhrs2[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptAvionicsPowerFlags->m_pbAHRUs[AVI_PILOT] &= bMultiplePower;
+
+    // AHRS (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puAhrs1[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puAhrs1[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptAvionicsPowerFlags->m_pbAHRUs[AVI_COPILOT] &= bMultiplePower;
+
+    // ADC (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puAdc[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbAHRUs[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ADC (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puAdc[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbAHRUs[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // FCDM (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFcdm[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uFcds2Backup;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptAvionicsPowerFlags->m_pbFCDMs[AVI_PILOT] &= bMultiplePower;
+
+    // FCDM (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFcdm[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbFCDMs[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // PFD (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puPfd[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbPFDs[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // PFD (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puPfd[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbPFDs[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ND (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puNd[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbNDs[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // ND (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puNd[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_pbNDs[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // VEMD
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puVemd[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puVemd[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptAvionicsPowerFlags->m_bVEMD &= bMultiplePower;
+
+    // VEMD Lane (Pilot) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puVemd[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_bVEMDLanes[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // VEMD Lane (CoPilot) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puVemd[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_bVEMDLanes[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // CAD / CAD Lane (TODO: CAD Lane ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puCad[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puCad[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptAvionicsPowerFlags->m_bCAD &= bMultiplePower;
+    ptAvionicsPowerFlags->m_bCADLane &= bMultiplePower;
+
+    // Warning Unit
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puWu[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puWu[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptAvionicsPowerFlags->m_bWarningUnit &= bMultiplePower;
+
+    // Wet Compass backlighting (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uInstrLights;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptAvionicsPowerFlags->m_bWetCompassLighting &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+}
+
+/**
+ *  @brief  Set the power flags for the flight guidance system.
+ *
+ *  @param[In, Out] ptSystem                    Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput                Reference to the graph input used to query the system.
+ *  @param[Out]     ptFlightGuidancePowerFlags  Reference to the flight guidance power flag struct.
+ */
+static void SetFlightGuidanceSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, FlightGuidancePowerFlagsT *const ptFlightGuidancePowerFlags)
+{
+    // APMS Panel (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightGuidancePowerFlags->m_bAPMS &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Autopilot Module (Pilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uAp2;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightGuidancePowerFlags->m_pbAutopilotModules[AVI_PILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Autopilot Module (CoPilot)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uAp1;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightGuidancePowerFlags->m_pbAutopilotModules[AVI_COPILOT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Autopilot Pitch SAS
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uP1Sas;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightGuidancePowerFlags->m_bPitchSAS &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Autopilot Pitch SEMA
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uP2Sema;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightGuidancePowerFlags->m_bPitchSEMA2 &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Autopilot Roll SAS
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uRoll1Sas;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightGuidancePowerFlags->m_bRollSAS &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Autopilot Roll SEMA
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uRoll2Sema;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightGuidancePowerFlags->m_bRollSEMA2 &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Autopilot Yaw SAS
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uYawSas;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFlightGuidancePowerFlags->m_bYawSAS &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+}
+
+/**
+ *  @brief  Set the power flags for the engine system.
+ *
+ *  @param[In, Out] ptSystem            Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput        Reference to the graph input used to query the system.
+ *  @param[Out]     ptEnginePowerFlags  Reference to the engine power flag struct.
+ */
+static void SetEngineSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, EnginePowerFlagsT *const ptEnginePowerFlags)
+{
+    /*
+     *  Essential Bus (Left)
+     */
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        // Engine N1 Sensor (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineN1Sensor[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine TOT Sensor (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbTOTSensor_degc[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Fail Limit Switch (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineFailLimitSwitch[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Freewheel Limit Switch (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineFreewheelLimitSwitch[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Oil Temperature Sensor (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineOilTemperatureSensor[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Oil Pressure Sensor (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineOilPressureSensor[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Oil Pressure Limit Switch (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineOilPressureLimitSwitch[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Transmission Oil Temperature Sensor (TODO: ??)
+        ptEnginePowerFlags->m_bTransmissionOilTemperatureSensor &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Transmission Oil Pressure Sensor (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbTransmissionOilPressureSensor[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Transmission Oil Pressure Limit Switch (Left) (TODO: ??)
+        ptEnginePowerFlags->m_pbTransmissionOilPressureLimitSwitch[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Rotor Min Speed Limit Switch (TODO: ??)
+        ptEnginePowerFlags->m_bRotorMinSpeedLimitSwitch &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Rotor Max Speed Limit Switch (TODO: ??)
+        ptEnginePowerFlags->m_bRotorMaxDrivenSpeedLimitSwitch &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Rotor Max Freewheel Speed Limit Switch (TODO: ??)
+        ptEnginePowerFlags->m_bRotorMaxFreewheelSpeedLimitSwitch &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // VARTOMS Mode Selector (TODO: ??)
+        ptEnginePowerFlags->m_bVARTOMSModeSelector &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    /*
+     *  Essential Bus (Right)
+     */
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        // Engine N1 Sensor (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineN1Sensor[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine TOT Sensor (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbTOTSensor_degc[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Fail Limit Switch (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineFailLimitSwitch[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Freewheel Limit Switch (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineFreewheelLimitSwitch[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Oil Temperature Sensor (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineOilTemperatureSensor[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Oil Pressure Sensor (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineOilPressureSensor[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Engine Oil Pressure Limit Switch (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbEngineOilPressureLimitSwitch[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Transmission Oil Pressure Sensor (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbTransmissionOilPressureSensor[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+        // Transmission Oil Pressure Limit Switch (Right) (TODO: ??)
+        ptEnginePowerFlags->m_pbTransmissionOilPressureLimitSwitch[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Engine N2/Tq Sensors (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puTqN2[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptEnginePowerFlags->m_pbEngineN2Sensor[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptEnginePowerFlags->m_pbEngineN2Sensor[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // Engine N2/Tq Sensors (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puTqN2[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptEnginePowerFlags->m_pbEngineN2Sensor[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptEnginePowerFlags->m_pbEngineN2Sensor[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+    
+    // Rotor Speed Sensor
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uRotorRpm;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_bRotorSpeedSensor &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Starter Relay (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puIgn[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_pbStarterRelay[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Starter Relay (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puIgn[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_pbStarterRelay[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Starter Motor (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puStart[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_pbStarterMotor[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Starter Motor (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puStart[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_pbStarterMotor[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Overspeed Shutdown System (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puOvsp[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_pbOverspeedShutdownSystem[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Overspeed Shutdown System (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puOvsp[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_pbOverspeedShutdownSystem[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Sand Filter (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puSandFilt[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_pbSandFilter[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Sand Filter (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puSandFilt[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_pbSandFilter[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Engine Trim Actuators (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uN2Trim;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+    {
+        ptEnginePowerFlags->m_pbEngineTrimActuators[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+        ptEnginePowerFlags->m_pbEngineTrimActuators[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+    }
+
+    // VARTOMS Controller
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_uVarNr;
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptEnginePowerFlags->m_bVARTOMSController &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+}
+
+/**
+ *  @brief  Set the power flags for the fuel system.
+ *
+ *  @param[In, Out] ptSystem            Reference to the current state of the electrical system.
+ *  @param[In, Out] ptGraphInput        Reference to the graph input used to query the system.
+ *  @param[Out]     ptFuelPowerFlags    Reference to the fuel power flag struct.
+ */
+static void SetFuelSystemPowerFlags(DCPowerSystemOutputsT *const ptSystem, ElectricalGraphInputsT *const ptGraphInput, FuelPowerFlagsT *const ptFuelPowerFlags)
+{
+    BOOL bMultiplePower = FALSE;    // Used to determine power from multiple sources
+
+    // Prime Pump (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puPrimeP[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFuelPowerFlags->m_pbPrimePump[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Prime Pump (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puPrimeP[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFuelPowerFlags->m_pbPrimePump[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Forward Transfer Pump
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptFuelPowerFlags->m_bFwdTransferPump &= bMultiplePower;
+
+    // Aft Transfer Pump
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptFuelPowerFlags->m_bFwdTransferPump &= bMultiplePower;
+
+    // Supply Tank Quantity Sensor (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFuelL[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFuelPowerFlags->m_pbSupplyTankFuelQuantitySensor[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Supply Tank Quantity Sensor (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFuelL[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFuelPowerFlags->m_pbSupplyTankFuelQuantitySensor[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Forward Main Tank Quantity Sensor (Forward) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFuelL[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puEssentialBus[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptFuelPowerFlags->m_bForwardMainTankQuantitySensorFwd &= bMultiplePower;
+
+    // Forward Main Tank Quantity Sensor (Aft) (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptFuelPowerFlags->m_bForwardMainTankQuantitySensorAft &= bMultiplePower;
+
+    // Supply Tank Low Fuel Limit Switch (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFuelL[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFuelPowerFlags->m_pbSupplyTankLowFuelLimitSwitch[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Supply Tank Low Fuel Limit Switch (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFuelL[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFuelPowerFlags->m_pbSupplyTankLowFuelLimitSwitch[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Aft Main Tank Low Fuel Indicator (TODO: ??)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_PILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower = ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puShedBus[AVI_COPILOT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        bMultiplePower |= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    ptFuelPowerFlags->m_bAftMainTankLowFuelIndicator &= bMultiplePower;
+
+    // Emergency Shutoff Valve (Left)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFuelV[ENGINE_LEFT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFuelPowerFlags->m_pbEmergencyShutoffValve[ENGINE_LEFT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+
+    // Emergency Shutoff Valve (Right)
+    ptGraphInput->m_uNode = ptSystem->m_tOverheadPanel.m_puFuelV[ENGINE_RIGHT];
+    UpdateElectricalGraph(&(ptSystem->m_tGraph), ptGraphInput);
+
+    if (ptSystem->m_tGraph.m_ptCircuitComponent != NULL)
+        ptFuelPowerFlags->m_pbEmergencyShutoffValve[ENGINE_RIGHT] &= ptSystem->m_tGraph.m_ptCircuitComponent->m_bHasFlow;
+}
